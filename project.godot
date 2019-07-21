@@ -1,0 +1,116 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "RigidBody",
+"class": "Drone",
+"language": "GDScript",
+"path": "res://Drone.gd"
+}, {
+"base": "Node",
+"class": "FlightController",
+"language": "GDScript",
+"path": "res://FlightController.gd"
+}, {
+"base": "Node",
+"class": "PID",
+"language": "GDScript",
+"path": "res://PID.gd"
+}, {
+"base": "KinematicBody",
+"class": "Propeller",
+"language": "GDScript",
+"path": "res://Propeller.gd"
+} ]
+_global_script_class_icons={
+"Drone": "",
+"FlightController": "",
+"PID": "",
+"Propeller": ""
+}
+
+[application]
+
+config/name="Drone"
+run/main_scene="res://Level.tscn"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1280
+window/size/height=720
+
+[input]
+
+increase_power={
+"deadzone": 0.05,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":3,"axis_value":-1.0,"script":null)
+ ]
+}
+decrease_power={
+"deadzone": 0.05,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":3,"axis_value":1.0,"script":null)
+ ]
+}
+pitch_up={
+"deadzone": 0.2,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":1.0,"script":null)
+ ]
+}
+pitch_down={
+"deadzone": 0.2,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":-1.0,"script":null)
+ ]
+}
+roll_left={
+"deadzone": 0.2,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":-1.0,"script":null)
+ ]
+}
+roll_right={
+"deadzone": 0.2,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":1.0,"script":null)
+ ]
+}
+yaw_left={
+"deadzone": 0.2,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":-1.0,"script":null)
+ ]
+}
+yaw_right={
+"deadzone": 0.2,
+"events": [ Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":2,"axis_value":1.0,"script":null)
+ ]
+}
+
+[network]
+
+limits/debugger_stdout/max_chars_per_second=65536
+limits/debugger_stdout/max_messages_per_frame=500
+limits/debugger_stdout/max_errors_per_frame=60
+
+[physics]
+
+common/physics_fps=120
+
+[rendering]
+
+threads/thread_model=2
+quality/filters/anisotropic_filter_level=8
+quality/directional_shadow/size=8192
+quality/shadow_atlas/size=8192
+quality/shadow_atlas/quadrant_0_subdiv=2
+quality/shadow_atlas/quadrant_1_subdiv=3
+quality/shadow_atlas/quadrant_2_subdiv=4
+quality/shadow_atlas/quadrant_3_subdiv=5
+quality/shadows/filter_mode=2
+quality/reflections/atlas_size=8192
+quality/filters/msaa=2
+environment/default_environment="res://default_env.tres"

@@ -1,0 +1,102 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Drone.tscn" type="PackedScene" id=1]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 15, 0.5, 15 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 30, 1, 30 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 1, 2.5, 1 )
+
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 2, 5, 2 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 1, 5, 1 )
+
+[sub_resource type="CubeMesh" id=6]
+size = Vector3( 2, 10, 2 )
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 2.5, 0.5, 2.5 )
+
+[sub_resource type="CubeMesh" id=8]
+size = Vector3( 5, 1, 5 )
+
+[node name="Level" type="Spatial"]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.860577, 0.207325, -0.465214, 0.509321, -0.350308, 0.786052, 0, -0.913401, -0.407062, 0, 20, 0 )
+shadow_enabled = true
+shadow_bias = 0.0
+shadow_contact = 0.1
+directional_shadow_blend_splits = true
+directional_shadow_normal_bias = 0.2
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 8, 20 )
+
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.36459, 10.836 )
+current = true
+target = NodePath("../Drone/Spatial")
+speed = 30.0
+enabled = true
+
+[node name="Drone" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0 )
+
+[node name="Spatial" type="Spatial" parent="Drone"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
+
+[node name="Objects" type="Spatial" parent="."]
+
+[node name="Ground" type="StaticBody" parent="Objects"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Objects/Ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Objects/Ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Pillar" type="StaticBody" parent="Objects"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Objects/Pillar"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Objects/Pillar"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="Pillar2" type="StaticBody" parent="Objects"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Objects/Pillar2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Objects/Pillar2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="Pillar3" type="StaticBody" parent="Objects"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Objects/Pillar3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+shape = SubResource( 7 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Objects/Pillar3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+mesh = SubResource( 8 )
+material/0 = null
