@@ -13,6 +13,8 @@ const PROP_LIFT = 0.025
 
 var target_altitude = 0.0
 
+onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
+
 
 func _ready():
 	flight_controller = $FlightController
@@ -21,24 +23,29 @@ func _ready():
 
 
 func _process(delta):
-	pass
+	debug_geom.draw_debug_grid(0.02, global_transform.xform(Vector3(0, 0, 0)), 1.5, 1.5, 1, 1,
+			Vector3.UP, global_transform.basis.xform(Vector3.RIGHT))
+	debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3.UP),
+			linear_velocity, linear_velocity.length() / 10)
+	debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3.UP),
+			Vector3.RIGHT, linear_velocity.x / 10, Color(10, 0, 0))
+	debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3.UP),
+			Vector3.UP, linear_velocity.y / 10, Color(0, 10, 0))
+	debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3.UP),
+			Vector3.BACK, linear_velocity.z / 10, Color(0, 0, 10))
+	
+	debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3(0.2, 0, 0.5)),
+			global_transform.basis.xform(Vector3.RIGHT), global_transform.basis.xform_inv(linear_velocity).x / 10,
+			Color(10, 0, 0))
+	debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3(-0.2, 0, 0.5)),
+			global_transform.basis.xform(Vector3.UP), global_transform.basis.xform_inv(linear_velocity).y / 10,
+			Color(0, 10, 0))
+	debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3(0.2, 0, 0.5)),
+			global_transform.basis.xform(Vector3.DOWN), global_transform.basis.xform_inv(linear_velocity).z / 10,
+			Color(0, 0, 10))
 
 
 func _physics_process(delta):
-	var power = (Input.get_action_strength("increase_power") - Input.get_action_strength("decrease_power") + 1) / 2
-	var pitch = Input.get_action_strength("pitch_up") - Input.get_action_strength("pitch_down")
-	var roll = Input.get_action_strength("roll_right") - Input.get_action_strength("roll_left")
-	var yaw = Input.get_action_strength("yaw_right") - Input.get_action_strength("yaw_left")
-	print("Pow: %8.2f ptc: %6.3f rol: %6.3f yaw: %6.3f" % [power, pitch, roll, yaw])
-	
-	flight_controller.read_position(global_transform.origin, global_transform.basis)
-	flight_controller.read_velocity(linear_velocity, angular_velocity)
-	flight_controller.read_input(power, pitch, roll, yaw)
-	flight_controller.update_control()
-	
-#	var prop_power = get_flight_controller_output(delta)
-	
-	
 	for prop in props:
 #		prop.set_rpm_target(power)
 #		prop.set_rpm_target(prop_power)
@@ -47,10 +54,9 @@ func _physics_process(delta):
 		var vec_pos = prop.global_transform.origin - global_transform.origin
 		add_torque(vec_torque)
 		add_force(vec_force, vec_pos)
-#	print("%8.3f %8.3f %8.3f %8.3f"
-#			% [props[0].get_thrust(), props[1].get_thrust(), props[2].get_thrust(), props[3].get_thrust()])
-	print("T: %8.3f RPM: %8.3f L: %8.3f"
-			% [props[0].get_torque(), props[0].get_rpm(), props[0].get_thrust()])
+		debug_geom.draw_debug_arrow(0.017, global_transform.origin + vec_pos, vec_force, vec_force.length() / 50)
+#	print("T: %8.3f RPM: %8.3f L: %8.3f"
+#			% [props[0].get_torque(), props[0].get_rpm(), props[0].get_thrust()])
 	
 	add_drag()
 
@@ -73,7 +79,7 @@ func _input(event):
 
 
 func get_flight_controller_output(delta):
-	flight_controller.read_position(global_transform.origin, global_transform.basis)
+	flight_controller.read_position(global_transform.origin, global_transform.basis.get_euler())
 	flight_controller.read_velocity(linear_velocity, angular_velocity)
 #	flight_controller.read_input(control_input)
 	var power = flight_controller.get_power(delta)
@@ -86,3 +92,6 @@ func get_flight_controller_output(delta):
 func add_drag():
 	var drag = -linear_velocity.length_squared() * linear_velocity.normalized() / 10.0
 	add_central_force(drag)
+	
+	drag = -angular_velocity.length_squared() * angular_velocity.normalized() / 10.0
+	add_torque(drag)

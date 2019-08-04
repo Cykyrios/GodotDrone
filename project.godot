@@ -9,12 +9,17 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "ImmediateGeometry",
+"class": "DebugGeometry",
+"language": "GDScript",
+"path": "res://DebugGeometry.gd"
+}, {
 "base": "RigidBody",
 "class": "Drone",
 "language": "GDScript",
 "path": "res://Drone.gd"
 }, {
-"base": "Node",
+"base": "Spatial",
 "class": "FlightController",
 "language": "GDScript",
 "path": "res://FlightController.gd"
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://Propeller.gd"
 } ]
 _global_script_class_icons={
+"DebugGeometry": "",
 "Drone": "",
 "FlightController": "",
 "PID": "",
@@ -94,7 +100,6 @@ yaw_right={
 
 limits/debugger_stdout/max_chars_per_second=65536
 limits/debugger_stdout/max_messages_per_frame=500
-limits/debugger_stdout/max_errors_per_frame=60
 
 [physics]
 
