@@ -69,7 +69,7 @@ func get_rpm():
 
 
 func set_power(p):
-	power = p
+	power = clamp(p, 0, 1)
 
 
 func get_power():
