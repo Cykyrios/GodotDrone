@@ -18,6 +18,9 @@ enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
 		ALTITUDE, POS_X, POS_Y, VERTICAL_SPEED, X_SPEED, Y_SPEED,
 		POWER, RPM, HEADING}
 
+enum FlightMode {RATE, LEVEL, AUTO}
+var flight_mode = FlightMode.RATE
+
 
 func _ready():
 	pos = global_transform.origin
@@ -32,6 +35,12 @@ func _ready():
 	pid_controllers[Controller.ALTITUDE].set_coefficients(0.2, 0.1, 0.17)
 	pid_controllers[Controller.ALTITUDE].set_clamp_limits(0.1, 0.9)
 #	pid_controllers[Controller.ALTITUDE].reset_integral(0.2)
+	pid_controllers[Controller.VERTICAL_SPEED].set_coefficients(1, 0.1, 0.5)
+	pid_controllers[Controller.VERTICAL_SPEED].set_clamp_limits(-2, 2)
+	pid_controllers[Controller.ROLL].set_coefficients(0.15, 0.15, 0.05)
+	pid_controllers[Controller.ROLL].set_clamp_limits(-0.05, 0.05)
+	pid_controllers[Controller.PITCH].set_coefficients(0.15, 0.15, 0.05)
+	pid_controllers[Controller.PITCH].set_clamp_limits(-0.05, 0.05)
 	
 	pid_controllers[Controller.YAW_SPEED].set_coefficients(0.03, 0.0, 0.001)
 	pid_controllers[Controller.YAW_SPEED].set_clamp_limits(-1, 1)
@@ -107,8 +116,16 @@ func change_power(p):
 #	var power = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt)
 #	for prop in props:
 #		prop.set_power(power)
-	for prop in props:
-		prop.set_power(p - 0.3)
+	if flight_mode == FlightMode.RATE:
+		for prop in props:
+			prop.set_power(p - 0.3)
+	
+	elif flight_mode == FlightMode.LEVEL:
+		var target = pid_controllers[Controller.ALTITUDE].target
+		pid_controllers[Controller.ALTITUDE].set_target(target + (p - 0.5) / 20)
+		var power = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, true)
+		for prop in props:
+			prop.set_power(power)
 
 
 func change_pitch(p):
@@ -118,14 +135,24 @@ func change_pitch(p):
 #			props[i].set_power(props[i].get_power() + pitch_change)
 #		else:
 #			props[i].set_power(props[i].get_power() - pitch_change)
-	var pitch_change = p * 3
-	pid_controllers[Controller.PITCH_SPEED].set_target(pitch_change)
-	pitch_change = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, true)
-	for i in range(4):
-		if i < 2:
-			props[i].set_power(props[i].get_power() + pitch_change)
-		else:
-			props[i].set_power(props[i].get_power() - pitch_change)
+	if flight_mode == FlightMode.RATE:
+		var pitch_change = p * 3
+		pid_controllers[Controller.PITCH_SPEED].set_target(pitch_change)
+		pitch_change = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
+		for i in range(4):
+			if i < 2:
+				props[i].set_power(props[i].get_power() + pitch_change)
+			else:
+				props[i].set_power(props[i].get_power() - pitch_change)
+	
+	elif flight_mode == FlightMode.LEVEL:
+		pid_controllers[Controller.PITCH].set_target(p / 4)
+		var pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, true)
+		for i in range(4):
+			if i < 2:
+				props[i].set_power(props[i].get_power() + pitch_change)
+			else:
+				props[i].set_power(props[i].get_power() - pitch_change)
 
 
 func change_roll(r):
@@ -135,14 +162,24 @@ func change_roll(r):
 #			props[i].set_power(props[i].get_power() + roll_change)
 #		else:
 #			props[i].set_power(props[i].get_power() - roll_change)
-	var roll_change = -r * 3
-	pid_controllers[Controller.ROLL_SPEED].set_target(roll_change)
-	roll_change = pid_controllers[Controller.ROLL_SPEED].get_output(ang_vel.z, dt, false)
-	for i in range(4):
-		if i == 0 or i == 3:
-			props[i].set_power(props[i].get_power() - roll_change)
-		else:
-			props[i].set_power(props[i].get_power() + roll_change)
+	if flight_mode == FlightMode.RATE:
+		var roll_change = -r * 3
+		pid_controllers[Controller.ROLL_SPEED].set_target(roll_change)
+		roll_change = pid_controllers[Controller.ROLL_SPEED].get_output(ang_vel.z, dt, false)
+		for i in range(4):
+			if i == 0 or i == 3:
+				props[i].set_power(props[i].get_power() - roll_change)
+			else:
+				props[i].set_power(props[i].get_power() + roll_change)
+	
+	elif flight_mode == FlightMode.LEVEL:
+		pid_controllers[Controller.ROLL].set_target(r / 4)
+		var roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
+		for i in range(4):
+			if i == 0 or i == 3:
+				props[i].set_power(props[i].get_power() + roll_change)
+			else:
+				props[i].set_power(props[i].get_power() - roll_change)
 
 
 func change_yaw(y):
