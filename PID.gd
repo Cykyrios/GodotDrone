@@ -2,7 +2,7 @@ extends Node
 
 class_name PID
 
-var target setget set_target, get_target
+var target = 0.0 setget set_target, get_target
 var err = 0.0
 var err_prev = 0.0
 var integral = 0.0
