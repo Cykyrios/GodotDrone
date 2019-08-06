@@ -74,8 +74,19 @@ func _physics_process(delta):
 
 
 func _input(event):
-	# used to change modes etc.?
-	pass
+	if event.is_action_pressed("cycle_flight_modes"):
+		cycle_flight_modes()
+
+
+func cycle_flight_modes():
+	if flight_mode == FlightMode.size() - 1:
+		flight_mode = 0
+	else:
+		flight_mode += 1
+	print("Mode: %s" % [flight_mode])
+	
+	if flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED:
+		pid_controllers[Controller.ALTITUDE].set_target(pos.y)
 
 
 func get_angles_from_basis():
