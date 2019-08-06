@@ -129,7 +129,7 @@ func change_power(p):
 #		prop.set_power(power)
 	if flight_mode == FlightMode.RATE:
 		for prop in props:
-			prop.set_power(p - 0.3)
+			prop.set_power(sign(p) * pow(abs(p), 2) - 0.05)
 	
 	elif flight_mode == FlightMode.LEVEL:
 		var target = pid_controllers[Controller.ALTITUDE].target
@@ -146,8 +146,10 @@ func change_pitch(p):
 #			props[i].set_power(props[i].get_power() + pitch_change)
 #		else:
 #			props[i].set_power(props[i].get_power() - pitch_change)
+	var pitch_change = 0.0
+	
 	if flight_mode == FlightMode.RATE:
-		var pitch_change = p * 3
+		pitch_change = sign(p) * pow(abs(p), 2) * 3
 		pid_controllers[Controller.PITCH_SPEED].set_target(pitch_change)
 		pitch_change = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
 		for i in range(4):
@@ -173,8 +175,10 @@ func change_roll(r):
 #			props[i].set_power(props[i].get_power() + roll_change)
 #		else:
 #			props[i].set_power(props[i].get_power() - roll_change)
+	var roll_change = 0.0
+	
 	if flight_mode == FlightMode.RATE:
-		var roll_change = -r * 3
+		roll_change = -sign(r) * pow(abs(r), 2) * 3
 		pid_controllers[Controller.ROLL_SPEED].set_target(roll_change)
 		roll_change = pid_controllers[Controller.ROLL_SPEED].get_output(ang_vel.z, dt, false)
 		for i in range(4):
@@ -200,11 +204,13 @@ func change_yaw(y):
 #			props[i].set_power(props[i].get_power() + yaw_change)
 #		else:
 #			props[i].set_power(props[i].get_power() - yaw_change)
-	var yaw_change = -y * 5
-	pid_controllers[Controller.YAW_SPEED].set_target(yaw_change)
-	yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
-	for i in range(4):
-		if i == 0 or i == 2:
-			props[i].set_power(props[i].get_power() - yaw_change)
-		else:
-			props[i].set_power(props[i].get_power() + yaw_change)
+	var yaw_change = 0.0
+	
+	if flight_mode == FlightMode.RATE:
+		pid_controllers[Controller.YAW_SPEED].set_target(-sign(y) * pow(abs(y), 2) * 5)
+		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
+		for i in range(4):
+			if i == 0 or i == 2:
+				props[i].set_power(props[i].get_power() - yaw_change)
+			else:
+				props[i].set_power(props[i].get_power() + yaw_change)
