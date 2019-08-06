@@ -15,10 +15,10 @@ var input = [0, 0, 0, 0]
 
 var pid_controllers = []
 enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
-		ALTITUDE, POS_X, POS_Y, VERTICAL_SPEED, X_SPEED, Y_SPEED,
+		ALTITUDE, POS_X, POS_Y, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED,
 		POWER, RPM, HEADING}
 
-enum FlightMode {RATE, LEVEL, AUTO}
+enum FlightMode {RATE, LEVEL, SPEED, AUTO}
 var flight_mode = FlightMode.RATE
 
 
@@ -42,12 +42,19 @@ func _ready():
 	pid_controllers[Controller.PITCH].set_coefficients(0.15, 0.15, 0.05)
 	pid_controllers[Controller.PITCH].set_clamp_limits(-0.05, 0.05)
 	
+	pid_controllers[Controller.FORWARD_SPEED].set_coefficients(1, 0.8, 0.1)
+	pid_controllers[Controller.FORWARD_SPEED].set_clamp_limits(-5, 5)
+	pid_controllers[Controller.LATERAL_SPEED].set_coefficients(1, 0.8, 0.1)
+	pid_controllers[Controller.LATERAL_SPEED].set_clamp_limits(-5, 5)
+	
 	pid_controllers[Controller.YAW_SPEED].set_coefficients(0.03, 0.0, 0.001)
 	pid_controllers[Controller.YAW_SPEED].set_clamp_limits(-1, 1)
 	pid_controllers[Controller.ROLL_SPEED].set_coefficients(0.03, 0, 0.001)
 	pid_controllers[Controller.ROLL_SPEED].set_clamp_limits(-1, 1)
 	pid_controllers[Controller.PITCH_SPEED].set_coefficients(0.03, 0, 0.001)
 	pid_controllers[Controller.PITCH_SPEED].set_clamp_limits(-1, 1)
+	
+	flight_mode = FlightMode.SPEED
 
 
 #func _process(delta):
@@ -131,10 +138,10 @@ func change_power(p):
 		for prop in props:
 			prop.set_power(sign(p) * pow(abs(p), 2) - 0.05)
 	
-	elif flight_mode == FlightMode.LEVEL:
+	elif flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED:
 		var target = pid_controllers[Controller.ALTITUDE].target
 		pid_controllers[Controller.ALTITUDE].set_target(target + (p - 0.5) / 20)
-		var power = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, true)
+		var power = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
 		for prop in props:
 			prop.set_power(power)
 
@@ -160,7 +167,19 @@ func change_pitch(p):
 	
 	elif flight_mode == FlightMode.LEVEL:
 		pid_controllers[Controller.PITCH].set_target(p / 4)
-		var pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, true)
+		pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+		for i in range(4):
+			if i < 2:
+				props[i].set_power(props[i].get_power() + pitch_change)
+			else:
+				props[i].set_power(props[i].get_power() - pitch_change)
+	
+	elif flight_mode == FlightMode.SPEED:
+		pid_controllers[Controller.FORWARD_SPEED].set_target(sign(p) * pow(abs(p), 2) * 5)
+		pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(
+				global_transform.basis.xform_inv(lin_vel).z, dt, false)
+		pid_controllers[Controller.PITCH].set_target(pitch_change / 5)
+		pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 		for i in range(4):
 			if i < 2:
 				props[i].set_power(props[i].get_power() + pitch_change)
@@ -189,7 +208,19 @@ func change_roll(r):
 	
 	elif flight_mode == FlightMode.LEVEL:
 		pid_controllers[Controller.ROLL].set_target(r / 4)
-		var roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
+		roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
+		for i in range(4):
+			if i == 0 or i == 3:
+				props[i].set_power(props[i].get_power() + roll_change)
+			else:
+				props[i].set_power(props[i].get_power() - roll_change)
+	
+	elif flight_mode == FlightMode.SPEED:
+		pid_controllers[Controller.LATERAL_SPEED].set_target(sign(r) * pow(abs(r), 2) * 5)
+		roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(
+				global_transform.basis.xform_inv(lin_vel).x, dt, false)
+		pid_controllers[Controller.ROLL].set_target(roll_change / 5)
+		roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 		for i in range(4):
 			if i == 0 or i == 3:
 				props[i].set_power(props[i].get_power() + roll_change)
@@ -208,6 +239,15 @@ func change_yaw(y):
 	
 	if flight_mode == FlightMode.RATE:
 		pid_controllers[Controller.YAW_SPEED].set_target(-sign(y) * pow(abs(y), 2) * 5)
+		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
+		for i in range(4):
+			if i == 0 or i == 2:
+				props[i].set_power(props[i].get_power() - yaw_change)
+			else:
+				props[i].set_power(props[i].get_power() + yaw_change)
+	
+	elif flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED:
+		pid_controllers[Controller.YAW_SPEED].set_target(-sign(y) * pow(abs(y), 2) * 2)
 		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 		for i in range(4):
 			if i == 0 or i == 2:
