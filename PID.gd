@@ -69,7 +69,7 @@ func get_output(mv, dt, p_print = false):
 	output = kp * err + ki * integral + kd * deriv
 	clamped_output = clamp(output, clamp_low, clamp_high)
 	if p_print:
-		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f total: %8.3f clamped: %8.3f"
-				% [target, err, kp * err, ki * integral, kd * deriv, output, clamped_output])
+		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f total: %8.3f clamped: %8.3f sat: %s"
+				% [target, err, kp * err, ki * integral, kd * deriv, output, clamped_output, is_saturated()])
 	
 	return clamped_output

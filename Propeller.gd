@@ -18,7 +18,7 @@ const RPM_ACCELERATION = 5000.0
 export (bool) var clockwise = false
 export (float, 0.0, 10000.0) var MAX_TORQUE = 1000.0
 export (float, 0.0, 30000.0) var MAX_RPM = 10000.0
-export (float, 0.0, 100.0) var LIFT_RATIO = 0.005
+export (float, 0.0, 10.0) var LIFT_RATIO = 2.0
 
 
 func _ready():
@@ -82,7 +82,7 @@ func update_thrust():
 
 func get_thrust():
 	var rot_speed = rpm * PI / 30.0 * radius
-	return (pow(rot_speed, 2) * LIFT_RATIO) * (1 + 0.5 * get_ground_effect())
+	return (pow(rot_speed, 2) * LIFT_RATIO / 1000) * (1 + 0.3 * get_ground_effect())
 
 
 func get_ground_effect():
