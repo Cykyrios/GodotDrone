@@ -43,10 +43,6 @@ func get_target():
 	return target
 
 
-func read_input(i):
-	target = i
-
-
 func set_clamp_limits(low, high):
 	clamp_low = low
 	clamp_high = high
@@ -70,8 +66,7 @@ func get_output(mv, dt, p_print = false):
 	var deriv = (err - err_prev) / dt
 	err_prev = err
 	
-	var int_term = ki * integral
-	output = kp * err + int_term + kd * deriv
+	output = kp * err + ki * integral + kd * deriv
 	clamped_output = clamp(output, clamp_low, clamp_high)
 	if p_print:
 		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f total: %8.3f clamped: %8.3f"
