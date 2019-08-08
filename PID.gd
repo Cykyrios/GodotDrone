@@ -50,7 +50,7 @@ func set_clamp_limits(low, high):
 
 func is_saturated():
 	var saturated = false
-	if clamped_output != output and sign(output) == sign(err):
+	if abs(clamped_output - output) > 0.00001 and sign(output) == sign(err_prev):
 		saturated = true
 	return saturated
 
