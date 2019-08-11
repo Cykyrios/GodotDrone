@@ -10,7 +10,6 @@ var radius = 0.2
 
 var controller = PID.new()
 var thrust_target = 0.0
-var power = 0.0 setget set_power, get_power
 var torque = 0.0 setget set_torque, get_torque
 var rpm = 0.0 setget set_rpm, get_rpm
 var rpm_target = 0.0 setget set_rpm_target, get_rpm_target
@@ -77,18 +76,6 @@ func set_rpm(x : float):
 
 func get_rpm():
 	return rpm
-
-
-func set_power(p):
-	power = clamp(p, 0, 1)
-
-
-func get_power():
-	return power
-
-
-func update_thrust():
-	set_rpm_target(power * MAX_RPM)
 
 
 func get_thrust():

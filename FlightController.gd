@@ -110,7 +110,6 @@ func init_telemetry():
 	telemetry_file.store_csv_line(["t", "input.power", "input.yaw", "input.roll", "input.pitch",
 			"x", "y", "z", "vx", "vy", "vz",
 			"yaw", "roll", "pitch", "yaw_speed", "roll_speed", "pitch_speed",
-			"power1", "power2", "power3", "power4",
 			"rpm1", "rpm2", "rpm3", "rpm4",
 			"thrust1", "thrust2", "thrust3", "thrust4"])
 	telemetry_file.close()
@@ -125,7 +124,6 @@ func write_telemetry():
 	var data = PoolStringArray([t, input[0], input[1], input[2], input[3],
 			pos.x, pos.y, pos.z, lin_vel.x, lin_vel.y, lin_vel.z,
 			angles.y, angles.z, angles.x, ang_vel.y, ang_vel.z, ang_vel.x,
-			props[0].get_power(), props[1].get_power(), props[2].get_power(), props[3].get_power(),
 			props[0].get_rpm(), props[1].get_rpm(), props[2].get_rpm(), props[3].get_rpm(),
 			props[0].get_thrust(), props[1].get_thrust(), props[2].get_thrust(), props[3].get_thrust()])
 	telemetry_file.store_csv_line(data)
