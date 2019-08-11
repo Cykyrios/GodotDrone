@@ -37,8 +37,8 @@ func _ready():
 		pid_controllers.append(PID.new())
 	
 	pid_controllers[Controller.ALTITUDE].set_coefficients(10, 2, 3)
-#	pid_controllers[Controller.ALTITUDE].set_clamp_limits(0.1, 0.9)
-	pid_controllers[Controller.VERTICAL_SPEED].set_coefficients(100, 15, 1.5)
+	pid_controllers[Controller.ALTITUDE].set_clamp_limits(0.1, 10)
+	pid_controllers[Controller.VERTICAL_SPEED].set_coefficients(30, 5, 1)
 #	pid_controllers[Controller.VERTICAL_SPEED].set_clamp_limits(-2, 2)
 	pid_controllers[Controller.ROLL].set_coefficients(5, 1, 2)
 #	pid_controllers[Controller.ROLL].set_clamp_limits(-0.5, 0.5)
@@ -210,7 +210,7 @@ func change_power(p):
 		power += sign(p) * pow(abs(p), 2) * 50 - 10
 	
 	elif flight_mode == FlightMode.SPEED:
-		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 2)
+		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 4)
 		power += pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.TRACK:
