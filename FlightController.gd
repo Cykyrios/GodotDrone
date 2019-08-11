@@ -133,7 +133,7 @@ func _input(event):
 
 
 func cycle_flight_modes():
-	if flight_mode == FlightMode.AUTO:
+	if flight_mode == FlightMode.AUTO or flight_mode == FlightMode.AUTO - 1:
 		flight_mode = 0
 	else:
 		flight_mode += 1
@@ -152,7 +152,7 @@ func get_angles_from_basis():
 
 func is_flight_safe():
 	var safe = true
-	if abs(angles.x) > deg2rad(50) or abs(angles.z) > deg2rad(50):
+	if abs(angles.x) > PI / 4 or abs(angles.z) > PI / 4:
 		safe = false
 	return safe
 
@@ -203,9 +203,7 @@ func change_power(p):
 		power += pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
 	
 	elif flight_mode == FlightMode.AUTO:
-		if !is_flight_safe():
-			power = 0.2
-		else:
+		if is_flight_safe():
 			pid_controllers[Controller.VERTICAL_SPEED].set_target(0)
 			power = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 	
