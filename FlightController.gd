@@ -20,11 +20,13 @@ enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
 		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED,
 		HEADING}
 
-enum FlightMode {RATE, LEVEL, SPEED, AUTO}
+enum FlightMode {RATE, LEVEL, SPEED, TRACK, AUTO}
 var flight_mode = FlightMode.RATE
 
 var telemetry_file = File.new()
 var b_telemetry = true
+
+onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
 
 
 func _ready():
@@ -96,6 +98,9 @@ func _physics_process(delta):
 	read_input()
 	update_control(delta)
 	
+	if flight_mode == FlightMode.TRACK:
+		debug_geom.draw_debug_cube(0.02, get_tracking_target(), Vector3(0.2, 0.2, 0.2))
+	
 	if b_telemetry:
 		write_telemetry()
 
@@ -139,7 +144,7 @@ func cycle_flight_modes():
 		flight_mode += 1
 	print("Mode: %s" % [flight_mode])
 	
-	if flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED:
+	if flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.TRACK:
 		pid_controllers[Controller.ALTITUDE].set_target(pos.y)
 
 
@@ -163,6 +168,12 @@ func set_props(prop_array):
 
 func set_hover_thrust(t : float):
 	hover_thrust = t
+
+
+func get_tracking_target():
+	var target = Vector3(pid_controllers[Controller.POS_X].target, pid_controllers[Controller.ALTITUDE].target,
+			pid_controllers[Controller.POS_Z].target)
+	return target
 
 
 func read_input():
@@ -197,7 +208,7 @@ func change_power(p):
 		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 2)
 		power += pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 	
-	elif flight_mode == FlightMode.LEVEL:
+	elif flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.TRACK:
 		var target = pid_controllers[Controller.ALTITUDE].target
 		pid_controllers[Controller.ALTITUDE].set_target(target + (p - 0.5) / 20)
 		power += pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
@@ -229,6 +240,13 @@ func change_pitch(p):
 		pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2)
 		pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
+	elif flight_mode == FlightMode.TRACK:
+		pid_controllers[Controller.POS_Z].set_target(pid_controllers[Controller.POS_Z].target + p / 100)
+		var target = get_tracking_target()
+		var pitch_target = clamp(pid_controllers[Controller.POS_Z].get_output(pos.z, dt, true), -1, 1) / 2
+		pid_controllers[Controller.PITCH].set_target(pitch_target)
+		pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt)
+	
 	elif flight_mode == FlightMode.AUTO:
 		pid_controllers[Controller.PITCH].set_target(0)
 		pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
@@ -255,6 +273,13 @@ func change_roll(r):
 		pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2)
 		roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 	
+	elif flight_mode == FlightMode.TRACK:
+		pid_controllers[Controller.POS_X].set_target(pid_controllers[Controller.POS_X].target + r / 100)
+		var target = get_tracking_target()
+		var roll_target = clamp(pid_controllers[Controller.POS_X].get_output(pos.x, dt), -1, 1) / 2
+		pid_controllers[Controller.ROLL].set_target(roll_target)
+		roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
+	
 	elif flight_mode == FlightMode.AUTO:
 		pid_controllers[Controller.ROLL].set_target(0)
 		roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
@@ -272,6 +297,10 @@ func change_yaw(y):
 	elif flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED:
 		pid_controllers[Controller.YAW_SPEED].set_target(-sign(y) * pow(abs(y), 2) * 2)
 		yaw_change += pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
+	
+	elif flight_mode == FlightMode.TRACK:
+		pid_controllers[Controller.HEADING].set_target(pid_controllers[Controller.HEADING].target - y / 100)
+		yaw_change += pid_controllers[Controller.HEADING].get_output(angles.y, dt, false)
 	
 	elif flight_mode == FlightMode.AUTO:
 		pid_controllers[Controller.YAW_SPEED].set_target(0)
