@@ -20,6 +20,7 @@ func _ready():
 	flight_controller = $FlightController
 	props = [$Propeller1, $Propeller2, $Propeller3, $Propeller4]
 	flight_controller.set_props(props)
+	flight_controller.set_hover_thrust(mass / 4 * 9.8)
 
 
 func _process(delta):
@@ -53,8 +54,6 @@ func _process(delta):
 
 func _physics_process(delta):
 	for prop in props:
-#		prop.set_rpm_target(power)
-#		prop.set_rpm_target(prop_power)
 		var vec_torque = prop.get_torque() * global_transform.basis.y
 		var vec_force = prop.global_transform.basis.y * prop.get_thrust()
 		var vec_pos = prop.global_transform.origin - global_transform.origin
