@@ -3,7 +3,7 @@ extends RigidBody
 class_name Drone
 
 var props
-var flight_controller : FlightController
+onready var flight_controller = $FlightController
 
 var control_input = 0.0
 
@@ -17,7 +17,6 @@ onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
 
 
 func _ready():
-	flight_controller = $FlightController
 	props = [$Propeller1, $Propeller2, $Propeller3, $Propeller4]
 	flight_controller.set_props(props)
 	flight_controller.set_hover_thrust(mass / 4 * 9.8)
@@ -45,7 +44,7 @@ func _process(delta):
 			global_transform.basis.xform(Vector3.RIGHT), global_transform.basis.xform_inv(linear_velocity).x / 10,
 			Color(10, 0, 0))
 	debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3(-0.2, 0, 0.5)),
-			global_transform.basis.xform(Vector3.UP), global_transform.basis.xform_inv(linear_velocity).y / 10,
+			global_transform.basis.xform(Vector3.UP), linear_velocity.y / 10,
 			Color(0, 10, 0))
 	debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3(0.2, 0, 0.5)),
 			global_transform.basis.xform(Vector3.DOWN), global_transform.basis.xform_inv(linear_velocity).z / 10,
@@ -59,8 +58,6 @@ func _physics_process(delta):
 		var vec_pos = prop.global_transform.origin - global_transform.origin
 		add_torque(vec_torque)
 		add_force(vec_force, vec_pos)
-#	print("T: %8.3f RPM: %8.3f L: %8.3f"
-#			% [props[0].get_torque(), props[0].get_rpm(), props[0].get_thrust()])
 	
 	add_drag()
 
@@ -80,17 +77,6 @@ func _input(event):
 		if event.button_index == BUTTON_LEFT:
 			apply_central_impulse(Vector3.LEFT)
 	pass
-
-
-func get_flight_controller_output(delta):
-	flight_controller.read_position(global_transform.origin, global_transform.basis.get_euler())
-	flight_controller.read_velocity(linear_velocity, angular_velocity)
-#	flight_controller.read_input(control_input)
-	var power = flight_controller.get_power(delta)
-	
-#	var prop_power = [power, power, power, power]
-#	return prop_power
-	return power
 
 
 func add_drag():

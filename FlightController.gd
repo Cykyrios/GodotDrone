@@ -213,12 +213,6 @@ func change_power(p):
 
 
 func change_pitch(p):
-#	var pitch_change = p / 100
-#	for i in range(4):
-#		if i < 2:
-#			props[i].set_power(props[i].get_power() + pitch_change)
-#		else:
-#			props[i].set_power(props[i].get_power() - pitch_change)
 	var pitch_change = 0.0
 	
 	if flight_mode == FlightMode.RATE:
@@ -245,12 +239,6 @@ func change_pitch(p):
 
 
 func change_roll(r):
-#	var roll_change = r / 100
-#	for i in range(4):
-#		if i == 0 or i == 3:
-#			props[i].set_power(props[i].get_power() + roll_change)
-#		else:
-#			props[i].set_power(props[i].get_power() - roll_change)
 	var roll_change = 0.0
 	
 	if flight_mode == FlightMode.RATE:
@@ -277,12 +265,6 @@ func change_roll(r):
 
 
 func change_yaw(y):
-#	var yaw_change = y / 100
-#	for i in range(4):
-#		if i == 0 or i == 2:
-#			props[i].set_power(props[i].get_power() + yaw_change)
-#		else:
-#			props[i].set_power(props[i].get_power() - yaw_change)
 	var yaw_change = 0.0
 	
 	if flight_mode == FlightMode.RATE:
