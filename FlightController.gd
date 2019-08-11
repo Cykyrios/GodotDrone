@@ -26,6 +26,8 @@ var flight_mode = FlightMode.RATE
 var telemetry_file = File.new()
 var b_telemetry = true
 
+signal flight_mode_changed
+
 onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
 
 
@@ -64,7 +66,9 @@ func _ready():
 	pid_controllers[Controller.HEADING].set_coefficients(3, 0, 2)
 #	pid_controllers[Controller.HEADING].set_clamp_limits(-1, 1)
 	
+	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
 	flight_mode = FlightMode.SPEED
+	emit_signal("flight_mode_changed", flight_mode)
 	
 	if b_telemetry:
 		var dir = Directory.new()
@@ -94,6 +98,7 @@ func _physics_process(delta):
 	if !is_flight_safe():
 		if flight_mode != FlightMode.RATE:
 			flight_mode = FlightMode.AUTO
+			emit_signal("flight_mode_changed", flight_mode)
 	
 	read_input()
 	update_control(delta)
@@ -141,6 +146,8 @@ func cycle_flight_modes():
 	else:
 		flight_mode += 1
 	print("Mode: %s" % [flight_mode])
+	
+	emit_signal("flight_mode_changed", flight_mode)
 	
 	if flight_mode == FlightMode.LEVEL:
 		pid_controllers[Controller.ALTITUDE].set_target(pos.y)

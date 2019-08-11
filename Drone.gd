@@ -85,3 +85,19 @@ func add_drag():
 	
 	drag = -angular_velocity.length_squared() * angular_velocity.normalized() / 10.0
 	add_torque(drag)
+
+
+func _on_flight_mode_changed(mode):
+	var led = $LEDMode
+	led.set_blink(0)
+	if mode == FlightController.FlightMode.RATE:
+		led.change_color(Color(1, 0, 0))
+	elif mode == FlightController.FlightMode.LEVEL:
+		led.change_color(Color(0.2, 0.2, 1))
+	elif mode == FlightController.FlightMode.SPEED:
+		led.change_color(Color(1, 1, 0))
+	elif mode == FlightController.FlightMode.TRACK:
+		led.change_color(Color(0, 1, 0))
+	elif mode == FlightController.FlightMode.AUTO:
+		led.change_color(Color(1, 0, 0))
+		led.set_blink(0.25)
