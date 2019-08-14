@@ -9,6 +9,7 @@ var pos_prev = pos
 var angles = Vector3(0, 0, 0)
 var angles_prev = angles
 var lin_vel = Vector3(0, 0, 0)
+var local_vel = Vector3(0, 0, 0)
 var ang_vel = Vector3(0, 0, 0)
 
 var props = []
@@ -17,8 +18,7 @@ var input = [0, 0, 0, 0]
 
 var pid_controllers = []
 enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
-		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED,
-		HEADING}
+		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED}
 
 enum FlightMode {RATE, LEVEL, SPEED, TRACK, AUTO}
 var flight_mode = FlightMode.RATE
@@ -63,8 +63,8 @@ func _ready():
 	pid_controllers[Controller.POS_X].set_clamp_limits(-1, 1)
 	pid_controllers[Controller.POS_Z].set_coefficients(0.4, 0, 0.2)
 	pid_controllers[Controller.POS_Z].set_clamp_limits(-1, 1)
-	pid_controllers[Controller.HEADING].set_coefficients(3, 0, 2)
-#	pid_controllers[Controller.HEADING].set_clamp_limits(-1, 1)
+	pid_controllers[Controller.YAW].set_coefficients(3, 0, 2)
+#	pid_controllers[Controller.YAW].set_clamp_limits(-1, 1)
 	
 	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
 	flight_mode = FlightMode.SPEED
@@ -86,6 +86,7 @@ func _physics_process(delta):
 	pos_prev = pos
 	pos = global_transform.origin
 	lin_vel = (pos - pos_prev) / dt
+	local_vel = global_transform.basis.xform_inv(lin_vel)
 	
 	angles_prev = angles
 	angles = global_transform.basis.get_euler()
@@ -113,10 +114,20 @@ func _physics_process(delta):
 func init_telemetry():
 	telemetry_file.open("user://telemetry.csv", File.WRITE)
 	telemetry_file.store_csv_line(["t", "input.power", "input.yaw", "input.roll", "input.pitch",
-			"x", "y", "z", "vx", "vy", "vz",
+			"x", "y", "z", "vx", "vy", "vz", "vx_loc", "vy_loc", "vz_loc",
 			"yaw", "roll", "pitch", "yaw_speed", "roll_speed", "pitch_speed",
 			"rpm1", "rpm2", "rpm3", "rpm4",
-			"thrust1", "thrust2", "thrust3", "thrust4"])
+			"thrust1", "thrust2", "thrust3", "thrust4",
+			"pid.alt.tgt", "pid.alt.err", "pid.alt.out", "pid.alt.clamp",
+			"pid.pitch.tgt", "pid.pitch.err", "pid.pitch.out", "pid.pitch.clamp",
+			"pid.roll.tgt", "pid.roll.err", "pid.roll.out", "pid.roll.clamp",
+			"pid.yaw.tgt", "pid.yaw.err", "pid.yaw.out", "pid.yaw.clamp",
+			"pid.yawspeed.tgt", "pid.yawspeed.err", "pid.yawspeed.out", "pid.yawspeed.clamp",
+			"pid.pitchspeed.tgt", "pid.pitchspeed.err", "pid.pitchspeed.out", "pid.pitchspeed.clamp",
+			"pid.rollspeed.tgt", "pid.rollspeed.err", "pid.rollspeed.out", "pid.rollspeed.clamp",
+			"pid.fwdspeed.tgt", "pid.fwdspeed.err", "pid.fwdspeed.out", "pid.fwdspeed.clamp",
+			"pid.latspeed.tgt", "pid.latspeed.err", "pid.latspeed.out", "pid.latspeed.clamp",
+			"pid.vrtspeed.tgt", "pid.vrtspeed.err", "pid.vrtspeed.out", "pid.vrtspeed.clamp"])
 	telemetry_file.close()
 
 
@@ -127,10 +138,20 @@ func write_telemetry():
 	telemetry_file.open("user://telemetry.csv", File.READ_WRITE)
 	telemetry_file.seek_end()
 	var data = PoolStringArray([t, input[0], input[1], input[2], input[3],
-			pos.x, pos.y, pos.z, lin_vel.x, lin_vel.y, lin_vel.z,
+			pos.x, pos.y, pos.z, lin_vel.x, lin_vel.y, lin_vel.z, local_vel.x, local_vel.y, local_vel.z,
 			angles.y, angles.z, angles.x, ang_vel.y, ang_vel.z, ang_vel.x,
 			props[0].get_rpm(), props[1].get_rpm(), props[2].get_rpm(), props[3].get_rpm(),
-			props[0].get_thrust(), props[1].get_thrust(), props[2].get_thrust(), props[3].get_thrust()])
+			props[0].get_thrust(), props[1].get_thrust(), props[2].get_thrust(), props[3].get_thrust(),
+			pid_controllers[Controller.ALTITUDE].target, pid_controllers[Controller.ALTITUDE].err, pid_controllers[Controller.ALTITUDE].output, pid_controllers[Controller.ALTITUDE].clamped_output,
+			pid_controllers[Controller.PITCH].target, pid_controllers[Controller.PITCH].err, pid_controllers[Controller.PITCH].output, pid_controllers[Controller.PITCH].clamped_output,
+			pid_controllers[Controller.ROLL].target, pid_controllers[Controller.ROLL].err, pid_controllers[Controller.ROLL].output, pid_controllers[Controller.ROLL].clamped_output,
+			pid_controllers[Controller.YAW].target, pid_controllers[Controller.YAW].err, pid_controllers[Controller.YAW].output, pid_controllers[Controller.YAW].clamped_output,
+			pid_controllers[Controller.YAW_SPEED].target, pid_controllers[Controller.YAW_SPEED].err, pid_controllers[Controller.YAW_SPEED].output, pid_controllers[Controller.YAW_SPEED].clamped_output,
+			pid_controllers[Controller.PITCH_SPEED].target, pid_controllers[Controller.PITCH_SPEED].err, pid_controllers[Controller.PITCH_SPEED].output, pid_controllers[Controller.PITCH_SPEED].clamped_output,
+			pid_controllers[Controller.ROLL_SPEED].target, pid_controllers[Controller.ROLL_SPEED].err, pid_controllers[Controller.ROLL_SPEED].output, pid_controllers[Controller.ROLL_SPEED].clamped_output,
+			pid_controllers[Controller.FORWARD_SPEED].target, pid_controllers[Controller.FORWARD_SPEED].err, pid_controllers[Controller.FORWARD_SPEED].output, pid_controllers[Controller.FORWARD_SPEED].clamped_output,
+			pid_controllers[Controller.LATERAL_SPEED].target, pid_controllers[Controller.LATERAL_SPEED].err, pid_controllers[Controller.LATERAL_SPEED].output, pid_controllers[Controller.LATERAL_SPEED].clamped_output,
+			pid_controllers[Controller.VERTICAL_SPEED].target, pid_controllers[Controller.VERTICAL_SPEED].err, pid_controllers[Controller.VERTICAL_SPEED].output, pid_controllers[Controller.VERTICAL_SPEED].clamped_output])
 	telemetry_file.store_csv_line(data)
 	telemetry_file.close()
 
@@ -155,7 +176,7 @@ func cycle_flight_modes():
 		pid_controllers[Controller.ALTITUDE].set_target(pos.y)
 		pid_controllers[Controller.POS_X].set_target(pos.x)
 		pid_controllers[Controller.POS_Z].set_target(pos.z)
-		pid_controllers[Controller.HEADING].set_target(angles.y)
+		pid_controllers[Controller.YAW].set_target(angles.y)
 
 
 func get_angles_from_basis():
@@ -246,7 +267,7 @@ func change_pitch(p):
 	elif flight_mode == FlightMode.SPEED:
 		pid_controllers[Controller.FORWARD_SPEED].set_target(sign(p) * pow(abs(p), 2) * 5)
 		pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(
-				global_transform.basis.xform_inv(lin_vel).z, dt, false)
+				local_vel.z, dt, false)
 		pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2)
 		pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
@@ -280,7 +301,7 @@ func change_roll(r):
 	elif flight_mode == FlightMode.SPEED:
 		pid_controllers[Controller.LATERAL_SPEED].set_target(sign(r) * pow(abs(r), 2) * 5)
 		roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(
-				global_transform.basis.xform_inv(lin_vel).x, dt, false)
+				local_vel.x, dt, false)
 		pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2)
 		roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 	
@@ -311,18 +332,18 @@ func change_yaw(y):
 		yaw_change += pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 	
 	elif flight_mode == FlightMode.TRACK:
-		var target = pid_controllers[Controller.HEADING].target - y / 100
+		var target = pid_controllers[Controller.YAW].target - y / 100
 		while target > PI:
 			target -= 2 * PI
 		while target < -PI:
 			target += 2 * PI
-		pid_controllers[Controller.HEADING].set_target(target)
+		pid_controllers[Controller.YAW].set_target(target)
 		var hdg_delta = 0
 		if abs(target - angles.y) > PI:
 			hdg_delta = 2 * PI
 			if target < 0:
 				hdg_delta = -hdg_delta
-		yaw_change += pid_controllers[Controller.HEADING].get_output(angles.y + hdg_delta, dt, true)
+		yaw_change += pid_controllers[Controller.YAW].get_output(angles.y + hdg_delta, dt, true)
 	
 	elif flight_mode == FlightMode.AUTO:
 		pid_controllers[Controller.YAW_SPEED].set_target(0)

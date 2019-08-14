@@ -48,7 +48,7 @@ speed = 30.0
 enabled = true
 
 [node name="Drone" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0 )
 
 [node name="Spatial" type="Spatial" parent="Drone"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
