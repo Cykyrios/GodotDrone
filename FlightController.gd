@@ -92,6 +92,23 @@ func _physics_process(delta):
 	angles = global_transform.basis.get_euler()
 	ang_vel = (angles - angles_prev) / dt
 	
+	# fix velocity on angle rollover
+	if abs(angles.y - angles_prev.y) > PI:
+		if angles.y > 0:
+			ang_vel.y = (angles.y - 2 * PI - angles_prev.y) / dt
+		else:
+			ang_vel.y = (angles.y + 2 * PI - angles_prev.y) / dt
+	if abs(angles.x - angles_prev.x) > PI:
+		if angles.x > 0:
+			ang_vel.x = (angles.x - 2 * PI - angles_prev.x) / dt
+		else:
+			ang_vel.x = (angles.x + 2 * PI - angles_prev.x) / dt
+	if abs(angles.z - angles_prev.z) > PI:
+		if angles.z > 0:
+			ang_vel.z = (angles.z - 2 * PI - angles_prev.z) / dt
+		else:
+			ang_vel.z = (angles.z + 2 * PI - angles_prev.z) / dt
+	
 #	print("px %6.2f py %6.2f pz %6.2f, vx %6.2f vy %6.2f vz %6.2f, ax %6.2f ay %6.2f az %6.2f, wx %6.2f wy %6.2f wz %6.2f"
 #			% [pos.x, pos.y, pos.z, lin_vel.x, lin_vel.y, lin_vel.z,
 #			angles.x, angles.y, angles.z, ang_vel.x, ang_vel.y, ang_vel.z])
