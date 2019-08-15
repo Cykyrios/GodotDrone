@@ -41,6 +41,8 @@ directional_shadow_normal_bias = 0.2
 
 [node name="CameraFixed" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 8, 20 )
+near = 0.1
+far = 1000.0
 
 [node name="CameraFollow" type="InterpolatedCamera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.36459, 10.836 )
@@ -56,6 +58,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
 
 [node name="CameraFPV" type="Camera" parent="Drone"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2 )
+near = 0.1
+far = 1000.0
 
 [node name="CameraTarget" type="Spatial" parent="Drone"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
