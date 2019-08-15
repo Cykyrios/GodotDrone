@@ -5,10 +5,10 @@
 [ext_resource path="res://Level.gd" type="Script" id=3]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 15, 0.5, 15 )
+extents = Vector3( 50, 0.5, 50 )
 
 [sub_resource type="CubeMesh" id=2]
-size = Vector3( 30, 1, 30 )
+size = Vector3( 100, 1, 100 )
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 1, 2.5, 1 )
@@ -108,6 +108,134 @@ shape = SubResource( 7 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 mesh = SubResource( 8 )
 material/0 = null
+
+[node name="TorusTunnel" type="Spatial" parent="Objects"]
+
+[node name="CSGTorus" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, -15 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus2" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 7, -15 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus3" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, -9, 10, -15 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus4" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0, 1, -7, 12, -15 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus5" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -4, 13, -15 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus6" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 13, -15 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus7" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 4, 13, -15 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus8" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( -3.78552e-08, 0.866025, 0.5, -1, -4.37114e-08, 0, 2.18557e-08, -0.5, 0.866025, 7, 13, -16 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus9" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( -2.18557e-08, 0.5, 0.866025, -1, -4.37114e-08, 0, 3.78552e-08, -0.866025, 0.5, 9, 13, -18 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus10" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 10, 13, -21 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus11" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 10, 14, -24 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus12" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 10, 16, -26 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus13" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 19, -27 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus14" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 10, 22, -26 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus15" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 10, 24, -24 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus16" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 10, 25, -21 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus17" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 10, 25, -17 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
+
+[node name="CSGTorus18" type="CSGTorus" parent="Objects/TorusTunnel"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 10, 25, -13 )
+use_collision = true
+inner_radius = 2.5
+sides = 64
+ring_sides = 16
 
 [node name="DebugGeometry" type="ImmediateGeometry" parent="."]
 script = ExtResource( 2 )
