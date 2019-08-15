@@ -2,7 +2,7 @@ extends Spatial
 
 class_name FlightController
 
-var t = 0.0
+var time = 0.0
 var dt = 0.0
 var pos = Vector3(0, 0, 0)
 var pos_prev = pos
@@ -81,7 +81,7 @@ func _ready():
 
 func _physics_process(delta):
 	dt = delta
-	t += dt
+	time += dt
 	
 	pos_prev = pos
 	pos = global_transform.origin
@@ -144,7 +144,11 @@ func init_telemetry():
 			"pid.rollspeed.tgt", "pid.rollspeed.err", "pid.rollspeed.out", "pid.rollspeed.clamp",
 			"pid.fwdspeed.tgt", "pid.fwdspeed.err", "pid.fwdspeed.out", "pid.fwdspeed.clamp",
 			"pid.latspeed.tgt", "pid.latspeed.err", "pid.latspeed.out", "pid.latspeed.clamp",
-			"pid.vrtspeed.tgt", "pid.vrtspeed.err", "pid.vrtspeed.out", "pid.vrtspeed.clamp"])
+			"pid.vrtspeed.tgt", "pid.vrtspeed.err", "pid.vrtspeed.out", "pid.vrtspeed.clamp",
+			"pid.prop1.tgt", "pid.prop1.err", "pid.prop1.out", "pid.prop1.clamp",
+			"pid.prop2.tgt", "pid.prop2.err", "pid.prop2.out", "pid.prop2.clamp",
+			"pid.prop3.tgt", "pid.prop3.err", "pid.prop3.out", "pid.prop3.clamp",
+			"pid.prop4.tgt", "pid.prop4.err", "pid.prop4.out", "pid.prop4.clamp"])
 	telemetry_file.close()
 
 
@@ -154,7 +158,7 @@ func write_telemetry():
 	
 	telemetry_file.open("user://telemetry.csv", File.READ_WRITE)
 	telemetry_file.seek_end()
-	var data = PoolStringArray([t, input[0], input[1], input[2], input[3],
+	var data = PoolStringArray([time, input[0], input[1], input[2], input[3],
 			pos.x, pos.y, pos.z, lin_vel.x, lin_vel.y, lin_vel.z, local_vel.x, local_vel.y, local_vel.z,
 			angles.y, angles.z, angles.x, ang_vel.y, ang_vel.z, ang_vel.x,
 			props[0].get_rpm(), props[1].get_rpm(), props[2].get_rpm(), props[3].get_rpm(),
@@ -168,7 +172,11 @@ func write_telemetry():
 			pid_controllers[Controller.ROLL_SPEED].target, pid_controllers[Controller.ROLL_SPEED].err, pid_controllers[Controller.ROLL_SPEED].output, pid_controllers[Controller.ROLL_SPEED].clamped_output,
 			pid_controllers[Controller.FORWARD_SPEED].target, pid_controllers[Controller.FORWARD_SPEED].err, pid_controllers[Controller.FORWARD_SPEED].output, pid_controllers[Controller.FORWARD_SPEED].clamped_output,
 			pid_controllers[Controller.LATERAL_SPEED].target, pid_controllers[Controller.LATERAL_SPEED].err, pid_controllers[Controller.LATERAL_SPEED].output, pid_controllers[Controller.LATERAL_SPEED].clamped_output,
-			pid_controllers[Controller.VERTICAL_SPEED].target, pid_controllers[Controller.VERTICAL_SPEED].err, pid_controllers[Controller.VERTICAL_SPEED].output, pid_controllers[Controller.VERTICAL_SPEED].clamped_output])
+			pid_controllers[Controller.VERTICAL_SPEED].target, pid_controllers[Controller.VERTICAL_SPEED].err, pid_controllers[Controller.VERTICAL_SPEED].output, pid_controllers[Controller.VERTICAL_SPEED].clamped_output,
+			props[0].controller.target, props[0].controller.err, props[0].controller.output, props[0].controller.clamped_output,
+			props[1].controller.target, props[1].controller.err, props[1].controller.output, props[1].controller.clamped_output,
+			props[2].controller.target, props[2].controller.err, props[2].controller.output, props[2].controller.clamped_output,
+			props[3].controller.target, props[3].controller.err, props[3].controller.output, props[3].controller.clamped_output])
 	telemetry_file.store_csv_line(data)
 	telemetry_file.close()
 
