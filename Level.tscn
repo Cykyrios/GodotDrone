@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Drone.tscn" type="PackedScene" id=1]
 [ext_resource path="res://DebugGeometry.gd" type="Script" id=2]
+[ext_resource path="res://Level.gd" type="Script" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 15, 0.5, 15 )
@@ -28,6 +29,7 @@ extents = Vector3( 2.5, 0.5, 2.5 )
 size = Vector3( 5, 1, 5 )
 
 [node name="Level" type="Spatial"]
+script = ExtResource( 3 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.860577, 0.207325, -0.465214, 0.509321, -0.350308, 0.786052, 0, -0.913401, -0.407062, 0, 20, 0 )
@@ -37,20 +39,25 @@ shadow_contact = 0.1
 directional_shadow_blend_splits = true
 directional_shadow_normal_bias = 0.2
 
-[node name="Camera" type="Camera" parent="."]
+[node name="CameraFixed" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 8, 20 )
 
-[node name="InterpolatedCamera" type="InterpolatedCamera" parent="."]
+[node name="CameraFollow" type="InterpolatedCamera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.36459, 10.836 )
 current = true
-target = NodePath("../Drone/Spatial")
-speed = 30.0
+near = 0.1
+far = 1000.0
+target = NodePath("../Drone/CameraTarget")
+speed = 20.0
 enabled = true
 
 [node name="Drone" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
 
-[node name="Spatial" type="Spatial" parent="Drone"]
+[node name="CameraFPV" type="Camera" parent="Drone"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2 )
+
+[node name="CameraTarget" type="Spatial" parent="Drone"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
 
 [node name="Objects" type="Spatial" parent="."]
