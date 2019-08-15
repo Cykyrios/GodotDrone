@@ -109,10 +109,6 @@ func _physics_process(delta):
 		else:
 			ang_vel.z = (angles.z + 2 * PI - angles_prev.z) / dt
 	
-#	print("px %6.2f py %6.2f pz %6.2f, vx %6.2f vy %6.2f vz %6.2f, ax %6.2f ay %6.2f az %6.2f, wx %6.2f wy %6.2f wz %6.2f"
-#			% [pos.x, pos.y, pos.z, lin_vel.x, lin_vel.y, lin_vel.z,
-#			angles.x, angles.y, angles.z, ang_vel.x, ang_vel.y, ang_vel.z])
-	
 	if !is_flight_safe():
 		if flight_mode != FlightMode.RATE:
 			flight_mode = FlightMode.AUTO
@@ -291,8 +287,7 @@ func change_pitch(p):
 	
 	elif flight_mode == FlightMode.SPEED:
 		pid_controllers[Controller.FORWARD_SPEED].set_target(sign(p) * pow(abs(p), 2) * 5)
-		pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(
-				local_vel.z, dt, false)
+		pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
 		pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2)
 		pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
@@ -331,8 +326,7 @@ func change_roll(r):
 	
 	elif flight_mode == FlightMode.SPEED:
 		pid_controllers[Controller.LATERAL_SPEED].set_target(sign(r) * pow(abs(r), 2) * 5)
-		roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(
-				local_vel.x, dt, false)
+		roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
 		pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2)
 		roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 	
@@ -380,7 +374,7 @@ func change_yaw(y):
 			hdg_delta = 2 * PI
 			if target < 0:
 				hdg_delta = -hdg_delta
-		yaw_change += pid_controllers[Controller.YAW].get_output(angles.y + hdg_delta, dt, true)
+		yaw_change += pid_controllers[Controller.YAW].get_output(angles.y + hdg_delta, dt, false)
 	
 	elif flight_mode == FlightMode.AUTO:
 		pid_controllers[Controller.YAW_SPEED].set_target(0)
