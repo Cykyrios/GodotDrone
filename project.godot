@@ -29,7 +29,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://PID.gd"
 }, {
-"base": "KinematicBody",
+"base": "Spatial",
 "class": "Propeller",
 "language": "GDScript",
 "path": "res://Propeller.gd"

@@ -5,7 +5,7 @@
 [ext_resource path="res://FlightController.gd" type="Script" id=3]
 [ext_resource path="res://LED.tscn" type="PackedScene" id=4]
 
-[sub_resource type="CubeMesh" id=10]
+[sub_resource type="CubeMesh" id=1]
 size = Vector3( 0.4, 0.2, 0.6 )
 
 [sub_resource type="CylinderMesh" id=2]
@@ -15,11 +15,11 @@ height = 0.26
 radial_segments = 16
 rings = 2
 
-[sub_resource type="SpatialMaterial" id=11]
+[sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 1, 0, 0, 1 )
 
-[sub_resource type="CylinderMesh" id=12]
-material = SubResource( 11 )
+[sub_resource type="CylinderMesh" id=4]
+material = SubResource( 3 )
 top_radius = 0.05
 bottom_radius = 0.05
 height = 0.25
@@ -53,7 +53,7 @@ script = ExtResource( 3 )
 [node name="Mesh" type="Spatial" parent="."]
 
 [node name="BodyMesh" type="MeshInstance" parent="Mesh"]
-mesh = SubResource( 10 )
+mesh = SubResource( 1 )
 material/0 = null
 
 [node name="FootMesh1" type="MeshInstance" parent="Mesh"]
@@ -78,7 +78,7 @@ material/0 = null
 
 [node name="NavLightLeft" type="MeshInstance" parent="Mesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0, 0 )
-mesh = SubResource( 12 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="NavLightRight" type="MeshInstance" parent="Mesh"]
