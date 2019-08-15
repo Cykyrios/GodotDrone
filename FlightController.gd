@@ -47,17 +47,17 @@ func _ready():
 	pid_controllers[Controller.PITCH].set_coefficients(5, 1, 2)
 #	pid_controllers[Controller.PITCH].set_clamp_limits(-0.5, 0.5)
 	
-	pid_controllers[Controller.FORWARD_SPEED].set_coefficients(0.2, 0.0, 0.01)
+	pid_controllers[Controller.FORWARD_SPEED].set_coefficients(0.2, 0.05, 0.01)
 	pid_controllers[Controller.FORWARD_SPEED].set_clamp_limits(-0.5, 0.5)
-	pid_controllers[Controller.LATERAL_SPEED].set_coefficients(0.2, 0.0, 0.01)
+	pid_controllers[Controller.LATERAL_SPEED].set_coefficients(0.2, 0.05, 0.01)
 	pid_controllers[Controller.LATERAL_SPEED].set_clamp_limits(-0.5, 0.5)
 	
-	pid_controllers[Controller.YAW_SPEED].set_coefficients(3, 0.0, 0.1)
-#	pid_controllers[Controller.YAW_SPEED].set_clamp_limits(-1, 1)
+	pid_controllers[Controller.YAW_SPEED].set_coefficients(3, 0, 0.1)
+	pid_controllers[Controller.YAW_SPEED].set_clamp_limits(-10, 10)
 	pid_controllers[Controller.ROLL_SPEED].set_coefficients(3, 0, 0.1)
-#	pid_controllers[Controller.ROLL_SPEED].set_clamp_limits(-1, 1)
+	pid_controllers[Controller.ROLL_SPEED].set_clamp_limits(-10, 10)
 	pid_controllers[Controller.PITCH_SPEED].set_coefficients(3, 0, 0.1)
-#	pid_controllers[Controller.PITCH_SPEED].set_clamp_limits(-1, 1)
+	pid_controllers[Controller.PITCH_SPEED].set_clamp_limits(-10, 10)
 	
 	pid_controllers[Controller.POS_X].set_coefficients(0.4, 0, 0.2)
 	pid_controllers[Controller.POS_X].set_clamp_limits(-1, 1)
@@ -67,7 +67,7 @@ func _ready():
 #	pid_controllers[Controller.YAW].set_clamp_limits(-1, 1)
 	
 	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
-	flight_mode = FlightMode.SPEED
+	flight_mode = FlightMode.RATE
 	emit_signal("flight_mode_changed", flight_mode)
 	
 	if b_telemetry:
@@ -297,8 +297,14 @@ func change_pitch(p):
 		pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt)
 	
 	elif flight_mode == FlightMode.AUTO:
-		pid_controllers[Controller.PITCH].set_target(0)
-		pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+		if is_flight_safe():
+			pid_controllers[Controller.FORWARD_SPEED].set_target(0)
+			pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
+			pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2)
+			pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+		else:
+			pid_controllers[Controller.PITCH].set_target(0)
+			pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
 	return pitch_change
 
@@ -331,8 +337,14 @@ func change_roll(r):
 		roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
 	
 	elif flight_mode == FlightMode.AUTO:
-		pid_controllers[Controller.ROLL].set_target(0)
-		roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+		if is_flight_safe():
+			pid_controllers[Controller.LATERAL_SPEED].set_target(0)
+			roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
+			pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2)
+			roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+		else:
+			pid_controllers[Controller.ROLL].set_target(0)
+			roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 	
 	return roll_change
 

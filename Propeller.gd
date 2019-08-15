@@ -19,7 +19,7 @@ const RPM_ACCELERATION = 8000.0
 export (bool) var clockwise = false
 export (float, 0.0, 10000.0) var MAX_TORQUE = 1000.0
 export (float, 0.0, 30000.0) var MAX_RPM = 10000.0
-export (float, 0.0, 10.0) var LIFT_RATIO = 2.0
+export (float, 0.0, 10.0) var LIFT_RATIO = 1.0
 
 
 func _ready():
@@ -33,18 +33,18 @@ func _ready():
 	controller.set_clamp_limits(0, MAX_RPM)
 
 
-func _process(delta):
-	var rot = rpm * PI / 30.0
-	if clockwise:
-		rot = -rot
-	rotate_object_local(Vector3.UP, rot * delta)
-
-
 func _physics_process(delta):
 	controller.set_target(thrust_target)
 	set_rpm_target(1000 * controller.get_output(get_thrust(), delta))
 	set_rpm(clamp(rpm_target, rpm - max_rpm_change * delta, rpm + max_rpm_change * delta))
 	set_torque(rpm / MAX_RPM / delta)
+	
+	var rot = rpm * PI / 30.0
+	if clockwise:
+		rot = -rot
+	rotate_object_local(Vector3.UP, rot * delta)
+	
+	transform = transform.orthonormalized()
 
 
 func set_torque(x : float):
