@@ -110,7 +110,7 @@ func _physics_process(delta):
 			ang_vel.z = (angles.z + 2 * PI - angles_prev.z) / dt
 	
 	if !is_flight_safe():
-		if flight_mode != FlightMode.RATE:
+		if flight_mode != FlightMode.RATE and flight_mode != FlightMode.AUTO:
 			flight_mode = FlightMode.AUTO
 			emit_signal("flight_mode_changed", flight_mode)
 	
