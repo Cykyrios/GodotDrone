@@ -277,7 +277,7 @@ func change_pitch(p):
 	var pitch_change = 0.0
 	
 	if flight_mode == FlightMode.RATE:
-		var pitch_input = sign(p) * pow(abs(p), 2) * 3
+		var pitch_input = sign(p) * pow(abs(p), 3) * 6
 		if global_transform.basis.y.dot(Vector3.UP) > 0:
 			pid_controllers[Controller.PITCH_SPEED].set_target(pitch_input)
 			pitch_change += pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
@@ -319,7 +319,7 @@ func change_roll(r):
 	var roll_change = 0.0
 	
 	if flight_mode == FlightMode.RATE:
-		var roll_input = sign(r) * pow(abs(r), 2) * 3
+		var roll_input = sign(r) * pow(abs(r), 3) * 6
 		if global_transform.basis.y.dot(Vector3.UP) > 0:
 			pid_controllers[Controller.ROLL_SPEED].set_target(roll_input)
 			roll_change += pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
@@ -361,7 +361,7 @@ func change_yaw(y):
 	var yaw_change = 0.0
 	
 	if flight_mode == FlightMode.RATE:
-		var yaw_input = -sign(y) * pow(abs(y), 2) * 5
+		var yaw_input = -sign(y) * pow(abs(y), 3) * 9
 		if global_transform.basis.y.dot(Vector3.UP) > 0:
 			pid_controllers[Controller.YAW_SPEED].set_target(yaw_input)
 			yaw_change += pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
