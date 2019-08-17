@@ -11,6 +11,8 @@ var angles_prev = angles
 var lin_vel = Vector3(0, 0, 0)
 var local_vel = Vector3(0, 0, 0)
 var ang_vel = Vector3(0, 0, 0)
+var basis = Basis()
+var basis_prev = basis
 
 var props = []
 var hover_thrust = 0.0
@@ -33,7 +35,8 @@ onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
 
 func _ready():
 	pos = global_transform.origin
-	angles = global_transform.basis.get_euler()
+	basis = global_transform.basis
+	angles = basis.get_euler()
 	
 	for i in range(Controller.size()):
 		pid_controllers.append(PID.new())
@@ -83,31 +86,8 @@ func _physics_process(delta):
 	dt = delta
 	time += dt
 	
-	pos_prev = pos
-	pos = global_transform.origin
-	lin_vel = (pos - pos_prev) / dt
-	local_vel = global_transform.basis.xform_inv(lin_vel)
-	
-	angles_prev = angles
-	angles = global_transform.basis.get_euler()
-	ang_vel = (angles - angles_prev) / dt
-	
-	# fix velocity on angle rollover
-	if abs(angles.y - angles_prev.y) > PI:
-		if angles.y > 0:
-			ang_vel.y = (angles.y - 2 * PI - angles_prev.y) / dt
-		else:
-			ang_vel.y = (angles.y + 2 * PI - angles_prev.y) / dt
-	if abs(angles.x - angles_prev.x) > PI:
-		if angles.x > 0:
-			ang_vel.x = (angles.x - 2 * PI - angles_prev.x) / dt
-		else:
-			ang_vel.x = (angles.x + 2 * PI - angles_prev.x) / dt
-	if abs(angles.z - angles_prev.z) > PI:
-		if angles.z > 0:
-			ang_vel.z = (angles.z - 2 * PI - angles_prev.z) / dt
-		else:
-			ang_vel.z = (angles.z + 2 * PI - angles_prev.z) / dt
+	update_position()
+	update_velocity()
 	
 	if !is_flight_safe():
 		if flight_mode != FlightMode.RATE and flight_mode != FlightMode.AUTO:
@@ -122,6 +102,33 @@ func _physics_process(delta):
 	
 	if b_telemetry:
 		write_telemetry()
+
+
+func update_position():
+	pos_prev = pos
+	pos = global_transform.origin
+	
+	basis_prev = basis
+	basis = global_transform.basis
+	
+	angles_prev = angles
+	angles = basis.get_euler()
+
+
+func update_velocity():
+	lin_vel = (pos - pos_prev) / dt
+	local_vel = basis.xform_inv(lin_vel)
+	
+	var ref1 = Vector3(1, 0, 0)
+	var orb1 = basis.xform_inv((pos + basis.xform(ref1) - (pos_prev + basis_prev.xform(ref1))) / dt - lin_vel)
+	var omegax = (ref1.cross(orb1) / ref1.length_squared()).cross(ref1)
+	var ref2 = Vector3(0, 1, 0)
+	var orb2 = basis.xform_inv((pos + basis.xform(ref2) - (pos_prev + basis_prev.xform(ref2))) / dt - lin_vel)
+	var omegay = (ref2.cross(orb2) / ref2.length_squared()).cross(ref2)
+	var ref3 = Vector3(0, 0, 1)
+	var orb3 = basis.xform_inv((pos + basis.xform(ref3) - (pos_prev + basis_prev.xform(ref3))) / dt - lin_vel)
+	var omegaz = (ref3.cross(orb3) / ref3.length_squared()).cross(ref3)
+	ang_vel = Vector3(omegay.z, omegaz.x, omegax.y)
 
 
 func init_telemetry():
@@ -278,11 +285,8 @@ func change_pitch(p):
 	
 	if flight_mode == FlightMode.RATE:
 		var pitch_input = sign(p) * pow(abs(p), 3) * 6
-		if global_transform.basis.y.dot(Vector3.UP) > 0:
-			pid_controllers[Controller.PITCH_SPEED].set_target(pitch_input)
-			pitch_change += pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
-		else:
-			pitch_change += pitch_input
+		pid_controllers[Controller.PITCH_SPEED].set_target(pitch_input)
+		pitch_change += pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL:
 		pid_controllers[Controller.PITCH].set_target(p / 2)
@@ -320,11 +324,8 @@ func change_roll(r):
 	
 	if flight_mode == FlightMode.RATE:
 		var roll_input = sign(r) * pow(abs(r), 3) * 6
-		if global_transform.basis.y.dot(Vector3.UP) > 0:
-			pid_controllers[Controller.ROLL_SPEED].set_target(roll_input)
-			roll_change += pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
-		else:
-			roll_change += roll_input
+		pid_controllers[Controller.ROLL_SPEED].set_target(roll_input)
+		roll_change += pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL:
 		pid_controllers[Controller.ROLL].set_target(r / 2)
@@ -362,11 +363,8 @@ func change_yaw(y):
 	
 	if flight_mode == FlightMode.RATE:
 		var yaw_input = -sign(y) * pow(abs(y), 3) * 9
-		if global_transform.basis.y.dot(Vector3.UP) > 0:
-			pid_controllers[Controller.YAW_SPEED].set_target(yaw_input)
-			yaw_change += pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
-		else:
-			yaw_change += yaw_input
+		pid_controllers[Controller.YAW_SPEED].set_target(yaw_input)
+		yaw_change += pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED:
 		pid_controllers[Controller.YAW_SPEED].set_target(-sign(y) * pow(abs(y), 2) * 2)
