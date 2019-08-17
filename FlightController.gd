@@ -287,17 +287,17 @@ func change_pitch(p):
 	if flight_mode == FlightMode.RATE:
 		var pitch_input = sign(p) * pow(abs(p), 3) * 6
 		pid_controllers[Controller.PITCH_SPEED].set_target(pitch_input)
-		pitch_change += pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
+		pitch_change = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL:
 		pid_controllers[Controller.PITCH].set_target(p / 2)
-		pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+		pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
 	elif flight_mode == FlightMode.SPEED:
 		pid_controllers[Controller.FORWARD_SPEED].set_target(sign(p) * pow(abs(p), 2) * 5)
 		pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
 		pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2)
-		pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+		pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
 	elif flight_mode == FlightMode.TRACK:
 		pid_controllers[Controller.POS_Z].set_target(pid_controllers[Controller.POS_Z].target + p / 100)
@@ -305,14 +305,14 @@ func change_pitch(p):
 		var delta_z = global_transform.xform_inv(target).z
 		var pitch_target = pid_controllers[Controller.POS_Z].get_output(target.z - delta_z, dt) / 2
 		pid_controllers[Controller.PITCH].set_target(pitch_target)
-		pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt)
+		pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt)
 	
 	elif flight_mode == FlightMode.AUTO:
 		if is_flight_safe():
 			pid_controllers[Controller.FORWARD_SPEED].set_target(0)
 			pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
 			pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2)
-			pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+			pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 		else:
 			pid_controllers[Controller.PITCH].set_target(0)
 			pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
@@ -326,17 +326,17 @@ func change_roll(r):
 	if flight_mode == FlightMode.RATE:
 		var roll_input = sign(r) * pow(abs(r), 3) * 6
 		pid_controllers[Controller.ROLL_SPEED].set_target(roll_input)
-		roll_change += pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
+		roll_change = pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL:
 		pid_controllers[Controller.ROLL].set_target(r / 2)
-		roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
+		roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
 	
 	elif flight_mode == FlightMode.SPEED:
 		pid_controllers[Controller.LATERAL_SPEED].set_target(sign(r) * pow(abs(r), 2) * 5)
 		roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
 		pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2)
-		roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+		roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 	
 	elif flight_mode == FlightMode.TRACK:
 		pid_controllers[Controller.POS_X].set_target(pid_controllers[Controller.POS_X].target + r / 100)
@@ -344,7 +344,7 @@ func change_roll(r):
 		var delta_x = global_transform.xform_inv(target).x
 		var roll_target = pid_controllers[Controller.POS_X].get_output(target.x - delta_x, dt) / 2
 		pid_controllers[Controller.ROLL].set_target(roll_target)
-		roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
+		roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
 	
 	elif flight_mode == FlightMode.AUTO:
 		if is_flight_safe():
@@ -365,11 +365,11 @@ func change_yaw(y):
 	if flight_mode == FlightMode.RATE:
 		var yaw_input = -sign(y) * pow(abs(y), 3) * 9
 		pid_controllers[Controller.YAW_SPEED].set_target(yaw_input)
-		yaw_change += pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
+		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED:
 		pid_controllers[Controller.YAW_SPEED].set_target(-sign(y) * pow(abs(y), 2) * 2)
-		yaw_change += pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
+		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 	
 	elif flight_mode == FlightMode.TRACK:
 		var target = pid_controllers[Controller.YAW].target - y / 100
@@ -383,10 +383,10 @@ func change_yaw(y):
 			hdg_delta = 2 * PI
 			if target < 0:
 				hdg_delta = -hdg_delta
-		yaw_change += pid_controllers[Controller.YAW].get_output(angles.y + hdg_delta, dt, false)
+		yaw_change = pid_controllers[Controller.YAW].get_output(angles.y + hdg_delta, dt, false)
 	
 	elif flight_mode == FlightMode.AUTO:
 		pid_controllers[Controller.YAW_SPEED].set_target(0)
-		yaw_change += pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
+		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 	
 	return yaw_change
