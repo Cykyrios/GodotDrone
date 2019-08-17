@@ -70,8 +70,7 @@ func _ready():
 #	pid_controllers[Controller.YAW].set_clamp_limits(-1, 1)
 	
 	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
-	flight_mode = FlightMode.RATE
-	emit_signal("flight_mode_changed", flight_mode)
+	change_flight_mode(FlightMode.RATE)
 	
 	if b_telemetry:
 		var dir = Directory.new()
@@ -91,8 +90,7 @@ func _physics_process(delta):
 	
 	if !is_flight_safe():
 		if flight_mode != FlightMode.RATE and flight_mode != FlightMode.AUTO:
-			flight_mode = FlightMode.AUTO
-			emit_signal("flight_mode_changed", flight_mode)
+			change_flight_mode(FlightMode.AUTO)
 	
 	read_input()
 	update_control(delta)
@@ -189,14 +187,17 @@ func _input(event):
 		cycle_flight_modes()
 
 
+func change_flight_mode(mode : int):
+	flight_mode = mode
+	emit_signal("flight_mode_changed", flight_mode)
+	print("Mode: %s" % [flight_mode])
+
+
 func cycle_flight_modes():
 	if flight_mode == FlightMode.AUTO or flight_mode == FlightMode.AUTO - 1:
-		flight_mode = 0
+		change_flight_mode(0)
 	else:
-		flight_mode += 1
-	print("Mode: %s" % [flight_mode])
-	
-	emit_signal("flight_mode_changed", flight_mode)
+		change_flight_mode(flight_mode + 1)
 	
 	if flight_mode == FlightMode.LEVEL:
 		pid_controllers[Controller.ALTITUDE].set_target(pos.y)
