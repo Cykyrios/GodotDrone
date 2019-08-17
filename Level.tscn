@@ -1,31 +1,48 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Drone.tscn" type="PackedScene" id=1]
 [ext_resource path="res://DebugGeometry.gd" type="Script" id=2]
 [ext_resource path="res://Level.gd" type="Script" id=3]
+[ext_resource path="res://CheckerShader.tres" type="Shader" id=4]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 50, 0.5, 50 )
 
-[sub_resource type="CubeMesh" id=2]
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 4 )
+shader_param/CellsX = 150.0
+shader_param/CellsY = 100.0
+shader_param/Color1 = Color( 0.784314, 0.784314, 0.784314, 1 )
+shader_param/Color2 = Color( 0.392157, 0.392157, 0.392157, 1 )
+
+[sub_resource type="CubeMesh" id=3]
+material = SubResource( 2 )
 size = Vector3( 100, 1, 100 )
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 1, 2.5, 1 )
 
-[sub_resource type="CubeMesh" id=4]
+[sub_resource type="CubeMesh" id=5]
 size = Vector3( 2, 5, 2 )
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=6]
 extents = Vector3( 1, 5, 1 )
 
-[sub_resource type="CubeMesh" id=6]
+[sub_resource type="CubeMesh" id=7]
 size = Vector3( 2, 10, 2 )
 
-[sub_resource type="BoxShape" id=7]
+[sub_resource type="BoxShape" id=8]
 extents = Vector3( 2.5, 0.5, 2.5 )
 
-[sub_resource type="CubeMesh" id=8]
+[sub_resource type="ShaderMaterial" id=9]
+shader = ExtResource( 4 )
+shader_param/CellsX = 4.0
+shader_param/CellsY = 4.0
+shader_param/Color1 = Color( 0.784314, 0.784314, 0.784314, 1 )
+shader_param/Color2 = Color( 0.392157, 0.392157, 0.392157, 1 )
+
+[sub_resource type="CubeMesh" id=10]
+material = SubResource( 9 )
 size = Vector3( 5, 1, 5 )
 
 [node name="Level" type="Spatial"]
@@ -74,7 +91,7 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Objects/Ground"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="Pillar" type="StaticBody" parent="Objects"]
@@ -82,23 +99,23 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Objects/Pillar"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Objects/Pillar"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
-mesh = SubResource( 4 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="Pillar2" type="StaticBody" parent="Objects"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 5 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Objects/Pillar2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Objects/Pillar2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
-mesh = SubResource( 6 )
+mesh = SubResource( 7 )
 material/0 = null
 
 [node name="Pillar3" type="StaticBody" parent="Objects"]
@@ -106,11 +123,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Objects/Pillar3"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Objects/Pillar3"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-mesh = SubResource( 8 )
+mesh = SubResource( 10 )
 material/0 = null
 
 [node name="TorusTunnel" type="Spatial" parent="Objects"]
