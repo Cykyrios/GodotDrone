@@ -275,8 +275,11 @@ func change_power(p):
 	
 	elif flight_mode == FlightMode.AUTO:
 		if is_flight_safe():
-			pid_controllers[Controller.VERTICAL_SPEED].set_target(0)
-			power = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
+			var target_speed = -3
+			if pos.y < 2:
+				target_speed = -0.5
+			pid_controllers[Controller.VERTICAL_SPEED].set_target(target_speed)
+			power += pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 	
 	return power
 
@@ -314,8 +317,12 @@ func change_pitch(p):
 			pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2)
 			pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 		else:
-			pid_controllers[Controller.PITCH].set_target(0)
-			pitch_change += pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+			if ang_vel.length_squared() <= 1.0:
+				pid_controllers[Controller.PITCH].set_target(0)
+				pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+			else:
+				pid_controllers[Controller.PITCH_SPEED].set_target(0)
+				pitch_change = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
 	
 	return pitch_change
 
@@ -351,10 +358,15 @@ func change_roll(r):
 			pid_controllers[Controller.LATERAL_SPEED].set_target(0)
 			roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
 			pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2)
-			roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+			roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 		else:
-			pid_controllers[Controller.ROLL].set_target(0)
-			roll_change += pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+			if ang_vel.length_squared() <= 1.0:
+				pid_controllers[Controller.ROLL].set_target(0)
+				roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+			else:
+				pid_controllers[Controller.ROLL].set_target(0)
+				roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+			
 	
 	return roll_change
 
