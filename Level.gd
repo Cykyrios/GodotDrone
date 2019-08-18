@@ -25,6 +25,9 @@ func _input(event):
 		if camera_index >= cameras.size():
 			camera_index = 0
 		change_camera()
+	
+	if Input.is_action_just_pressed("pause"):
+		get_tree().paused = !get_tree().paused
 
 
 func change_camera():

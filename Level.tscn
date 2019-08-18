@@ -46,6 +46,7 @@ material = SubResource( 9 )
 size = Vector3( 5, 1, 5 )
 
 [node name="Level" type="Spatial"]
+pause_mode = 2
 script = ExtResource( 3 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
@@ -71,6 +72,7 @@ speed = 20.0
 enabled = true
 
 [node name="Drone" parent="." instance=ExtResource( 1 )]
+pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
 
 [node name="CameraFPV" type="Camera" parent="Drone"]
