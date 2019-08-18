@@ -64,10 +64,10 @@ func _input(event):
 
 
 func add_drag():
-	var drag = -linear_velocity.length_squared() * linear_velocity.normalized() / 10.0
+	var drag = -linear_velocity.length_squared() * linear_velocity.normalized() / 20.0
 	add_central_force(drag)
 	
-	drag = -angular_velocity.length_squared() * angular_velocity.normalized() / 10.0
+	drag = -angular_velocity.length_squared() * angular_velocity.normalized() / 20.0
 	add_torque(drag)
 
 
