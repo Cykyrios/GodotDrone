@@ -57,7 +57,7 @@ func _physics_process(delta):
 
 
 func _input(event):
-	if Input.is_action_just_pressed("ui_home"):
+	if Input.is_action_just_pressed("respawn"):
 		global_transform = Transform(Basis(), Vector3(0, 0.2, 0))
 		linear_velocity = Vector3.ZERO
 		angular_velocity = Vector3.ZERO
