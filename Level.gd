@@ -9,6 +9,7 @@ func _ready():
 	cameras.append($CameraFollow)
 	cameras.append($Drone/CameraFPV)
 	cameras.append($CameraFixed)
+	cameras.append($FlyaroundCamera/RotationHelper/Camera)
 	
 	camera = cameras[camera_index]
 	
