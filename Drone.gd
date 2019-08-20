@@ -61,6 +61,7 @@ func _input(event):
 		global_transform = Transform(Basis(), Vector3(0, 0.2, 0))
 		linear_velocity = Vector3.ZERO
 		angular_velocity = Vector3.ZERO
+		flight_controller.reset()
 
 
 func add_drag():

@@ -402,3 +402,13 @@ func change_yaw(y):
 		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 	
 	return yaw_change
+
+
+func reset():
+	update_position()
+	update_velocity()
+	
+	for controller in pid_controllers:
+		controller.reset_integral()
+		controller.err = 0.0
+		controller.err_prev = 0.0
