@@ -14,12 +14,12 @@ var torque = 0.0 setget set_torque, get_torque
 var rpm = 0.0 setget set_rpm, get_rpm
 var rpm_target = 0.0 setget set_rpm_target, get_rpm_target
 var max_rpm_change = 0.0
-const RPM_ACCELERATION = 8000.0
 
 export (bool) var clockwise = false
 export (float, 0.0, 10000.0) var MAX_TORQUE = 1000.0
 export (float, 0.0, 30000.0) var MAX_RPM = 10000.0
 export (float, 0.0, 10.0) var LIFT_RATIO = 1.0
+export (float, 0, 50000) var RPM_ACCELERATION = 8000.0
 
 
 func _ready():
