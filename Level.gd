@@ -6,7 +6,7 @@ var camera : Camera
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	cameras.append($CameraFollow)
+	cameras.append($FollowCamera)
 	cameras.append($Drone/CameraFPV)
 	cameras.append($CameraFixed)
 	cameras.append($FlyaroundCamera/RotationHelper/Camera)
