@@ -268,7 +268,11 @@ func change_power(p):
 		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 4)
 		power += pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 	
-	elif flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.TRACK:
+	elif flight_mode == FlightMode.LEVEL:
+		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 10)
+		power += pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
+	
+	elif flight_mode == FlightMode.TRACK:
 		var target = pid_controllers[Controller.ALTITUDE].target
 		pid_controllers[Controller.ALTITUDE].set_target(target + (p - 0.5) / 40)
 		power += pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
