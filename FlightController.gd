@@ -414,5 +414,12 @@ func reset():
 	
 	for controller in pid_controllers:
 		controller.reset_integral()
+		controller.target = 0.0
 		controller.err = 0.0
 		controller.err_prev = 0.0
+	pid_controllers[Controller.ALTITUDE].target = pos.y
+	pid_controllers[Controller.POS_X].target = pos.x
+	pid_controllers[Controller.POS_Z].target = pos.z
+	
+	for prop in props:
+		prop.set_rpm(0)
