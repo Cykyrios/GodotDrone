@@ -1,11 +1,12 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://FollowCamera.tscn" type="PackedScene" id=1]
+[ext_resource path="res://FlyaroundCamera.tscn" type="PackedScene" id=1]
 [ext_resource path="res://DebugGeometry.gd" type="Script" id=2]
 [ext_resource path="res://Level.gd" type="Script" id=3]
 [ext_resource path="res://CheckerShader.tres" type="Shader" id=4]
-[ext_resource path="res://FlyaroundCamera.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Drone.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Drone.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Gate.tscn" type="PackedScene" id=6]
+[ext_resource path="res://FollowCamera.tscn" type="PackedScene" id=7]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 100, 0.5, 100 )
@@ -64,7 +65,7 @@ transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 
 near = 0.1
 far = 1000.0
 
-[node name="FollowCamera" parent="." instance=ExtResource( 1 )]
+[node name="FollowCamera" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
 near = 0.1
 far = 1000.0
@@ -73,13 +74,13 @@ target_offset = Vector3( 0, 0.5, 0 )
 camera_offset = Vector3( 0, 0.5, 2 )
 speed = 2.0
 
-[node name="FlyaroundCamera" parent="." instance=ExtResource( 5 )]
+[node name="FlyaroundCamera" parent="." instance=ExtResource( 1 )]
 pause_mode = 2
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5 )
 speed = 10
 look_around_speed = 5
 
-[node name="Drone" parent="." instance=ExtResource( 6 )]
+[node name="Drone" parent="." instance=ExtResource( 5 )]
 pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
 
@@ -87,9 +88,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
 transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, -0.2 )
 near = 0.1
 far = 1000.0
-
-[node name="CameraTarget" type="Spatial" parent="Drone"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
 
 [node name="Objects" type="Spatial" parent="."]
 
@@ -270,205 +268,80 @@ ring_sides = 16
 
 [node name="Course" type="Spatial" parent="Objects"]
 
-[node name="CSGTorus19" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 42, 0, 0 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate1" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 0 )
 
-[node name="CSGTorus20" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 42, 0, -10 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate2" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, -10 )
 
-[node name="CSGTorus21" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 42, 0, -20 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate3" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, -20 )
 
-[node name="CSGTorus22" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 42, 0, -30 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate4" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, -30 )
 
-[node name="CSGTorus23" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 0.866025, 0.5, -2.18557e-08, 0, -4.37114e-08, -1, -0.5, 0.866025, -3.78552e-08, 40, 3, -38 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate5" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 40, 3, -38 )
 
-[node name="CSGTorus24" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 0.5, 0.836516, -0.224144, -2.26267e-08, -0.258819, -0.965926, -0.866025, 0.482963, -0.12941, 30, 8, -45 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate6" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( 0.5, 0.224144, 0.836516, 0, 0.965926, -0.258819, -0.866025, 0.12941, 0.482963, 30, 8, -45 )
 
-[node name="CSGTorus25" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0, 1, 20, 15, -50 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate7" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0.5, 0.866025, 0, 0.866025, -0.5, -1, -2.18557e-08, -3.78552e-08, 20, 15, -50 )
 
-[node name="CSGTorus26" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0, 1, 10, 25, -50 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate8" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0.5, 0.866025, 0, 0.866025, -0.5, -1, -2.18557e-08, -3.78552e-08, 10, 25, -50 )
 
-[node name="CSGTorus27" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 0.353553, -0.612372, 0.707107, 0.866025, 0.5, 0, -0.353553, 0.612372, 0.707107, -5, 35, -40 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate9" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -0.707107, 0.353553, 0.612372, 0, 0.866025, -0.5, -0.707107, -0.353553, -0.612372, -5, 35, -40 )
 
-[node name="CSGTorus28" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -15, 45, -20 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate10" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -15, 45, -20 )
 
-[node name="CSGTorus29" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -15, 45, 0 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate11" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -15, 45, 0 )
 
-[node name="CSGTorus30" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 0.707107, 0.707107, -3.09086e-08, 0, -4.37114e-08, -1, -0.707107, 0.707107, -3.09086e-08, -10, 45, 10 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate12" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -10, 45, 10 )
 
-[node name="CSGTorus31" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 45, 15 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate13" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 45, 15 )
 
-[node name="CSGTorus32" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( -3.09086e-08, -0.707107, 0.707107, 1, -4.37114e-08, 0, 3.09086e-08, 0.707107, 0.707107, 10, 45, 10 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate14" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 10, 45, 10 )
 
-[node name="CSGTorus33" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 0.5, -0.5, 0.707107, 0.707107, 0.707107, 0, -0.5, 0.5, 0.707107, 25, 35, -5 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate15" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 25, 35, -5 )
 
-[node name="CSGTorus34" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 0.5, -0.5, 0.707107, 0.707107, 0.707107, 0, -0.5, 0.5, 0.707107, 40, 20, -20 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate16" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 40, 20, -20 )
 
-[node name="CSGTorus35" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 55, 10, -30 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate17" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 55, 10, -30 )
 
-[node name="CSGTorus36" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 0.707107, 0.707107, -3.09086e-08, 0, -4.37114e-08, -1, -0.707107, 0.707107, -3.09086e-08, 70, 5, -20 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate18" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 70, 5, -20 )
 
-[node name="CSGTorus37" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 90, 5, 20 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate19" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 90, 5, 20 )
 
-[node name="CSGTorus38" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 90, 5, 40 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate20" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 90, 5, 40 )
 
-[node name="CSGTorus39" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 90, 5, 60 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate21" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 90, 5, 60 )
 
-[node name="CSGTorus40" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( -3.09086e-08, -0.707107, 0.707107, 1, -4.37114e-08, 0, 3.09086e-08, 0.707107, 0.707107, 80, 5, 80 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate22" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 80, 5, 80 )
 
-[node name="CSGTorus41" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 65, 5, 85 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate23" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 65, 5, 85 )
 
-[node name="CSGTorus42" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 0.707107, 0.707107, -3.09086e-08, 0, -4.37114e-08, -1, -0.707107, 0.707107, -3.09086e-08, 50, 5, 80 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate24" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 50, 5, 80 )
 
-[node name="CSGTorus43" type="CSGTorus" parent="Objects/Course"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 42, 5, 60 )
-use_collision = true
-inner_radius = 6.0
-outer_radius = 6.5
-sides = 64
-ring_sides = 16
+[node name="Gate25" parent="Objects/Course" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 5, 60 )
 
 [node name="DebugGeometry" type="ImmediateGeometry" parent="."]
 script = ExtResource( 2 )
