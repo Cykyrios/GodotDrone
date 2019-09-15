@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://HUD/HUD.gd" type="Script" id=1]
+[ext_resource path="res://HUD/HUDLadder.tscn" type="PackedScene" id=2]
+[ext_resource path="res://HUD/HUDSpeedScale.tscn" type="PackedScene" id=3]
+[ext_resource path="res://HUD/HUDAltitudeScale.gd" type="Script" id=4]
+[ext_resource path="res://HUD/HUDAltitudeScale.tscn" type="PackedScene" id=5]
+
+[node name="HUD" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+color = Color( 0, 1, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 500, 500 )
+size_flags_horizontal = 5
+size_flags_vertical = 5
+custom_constants/separation = 30
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HUDSpeedScale" parent="HBoxContainer" instance=ExtResource( 3 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 580.0
+margin_right = 680.0
+margin_bottom = 1080.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="HUDLadder" parent="HBoxContainer" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 710.0
+margin_top = 0.0
+margin_right = 1210.0
+margin_bottom = 1080.0
+rect_min_size = Vector2( 500, 500 )
+rect_clip_content = true
+size_flags_horizontal = 5
+size_flags_vertical = 5
+
+[node name="HUDAltitudeScale" parent="HBoxContainer" instance=ExtResource( 5 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1240.0
+margin_right = 1340.0
+margin_bottom = 1080.0
+rect_min_size = Vector2( 100, 0 )
+script = ExtResource( 4 )
