@@ -10,7 +10,8 @@ func _ready():
 	update_marker(angle)
 
 
-func update_marker(angle : int):
+func update_marker(a : int):
+	angle = a
 	if angle < 0:
 		left_half.get_node("HorizontalLine").size_flags_vertical = SIZE_SHRINK_END
 		right_half.get_node("HorizontalLine").size_flags_vertical = SIZE_SHRINK_END
