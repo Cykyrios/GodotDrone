@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://HUD/HUD_dynamic_font_med.tres" type="DynamicFont" id=1]
+[ext_resource path="res://HUD/HUD_dynamic_font_32.tres" type="DynamicFont" id=1]
 [ext_resource path="res://HUD/HUDSpeedScale.gd" type="Script" id=2]
 [ext_resource path="res://HUD/HUDBidirectionalGauge.tscn" type="PackedScene" id=3]
 

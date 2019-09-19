@@ -2,7 +2,8 @@
 
 [ext_resource path="res://HUD/HUDBidirectionalGauge.tscn" type="PackedScene" id=1]
 [ext_resource path="res://HUD/HUDHeadingScale.gd" type="Script" id=2]
-[ext_resource path="res://HUD/HUD_dynamic_font_med.tres" type="DynamicFont" id=3]
+[ext_resource path="res://HUD/HUD_dynamic_font_32.tres" type="DynamicFont" id=3]
+
 
 [node name="HUDHeadingScale" type="Control"]
 anchor_left = 0.5
