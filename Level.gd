@@ -4,6 +4,8 @@ var cameras = []
 var camera_index = 0
 var camera : Camera
 
+onready var hud = $HUD
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	cameras.append($FollowCamera)
@@ -15,9 +17,13 @@ func _ready():
 	
 	change_camera()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
+func _process(delta):
+	var fc = $Drone/FlightController
+	var angles = fc.angles
+	var velocity = fc.lin_vel
+	var altitude = fc.pos.y
+	hud.update_hud(delta, angles.x, angles.z, angles.y, velocity, altitude)
 
 
 func _input(event):
@@ -35,3 +41,8 @@ func change_camera():
 	camera.current = false
 	camera = cameras[camera_index]
 	camera.current = true
+	
+	if camera_index == 1:
+		hud.visible = true
+	else:
+		hud.visible = false
