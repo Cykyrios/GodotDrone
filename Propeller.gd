@@ -85,7 +85,7 @@ func get_rpm():
 
 func get_thrust():
 	var rot_speed = rpm * PI / 30.0 * radius
-	return (pow(rot_speed, 2) * LIFT_RATIO / 1000) * (1 + 0.3 * get_ground_effect())
+	return (pow(rot_speed, 2) * LIFT_RATIO / 1000) * (1 + 0 * 0.3 * get_ground_effect())
 
 
 func get_ground_effect():
