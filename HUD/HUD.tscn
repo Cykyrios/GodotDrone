@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://HUD/HUD.gd" type="Script" id=1]
 [ext_resource path="res://HUD/HUDLadder.tscn" type="PackedScene" id=2]
 [ext_resource path="res://HUD/HUDSpeedScale.tscn" type="PackedScene" id=3]
 [ext_resource path="res://HUD/HUDHeadingScale.tscn" type="PackedScene" id=4]
 [ext_resource path="res://HUD/HUDAltitudeScale.tscn" type="PackedScene" id=5]
+[ext_resource path="res://HUD/HUDStickInput.tscn" type="PackedScene" id=6]
 
 [node name="HUD" type="Control"]
 anchor_right = 1.0
@@ -51,7 +52,7 @@ grow_vertical = 2
 size_flags_horizontal = 5
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxLadder" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 157.0
 margin_right = 1920.0
 margin_bottom = 922.0
@@ -67,7 +68,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HUDSpeedScale" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 3 )]
+[node name="HUDSpeedScale" parent="VBoxContainer/HBoxLadder" instance=ExtResource( 3 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -79,7 +80,7 @@ grow_horizontal = 0
 grow_vertical = 0
 rect_min_size = Vector2( 150, 0 )
 
-[node name="HUDLadder" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 2 )]
+[node name="HUDLadder" parent="VBoxContainer/HBoxLadder" instance=ExtResource( 2 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -93,7 +94,7 @@ rect_clip_content = true
 size_flags_horizontal = 5
 size_flags_vertical = 5
 
-[node name="HUDAltitudeScale" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 5 )]
+[node name="HUDAltitudeScale" parent="VBoxContainer/HBoxLadder" instance=ExtResource( 5 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -103,8 +104,31 @@ margin_right = 1390.0
 margin_bottom = 765.0
 rect_min_size = Vector2( 150, 0 )
 
-[node name="Control" type="Control" parent="VBoxContainer"]
+[node name="HBoxInput" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 926.0
 margin_right = 1920.0
 margin_bottom = 1080.0
+size_flags_horizontal = 5
 size_flags_vertical = 3
+custom_constants/separation = 50
+alignment = 1
+
+[node name="HUDStickLeft" parent="VBoxContainer/HBoxInput" instance=ExtResource( 6 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 835.0
+margin_top = 27.0
+margin_right = 935.0
+margin_bottom = 127.0
+
+[node name="HUDStickRight" parent="VBoxContainer/HBoxInput" instance=ExtResource( 6 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 985.0
+margin_top = 27.0
+margin_right = 1085.0
+margin_bottom = 127.0

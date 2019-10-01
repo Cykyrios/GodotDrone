@@ -28,7 +28,7 @@ func update_altitude(a : float, dt : float):
 	var vs_sign = " "
 	if vertical_speed < 0:
 		vs_sign = "-"
-	vertical_speed_label.text = "%s%02d.%d" % [vs_sign, abs(vertical_speed),
+	vertical_speed_label.text = "%s%02d.%d VS" % [vs_sign, abs(vertical_speed),
 			(abs(vertical_speed) - floor(abs(vertical_speed))) * 10]
 
 

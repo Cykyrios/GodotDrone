@@ -78,7 +78,7 @@ margin_bottom = 119.0
 size_flags_vertical = 5
 custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color = Color( 0.392157, 0.901961, 0.392157, 1 )
-text = "-00.0"
+text = "-00.0 VS"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
