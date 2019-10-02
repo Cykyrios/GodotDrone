@@ -127,17 +127,17 @@ shape = SubResource( 9 )
 
 [node name="Propeller1" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.15, -0.4 )
+clockwise = true
 
 [node name="Propeller2" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.15, -0.4 )
-clockwise = true
 
 [node name="Propeller3" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.15, 0.4 )
+clockwise = true
 
 [node name="Propeller4" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.15, 0.4 )
-clockwise = true
 
 [node name="LEDNavLeft" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.125, 0 )

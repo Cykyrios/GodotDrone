@@ -252,10 +252,10 @@ func update_control(delta):
 	var roll = change_roll(input[2])
 	var pitch = change_pitch(input[3])
 	
-	props[0].set_thrust_target(power - yaw + roll + pitch)
-	props[1].set_thrust_target(power + yaw - roll + pitch)
-	props[2].set_thrust_target(power - yaw - roll - pitch)
-	props[3].set_thrust_target(power + yaw + roll - pitch)
+	props[0].set_thrust_target(power + yaw + roll + pitch)
+	props[1].set_thrust_target(power - yaw - roll + pitch)
+	props[2].set_thrust_target(power + yaw - roll - pitch)
+	props[3].set_thrust_target(power - yaw + roll - pitch)
 
 
 func change_power(p):
