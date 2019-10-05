@@ -16,7 +16,7 @@ var rpm_target = 0.0 setget set_rpm_target, get_rpm_target
 var max_rpm_change = 0.0
 var powered = true
 
-export (bool) var clockwise = false
+export (bool) var clockwise = false setget set_clockwise
 export (float, 0.0, 10000.0) var MAX_TORQUE = 1000.0
 export (float, 0.0, 30000.0) var MAX_RPM = 10000.0
 export (float, 0.0, 10.0) var LIFT_RATIO = 1.0
@@ -25,6 +25,8 @@ export (int, 0, 100) var MIN_POWER = 1
 
 
 func _ready():
+	set_visibility()
+	
 	ray.add_exception(get_parent())
 	max_ray_length = ray.cast_to.length()
 	
@@ -50,6 +52,16 @@ func _physics_process(delta):
 	rotate_object_local(Vector3.UP, rot * delta)
 	
 	transform = transform.orthonormalized()
+
+
+func set_clockwise(cw : bool):
+	clockwise = cw
+	set_visibility()
+
+
+func set_visibility():
+	$CW.visible = clockwise
+	$CCW.visible = !clockwise
 
 
 func set_torque(x : float):
