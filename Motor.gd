@@ -21,11 +21,13 @@ var max_rpm_change = 0.0
 var powered = true
 
 
+func _enter_tree():
+	set_clockwise(clockwise)
+
+
 func _ready():
 	if Engine.editor_hint:
 		return
-	
-	set_clockwise(clockwise)
 	
 	MAX_TORQUE = MAX_TORQUE / 1000.0
 	max_rpm_change = MAX_TORQUE * RPM_ACCELERATION
