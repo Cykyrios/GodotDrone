@@ -74,8 +74,12 @@ func post_import(scene):
 		for node in scene.get_children():
 			var node_name = node.name
 			if node_name.ends_with("-colcylinder"):
+				var area = Area.new()
+				scene.add_child(area)
+				area.set_owner(scene)
+				area.name = "Area"
 				var shape = collision_shape(node, "cylinder")
-				scene.add_child(shape)
+				area.add_child(shape)
 				shape.set_owner(scene)
 				shape.name = node.name.replace("-colcylinder", "-col")
 				node.queue_free()
