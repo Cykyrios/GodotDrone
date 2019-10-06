@@ -5,14 +5,16 @@ export (Color) var color = Color(0, 0, 0)
 
 var timer = Timer.new()
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+
+func _enter_tree():
 	$LightMesh.material_override = mat
 	mat.albedo_color = Color(0.4, 0.4, 0.4)
 	mat.emission_enabled = true
 	mat.emission_energy = 1
 	mat.emission = color
-	
+
+
+func _ready():
 	add_child(timer)
 	timer.connect("timeout", self, "_on_timer_elapsed")
 
