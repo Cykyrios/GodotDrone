@@ -14,7 +14,7 @@ var ang_vel = Vector3(0, 0, 0)
 var basis = Basis()
 var basis_prev = basis
 
-var props = []
+var motors = []
 var hover_thrust = 0.0
 var input = [0, 0, 0, 0]
 
@@ -162,8 +162,8 @@ func write_telemetry():
 	var data = PoolStringArray([time, input[0], input[1], input[2], input[3],
 			pos.x, pos.y, pos.z, lin_vel.x, lin_vel.y, lin_vel.z, local_vel.x, local_vel.y, local_vel.z,
 			angles.y, angles.z, angles.x, ang_vel.y, ang_vel.z, ang_vel.x,
-			props[0].get_rpm(), props[1].get_rpm(), props[2].get_rpm(), props[3].get_rpm(),
-			props[0].get_thrust(), props[1].get_thrust(), props[2].get_thrust(), props[3].get_thrust(),
+			motors[0].get_rpm(), motors[1].get_rpm(), motors[2].get_rpm(), motors[3].get_rpm(),
+			motors[0].propeller.get_thrust(), motors[1].propeller.get_thrust(), motors[2].propeller.get_thrust(), motors[3].propeller.get_thrust(),
 			pid_controllers[Controller.ALTITUDE].target, pid_controllers[Controller.ALTITUDE].err, pid_controllers[Controller.ALTITUDE].output, pid_controllers[Controller.ALTITUDE].clamped_output,
 			pid_controllers[Controller.PITCH].target, pid_controllers[Controller.PITCH].err, pid_controllers[Controller.PITCH].output, pid_controllers[Controller.PITCH].clamped_output,
 			pid_controllers[Controller.ROLL].target, pid_controllers[Controller.ROLL].err, pid_controllers[Controller.ROLL].output, pid_controllers[Controller.ROLL].clamped_output,
@@ -174,10 +174,10 @@ func write_telemetry():
 			pid_controllers[Controller.FORWARD_SPEED].target, pid_controllers[Controller.FORWARD_SPEED].err, pid_controllers[Controller.FORWARD_SPEED].output, pid_controllers[Controller.FORWARD_SPEED].clamped_output,
 			pid_controllers[Controller.LATERAL_SPEED].target, pid_controllers[Controller.LATERAL_SPEED].err, pid_controllers[Controller.LATERAL_SPEED].output, pid_controllers[Controller.LATERAL_SPEED].clamped_output,
 			pid_controllers[Controller.VERTICAL_SPEED].target, pid_controllers[Controller.VERTICAL_SPEED].err, pid_controllers[Controller.VERTICAL_SPEED].output, pid_controllers[Controller.VERTICAL_SPEED].clamped_output,
-			props[0].controller.target, props[0].controller.err, props[0].controller.output, props[0].controller.clamped_output,
-			props[1].controller.target, props[1].controller.err, props[1].controller.output, props[1].controller.clamped_output,
-			props[2].controller.target, props[2].controller.err, props[2].controller.output, props[2].controller.clamped_output,
-			props[3].controller.target, props[3].controller.err, props[3].controller.output, props[3].controller.clamped_output])
+			motors[0].controller.target, motors[0].controller.err, motors[0].controller.output, motors[0].controller.clamped_output,
+			motors[1].controller.target, motors[1].controller.err, motors[1].controller.output, motors[1].controller.clamped_output,
+			motors[2].controller.target, motors[2].controller.err, motors[2].controller.output, motors[2].controller.clamped_output,
+			motors[3].controller.target, motors[3].controller.err, motors[3].controller.output, motors[3].controller.clamped_output])
 	telemetry_file.store_csv_line(data)
 	telemetry_file.close()
 
@@ -222,8 +222,8 @@ func is_flight_safe():
 	return safe
 
 
-func set_props(prop_array):
-	props = prop_array
+func set_motors(motor_array):
+	motors = motor_array
 
 
 func set_hover_thrust(t : float):
@@ -252,10 +252,10 @@ func update_control(delta):
 	var roll = change_roll(input[2])
 	var pitch = change_pitch(input[3])
 	
-	props[0].set_thrust_target(power + yaw + roll + pitch)
-	props[1].set_thrust_target(power - yaw - roll + pitch)
-	props[2].set_thrust_target(power + yaw - roll - pitch)
-	props[3].set_thrust_target(power - yaw + roll - pitch)
+	motors[0].set_thrust_target(power + yaw + roll + pitch)
+	motors[1].set_thrust_target(power - yaw - roll + pitch)
+	motors[2].set_thrust_target(power + yaw - roll - pitch)
+	motors[3].set_thrust_target(power - yaw + roll - pitch)
 
 
 func change_power(p):
@@ -421,5 +421,5 @@ func reset():
 	pid_controllers[Controller.POS_X].target = pos.x
 	pid_controllers[Controller.POS_Z].target = pos.z
 	
-	for prop in props:
-		prop.set_rpm(0)
+	for motor in motors:
+		motor.set_rpm(0)

@@ -9,6 +9,21 @@ func post_import(scene):
 	if scene is Drone:
 		for node in scene.get_children():
 			if node is MeshInstance:
+				var node_name = node.name
+				if node_name.ends_with("-colbox"):
+					var shape = collision_shape(node, "box")
+					shape.name = node_name.replace("-colbox", "-col")
+					scene.add_child(shape)
+					shape.set_owner(scene)
+					node.queue_free()
+					continue
+				elif node_name.ends_with("-colcylinder"):
+					var shape = collision_shape(node, "cylinder")
+					shape.name = node_name.replace("-colcylinder", "-col")
+					scene.add_child(shape)
+					shape.set_owner(scene)
+					node.queue_free()
+					continue
 				for child in node.get_children():
 					var child_name = child.name
 					if child is StaticBody:
@@ -22,12 +37,12 @@ func post_import(scene):
 					elif child is MeshInstance:
 						if child_name.ends_with("-colbox"):
 							var shape = collision_shape(child, "box")
-							shape.name = child_name.rstrip("box")
+							shape.name = child_name.replace("-colbox", "-col")
 							scene.add_child(shape)
 							shape.set_owner(scene)
 						elif child_name.ends_with("-colcylinder"):
 							var shape = collision_shape(child, "cylinder")
-							shape.name = child_name.rstrip("cylinder")
+							shape.name = child_name.replace("-colcylinder", "-col")
 							scene.add_child(shape)
 							shape.set_owner(scene)
 						child.queue_free()
@@ -53,8 +68,17 @@ func post_import(scene):
 				var shape = collision_shape(collision, "cylinder")
 				area.add_child(shape)
 				shape.set_owner(scene)
-				shape.name = collision.name.rstrip("-cylinder")
+				shape.name = collision.name.replace("-colcylinder", "-col")
 				collision.queue_free()
+	elif scene is Motor:
+		for node in scene.get_children():
+			var node_name = node.name
+			if node_name.ends_with("-colcylinder"):
+				var shape = collision_shape(node, "cylinder")
+				scene.add_child(shape)
+				shape.set_owner(scene)
+				shape.name = node.name.replace("-colcylinder", "-col")
+				node.queue_free()
 	
 	return scene
 

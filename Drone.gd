@@ -2,7 +2,7 @@ extends RigidBody
 
 class_name Drone
 
-var props
+var motors = []
 onready var flight_controller = $FlightController
 
 onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
@@ -10,14 +10,15 @@ var b_debug = false
 
 
 func _ready():
-	props = [$Propeller1, $Propeller2, $Propeller3, $Propeller4]
-	flight_controller.set_props(props)
+	motors = [$Motor1, $Motor2, $Motor3, $Motor4]
+	flight_controller.set_motors(motors)
 	flight_controller.set_hover_thrust(mass / 4 * 9.8)
 
 
 func _process(delta):
 	if b_debug:
-		for prop in props:
+		for motor in motors:
+			var prop = motor.propeller
 			var vec_force = prop.global_transform.basis.y * prop.get_thrust()
 			var vec_pos = prop.global_transform.origin - global_transform.origin
 			debug_geom.draw_debug_arrow(delta, global_transform.origin + vec_pos, vec_force, vec_force.length() / 50,
@@ -46,8 +47,9 @@ func _process(delta):
 
 
 func _physics_process(delta):
-	for prop in props:
-		var vec_torque = prop.get_torque() * global_transform.basis.y
+	for motor in motors:
+		var prop = motor.propeller
+		var vec_torque = motor.get_torque() * global_transform.basis.y
 		var vec_force = prop.global_transform.basis.y * prop.get_thrust()
 		var vec_pos = prop.global_transform.origin - global_transform.origin
 		add_torque(vec_torque)
@@ -68,8 +70,8 @@ func add_drag():
 	var drag = -linear_velocity.length_squared() * linear_velocity.normalized() / 20.0
 	add_central_force(drag)
 	
-	drag = -angular_velocity.length_squared() * angular_velocity.normalized() / 20.0
-	add_torque(drag)
+	var ang_drag = -angular_velocity.length_squared() * angular_velocity.normalized() / 20.0
+	add_torque(ang_drag)
 
 
 func _on_flight_mode_changed(mode):
