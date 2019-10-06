@@ -24,7 +24,7 @@ func _process(delta):
 	var velocity = fc.lin_vel
 	var altitude = fc.pos.y
 	var input = fc.input
-	var left_stick = Vector2(input[1], input[0])
+	var left_stick = Vector2(input[1], -input[0])
 	var right_stick = Vector2(input[2], input[3])
 	hud.update_hud(delta, angles.x, angles.z, angles.y, velocity, altitude, left_stick, right_stick)
 
