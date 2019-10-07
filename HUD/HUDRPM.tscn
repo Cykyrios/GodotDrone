@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://HUD/HUDRPM.gd" type="Script" id=1]
+[ext_resource path="res://HUD/HUD_dynamic_font_26.tres" type="DynamicFont" id=2]
+
+[node name="HUDRPM" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -95.0
+margin_top = -35.0
+margin_right = 95.0
+margin_bottom = 35.0
+custom_constants/vseparation = 0
+custom_constants/hseparation = 20
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelMotor1" type="Label" parent="GridContainer"]
+margin_right = 85.0
+margin_bottom = 33.0
+size_flags_horizontal = 4
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.196078, 0.901961, 0.196078, 1 )
+text = "00000"
+
+[node name="LabelMotor2" type="Label" parent="GridContainer"]
+margin_left = 105.0
+margin_right = 190.0
+margin_bottom = 33.0
+size_flags_horizontal = 4
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.196078, 0.901961, 0.196078, 1 )
+text = "00000"
+
+[node name="LabelMotor3" type="Label" parent="GridContainer"]
+margin_top = 33.0
+margin_right = 85.0
+margin_bottom = 66.0
+size_flags_horizontal = 4
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.196078, 0.901961, 0.196078, 1 )
+text = "00000"
+
+[node name="LabelMotor4" type="Label" parent="GridContainer"]
+margin_left = 105.0
+margin_top = 33.0
+margin_right = 190.0
+margin_bottom = 66.0
+size_flags_horizontal = 4
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0.196078, 0.901961, 0.196078, 1 )
+text = "00000"
