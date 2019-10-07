@@ -92,7 +92,6 @@ func _physics_process(delta):
 		if flight_mode != FlightMode.RATE and flight_mode != FlightMode.AUTO:
 			change_flight_mode(FlightMode.AUTO)
 	
-	read_input()
 	update_control(delta)
 	
 	if flight_mode == FlightMode.TRACK:
@@ -182,18 +181,13 @@ func write_telemetry():
 	telemetry_file.close()
 
 
-func _input(event):
-	if event.is_action_pressed("cycle_flight_modes"):
-		cycle_flight_modes()
-
-
 func change_flight_mode(mode : int):
 	flight_mode = mode
 	emit_signal("flight_mode_changed", flight_mode)
 	print("Mode: %s" % [flight_mode])
 
 
-func cycle_flight_modes():
+func _on_cycle_flight_modes():
 	if flight_mode == FlightMode.AUTO or flight_mode == FlightMode.AUTO - 1:
 		change_flight_mode(0)
 	else:
@@ -234,15 +228,6 @@ func get_tracking_target():
 	var target = Vector3(pid_controllers[Controller.POS_X].target, pid_controllers[Controller.ALTITUDE].target,
 			pid_controllers[Controller.POS_Z].target)
 	return target
-
-
-func read_input():
-	var power = (Input.get_action_strength("increase_power") - Input.get_action_strength("decrease_power") + 1) / 2
-	var pitch = Input.get_action_strength("pitch_up") - Input.get_action_strength("pitch_down")
-	var roll = Input.get_action_strength("roll_right") - Input.get_action_strength("roll_left")
-	var yaw = Input.get_action_strength("yaw_right") - Input.get_action_strength("yaw_left")
-#	print("Pow: %8.2f ptc: %6.3f rol: %6.3f yaw: %6.3f" % [power, pitch, roll, yaw])
-	input = [power, yaw, roll, pitch]
 
 
 func update_control(delta):

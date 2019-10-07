@@ -53,6 +53,11 @@ _global_script_classes=[ {
 "class": "Propeller",
 "language": "GDScript",
 "path": "res://Propeller.gd"
+}, {
+"base": "Node",
+"class": "RadioController",
+"language": "GDScript",
+"path": "res://RadioController.gd"
 } ]
 _global_script_class_icons={
 "DebugGeometry": "",
@@ -63,7 +68,8 @@ _global_script_class_icons={
 "HUDLadder": "",
 "Motor": "",
 "PID": "",
-"Propeller": ""
+"Propeller": "",
+"RadioController": ""
 }
 
 [application]
