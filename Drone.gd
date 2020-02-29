@@ -12,7 +12,10 @@ var b_debug = false
 func _ready():
 	motors = [$Motor1, $Motor2, $Motor3, $Motor4]
 	flight_controller.set_motors(motors)
-	flight_controller.set_hover_thrust(mass / 4 * 9.8)
+#	var prop = motors[0].propeller
+#	var hover_rpm = sqrt(mass / 4 * 9.81 * 1000 / prop.LIFT_RATIO / pow(PI / 30.0, 2) / pow(prop.radius, 2))
+#	flight_controller.set_hover_rpm(hover_rpm)
+	flight_controller.set_hover_thrust(mass / 4 * 9.81)
 
 
 func _process(delta):

@@ -250,7 +250,8 @@ func change_power(p):
 	var power = hover_thrust
 	
 	if flight_mode == FlightMode.RATE:
-		power += sign(p) * pow(abs(p), 2) * 50 - 10
+#		power += sign(p) * pow(abs(p), 2) * 50 - 10
+		power = p * 50
 	
 	elif flight_mode == FlightMode.SPEED:
 		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 4)
