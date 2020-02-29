@@ -18,6 +18,9 @@ var motors = []
 var hover_thrust = 0.0
 var input = [0, 0, 0, 0]
 
+var control_profile = ControlProfile.new()
+
+
 var pid_controllers = []
 enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
 		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED}
@@ -277,7 +280,9 @@ func change_pitch(p):
 	var pitch_change = 0.0
 	
 	if flight_mode == FlightMode.RATE:
-		var pitch_input = sign(p) * pow(abs(p), 3) * 6
+		var rate = control_profile.rate_pitch
+		var expo = control_profile.expo_pitch
+		var pitch_input = ((1 - expo) * p + expo * pow(p, 3)) * deg2rad(rate)
 		pid_controllers[Controller.PITCH_SPEED].set_target(pitch_input)
 		pitch_change = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
 	
@@ -320,7 +325,9 @@ func change_roll(r):
 	var roll_change = 0.0
 	
 	if flight_mode == FlightMode.RATE:
-		var roll_input = sign(r) * pow(abs(r), 3) * 6
+		var rate = control_profile.rate_roll
+		var expo = control_profile.expo_roll
+		var roll_input = ((1 - expo) * r + expo * pow(r, 3)) * deg2rad(rate)
 		pid_controllers[Controller.ROLL_SPEED].set_target(roll_input)
 		roll_change = pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
 	
@@ -364,7 +371,9 @@ func change_yaw(y):
 	var yaw_change = 0.0
 	
 	if flight_mode == FlightMode.RATE:
-		var yaw_input = -sign(y) * pow(abs(y), 3) * 9
+		var rate = control_profile.rate_yaw
+		var expo = control_profile.expo_yaw
+		var yaw_input = -((1 - expo) * y + expo * pow(y, 3)) * deg2rad(rate)
 		pid_controllers[Controller.YAW_SPEED].set_target(yaw_input)
 		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 	
