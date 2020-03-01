@@ -29,7 +29,7 @@ enum FlightMode {RATE, LEVEL, SPEED, TRACK, AUTO}
 var flight_mode = FlightMode.RATE
 
 var telemetry_file = File.new()
-var b_telemetry = true
+export (bool) var b_telemetry = false
 
 signal flight_mode_changed
 
@@ -225,6 +225,12 @@ func set_motors(motor_array):
 
 func set_hover_thrust(t : float):
 	hover_thrust = t
+
+
+func set_tracking_target(target : Vector3):
+	pid_controllers[Controller.POS_X].set_target(target.x)
+	pid_controllers[Controller.ALTITUDE].set_target(target.y)
+	pid_controllers[Controller.POS_Z].set_target(target.z)
 
 
 func get_tracking_target():
