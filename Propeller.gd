@@ -9,6 +9,9 @@ var max_ray_length = 0.0
 
 export (float, 0.01, 0.5) var radius = 0.2
 export (float, 0.0, 10.0) var LIFT_RATIO = 1.0
+export (float, 0.5, 15) var diameter = 5
+export (float, 0.5, 15) var pitch = 5
+export (int, 2, 6) var num_blades = 2
 
 var clockwise = false setget set_clockwise
 var rpm = 0.0
@@ -17,6 +20,9 @@ var rpm = 0.0
 func _ready():
 	if Engine.editor_hint:
 		return
+	
+	diameter *= 0.0254
+	pitch *= 0.0254
 	
 	set_visibility()
 	

@@ -11,6 +11,8 @@ export (float, 0.0, 10000.0) var MAX_TORQUE = 1000.0
 export (float, 0.0, 30000.0) var MAX_RPM = 10000.0
 export (float, 0, 50000) var RPM_ACCELERATION = 16000.0
 export (int, 0, 100) var MIN_POWER = 1
+export (int, 100, 20000) var kv = 2000
+export (int, 101, 9999) var motor_size = 2207
 
 var controller = PID.new()
 var thrust_target = 0.0

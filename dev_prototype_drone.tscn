@@ -157,26 +157,38 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0
 
 [node name="Motor1" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.13, -0.4 )
+kv = 1000
 
 [node name="Propeller1" parent="Motor1" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0 )
+diameter = 10.0
+pitch = 10.0
 
 [node name="Motor2" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.13, -0.4 )
 clockwise = false
+kv = 1000
 
 [node name="Propeller2" parent="Motor2" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0 )
+diameter = 10.0
+pitch = 10.0
 
 [node name="Motor3" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.13, 0.4 )
+kv = 1000
 
 [node name="Propeller3" parent="Motor3" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0 )
+diameter = 10.0
+pitch = 10.0
 
 [node name="Motor4" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.13, 0.4 )
 clockwise = false
+kv = 1000
 
 [node name="Propeller4" parent="Motor4" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0 )
+diameter = 15.0
+pitch = 15.0
