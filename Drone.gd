@@ -5,6 +5,14 @@ class_name Drone
 var motors = []
 onready var flight_controller = $FlightController
 
+var control_profile = ControlProfile.new()
+export (float, 1.0, 1800.0) var rate_pitch = 667.0
+export (float, 1.0, 1800.0) var rate_roll = 667.0
+export (float, 1.0, 1800.0) var rate_yaw = 667.0
+export (float, 0.0, 1.0) var expo_pitch = 0.2
+export (float, 0.0, 1.0) var expo_roll = 0.2
+export (float, 0.0, 1.0) var expo_yaw = 0.2
+
 onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
 var b_debug = false
 
@@ -16,6 +24,10 @@ func _ready():
 #	var hover_rpm = sqrt(mass / 4 * 9.81 * 1000 / prop.LIFT_RATIO / pow(PI / 30.0, 2) / pow(prop.radius, 2))
 #	flight_controller.set_hover_rpm(hover_rpm)
 	flight_controller.set_hover_thrust(mass / 4 * 9.81)
+	
+	control_profile.set_rates(rate_pitch, rate_roll, rate_yaw)
+	control_profile.set_expo(expo_pitch, expo_roll, expo_yaw)
+	flight_controller.set_control_profile(control_profile)
 
 
 func _process(delta):

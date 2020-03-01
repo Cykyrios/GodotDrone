@@ -85,6 +85,12 @@ look_around_speed = 5
 [node name="Drone" parent="." instance=ExtResource( 6 )]
 pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0 )
+rate_pitch = 360.0
+rate_roll = 360.0
+rate_yaw = 360.0
+expo_pitch = 1.0
+expo_roll = 1.0
+expo_yaw = 1.0
 
 [node name="CameraFPV" type="Camera" parent="Drone"]
 transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, -0.2 )

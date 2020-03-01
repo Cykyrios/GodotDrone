@@ -3,13 +3,13 @@ extends Node
 class_name ControlProfile
 
 
-export (float, 1.0, 1800.0) var rate_pitch = 667.0
-export (float, 1.0, 1800.0) var rate_roll = 667.0
-export (float, 1.0, 1800.0) var rate_yaw = 667.0
+var rate_pitch = 667.0
+var rate_roll = 667.0
+var rate_yaw = 667.0
 
-export (float, 0.0, 1.0) var expo_pitch = 0.2
-export (float, 0.0, 1.0) var expo_roll = 0.2
-export (float, 0.0, 1.0) var expo_yaw = 0.2
+var expo_pitch = 0.2
+var expo_roll = 0.2
+var expo_yaw = 0.2
 
 
 func _ready():

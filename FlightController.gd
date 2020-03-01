@@ -18,7 +18,7 @@ var motors = []
 var hover_thrust = 0.0
 var input = [0, 0, 0, 0]
 
-var control_profile = ControlProfile.new()
+var control_profile = null
 
 
 var pid_controllers = []
@@ -102,6 +102,10 @@ func _physics_process(delta):
 	
 	if b_telemetry:
 		write_telemetry()
+
+
+func set_control_profile(profile : ControlProfile):
+	control_profile = profile
 
 
 func update_position():
