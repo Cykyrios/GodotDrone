@@ -41,7 +41,9 @@ func _ready():
 func _physics_process(delta):
 	if Engine.editor_hint:
 		return
-	
+
+
+func update_thrust(delta):
 	if powered:
 		controller.set_target(thrust_target)
 		set_rpm_target(controller.get_output(propeller.get_thrust(), delta))

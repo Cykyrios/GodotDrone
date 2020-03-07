@@ -85,27 +85,49 @@ func _ready():
 
 
 func _physics_process(delta):
-	dt = delta
-	time += dt
-	
-	update_position()
-	update_velocity()
-	
 	if !is_flight_safe():
 		if flight_mode != FlightMode.RATE and flight_mode != FlightMode.AUTO:
 			change_flight_mode(FlightMode.AUTO)
-	
-	update_control(delta)
-	
+
 	if flight_mode == FlightMode.TRACK:
 		debug_geom.draw_debug_cube(0.02, get_tracking_target(), Vector3(0.2, 0.2, 0.2))
-	
+
 	if b_telemetry:
 		write_telemetry()
 
 
 func set_control_profile(profile : ControlProfile):
 	control_profile = profile
+
+
+func integrate_loop(delta : float, drone_pos : Vector3, drone_basis : Basis):
+	dt = delta
+	time += dt
+	
+	pos_prev = pos
+	pos = drone_pos
+	
+	basis_prev = basis
+	basis = drone_basis
+	
+	angles_prev = angles
+	angles = basis.get_euler()
+	
+	lin_vel = (pos - pos_prev) / dt
+	local_vel = basis.xform_inv(lin_vel)
+	
+	var ref1 = Vector3(1, 0, 0)
+	var orb1 = basis.xform_inv((pos + basis.xform(ref1) - (pos_prev + basis_prev.xform(ref1))) / dt - lin_vel)
+	var omegax = (ref1.cross(orb1) / ref1.length_squared()).cross(ref1)
+	var ref2 = Vector3(0, 1, 0)
+	var orb2 = basis.xform_inv((pos + basis.xform(ref2) - (pos_prev + basis_prev.xform(ref2))) / dt - lin_vel)
+	var omegay = (ref2.cross(orb2) / ref2.length_squared()).cross(ref2)
+	var ref3 = Vector3(0, 0, 1)
+	var orb3 = basis.xform_inv((pos + basis.xform(ref3) - (pos_prev + basis_prev.xform(ref3))) / dt - lin_vel)
+	var omegaz = (ref3.cross(orb3) / ref3.length_squared()).cross(ref3)
+	ang_vel = Vector3(omegay.z, omegaz.x, omegax.y)
+	
+	update_control(dt)
 
 
 func update_position():
