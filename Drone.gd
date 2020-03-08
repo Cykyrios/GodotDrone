@@ -97,7 +97,7 @@ func _integrate_forces(state):
 			var prop_pos = prop.global_transform.origin - global_transform.origin
 			vec_torque -= prop_force.cross(xform.basis.xform(prop_xform.origin))
 
-		var drag = get_drag(lin_vel, ang_vel)
+		var drag = get_drag(lin_vel, ang_vel, basis)
 		vec_force += drag[0]
 		vec_torque += drag[1]
 		
@@ -126,9 +126,10 @@ func _on_reset():
 	flight_controller.reset()
 
 
-func get_drag(lin_vel : Vector3, ang_vel):
+func get_drag(lin_vel : Vector3, ang_vel, orientation : Basis):
+	var cd = lerp(0.1, 1.3, abs(lin_vel.normalized().dot(orientation.y)))
 	var drag = [Vector3(), Vector3()]
-	drag[0] = -lin_vel.length_squared() * lin_vel.normalized() / 20.0
+	drag[0] = -lin_vel.length_squared() * lin_vel.normalized() / 20.0 * cd
 	drag[1] = -ang_vel.length_squared() * ang_vel.normalized() / 20.0
 	
 	return drag
