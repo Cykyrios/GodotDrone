@@ -272,10 +272,25 @@ func update_control(delta):
 	var roll = change_roll(input[2])
 	var pitch = change_pitch(input[3])
 	
-	motors[0].set_thrust_target(power + yaw + roll + pitch)
-	motors[1].set_thrust_target(power - yaw - roll + pitch)
-	motors[2].set_thrust_target(power + yaw - roll - pitch)
-	motors[3].set_thrust_target(power - yaw + roll - pitch)
+	var motor_power = [power + yaw + roll + pitch,
+			power - yaw - roll + pitch,
+			power + yaw - roll - pitch,
+			power - yaw + roll - pitch]
+	
+	# Air Mode
+	var offset = 0.0
+	for p in motor_power:
+		if p < 0.0 and p < offset:
+			offset = p
+	if offset < 0.0:
+		offset = -offset
+		for i in range(4):
+			motor_power[i] += offset
+	
+	motors[0].set_thrust_target(motor_power[0])
+	motors[1].set_thrust_target(motor_power[1])
+	motors[2].set_thrust_target(motor_power[2])
+	motors[3].set_thrust_target(motor_power[3])
 
 
 func change_power(p):
