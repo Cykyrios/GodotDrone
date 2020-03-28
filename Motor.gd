@@ -20,7 +20,7 @@ var torque = 0.0 setget set_torque, get_torque
 var rpm = 0.0 setget set_rpm, get_rpm
 var rpm_target = 0.0 setget set_rpm_target, get_rpm_target
 var max_rpm_change = 0.0
-var powered = true
+var powered = false
 
 
 func _enter_tree():
