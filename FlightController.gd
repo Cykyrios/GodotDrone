@@ -40,9 +40,9 @@ onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
 
 
 func _ready():
-	pos = global_transform.origin
-	basis = global_transform.basis
-	angles = basis.get_euler()
+#	pos = global_transform.origin
+#	basis = global_transform.basis
+#	angles = basis.get_euler()
 	
 	for i in range(Controller.size()):
 		pid_controllers.append(PID.new())
@@ -135,19 +135,7 @@ func integrate_loop(delta : float, drone_pos : Vector3, drone_basis : Basis):
 	angles_prev = angles
 	angles = basis.get_euler()
 	
-	lin_vel = (pos - pos_prev) / dt
-	local_vel = basis.xform_inv(lin_vel)
-	
-	var ref1 = Vector3(1, 0, 0)
-	var orb1 = basis.xform_inv((pos + basis.xform(ref1) - (pos_prev + basis_prev.xform(ref1))) / dt - lin_vel)
-	var omegax = (ref1.cross(orb1) / ref1.length_squared()).cross(ref1)
-	var ref2 = Vector3(0, 1, 0)
-	var orb2 = basis.xform_inv((pos + basis.xform(ref2) - (pos_prev + basis_prev.xform(ref2))) / dt - lin_vel)
-	var omegay = (ref2.cross(orb2) / ref2.length_squared()).cross(ref2)
-	var ref3 = Vector3(0, 0, 1)
-	var orb3 = basis.xform_inv((pos + basis.xform(ref3) - (pos_prev + basis_prev.xform(ref3))) / dt - lin_vel)
-	var omegaz = (ref3.cross(orb3) / ref3.length_squared()).cross(ref3)
-	ang_vel = Vector3(omegay.z, omegaz.x, omegax.y)
+	update_velocity()
 	
 	update_control(dt)
 
@@ -291,6 +279,7 @@ func update_control(delta):
 	var yaw = change_yaw(input[1])
 	var roll = change_roll(input[2])
 	var pitch = change_pitch(input[3])
+#	print("%8.3f %8.3f %8.3f %8.3f" % [power, yaw, roll, pitch])
 	
 	var motor_speed = [power + yaw + roll + pitch,
 			power - yaw - roll + pitch,
