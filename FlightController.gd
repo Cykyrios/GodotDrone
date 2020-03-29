@@ -32,7 +32,7 @@ enum FlightMode {RATE, LEVEL, SPEED, TRACK, AUTO}
 var flight_mode = FlightMode.RATE
 
 var telemetry_file = File.new()
-export (bool) var b_telemetry = false
+export (bool) var b_telemetry = true
 
 signal flight_mode_changed
 
@@ -184,6 +184,7 @@ func init_telemetry():
 	telemetry_file.store_csv_line(["t", "input.power", "input.yaw", "input.roll", "input.pitch",
 			"x", "y", "z", "vx", "vy", "vz", "vx_loc", "vy_loc", "vz_loc",
 			"yaw", "roll", "pitch", "yaw_speed", "roll_speed", "pitch_speed",
+			"delta_posx", "delta_posy", "delta_posz",
 			"rpm1", "rpm2", "rpm3", "rpm4",
 			"thrust1", "thrust2", "thrust3", "thrust4",
 			"pid.alt.tgt", "pid.alt.err", "pid.alt.out", "pid.alt.clamp",
@@ -196,6 +197,8 @@ func init_telemetry():
 			"pid.fwdspeed.tgt", "pid.fwdspeed.err", "pid.fwdspeed.out", "pid.fwdspeed.clamp",
 			"pid.latspeed.tgt", "pid.latspeed.err", "pid.latspeed.out", "pid.latspeed.clamp",
 			"pid.vrtspeed.tgt", "pid.vrtspeed.err", "pid.vrtspeed.out", "pid.vrtspeed.clamp",
+			"pid.posx.tgt", "pid.posx.err", "pid.posx.out", "pid.posx.clamp",
+			"pid.posz.tgt", "pid.posz.err", "pid.posz.out", "pid.posz.clamp",
 			"pid.prop1.tgt", "pid.prop1.err", "pid.prop1.out", "pid.prop1.clamp",
 			"pid.prop2.tgt", "pid.prop2.err", "pid.prop2.out", "pid.prop2.clamp",
 			"pid.prop3.tgt", "pid.prop3.err", "pid.prop3.out", "pid.prop3.clamp",
@@ -212,6 +215,7 @@ func write_telemetry():
 	var data = PoolStringArray([time, input[0], input[1], input[2], input[3],
 			pos.x, pos.y, pos.z, lin_vel.x, lin_vel.y, lin_vel.z, local_vel.x, local_vel.y, local_vel.z,
 			angles.y, angles.z, angles.x, ang_vel.y, ang_vel.z, ang_vel.x,
+			(get_tracking_target() - pos).x, (get_tracking_target() - pos).y, (get_tracking_target() - pos).z,
 			motors[0].get_rpm(), motors[1].get_rpm(), motors[2].get_rpm(), motors[3].get_rpm(),
 			motors[0].propeller.get_thrust(), motors[1].propeller.get_thrust(), motors[2].propeller.get_thrust(), motors[3].propeller.get_thrust(),
 			pid_controllers[Controller.ALTITUDE].target, pid_controllers[Controller.ALTITUDE].err, pid_controllers[Controller.ALTITUDE].output, pid_controllers[Controller.ALTITUDE].clamped_output,
@@ -224,6 +228,8 @@ func write_telemetry():
 			pid_controllers[Controller.FORWARD_SPEED].target, pid_controllers[Controller.FORWARD_SPEED].err, pid_controllers[Controller.FORWARD_SPEED].output, pid_controllers[Controller.FORWARD_SPEED].clamped_output,
 			pid_controllers[Controller.LATERAL_SPEED].target, pid_controllers[Controller.LATERAL_SPEED].err, pid_controllers[Controller.LATERAL_SPEED].output, pid_controllers[Controller.LATERAL_SPEED].clamped_output,
 			pid_controllers[Controller.VERTICAL_SPEED].target, pid_controllers[Controller.VERTICAL_SPEED].err, pid_controllers[Controller.VERTICAL_SPEED].output, pid_controllers[Controller.VERTICAL_SPEED].clamped_output,
+			pid_controllers[Controller.POS_X].target, pid_controllers[Controller.POS_X].err, pid_controllers[Controller.POS_X].output, pid_controllers[Controller.POS_X].clamped_output,
+			pid_controllers[Controller.POS_Z].target, pid_controllers[Controller.POS_Z].err, pid_controllers[Controller.POS_Z].output, pid_controllers[Controller.POS_Z].clamped_output,
 			motors[0].controller.target, motors[0].controller.err, motors[0].controller.output, motors[0].controller.clamped_output,
 			motors[1].controller.target, motors[1].controller.err, motors[1].controller.output, motors[1].controller.clamped_output,
 			motors[2].controller.target, motors[2].controller.err, motors[2].controller.output, motors[2].controller.clamped_output,
