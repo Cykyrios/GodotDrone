@@ -47,32 +47,32 @@ func _ready():
 	for i in range(Controller.size()):
 		pid_controllers.append(PID.new())
 	
-	pid_controllers[Controller.ALTITUDE].set_coefficients(10, 2, 3)
-	pid_controllers[Controller.ALTITUDE].set_clamp_limits(0.1, 10)
-	pid_controllers[Controller.VERTICAL_SPEED].set_coefficients(4, 3, 0.8)
+	pid_controllers[Controller.ALTITUDE].set_coefficients(10000.0, 300000.0, 3000.0)
+#	pid_controllers[Controller.ALTITUDE].set_clamp_limits(1000.0, 100000.0)
+	pid_controllers[Controller.VERTICAL_SPEED].set_coefficients(100000.0, 50000.0, 1000.0)
 #	pid_controllers[Controller.VERTICAL_SPEED].set_clamp_limits(-2, 2)
-	pid_controllers[Controller.ROLL].set_coefficients(5, 1, 2)
+	pid_controllers[Controller.ROLL].set_coefficients(2000, 200, 600)
 #	pid_controllers[Controller.ROLL].set_clamp_limits(-0.5, 0.5)
-	pid_controllers[Controller.PITCH].set_coefficients(5, 1, 2)
+	pid_controllers[Controller.PITCH].set_coefficients(2000, 200, 600)
 #	pid_controllers[Controller.PITCH].set_clamp_limits(-0.5, 0.5)
 	
 	pid_controllers[Controller.FORWARD_SPEED].set_coefficients(0.5, 0.05, 0.05)
-	pid_controllers[Controller.FORWARD_SPEED].set_clamp_limits(-0.5, 0.5)
+#	pid_controllers[Controller.FORWARD_SPEED].set_clamp_limits(-0.5, 0.5)
 	pid_controllers[Controller.LATERAL_SPEED].set_coefficients(0.5, 0.05, 0.05)
-	pid_controllers[Controller.LATERAL_SPEED].set_clamp_limits(-0.5, 0.5)
+#	pid_controllers[Controller.LATERAL_SPEED].set_clamp_limits(-0.5, 0.5)
 	
 	pid_controllers[Controller.YAW_SPEED].set_coefficients(5000, 0, 0)
-	pid_controllers[Controller.YAW_SPEED].set_clamp_limits(-10, 10)
+#	pid_controllers[Controller.YAW_SPEED].set_clamp_limits(-10, 10)
 	pid_controllers[Controller.ROLL_SPEED].set_coefficients(5000.0, 1000.0, 200.0)
-	pid_controllers[Controller.ROLL_SPEED].set_clamp_limits(-10, 10)
+#	pid_controllers[Controller.ROLL_SPEED].set_clamp_limits(-10, 10)
 	pid_controllers[Controller.PITCH_SPEED].set_coefficients(5000.0, 1000.0, 200.0)
-	pid_controllers[Controller.PITCH_SPEED].set_clamp_limits(-10, 10)
+#	pid_controllers[Controller.PITCH_SPEED].set_clamp_limits(-10, 10)
 	
-	pid_controllers[Controller.POS_X].set_coefficients(0.4, 0, 0.2)
-	pid_controllers[Controller.POS_X].set_clamp_limits(-1, 1)
-	pid_controllers[Controller.POS_Z].set_coefficients(0.4, 0, 0.2)
-	pid_controllers[Controller.POS_Z].set_clamp_limits(-1, 1)
-	pid_controllers[Controller.YAW].set_coefficients(3, 0, 2)
+	pid_controllers[Controller.POS_X].set_coefficients(1, 0, 1)
+#	pid_controllers[Controller.POS_X].set_clamp_limits(-1, 1)
+	pid_controllers[Controller.POS_Z].set_coefficients(1, 0, 1)
+#	pid_controllers[Controller.POS_Z].set_clamp_limits(-1, 1)
+	pid_controllers[Controller.YAW].set_coefficients(1000, 100, 100)
 #	pid_controllers[Controller.YAW].set_clamp_limits(-1, 1)
 	
 	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
@@ -308,21 +308,20 @@ func change_power(p):
 	var power = hover_thrust
 	
 	if flight_mode == FlightMode.RATE:
-#		power += sign(p) * pow(abs(p), 2) * 50 - 10
-		power = p * 50
+		power = p * motors[0].MAX_RPM
 	
 	elif flight_mode == FlightMode.SPEED:
-		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 4)
-		power += pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
+		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 10.0)
+		power = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL:
-		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 10)
-		power += pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
+		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 10.0)
+		power = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 	
 	elif flight_mode == FlightMode.TRACK:
 		var target = pid_controllers[Controller.ALTITUDE].target
-		pid_controllers[Controller.ALTITUDE].set_target(target + (p - 0.5) / 40)
-		power += pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
+		pid_controllers[Controller.ALTITUDE].set_target(target + (p - 0.5) * 5.0 * dt)
+		power = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
 	
 	elif flight_mode == FlightMode.AUTO:
 		if is_flight_safe():
@@ -330,37 +329,38 @@ func change_power(p):
 			if pos.y < 2:
 				target_speed = -0.5
 			pid_controllers[Controller.VERTICAL_SPEED].set_target(target_speed)
-			power += pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
+			power = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 	
 	return power
 
 
 func change_pitch(p):
 	var pitch_change = 0.0
+	var expo = control_profile.expo_pitch
 	
 	if flight_mode == FlightMode.RATE:
 		var rate = control_profile.rate_pitch
-		var expo = control_profile.expo_pitch
 		var pitch_input = ((1 - expo) * p + expo * pow(p, 3)) * deg2rad(rate)
 		pid_controllers[Controller.PITCH_SPEED].set_target(pitch_input)
 		pitch_change = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL:
-		pid_controllers[Controller.PITCH].set_target(p / 2)
+		pid_controllers[Controller.PITCH].set_target(((1 - expo) * p + expo * pow(p, 3)) / 2.0)
 		pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
 	elif flight_mode == FlightMode.SPEED:
-		pid_controllers[Controller.FORWARD_SPEED].set_target(sign(p) * pow(abs(p), 2) * 10)
+		pid_controllers[Controller.FORWARD_SPEED].set_target(((1 - expo) * p + expo * pow(p, 3)) * 10.0)
 		pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
-		pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2)
+		pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2.0)
 		pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
 	elif flight_mode == FlightMode.TRACK:
-		pid_controllers[Controller.POS_Z].set_target(pid_controllers[Controller.POS_Z].target + p / 100)
-		var target = get_tracking_target()
+		var target = pid_controllers[Controller.POS_Z].target + ((1 - expo) * p + expo * pow(p, 3)) * 5.0 * dt
+		pid_controllers[Controller.POS_Z].set_target(target)
+		target = get_tracking_target()
 		var delta_z = global_transform.xform_inv(target).z
-		var pitch_target = pid_controllers[Controller.POS_Z].get_output(target.z - delta_z, dt) / 2
-		pid_controllers[Controller.PITCH].set_target(pitch_target)
+		var pitch_target = pid_controllers[Controller.POS_Z].get_output(target.z - delta_z, dt)
+		pid_controllers[Controller.PITCH].set_target(clamp(pitch_target,-deg2rad(30),deg2rad(30)))
 		pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt)
 	
 	elif flight_mode == FlightMode.AUTO:
@@ -382,30 +382,31 @@ func change_pitch(p):
 
 func change_roll(r):
 	var roll_change = 0.0
+	var expo = control_profile.expo_roll
 	
 	if flight_mode == FlightMode.RATE:
 		var rate = control_profile.rate_roll
-		var expo = control_profile.expo_roll
 		var roll_input = ((1 - expo) * r + expo * pow(r, 3)) * deg2rad(rate)
 		pid_controllers[Controller.ROLL_SPEED].set_target(roll_input)
 		roll_change = pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL:
-		pid_controllers[Controller.ROLL].set_target(r / 2)
+		pid_controllers[Controller.ROLL].set_target(((1 - expo) * r + expo * pow(r, 3)) / 2.0)
 		roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
 	
 	elif flight_mode == FlightMode.SPEED:
-		pid_controllers[Controller.LATERAL_SPEED].set_target(sign(r) * pow(abs(r), 2) * 10)
+		pid_controllers[Controller.LATERAL_SPEED].set_target(((1 - expo) * r + expo * pow(r, 3)) * 10.0)
 		roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
-		pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2)
+		pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2.0)
 		roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 	
 	elif flight_mode == FlightMode.TRACK:
-		pid_controllers[Controller.POS_X].set_target(pid_controllers[Controller.POS_X].target + r / 100)
-		var target = get_tracking_target()
+		var target = pid_controllers[Controller.POS_X].target + ((1 - expo) * r + expo * pow(r, 3)) * 5.0 * dt
+		pid_controllers[Controller.POS_X].set_target(target)
+		target = get_tracking_target()
 		var delta_x = global_transform.xform_inv(target).x
-		var roll_target = pid_controllers[Controller.POS_X].get_output(target.x - delta_x, dt) / 2
-		pid_controllers[Controller.ROLL].set_target(roll_target)
+		var roll_target = pid_controllers[Controller.POS_X].get_output(target.x - delta_x, dt)
+		pid_controllers[Controller.ROLL].set_target(clamp(roll_target,-deg2rad(30),deg2rad(30)))
 		roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
 	
 	elif flight_mode == FlightMode.AUTO:
@@ -421,27 +422,26 @@ func change_roll(r):
 			else:
 				pid_controllers[Controller.ROLL].set_target(0)
 				roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
-			
 	
 	return roll_change
 
 
 func change_yaw(y):
 	var yaw_change = 0.0
+	var expo = control_profile.expo_yaw
 	
 	if flight_mode == FlightMode.RATE:
 		var rate = control_profile.rate_yaw
-		var expo = control_profile.expo_yaw
 		var yaw_input = -((1 - expo) * y + expo * pow(y, 3)) * deg2rad(rate)
 		pid_controllers[Controller.YAW_SPEED].set_target(yaw_input)
 		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED:
-		pid_controllers[Controller.YAW_SPEED].set_target(-sign(y) * pow(abs(y), 2) * 2)
+		pid_controllers[Controller.YAW_SPEED].set_target(-((1 - expo) * y + expo * pow(y, 3)) * 2)
 		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 	
 	elif flight_mode == FlightMode.TRACK:
-		var target = pid_controllers[Controller.YAW].target - y / 100
+		var target = pid_controllers[Controller.YAW].target - ((1 - expo) * y + expo * pow(y, 3)) * PI / 2.0 * dt
 		while target > PI:
 			target -= 2 * PI
 		while target < -PI:
