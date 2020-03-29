@@ -61,11 +61,11 @@ func _ready():
 	pid_controllers[Controller.LATERAL_SPEED].set_coefficients(0.5, 0.05, 0.05)
 	pid_controllers[Controller.LATERAL_SPEED].set_clamp_limits(-0.5, 0.5)
 	
-	pid_controllers[Controller.YAW_SPEED].set_coefficients(3, 0.1, 0.05)
+	pid_controllers[Controller.YAW_SPEED].set_coefficients(5000, 0, 0)
 	pid_controllers[Controller.YAW_SPEED].set_clamp_limits(-10, 10)
-	pid_controllers[Controller.ROLL_SPEED].set_coefficients(3, 0.1, 0.1)
+	pid_controllers[Controller.ROLL_SPEED].set_coefficients(5000.0, 1000.0, 200.0)
 	pid_controllers[Controller.ROLL_SPEED].set_clamp_limits(-10, 10)
-	pid_controllers[Controller.PITCH_SPEED].set_coefficients(3, 0.1, 0.1)
+	pid_controllers[Controller.PITCH_SPEED].set_coefficients(5000.0, 1000.0, 200.0)
 	pid_controllers[Controller.PITCH_SPEED].set_clamp_limits(-10, 10)
 	
 	pid_controllers[Controller.POS_X].set_coefficients(0.4, 0, 0.2)
