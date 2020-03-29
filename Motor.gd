@@ -48,9 +48,10 @@ func update_thrust(delta):
 		controller.set_target(thrust_target)
 		set_rpm_target(controller.get_output(propeller.get_thrust(), delta))
 		set_rpm(clamp(rpm_target, rpm - max_rpm_change * delta, rpm + max_rpm_change * delta))
+		set_torque(rpm / (MAX_RPM as float) * MAX_TORQUE)
 	else:
 		set_rpm(clamp(0, rpm - max_rpm_change * delta, rpm + max_rpm_change * delta))
-	set_torque(rpm / MAX_RPM / delta)
+		set_torque(0.0)
 
 
 func set_clockwise(cw : bool):
