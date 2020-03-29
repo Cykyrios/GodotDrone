@@ -218,7 +218,8 @@ limits/debugger_stdout/max_messages_per_frame=500
 
 [physics]
 
-common/physics_fps=240
+common/physics_fps=100
+3d/default_gravity=9.81
 
 [rendering]
 

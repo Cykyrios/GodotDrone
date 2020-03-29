@@ -13,6 +13,10 @@ export (float, 0.0, 1.0) var expo_pitch = 0.2
 export (float, 0.0, 1.0) var expo_roll = 0.2
 export (float, 0.0, 1.0) var expo_yaw = 0.2
 
+var drone_transform = Transform()
+var drone_pos = Vector3()
+var drone_basis = Vector3()
+
 onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
 var b_debug = false
 
@@ -62,15 +66,56 @@ func _process(delta):
 
 
 func _physics_process(delta):
-	for motor in motors:
-		var prop = motor.propeller
-		var vec_torque = motor.get_torque() * global_transform.basis.y
-		var vec_force = prop.global_transform.basis.y * prop.get_thrust()
-		var vec_pos = prop.global_transform.origin - global_transform.origin
-		add_torque(vec_torque)
-		add_force(vec_force, vec_pos)
+	drone_transform = global_transform
+	drone_pos = drone_transform.origin
+	drone_basis = drone_transform.basis
+
+
+func _integrate_forces(state):
+	var steps = 10
+	var dt = state.step / (steps as float)
 	
-	add_drag()
+	var xform = drone_transform
+	var pos = drone_pos
+	var basis = drone_basis
+	var lin_vel = state.linear_velocity
+	var ang_vel = state.angular_velocity
+	
+	for i in range(steps):
+		flight_controller.integrate_loop(dt, pos, basis)
+		
+		var vec_force = Vector3()
+		var vec_torque = Vector3()
+		
+		for motor in motors:
+			motor.update_thrust(dt)
+			var prop = motor.propeller
+			var prop_xform = motor.transform * prop.transform
+			var prop_force = xform.basis.xform(prop_xform.basis.y) * prop.get_thrust()
+			vec_force += prop_force
+			vec_torque += motor.get_torque() * basis.y
+			var prop_pos = prop.global_transform.origin - global_transform.origin
+			vec_torque -= prop_force.cross(xform.basis.xform(prop_xform.origin))
+
+		var drag = get_drag(lin_vel, ang_vel, basis)
+		vec_force += drag[0]
+		vec_torque += drag[1]
+		
+		# Integrate forces and velocities
+		var a = vec_force * state.inverse_mass + state.total_gravity
+		lin_vel += a * dt
+		pos += lin_vel * dt
+		
+		var ang_a = vec_torque * state.inverse_inertia
+		ang_vel += ang_a * dt
+		var delta_ang_vel = ang_vel * dt
+		if delta_ang_vel != Vector3.ZERO:
+			basis = basis.rotated(delta_ang_vel.normalized(), delta_ang_vel.length())
+		
+		xform = Transform(basis, pos)
+	
+	state.linear_velocity = lin_vel
+	state.angular_velocity = ang_vel
 
 
 func _on_reset():
@@ -80,12 +125,13 @@ func _on_reset():
 	flight_controller.reset()
 
 
-func add_drag():
-	var drag = -linear_velocity.length_squared() * linear_velocity.normalized() / 20.0
-	add_central_force(drag)
+func get_drag(lin_vel : Vector3, ang_vel, orientation : Basis):
+	var cd = lerp(0.1, 1.3, abs(lin_vel.normalized().dot(orientation.y)))
+	var drag = [Vector3(), Vector3()]
+	drag[0] = -lin_vel.length_squared() * lin_vel.normalized() / 20.0 * cd
+	drag[1] = -ang_vel.length_squared() * ang_vel.normalized() / 20.0
 	
-	var ang_drag = -angular_velocity.length_squared() * angular_velocity.normalized() / 20.0
-	add_torque(ang_drag)
+	return drag
 
 
 func _on_flight_mode_changed(mode):
