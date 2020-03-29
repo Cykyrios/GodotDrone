@@ -198,11 +198,7 @@ func init_telemetry():
 			"pid.latspeed.tgt", "pid.latspeed.err", "pid.latspeed.out", "pid.latspeed.clamp",
 			"pid.vrtspeed.tgt", "pid.vrtspeed.err", "pid.vrtspeed.out", "pid.vrtspeed.clamp",
 			"pid.posx.tgt", "pid.posx.err", "pid.posx.out", "pid.posx.clamp",
-			"pid.posz.tgt", "pid.posz.err", "pid.posz.out", "pid.posz.clamp",
-			"pid.prop1.tgt", "pid.prop1.err", "pid.prop1.out", "pid.prop1.clamp",
-			"pid.prop2.tgt", "pid.prop2.err", "pid.prop2.out", "pid.prop2.clamp",
-			"pid.prop3.tgt", "pid.prop3.err", "pid.prop3.out", "pid.prop3.clamp",
-			"pid.prop4.tgt", "pid.prop4.err", "pid.prop4.out", "pid.prop4.clamp"])
+			"pid.posz.tgt", "pid.posz.err", "pid.posz.out", "pid.posz.clamp"])
 	telemetry_file.close()
 
 
@@ -229,11 +225,7 @@ func write_telemetry():
 			pid_controllers[Controller.LATERAL_SPEED].target, pid_controllers[Controller.LATERAL_SPEED].err, pid_controllers[Controller.LATERAL_SPEED].output, pid_controllers[Controller.LATERAL_SPEED].clamped_output,
 			pid_controllers[Controller.VERTICAL_SPEED].target, pid_controllers[Controller.VERTICAL_SPEED].err, pid_controllers[Controller.VERTICAL_SPEED].output, pid_controllers[Controller.VERTICAL_SPEED].clamped_output,
 			pid_controllers[Controller.POS_X].target, pid_controllers[Controller.POS_X].err, pid_controllers[Controller.POS_X].output, pid_controllers[Controller.POS_X].clamped_output,
-			pid_controllers[Controller.POS_Z].target, pid_controllers[Controller.POS_Z].err, pid_controllers[Controller.POS_Z].output, pid_controllers[Controller.POS_Z].clamped_output,
-			motors[0].controller.target, motors[0].controller.err, motors[0].controller.output, motors[0].controller.clamped_output,
-			motors[1].controller.target, motors[1].controller.err, motors[1].controller.output, motors[1].controller.clamped_output,
-			motors[2].controller.target, motors[2].controller.err, motors[2].controller.output, motors[2].controller.clamped_output,
-			motors[3].controller.target, motors[3].controller.err, motors[3].controller.output, motors[3].controller.clamped_output])
+			pid_controllers[Controller.POS_Z].target, pid_controllers[Controller.POS_Z].err, pid_controllers[Controller.POS_Z].output, pid_controllers[Controller.POS_Z].clamped_output])
 	telemetry_file.store_csv_line(data)
 	telemetry_file.close()
 
@@ -300,25 +292,27 @@ func update_control(delta):
 	var roll = change_roll(input[2])
 	var pitch = change_pitch(input[3])
 	
-	var motor_power = [power + yaw + roll + pitch,
+	var motor_speed = [power + yaw + roll + pitch,
 			power - yaw - roll + pitch,
 			power + yaw - roll - pitch,
 			power - yaw + roll - pitch]
 	
 	# Air Mode
 	var offset = 0.0
-	for p in motor_power:
-		if p < 0.0 and p < offset:
-			offset = p
-	if offset < 0.0:
-		offset = -offset
-		for i in range(4):
-			motor_power[i] += offset
+	var max_rpm = motors[0].MAX_RPM
+	var min_rpm = max_rpm * motors[0].MIN_POWER / 100.0
+	for speed in motor_speed:
+		if (speed < min_rpm and speed < offset):
+			offset = speed - min_rpm
+		elif (speed > max_rpm and speed > offset):
+			offset = speed - max_rpm
+	for i in range(4):
+		motor_speed[i] -= offset
 	
-	motors[0].set_thrust_target(motor_power[0])
-	motors[1].set_thrust_target(motor_power[1])
-	motors[2].set_thrust_target(motor_power[2])
-	motors[3].set_thrust_target(motor_power[3])
+	motors[0].set_rpm_target(motor_speed[0])
+	motors[1].set_rpm_target(motor_speed[1])
+	motors[2].set_rpm_target(motor_speed[2])
+	motors[3].set_rpm_target(motor_speed[3])
 
 
 func change_power(p):
