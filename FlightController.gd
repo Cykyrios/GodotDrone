@@ -114,10 +114,14 @@ func set_control_profile(profile : ControlProfile):
 func _on_arm_input():
 	if input[0] <= 0.01:
 		set_armed(true)
+	for controller in pid_controllers:
+		controller.set_disabled(false)
 
 
 func _on_disarm_input():
 	set_armed(false)
+	for controller in pid_controllers:
+		controller.set_disabled(true)
 
 
 func set_armed(arm : bool):
@@ -438,10 +442,7 @@ func reset():
 	update_velocity()
 	
 	for controller in pid_controllers:
-		controller.reset_integral()
-		controller.target = 0.0
-		controller.err = 0.0
-		controller.err_prev = 0.0
+		controller.reset()
 	pid_controllers[Controller.ALTITUDE].target = pos.y
 	pid_controllers[Controller.POS_X].target = pos.x
 	pid_controllers[Controller.POS_Z].target = pos.z
