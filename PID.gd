@@ -13,6 +13,8 @@ var clamp_low = -INF
 var clamp_high = INF
 var clamped_output = 0.0
 
+var disabled = false setget set_disabled
+
 export (float) var kp = 0.0
 export (float) var ki = 0.0
 export (float) var kd = 0.0
@@ -24,6 +26,10 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func set_disabled(d : bool):
+	disabled = d
 
 
 func set_coefficients(p : float, i : float, d : float):
@@ -55,11 +61,24 @@ func is_saturated():
 	return saturated
 
 
+func reset():
+	set_target(0.0)
+	err = 0.0
+	err_prev = 0.0
+	reset_integral()
+	freeze_integral = false
+	output = 0.0
+	clamped_output = 0.0
+
+
 func reset_integral(i = 0.0):
 	integral = i
 
 
 func get_output(mv, dt, p_print = false):
+	if disabled:
+		return 0.0
+	
 	err = target - mv
 	if not is_saturated():
 		integral += err * dt
