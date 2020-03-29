@@ -78,8 +78,8 @@ func _integrate_forces(state):
 	var xform = drone_transform
 	var pos = drone_pos
 	var basis = drone_basis
-	var lin_vel = linear_velocity
-	var ang_vel = angular_velocity
+	var lin_vel = state.linear_velocity
+	var ang_vel = state.angular_velocity
 	
 	for i in range(steps):
 		flight_controller.integrate_loop(dt, pos, basis)
@@ -109,9 +109,8 @@ func _integrate_forces(state):
 		var ang_a = vec_torque * state.inverse_inertia
 		ang_vel += ang_a * dt
 		var delta_ang_vel = ang_vel * dt
-		if delta_ang_vel == Vector3.ZERO:
-			delta_ang_vel = Vector3.ONE
-		basis = basis.rotated(delta_ang_vel.normalized(), delta_ang_vel.length())
+		if delta_ang_vel != Vector3.ZERO:
+			basis = basis.rotated(delta_ang_vel.normalized(), delta_ang_vel.length())
 		
 		xform = Transform(basis, pos)
 	
