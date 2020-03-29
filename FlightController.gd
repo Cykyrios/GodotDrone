@@ -464,7 +464,9 @@ func change_yaw(y):
 func reset():
 	set_armed(false)
 	
-	update_position()
+	# Update position twice to ensure pos_prev == pos
+	for i in range(2):
+		update_position()
 	update_velocity()
 	
 	for controller in pid_controllers:
