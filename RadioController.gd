@@ -4,6 +4,8 @@ class_name RadioController
 
 signal reset_requested
 signal mode_changed
+signal arm_input
+signal disarm_input
 
 
 export (NodePath) var target_path = null
@@ -16,6 +18,8 @@ func _ready():
 	target = get_node(target_path)
 	connect("reset_requested", target, "_on_reset")
 	connect("mode_changed", target.flight_controller, "_on_cycle_flight_modes")
+	connect("arm_input", target.flight_controller, "_on_arm_input")
+	connect("disarm_input", target.flight_controller, "_on_disarm_input")
 
 
 func _input(event):
@@ -23,6 +27,11 @@ func _input(event):
 		emit_signal("reset_requested")
 	elif event.is_action_pressed("cycle_flight_modes"):
 		emit_signal("mode_changed")
+	elif event.is_action_pressed("toggle_arm"):
+		if target.flight_controller.armed == false:
+			emit_signal("arm_input")
+		else:
+			emit_signal("disarm_input")
 
 
 func _physics_process(delta):

@@ -21,6 +21,9 @@ var input = [0, 0, 0, 0]
 var control_profile = null
 
 
+var armed = false setget set_armed
+
+
 var pid_controllers = []
 enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
 		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED}
@@ -106,6 +109,21 @@ func _physics_process(delta):
 
 func set_control_profile(profile : ControlProfile):
 	control_profile = profile
+
+
+func _on_arm_input():
+	if input[0] <= 0.01:
+		set_armed(true)
+
+
+func _on_disarm_input():
+	set_armed(false)
+
+
+func set_armed(arm : bool):
+	armed = arm
+	for motor in motors:
+		motor.powered = armed
 
 
 func update_position():
@@ -414,6 +432,8 @@ func change_yaw(y):
 
 
 func reset():
+	set_armed(false)
+	
 	update_position()
 	update_velocity()
 	
