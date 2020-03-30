@@ -47,7 +47,7 @@ func _ready():
 	for i in range(Controller.size()):
 		pid_controllers.append(PID.new())
 	
-	pid_controllers[Controller.ALTITUDE].set_coefficients(10000.0, 300000.0, 3000.0)
+	pid_controllers[Controller.ALTITUDE].set_coefficients(10000.0, 300000.0, 10000.0)
 #	pid_controllers[Controller.ALTITUDE].set_clamp_limits(1000.0, 100000.0)
 	pid_controllers[Controller.VERTICAL_SPEED].set_coefficients(100000.0, 50000.0, 1000.0)
 #	pid_controllers[Controller.VERTICAL_SPEED].set_clamp_limits(-2, 2)
@@ -68,11 +68,11 @@ func _ready():
 	pid_controllers[Controller.PITCH_SPEED].set_coefficients(5000.0, 1000.0, 200.0)
 #	pid_controllers[Controller.PITCH_SPEED].set_clamp_limits(-10, 10)
 	
-	pid_controllers[Controller.POS_X].set_coefficients(1, 0, 1)
+	pid_controllers[Controller.POS_X].set_coefficients(0.2, 0.05, 0.2)
 #	pid_controllers[Controller.POS_X].set_clamp_limits(-1, 1)
-	pid_controllers[Controller.POS_Z].set_coefficients(1, 0, 1)
+	pid_controllers[Controller.POS_Z].set_coefficients(0.2, 0.05, 0.2)
 #	pid_controllers[Controller.POS_Z].set_clamp_limits(-1, 1)
-	pid_controllers[Controller.YAW].set_coefficients(1000, 100, 100)
+	pid_controllers[Controller.YAW].set_coefficients(3000, 500, 1000)
 #	pid_controllers[Controller.YAW].set_clamp_limits(-1, 1)
 	
 	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
@@ -366,8 +366,12 @@ func update_command():
 		motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
 	elif flight_mode == FlightMode.TRACK:
-		var target = pid_controllers[Controller.ALTITUDE].target
-		pid_controllers[Controller.ALTITUDE].set_target(target + (pwr - 0.5) * 5.0 * dt)
+		var target = get_tracking_target()
+		target.x = target.x + ((1 - expo_r) * r + expo_r * pow(r, 3)) * 5.0 * dt
+		target.y = target.y + (pwr - 0.5) * 5.0 * dt
+		target.z = target.z + ((1 - expo_p) * p + expo_p * pow(p, 3)) * 5.0 * dt
+		set_tracking_target(target)
+		
 		motor_control[0] = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
 		
 		target = pid_controllers[Controller.YAW].target - ((1 - expo_y) * y + expo_y * pow(y, 3)) * PI / 2.0 * dt
@@ -383,19 +387,15 @@ func update_command():
 				hdg_delta = -hdg_delta
 		motor_control[1] = pid_controllers[Controller.YAW].get_output(angles.y + hdg_delta, dt, false)
 		
-		target = pid_controllers[Controller.POS_X].target + ((1 - expo_r) * r + expo_r * pow(r, 3)) * 5.0 * dt
-		pid_controllers[Controller.POS_X].set_target(target)
+		var xform = Transform(basis, pos)
 		target = get_tracking_target()
-		var delta_x = global_transform.xform_inv(target).x
-		var roll_target = pid_controllers[Controller.POS_X].get_output(target.x - delta_x, dt)
+		var delta_pos = xform.xform_inv(target)
+		
+		var roll_target = pid_controllers[Controller.POS_X].get_output(target.x - delta_pos.x, dt)
 		pid_controllers[Controller.ROLL].set_target(clamp(roll_target,-deg2rad(30),deg2rad(30)))
 		motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
-		
-		target = pid_controllers[Controller.POS_Z].target + ((1 - expo_p) * p + expo_p * pow(p, 3)) * 5.0 * dt
-		pid_controllers[Controller.POS_Z].set_target(target)
-		target = get_tracking_target()
-		var delta_z = global_transform.xform_inv(target).z
-		var pitch_target = pid_controllers[Controller.POS_Z].get_output(target.z - delta_z, dt)
+
+		var pitch_target = pid_controllers[Controller.POS_Z].get_output(target.z - delta_pos.z, dt)
 		pid_controllers[Controller.PITCH].set_target(clamp(pitch_target,-deg2rad(30),deg2rad(30)))
 		motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt)
 	
