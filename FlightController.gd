@@ -275,12 +275,13 @@ func get_tracking_target():
 
 func update_control(delta):
 	dt = delta
-	var power = change_power(input[0])
-	var yaw = change_yaw(input[1])
-	var roll = change_roll(input[2])
-	var pitch = change_pitch(input[3])
+	var motor_control = update_command()
 #	print("%8.3f %8.3f %8.3f %8.3f" % [power, yaw, roll, pitch])
 	
+	var power = motor_control[0]
+	var yaw = motor_control[1]
+	var roll = motor_control[2]
+	var pitch = motor_control[3]
 	var motor_speed = [power + yaw + roll + pitch,
 			power - yaw - roll + pitch,
 			power + yaw - roll - pitch,
@@ -304,144 +305,72 @@ func update_control(delta):
 	motors[3].set_rpm_target(motor_speed[3])
 
 
-func change_power(p):
-	var power = hover_thrust
+func update_command():
+	var motor_control = [0, 0, 0, 0]
+	
+	var pwr = input[0]
+	var y = input[1]
+	var r = input[2]
+	var p = input[3]
+	
+	var expo_y = control_profile.expo_yaw
+	var rate_y = control_profile.rate_yaw
+	var expo_r = control_profile.expo_roll
+	var rate_r = control_profile.rate_roll
+	var expo_p = control_profile.expo_pitch
+	var rate_p = control_profile.rate_pitch
 	
 	if flight_mode == FlightMode.RATE:
-		power = p * motors[0].MAX_RPM
-	
-	elif flight_mode == FlightMode.SPEED:
-		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 10.0)
-		power = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
+		motor_control[0] = pwr * motors[0].MAX_RPM
+		
+		var yaw_input = -((1 - expo_y) * y + expo_y * pow(y, 3)) * deg2rad(rate_y)
+		pid_controllers[Controller.YAW_SPEED].set_target(yaw_input)
+		motor_control[1] = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
+		
+		var roll_input = ((1 - expo_r) * r + expo_r * pow(r, 3)) * deg2rad(rate_r)
+		pid_controllers[Controller.ROLL_SPEED].set_target(roll_input)
+		motor_control[2] = pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
+		
+		var pitch_input = ((1 - expo_p) * p + expo_p * pow(p, 3)) * deg2rad(rate_p)
+		pid_controllers[Controller.PITCH_SPEED].set_target(pitch_input)
+		motor_control[3] = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL:
-		pid_controllers[Controller.VERTICAL_SPEED].set_target((p - 0.5) * 10.0)
-		power = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
+		pid_controllers[Controller.VERTICAL_SPEED].set_target((pwr - 0.5) * 10.0)
+		motor_control[0] = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
+		
+		pid_controllers[Controller.YAW_SPEED].set_target(-((1 - expo_y) * y + expo_y * pow(y, 3)) * 2)
+		motor_control[1] = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
+		
+		pid_controllers[Controller.ROLL].set_target(((1 - expo_r) * r + expo_r * pow(r, 3)) / 2.0)
+		motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
+		
+		pid_controllers[Controller.PITCH].set_target(((1 - expo_p) * p + expo_p * pow(p, 3)) / 2.0)
+		motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+	
+	elif flight_mode == FlightMode.SPEED:
+		pid_controllers[Controller.VERTICAL_SPEED].set_target((pwr - 0.5) * 10.0)
+		motor_control[0] = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
+		
+		pid_controllers[Controller.YAW_SPEED].set_target(-((1 - expo_y) * y + expo_y * pow(y, 3)) * 2)
+		motor_control[1] = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
+		
+		pid_controllers[Controller.LATERAL_SPEED].set_target(((1 - expo_r) * r + expo_r * pow(r, 3)) * 10.0)
+		var roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
+		pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2.0)
+		motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+		
+		pid_controllers[Controller.FORWARD_SPEED].set_target(((1 - expo_p) * p + expo_p * pow(p, 3)) * 10.0)
+		var pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
+		pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2.0)
+		motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
 	elif flight_mode == FlightMode.TRACK:
 		var target = pid_controllers[Controller.ALTITUDE].target
-		pid_controllers[Controller.ALTITUDE].set_target(target + (p - 0.5) * 5.0 * dt)
-		power = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
-	
-	elif flight_mode == FlightMode.AUTO:
-		if is_flight_safe():
-			var target_speed = -3
-			if pos.y < 2:
-				target_speed = -0.5
-			pid_controllers[Controller.VERTICAL_SPEED].set_target(target_speed)
-			power = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
-	
-	return power
-
-
-func change_pitch(p):
-	var pitch_change = 0.0
-	var expo = control_profile.expo_pitch
-	
-	if flight_mode == FlightMode.RATE:
-		var rate = control_profile.rate_pitch
-		var pitch_input = ((1 - expo) * p + expo * pow(p, 3)) * deg2rad(rate)
-		pid_controllers[Controller.PITCH_SPEED].set_target(pitch_input)
-		pitch_change = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
-	
-	elif flight_mode == FlightMode.LEVEL:
-		pid_controllers[Controller.PITCH].set_target(((1 - expo) * p + expo * pow(p, 3)) / 2.0)
-		pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
-	
-	elif flight_mode == FlightMode.SPEED:
-		pid_controllers[Controller.FORWARD_SPEED].set_target(((1 - expo) * p + expo * pow(p, 3)) * 10.0)
-		pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
-		pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2.0)
-		pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
-	
-	elif flight_mode == FlightMode.TRACK:
-		var target = pid_controllers[Controller.POS_Z].target + ((1 - expo) * p + expo * pow(p, 3)) * 5.0 * dt
-		pid_controllers[Controller.POS_Z].set_target(target)
-		target = get_tracking_target()
-		var delta_z = global_transform.xform_inv(target).z
-		var pitch_target = pid_controllers[Controller.POS_Z].get_output(target.z - delta_z, dt)
-		pid_controllers[Controller.PITCH].set_target(clamp(pitch_target,-deg2rad(30),deg2rad(30)))
-		pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt)
-	
-	elif flight_mode == FlightMode.AUTO:
-		if is_flight_safe():
-			pid_controllers[Controller.FORWARD_SPEED].set_target(0)
-			pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
-			pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2)
-			pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
-		else:
-			if ang_vel.length_squared() <= 1.0:
-				pid_controllers[Controller.PITCH].set_target(0)
-				pitch_change = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
-			else:
-				pid_controllers[Controller.PITCH_SPEED].set_target(0)
-				pitch_change = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
-	
-	return pitch_change
-
-
-func change_roll(r):
-	var roll_change = 0.0
-	var expo = control_profile.expo_roll
-	
-	if flight_mode == FlightMode.RATE:
-		var rate = control_profile.rate_roll
-		var roll_input = ((1 - expo) * r + expo * pow(r, 3)) * deg2rad(rate)
-		pid_controllers[Controller.ROLL_SPEED].set_target(roll_input)
-		roll_change = pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
-	
-	elif flight_mode == FlightMode.LEVEL:
-		pid_controllers[Controller.ROLL].set_target(((1 - expo) * r + expo * pow(r, 3)) / 2.0)
-		roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
-	
-	elif flight_mode == FlightMode.SPEED:
-		pid_controllers[Controller.LATERAL_SPEED].set_target(((1 - expo) * r + expo * pow(r, 3)) * 10.0)
-		roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
-		pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2.0)
-		roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
-	
-	elif flight_mode == FlightMode.TRACK:
-		var target = pid_controllers[Controller.POS_X].target + ((1 - expo) * r + expo * pow(r, 3)) * 5.0 * dt
-		pid_controllers[Controller.POS_X].set_target(target)
-		target = get_tracking_target()
-		var delta_x = global_transform.xform_inv(target).x
-		var roll_target = pid_controllers[Controller.POS_X].get_output(target.x - delta_x, dt)
-		pid_controllers[Controller.ROLL].set_target(clamp(roll_target,-deg2rad(30),deg2rad(30)))
-		roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
-	
-	elif flight_mode == FlightMode.AUTO:
-		if is_flight_safe():
-			pid_controllers[Controller.LATERAL_SPEED].set_target(0)
-			roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
-			pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2)
-			roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
-		else:
-			if ang_vel.length_squared() <= 1.0:
-				pid_controllers[Controller.ROLL].set_target(0)
-				roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
-			else:
-				pid_controllers[Controller.ROLL].set_target(0)
-				roll_change = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
-	
-	return roll_change
-
-
-func change_yaw(y):
-	var yaw_change = 0.0
-	var expo = control_profile.expo_yaw
-	
-	if flight_mode == FlightMode.RATE:
-		var rate = control_profile.rate_yaw
-		var yaw_input = -((1 - expo) * y + expo * pow(y, 3)) * deg2rad(rate)
-		pid_controllers[Controller.YAW_SPEED].set_target(yaw_input)
-		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
-	
-	elif flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED:
-		pid_controllers[Controller.YAW_SPEED].set_target(-((1 - expo) * y + expo * pow(y, 3)) * 2)
-		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
-	
-	elif flight_mode == FlightMode.TRACK:
-		var target = pid_controllers[Controller.YAW].target - ((1 - expo) * y + expo * pow(y, 3)) * PI / 2.0 * dt
+		pid_controllers[Controller.ALTITUDE].set_target(target + (pwr - 0.5) * 5.0 * dt)
+		motor_control[0] = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
+		
+		target = pid_controllers[Controller.YAW].target - ((1 - expo_y) * y + expo_y * pow(y, 3)) * PI / 2.0 * dt
 		while target > PI:
 			target -= 2 * PI
 		while target < -PI:
@@ -452,13 +381,62 @@ func change_yaw(y):
 			hdg_delta = 2 * PI
 			if target < 0:
 				hdg_delta = -hdg_delta
-		yaw_change = pid_controllers[Controller.YAW].get_output(angles.y + hdg_delta, dt, false)
+		motor_control[1] = pid_controllers[Controller.YAW].get_output(angles.y + hdg_delta, dt, false)
+		
+		target = pid_controllers[Controller.POS_X].target + ((1 - expo_r) * r + expo_r * pow(r, 3)) * 5.0 * dt
+		pid_controllers[Controller.POS_X].set_target(target)
+		target = get_tracking_target()
+		var delta_x = global_transform.xform_inv(target).x
+		var roll_target = pid_controllers[Controller.POS_X].get_output(target.x - delta_x, dt)
+		pid_controllers[Controller.ROLL].set_target(clamp(roll_target,-deg2rad(30),deg2rad(30)))
+		motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
+		
+		target = pid_controllers[Controller.POS_Z].target + ((1 - expo_p) * p + expo_p * pow(p, 3)) * 5.0 * dt
+		pid_controllers[Controller.POS_Z].set_target(target)
+		target = get_tracking_target()
+		var delta_z = global_transform.xform_inv(target).z
+		var pitch_target = pid_controllers[Controller.POS_Z].get_output(target.z - delta_z, dt)
+		pid_controllers[Controller.PITCH].set_target(clamp(pitch_target,-deg2rad(30),deg2rad(30)))
+		motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt)
 	
 	elif flight_mode == FlightMode.AUTO:
+		if is_flight_safe():
+			var target_speed = -3
+			if pos.y < 2:
+				target_speed = -0.5
+			pid_controllers[Controller.VERTICAL_SPEED].set_target(target_speed)
+			motor_control[0] = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
+		
 		pid_controllers[Controller.YAW_SPEED].set_target(0)
-		yaw_change = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
+		motor_control[1] = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
+		
+		if is_flight_safe():
+			pid_controllers[Controller.LATERAL_SPEED].set_target(0)
+			var roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
+			pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -1, 1) / 2)
+			motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+		else:
+			if ang_vel.length_squared() <= 1.0:
+				pid_controllers[Controller.ROLL].set_target(0)
+				motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+			else:
+				pid_controllers[Controller.ROLL].set_target(0)
+				motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+		
+		if is_flight_safe():
+			pid_controllers[Controller.FORWARD_SPEED].set_target(0)
+			var pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
+			pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -1, 1) / 2)
+			motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+		else:
+			if ang_vel.length_squared() <= 1.0:
+				pid_controllers[Controller.PITCH].set_target(0)
+				motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+			else:
+				pid_controllers[Controller.PITCH_SPEED].set_target(0)
+				motor_control[3] = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
 	
-	return yaw_change
+	return motor_control
 
 
 func reset():
