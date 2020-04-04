@@ -92,6 +92,7 @@ mass = 5.0
 custom_integrator = true
 continuous_cd = true
 script = ExtResource( 2 )
+base_drag = 5.0
 
 [node name="Body" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )

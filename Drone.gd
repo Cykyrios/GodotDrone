@@ -17,6 +17,8 @@ var drone_transform = Transform()
 var drone_pos = Vector3()
 var drone_basis = Vector3()
 
+export (float, 0.0, 10.0) var base_drag = 1.0
+
 onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
 var b_debug = false
 
@@ -126,10 +128,10 @@ func _on_reset():
 
 
 func get_drag(lin_vel : Vector3, ang_vel, orientation : Basis):
-	var cd = lerp(0.1, 1.3, abs(lin_vel.normalized().dot(orientation.y)))
+	var cd = lerp(0.3, 1.3, abs(lin_vel.normalized().dot(orientation.y)))
 	var drag = [Vector3(), Vector3()]
-	drag[0] = -lin_vel.length_squared() * lin_vel.normalized() / 20.0 * cd
-	drag[1] = -ang_vel.length_squared() * ang_vel.normalized() / 20.0
+	drag[0] = -lin_vel.length_squared() * lin_vel.normalized() * base_drag / 100.0 * cd
+	drag[1] = -ang_vel.length_squared() * ang_vel.normalized() * base_drag / 100.0
 	
 	return drag
 
