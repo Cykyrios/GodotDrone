@@ -1,7 +1,7 @@
 extends Spatial
 
 export var speed = 30
-var speed_modifier = 2.0
+export var speed_modifier = 4.0
 export var look_around_speed = 1
 export var look_around_sensitivity = 0.1
 

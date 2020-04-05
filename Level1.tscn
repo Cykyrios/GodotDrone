@@ -72,7 +72,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
 near = 0.1
 far = 1000.0
 target = NodePath("../Drone")
-target_offset = Vector3( 0, 0.5, 0 )
+target_distance = 1.0
+target_offset = Vector3( 0, 0.2, 0 )
 camera_offset = Vector3( 0, 0.5, 2 )
 speed = 2.0
 
