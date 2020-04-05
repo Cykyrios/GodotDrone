@@ -31,6 +31,18 @@ enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
 enum FlightMode {RATE, LEVEL, SPEED, TRACK, AUTO}
 var flight_mode = FlightMode.RATE
 
+
+export (float, 0.0, 1000.0) var pid_roll_p = 50.0
+export (float, 0.0, 1000.0) var pid_roll_i = 10.0
+export (float, 0.0, 1000.0) var pid_roll_d = 2.0
+export (float, 0.0, 1000.0) var pid_pitch_p = 50.0
+export (float, 0.0, 1000.0) var pid_pitch_i = 10.0
+export (float, 0.0, 1000.0) var pid_pitch_d = 2.0
+export (float, 0.0, 1000.0) var pid_yaw_p = 50.0
+export (float, 0.0, 1000.0) var pid_yaw_i = 30.0
+export (float, 0.0, 1000.0) var pid_yaw_d = 0.0
+
+
 var telemetry_file = File.new()
 export (bool) var b_telemetry = true
 
@@ -61,11 +73,11 @@ func _ready():
 	pid_controllers[Controller.LATERAL_SPEED].set_coefficients(0.5, 0.05, 0.05)
 #	pid_controllers[Controller.LATERAL_SPEED].set_clamp_limits(-0.5, 0.5)
 	
-	pid_controllers[Controller.YAW_SPEED].set_coefficients(5000, 0, 0)
+	pid_controllers[Controller.YAW_SPEED].set_coefficients(100 * pid_yaw_p, 100 * pid_yaw_i, 100 * pid_yaw_d)
 #	pid_controllers[Controller.YAW_SPEED].set_clamp_limits(-10, 10)
-	pid_controllers[Controller.ROLL_SPEED].set_coefficients(5000.0, 1000.0, 200.0)
+	pid_controllers[Controller.ROLL_SPEED].set_coefficients(100 * pid_roll_p, 100 * pid_roll_i, 100 * pid_roll_d)
 #	pid_controllers[Controller.ROLL_SPEED].set_clamp_limits(-10, 10)
-	pid_controllers[Controller.PITCH_SPEED].set_coefficients(5000.0, 1000.0, 200.0)
+	pid_controllers[Controller.PITCH_SPEED].set_coefficients(100 * pid_pitch_p, 100 * pid_pitch_i, 100 * pid_pitch_d)
 #	pid_controllers[Controller.PITCH_SPEED].set_clamp_limits(-10, 10)
 	
 	pid_controllers[Controller.POS_X].set_coefficients(0.2, 0.05, 0.2)
