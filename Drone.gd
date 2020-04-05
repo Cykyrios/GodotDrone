@@ -75,6 +75,8 @@ func _physics_process(delta):
 
 func _integrate_forces(state):
 	var steps = 10
+	if !flight_controller.armed:
+		steps = 1
 	var dt = state.step / (steps as float)
 	
 	var xform = drone_transform
