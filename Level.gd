@@ -4,7 +4,10 @@ var cameras = []
 var camera_index = 0
 var camera : Camera
 
+onready var drone = $Drone
 onready var hud = $HUD
+
+var tracks = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,6 +19,15 @@ func _ready():
 	camera = cameras[camera_index]
 	
 	change_camera()
+	
+	for c in get_children():
+		if c is Track:
+			tracks.append(c)
+	
+	if Engine.editor_hint:
+		for track in tracks:
+			for checkpoint in track.checkpoints:
+				checkpoint.mat.set_shader_param("Editor", true)
 
 
 func _process(delta):
@@ -28,6 +40,9 @@ func _process(delta):
 	var right_stick = Vector2(input[2], input[3])
 	var rpm = [fc.motors[0].rpm, fc.motors[1].rpm, fc.motors[2].rpm, fc.motors[3].rpm]
 	hud.update_hud(delta, angles.x, angles.z, angles.y, velocity, altitude, left_stick, right_stick, rpm)
+	
+	for track in tracks:
+		track.checkpoints[track.current].mat.set_shader_param("DronePosition", drone.global_transform.origin)
 
 
 func _input(event):

@@ -2,19 +2,19 @@ tool
 extends Spatial
 class_name Gate
 
-onready var area = $Area
+var checkpoints = []
 
 
 func _ready():
-	area.connect("body_entered", self, "_on_Area_body_entered")
-	area.connect("body_exited", self, "_on_Area_body_exited")
+	for c in get_children():
+		if c is Checkpoint:
+			checkpoints.append(c as Checkpoint)
 
 
-func _on_Area_body_entered(body):
-	if body is Drone:
-		print("entered: ", body.linear_velocity)
-
-
-func _on_Area_body_exited(body):
-	if body is Drone:
-		print("exited: ", body.linear_velocity)
+func _enter_tree():
+	if Engine.editor_hint and checkpoints.empty():
+		for c in get_children():
+			if c is Checkpoint:
+				checkpoints.append(c as Checkpoint)
+		for c in checkpoints:
+			c.set_area_visible(true)
