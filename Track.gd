@@ -35,6 +35,9 @@ func _enter_tree():
 						checkpoints.append(c)
 		for c in checkpoints:
 			c.set_area_visible(true)
+			c.mat.set_shader_param("Editor", true)
+			if c.backward:
+				c.mat.set_shader_param("CheckpointBackward", true)
 
 
 func _on_checkpoint_passed(cp):
@@ -47,3 +50,9 @@ func _on_checkpoint_passed(cp):
 		print("Next: %d/%d" % [current + 1, course.size()])
 	else:
 		print("Finished!")
+
+
+func reset():
+	course[current].set_active(false)
+	current = 0
+	course[current].set_active(true)

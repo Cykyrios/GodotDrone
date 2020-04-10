@@ -52,6 +52,7 @@ func _process(delta):
 
 func set_backward(back : bool):
 	backward = back
+	mat.set_shader_param("CheckpointBackward", backward)
 
 
 func set_active(act : bool):

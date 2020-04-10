@@ -6,6 +6,7 @@ var camera : Camera
 
 onready var drone = $Drone
 onready var hud = $HUD
+onready var radio_controller = $RadioController
 
 var tracks = []
 
@@ -24,10 +25,7 @@ func _ready():
 		if c is Track:
 			tracks.append(c)
 	
-	if Engine.editor_hint:
-		for track in tracks:
-			for checkpoint in track.checkpoints:
-				checkpoint.mat.set_shader_param("Editor", true)
+	radio_controller.connect("reset_requested", self, "_on_drone_reset")
 
 
 func _process(delta):
@@ -40,9 +38,6 @@ func _process(delta):
 	var right_stick = Vector2(input[2], input[3])
 	var rpm = [fc.motors[0].rpm, fc.motors[1].rpm, fc.motors[2].rpm, fc.motors[3].rpm]
 	hud.update_hud(delta, angles.x, angles.z, angles.y, velocity, altitude, left_stick, right_stick, rpm)
-	
-	for track in tracks:
-		track.checkpoints[track.current].mat.set_shader_param("DronePosition", drone.global_transform.origin)
 
 
 func _input(event):
@@ -65,3 +60,8 @@ func change_camera():
 		hud.visible = true
 	else:
 		hud.visible = false
+
+
+func _on_drone_reset():
+	for track in tracks:
+		track.reset()
