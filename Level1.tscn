@@ -95,7 +95,7 @@ expo_yaw = 1.0
 
 [node name="CameraFPV" type="Camera" parent="Drone"]
 transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, -0.05 )
-near = 0.1
+near = 0.03
 far = 1000.0
 
 [node name="Objects" type="Spatial" parent="."]
