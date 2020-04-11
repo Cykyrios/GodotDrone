@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://HUD/HUD.tscn" type="PackedScene" id=1]
 [ext_resource path="res://DebugGeometry.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://CheckerShader.tres" type="Shader" id=4]
 [ext_resource path="res://RadioController.gd" type="Script" id=5]
 [ext_resource path="res://Drone1.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Track_MultiGP_2018_Regional_Qualifier.tscn" type="PackedScene" id=7]
 [ext_resource path="res://FlyaroundCamera.tscn" type="PackedScene" id=8]
 [ext_resource path="res://FollowCamera.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Track1.tscn" type="PackedScene" id=10]
@@ -51,6 +52,14 @@ shader_param/Color2 = Color( 0.392157, 0.392157, 0.392157, 1 )
 material = SubResource( 9 )
 size = Vector3( 5, 1, 5 )
 
+[sub_resource type="CapsuleMesh" id=11]
+radius = 0.3
+mid_height = 1.2
+
+[sub_resource type="CapsuleShape" id=12]
+radius = 0.3
+height = 1.2
+
 [node name="Level" type="Spatial"]
 pause_mode = 2
 script = ExtResource( 3 )
@@ -86,12 +95,9 @@ look_around_speed = 5
 
 [node name="Drone" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0 )
-rate_pitch = 360.0
-rate_roll = 360.0
-rate_yaw = 360.0
-expo_pitch = 1.0
-expo_roll = 1.0
-expo_yaw = 1.0
+expo_pitch = 0.3
+expo_roll = 0.3
+expo_yaw = 0.3
 
 [node name="CameraFPV" type="Camera" parent="Drone"]
 transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, -0.05 )
@@ -275,6 +281,18 @@ inner_radius = 2.5
 sides = 64
 ring_sides = 16
 
+[node name="MockPilot" type="StaticBody" parent="Objects"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Objects/MockPilot"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.9, 0 )
+mesh = SubResource( 11 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Objects/MockPilot"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.9, 0 )
+shape = SubResource( 12 )
+
 [node name="DebugGeometry" type="ImmediateGeometry" parent="."]
 script = ExtResource( 2 )
 
@@ -288,3 +306,6 @@ target_path = NodePath("../Drone")
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 0 )
 
 [node name="Track2" parent="." instance=ExtResource( 11 )]
+
+[node name="Track3" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 50 )

@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Track.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Gate/Flag.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Gate/Gate_Simple_5x5.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Gate/Gate_SplitS.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Gate/Gate_Hurdle.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Gate/Gate_LowHighLow.tscn" type="PackedScene" id=6]
+
+[node name="Track" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Gate1" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 1.05 )
+
+[node name="Flag1" parent="." instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 0 )
+
+[node name="Flag2" parent="." instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 28, 0, 0 )
+
+[node name="Flag3" parent="." instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 42, 0, 0 )
+
+[node name="Gate2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 57.05, 0, 0 )
+
+[node name="GateHurdle" parent="." instance=ExtResource( 5 )]
+transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 50.273, 0, -15.273 )
+
+[node name="Gate3" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 35, 0, -22.05 )
+
+[node name="Flag4" parent="." instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 21, 0, -14 )
+
+[node name="GateLowHighLow" parent="." instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 21, 0, -26.95 )
+
+[node name="GateSplitS" parent="." instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 42, 0, -29.3 )
+
+[node name="Gate4" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 21, 0, -50.05 )
+
+[node name="Flag5" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -35 )
+
+[node name="Gate5" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -26.95 )
+
+[node name="Flag6" parent="." instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -42 )
+
+[node name="Gate6" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -22.05, 0, -28 )
+
+[node name="Flag7" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -21, 0, -14 )
