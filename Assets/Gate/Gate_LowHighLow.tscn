@@ -19,7 +19,7 @@ surfaces/0 = {
 "vertex_count": 132
 }
 
-[sub_resource type="ArrayMesh" id=3]
+[sub_resource type="ArrayMesh" id=5]
 resource_name = "Flag"
 surfaces/0 = {
 "aabb": AABB( -1.05393, 0, -0.025, 1.07893, 5.03432, 0.0500001 ),
@@ -33,14 +33,15 @@ surfaces/0 = {
 "vertex_count": 1542
 }
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.75, 0.75, 0.01 )
 
-[sub_resource type="BoxShape" id=2]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 3.5, 4, 0.01 )
 
 [node name="Gate" type="Spatial"]
 script = ExtResource( 3 )
+checkpoints = [ NodePath("Checkpoint"), NodePath("Checkpoint2"), NodePath("Checkpoint3") ]
 
 [node name="Gate_Simple_5x5" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.025 )
@@ -54,37 +55,32 @@ material/0 = null
 
 [node name="Flag" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.8, 0 )
-mesh = SubResource( 3 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="Flag2" type="MeshInstance" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 1.8, 0 )
-mesh = SubResource( 3 )
+mesh = SubResource( 5 )
 material/0 = null
 
-[node name="Checkpoint" type="Spatial" parent="."]
+[node name="Checkpoint" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0 )
 script = ExtResource( 1 )
 
-[node name="Area" type="Area" parent="Checkpoint"]
+[node name="CollisionShape" type="CollisionShape" parent="Checkpoint"]
+shape = SubResource( 3 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint/Area"]
-shape = SubResource( 4 )
-
-[node name="Checkpoint2" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 5.8, 0 )
+[node name="Checkpoint2" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 4, 0 )
 script = ExtResource( 1 )
 
-[node name="Area" type="Area" parent="Checkpoint2"]
+[node name="CollisionShape" type="CollisionShape" parent="Checkpoint2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0 )
+shape = SubResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint2/Area"]
-shape = SubResource( 2 )
-
-[node name="Checkpoint3" type="Spatial" parent="."]
+[node name="Checkpoint3" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.75, 0 )
 script = ExtResource( 1 )
 
-[node name="Area" type="Area" parent="Checkpoint3"]
-
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint3/Area"]
-shape = SubResource( 4 )
+[node name="CollisionShape" type="CollisionShape" parent="Checkpoint3"]
+shape = SubResource( 3 )

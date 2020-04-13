@@ -24,17 +24,16 @@ extents = Vector3( 0.75, 0.75, 0.01 )
 
 [node name="Gate" type="Spatial"]
 script = ExtResource( 3 )
+checkpoints = [ NodePath("Checkpoint") ]
 
 [node name="Gate_Simple_5x5" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.025 )
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="Checkpoint" type="Spatial" parent="."]
+[node name="Checkpoint" type="Area" parent="."]
 script = ExtResource( 1 )
 
-[node name="Area" type="Area" parent="Checkpoint"]
+[node name="CollisionShape" type="CollisionShape" parent="Checkpoint"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint/Area"]
 shape = SubResource( 2 )

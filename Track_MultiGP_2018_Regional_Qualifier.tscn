@@ -10,6 +10,7 @@
 
 [node name="Track" type="Spatial"]
 script = ExtResource( 1 )
+course = "0,lap_start,1b,2,3b,4,5,6,7b,8b,9,10b,11,12b,13,14b,15,16,17,18,0,lap_end"
 
 [node name="Launchpad" parent="." instance=ExtResource( 7 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -21, 0, 0 )

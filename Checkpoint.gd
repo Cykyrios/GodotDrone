@@ -1,13 +1,12 @@
 tool
-extends Spatial
+extends Area
 class_name Checkpoint
 
 
-var areas = []
 var bodies = []
 var areas_per_body = []
 
-var backward = false setget set_backward
+export (bool) var backward = false setget set_backward
 var active = false
 var area_visible = false setget set_area_visible
 var mat = ShaderMaterial.new()
@@ -21,33 +20,33 @@ func _ready():
 	var shad = load("res://CheckpointShader.tres")
 	mat.shader = shad
 	
-	for a in get_children():
-		if a is Area:
-			areas.append(a)
-			a.connect("body_entered", self, "_on_entered")
-			a.connect("body_exited", self, "_on_exited")
-			
-			for col in a.get_children():
-				if col is CollisionShape:
-					var m = MeshInstance.new()
-					m.transform = col.transform
-					if col.shape is BoxShape:
-							m.mesh = CubeMesh.new()
-							m.mesh.size = (col.shape as BoxShape).extents * 2
-					elif col.shape is CylinderShape:
-							m.mesh = CylinderMesh.new()
-							var s = col.shape as CylinderShape
-							m.mesh.top_radius = s.radius
-							m.mesh.bottom_radius = s.radius
-							m.mesh.height = s.height
-					m.mesh.surface_set_material(0, mat)
-					m.visible = false
-					a.add_child(m)
+	connect("body_entered", self, "_on_entered")
+	connect("body_exited", self, "_on_exited")
+	
+	for col in get_children():
+		if col is CollisionShape:
+			var m = MeshInstance.new()
+			m.transform = col.transform
+			if col.shape is BoxShape:
+					m.mesh = CubeMesh.new()
+					m.mesh.size = (col.shape as BoxShape).extents * 2
+			elif col.shape is CylinderShape:
+					m.mesh = CylinderMesh.new()
+					var s = col.shape as CylinderShape
+					m.mesh.top_radius = s.radius
+					m.mesh.bottom_radius = s.radius
+					m.mesh.height = s.height
+			m.mesh.surface_set_material(0, mat)
+			m.visible = false
+			add_child(m)
+			m.set_owner(self)
+	set_area_visible(true)
 
 
 func _process(delta):
-	mat.set_shader_param("CheckpointPosition", global_transform.origin)
-	mat.set_shader_param("CheckpointForward", global_transform.basis.z)
+	if active:
+		mat.set_shader_param("CheckpointPosition", global_transform.origin)
+		mat.set_shader_param("CheckpointForward", global_transform.basis.z)
 
 
 func set_backward(back : bool):
@@ -61,10 +60,9 @@ func set_active(act : bool):
 
 
 func set_area_visible(vis : bool):
-	for a in areas:
-		for c in a.get_children():
-			if c is MeshInstance:
-				c.visible = vis
+	for c in get_children():
+		if c is MeshInstance:
+			c.visible = vis
 
 
 func get_velocity_check(body):

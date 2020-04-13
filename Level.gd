@@ -64,4 +64,4 @@ func change_camera():
 
 func _on_drone_reset():
 	for track in tracks:
-		track.reset()
+		track.reset_track()

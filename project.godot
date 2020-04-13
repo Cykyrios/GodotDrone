@@ -14,7 +14,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Battery.gd"
 }, {
-"base": "Spatial",
+"base": "Area",
 "class": "Checkpoint",
 "language": "GDScript",
 "path": "res://Checkpoint.gd"

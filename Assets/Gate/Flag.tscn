@@ -3,7 +3,7 @@
 [ext_resource path="res://Checkpoint.gd" type="Script" id=1]
 [ext_resource path="res://Gate.gd" type="Script" id=2]
 
-[sub_resource type="ArrayMesh" id=14]
+[sub_resource type="ArrayMesh" id=1]
 resource_name = "Flag"
 surfaces/0 = {
 "aabb": AABB( -1.05393, 0, -0.025, 1.07893, 5.03432, 0.0500001 ),
@@ -17,21 +17,21 @@ surfaces/0 = {
 "vertex_count": 1542
 }
 
-[sub_resource type="BoxShape" id=9]
+[sub_resource type="BoxShape" id=2]
 extents = Vector3( 5, 5, 0.01 )
 
 [node name="Gate" type="Spatial"]
 script = ExtResource( 2 )
+checkpoints = [ NodePath("Checkpoint") ]
 
 [node name="Flag" type="MeshInstance" parent="."]
-mesh = SubResource( 14 )
+mesh = SubResource( 1 )
 material/0 = null
 
-[node name="Checkpoint" type="Spatial" parent="."]
+[node name="Checkpoint" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0 )
 script = ExtResource( 1 )
 
-[node name="Area" type="Area" parent="Checkpoint"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 0 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint/Area"]
-shape = SubResource( 9 )
+[node name="CollisionShape" type="CollisionShape" parent="Checkpoint"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3, 0 )
+shape = SubResource( 2 )
