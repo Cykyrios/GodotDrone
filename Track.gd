@@ -3,8 +3,11 @@ extends Spatial
 class_name Track
 
 
-var checkpoints = []
+export (bool) var edit_track = false setget set_edit_track
+export (int) var selected_checkpoint = -1 setget set_selected_checkpoint
 export (String, MULTILINE) var course
+
+var checkpoints = []
 var current_checkpoint = null
 var current = 0
 
@@ -18,19 +21,26 @@ func _ready():
 	if Engine.editor_hint:
 		return
 	
-	if checkpoints.empty():
-		for child in get_children():
-			if child is Gate:
-				for c in child.get_children():
-					if c is Checkpoint:
-						checkpoints.append(c)
-			elif child is Checkpoint:
-				checkpoints.append(child)
+	set_selected_checkpoint(-1)
+	set_edit_track(false)
+	
+	get_checkpoints()
 	
 	for cp in checkpoints:
 		cp.connect("passed", self, "_on_checkpoint_passed")
 	
 	update_course()
+
+
+func get_checkpoints():
+	checkpoints.clear()
+	for child in get_children():
+		if child is Gate:
+			for c in child.get_children():
+				if c is Checkpoint:
+					checkpoints.append(c)
+		elif child is Checkpoint:
+			checkpoints.append(child)
 
 
 func update_course():
@@ -68,18 +78,36 @@ func update_course():
 	reset_track()
 
 
-#func _enter_tree():
-#	if Engine.editor_hint:
-#		if checkpoints.empty():
-#			for g in get_children():
-#				if g is Gate:
-#					for c in g.checkpoints:
-#						checkpoints.append(c)
-#		for c in checkpoints:
-#			c.set_area_visible(true)
-#			c.mat.set_shader_param("Editor", true)
-#			if c.backward:
-#				c.mat.set_shader_param("CheckpointBackward", true)
+func set_edit_track(edit : bool):
+	if !Engine.editor_hint:
+		return
+	edit_track = edit
+	if edit_track:
+		get_checkpoints()
+	for cp in checkpoints:
+		cp.set_area_visible(edit_track)
+		cp.mat.set_shader_param("Editor", edit_track)
+		cp.mat.set_shader_param("Selected", false)
+	if !edit_track:
+		checkpoints.clear()
+		selected_checkpoint = -1
+
+
+func set_selected_checkpoint(selected : int):
+	if !Engine.editor_hint:
+		return
+	var size = checkpoints.size()
+	if size == 0:
+		selected_checkpoint = -1
+		return
+	elif selected >= size:
+		return
+	elif selected < -1:
+		checkpoints[selected_checkpoint].set_selected(false)
+		return
+	checkpoints[selected_checkpoint].set_selected(false)
+	selected_checkpoint = selected
+	checkpoints[selected_checkpoint].set_selected(true)
 
 
 func _on_checkpoint_passed(cp):
@@ -114,5 +142,4 @@ func reset_track():
 		current_checkpoint.set_active(false)
 	current_lap = 1
 	current = -1
-	print(checkpoints)
 	activate_next_checkpoint()

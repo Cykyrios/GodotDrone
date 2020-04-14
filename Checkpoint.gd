@@ -8,6 +8,7 @@ var areas_per_body = []
 
 export (bool) var backward = false setget set_backward
 var active = false
+var selected = false setget set_selected
 var area_visible = false setget set_area_visible
 var mat = ShaderMaterial.new()
 
@@ -44,7 +45,7 @@ func _ready():
 
 
 func _process(delta):
-	if active:
+	if Engine.editor_hint or active:
 		mat.set_shader_param("CheckpointPosition", global_transform.origin)
 		mat.set_shader_param("CheckpointForward", global_transform.basis.z)
 
@@ -57,6 +58,11 @@ func set_backward(back : bool):
 func set_active(act : bool):
 	active = act
 	set_area_visible(active)
+
+
+func set_selected(select : bool):
+	selected = select
+	mat.set_shader_param("Selected", selected)
 
 
 func set_area_visible(vis : bool):

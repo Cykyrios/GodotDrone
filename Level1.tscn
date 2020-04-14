@@ -304,13 +304,8 @@ target_path = NodePath("../Drone")
 
 [node name="Track" parent="." instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 0 )
-course = ""
-laps = 3
 
 [node name="Track2" parent="." instance=ExtResource( 11 )]
-course = ""
-laps = 3
 
 [node name="Track3" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 50 )
-laps = 3
