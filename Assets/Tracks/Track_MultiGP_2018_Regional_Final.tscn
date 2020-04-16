@@ -16,7 +16,7 @@
 
 [node name="Track" type="Spatial"]
 script = ExtResource( 1 )
-course = "0,lap_start,3,2,1,4b,5,6,8,10,9b,11,12,13b,14,15,16,17b,18,19,20,21,22,23,7,24,25,26,27,28,29,30,31,32,33,34,0,lap_end"
+course = "0,lap_start,3,2,1,4b,5,6,8,10,9b,11,12,13b,14,15,16,17b,18,19,20,21,22,23,7b,24,25,26,27,28,29,30,31,32,33,34,0,lap_end"
 
 [node name="Launchpad" parent="." instance=ExtResource( 2 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 55, 0, 15.5 )
