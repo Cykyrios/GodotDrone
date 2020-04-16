@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Track.gd" type="Script" id=1]
-[ext_resource path="res://Launchpad.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Tracks/Objects/Launchpad.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Tracks/Gates/Gate_7x6_Elevated.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Tracks/Gates/Gate_Flag.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Tracks/Gates/Gate_7x6_TripleTopless.tscn" type="PackedScene" id=5]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Assets/Tracks/Gates/Gate_7x6_Simple.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Assets/Tracks/Gates/Gate_Hurdle_10x5.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Assets/Tracks/Gates/Gate_7x6_Double.tscn" type="PackedScene" id=13]
+
 
 [node name="Track" type="Spatial"]
 script = ExtResource( 1 )

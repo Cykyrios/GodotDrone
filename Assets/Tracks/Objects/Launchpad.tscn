@@ -1,6 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Physicsmat_Launchpad.tres" type="PhysicsMaterial" id=1]
+[ext_resource path="res://Assets/Tracks/Objects/Physicsmat_Launchpad.tres" type="PhysicsMaterial" id=1]
+
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 2, 0.1, 0.5 )

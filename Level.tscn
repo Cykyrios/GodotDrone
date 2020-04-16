@@ -6,9 +6,10 @@
 [ext_resource path="res://CheckerShader.tres" type="Shader" id=4]
 [ext_resource path="res://RadioController.gd" type="Script" id=5]
 [ext_resource path="res://dev_prototype_drone.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Gate.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/Tracks/Gates/Gate.tscn" type="PackedScene" id=7]
 [ext_resource path="res://FlyaroundCamera.tscn" type="PackedScene" id=8]
 [ext_resource path="res://FollowCamera.tscn" type="PackedScene" id=9]
+
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 100, 0.5, 100 )

@@ -1,10 +1,11 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Track.gd" type="Script" id=1]
-[ext_resource path="res://Launchpad.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Tracks/Objects/Launchpad.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Tracks/Gates/Gate_5x5_Double.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Tracks/Gates/Gate_Flag.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Tracks/Gates/Gate_5x5_Simple.tscn" type="PackedScene" id=5]
+
 
 [node name="Track" type="Spatial"]
 script = ExtResource( 1 )

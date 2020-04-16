@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Track.gd" type="Script" id=1]
-[ext_resource path="res://Gate.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Tracks/Gates/Gate.tscn" type="PackedScene" id=3]
+
 
 [node name="Track" type="Spatial"]
 script = ExtResource( 1 )

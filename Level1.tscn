@@ -9,8 +9,8 @@
 [ext_resource path="res://Assets/Tracks/Track_MultiGP_2018_Regional_Qualifier.tscn" type="PackedScene" id=7]
 [ext_resource path="res://FlyaroundCamera.tscn" type="PackedScene" id=8]
 [ext_resource path="res://FollowCamera.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Track1.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Track2.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Assets/Tracks/Track1.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Assets/Tracks/Track2.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Assets/Tracks/Track_MultiGP_2020_Global_Qualifier.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Assets/Tracks/Track_MultiGP_2018_Regional_Final.tscn" type="PackedScene" id=13]
 
