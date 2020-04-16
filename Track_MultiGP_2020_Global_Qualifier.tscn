@@ -2,9 +2,9 @@
 
 [ext_resource path="res://Track.gd" type="Script" id=1]
 [ext_resource path="res://Launchpad.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/Gate/Gate_Double_5x5.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Assets/Gate/Flag.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Gate/Gate_Simple_5x5.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Tracks/Gates/Gate_5x5_Double.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Tracks/Gates/Gate_Flag.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Tracks/Gates/Gate_5x5_Simple.tscn" type="PackedScene" id=5]
 
 [node name="Track" type="Spatial"]
 script = ExtResource( 1 )
@@ -13,41 +13,41 @@ course = "14b,0,lap_start,1,2,4,3,5,7,6b,8b,9,10,11,12,13b,14b,0,lap_end"
 [node name="Launchpad" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 9.5 )
 
-[node name="Gate1" parent="." instance=ExtResource( 6 )]
+[node name="Gate1" parent="." instance=ExtResource( 5 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10, 0, -11 )
 
-[node name="Flag1" parent="." instance=ExtResource( 5 )]
+[node name="Flag1" parent="." instance=ExtResource( 4 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, -7 )
 
-[node name="Gate2" parent="." instance=ExtResource( 6 )]
+[node name="Gate2" parent="." instance=ExtResource( 5 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 20, 0, -11 )
 
 [node name="DoubleGate1" parent="." instance=ExtResource( 3 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 34, 0, -2 )
 
-[node name="Flag2" parent="." instance=ExtResource( 5 )]
+[node name="Flag2" parent="." instance=ExtResource( 4 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24, 0, 3 )
 
 [node name="DoubleGate2" parent="." instance=ExtResource( 3 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 34, 0, 9 )
 
-[node name="Flag3" parent="." instance=ExtResource( 5 )]
+[node name="Flag3" parent="." instance=ExtResource( 4 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24, 0, 8 )
 
-[node name="Gate3" parent="." instance=ExtResource( 6 )]
+[node name="Gate3" parent="." instance=ExtResource( 5 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11.05, 0, 3 )
 
-[node name="Gate4" parent="." instance=ExtResource( 6 )]
+[node name="Gate4" parent="." instance=ExtResource( 5 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8.95, 0, 3 )
 
-[node name="Gate5" parent="." instance=ExtResource( 6 )]
+[node name="Gate5" parent="." instance=ExtResource( 5 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6.85, 0, 3 )
 
-[node name="Gate6" parent="." instance=ExtResource( 6 )]
+[node name="Gate6" parent="." instance=ExtResource( 5 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, 7 )
 
-[node name="Flag4" parent="." instance=ExtResource( 5 )]
+[node name="Flag4" parent="." instance=ExtResource( 4 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -15, 0, 3 )
 
-[node name="Flag5" parent="." instance=ExtResource( 5 )]
+[node name="Flag5" parent="." instance=ExtResource( 4 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -20, 0, -7 )
