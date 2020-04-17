@@ -11,33 +11,85 @@ onready var stick_right = $VBoxContainer/HBoxInput/HUDStickRight
 onready var rpm_table = $HUDRPM
 
 # Flight data
-var delta = 0.0
-var pitch = 0.0
-var roll = 0.0
-var heading = 0.0
-var velocity = Vector3.ZERO
-var altitude = 0.0
-var left_stick = Vector2.ZERO
-var right_stick = Vector2.ZERO
-var rpm = [0, 0, 0, 0]
+var hud_timer = 0.1
+var hud_delta = 0.0
+var hud_position = Vector3.ZERO
+var hud_angles = Vector3.ZERO
+var hud_velocity = Vector3.ZERO
+var hud_left_stick = Vector2.ZERO
+var hud_right_stick = Vector2.ZERO
+var hud_rpm = [0, 0, 0, 0]
+var is_first = false
+var first_angles = Vector3.ZERO
 
 
 func _ready():
-	update_hud(delta, pitch, roll, heading, velocity, altitude, left_stick, right_stick, rpm)
+	reset_hud_data()
+	update_hud_data(hud_delta, hud_position, hud_angles, hud_velocity, hud_left_stick, hud_right_stick, hud_rpm)
 
 
-func update_hud(dt : float, p : float, r : float, h : float, v : Vector3, a : float,
+func _process(delta):
+	if hud_delta >= hud_timer:
+		hud_position /= hud_delta
+		hud_angles /= hud_delta
+		hud_velocity /= hud_delta
+		hud_left_stick /= hud_delta
+		hud_right_stick /= hud_delta
+		for i in range(hud_rpm.size()):
+			hud_rpm[i] /= hud_delta
+		update_hud()
+		reset_hud_data()
+
+
+func update_hud():
+	ladder.update_ladder(hud_angles.x, hud_angles.z)
+	speed_scale.update_speed(hud_velocity.length(), hud_delta)
+	altitude_scale.update_altitude(hud_position.y, hud_delta)
+	heading_scale.update_heading(hud_angles.y, hud_delta)
+	stick_left.update_stick_input(hud_left_stick)
+	stick_right.update_stick_input(hud_right_stick)
+	rpm_table.update_rpm(hud_rpm[0], hud_rpm[1], hud_rpm[2], hud_rpm[3])
+
+
+func update_hud_data(dt : float, position : Vector3, angles : Vector3, velocity : Vector3,
 		left_stick : Vector2, right_stick : Vector2, rpm):
-	delta = dt
-	pitch = p
-	roll = r
-	heading = h
-	velocity = v
-	altitude = a
-	ladder.update_ladder(pitch, roll)
-	speed_scale.update_speed(velocity.length(), delta)
-	altitude_scale.update_altitude(altitude, delta)
-	heading_scale.update_heading(heading, delta)
-	stick_left.update_stick_input(left_stick)
-	stick_right.update_stick_input(right_stick)
-	rpm_table.update_rpm(rpm[0], rpm[1], rpm[2], rpm[3])
+	hud_delta += dt
+	hud_position += dt * position
+	if is_first:
+		first_angles = angles
+		is_first = false
+	# Adjust angles to prevent averaging issues
+	hud_angles += dt * get_adjusted_angles(angles)
+	hud_velocity += dt * velocity
+	hud_left_stick += dt * left_stick
+	hud_right_stick += dt * right_stick
+	for i in range(hud_rpm.size()):
+		hud_rpm[i] += dt * rpm[i]
+
+
+func reset_hud_data():
+	is_first = true
+	first_angles = Vector3.ZERO
+	hud_delta = 0.0
+	hud_position = Vector3.ZERO
+	hud_angles = Vector3.ZERO
+	hud_velocity = Vector3.ZERO
+	hud_left_stick = Vector2.ZERO
+	hud_right_stick = Vector2.ZERO
+	hud_rpm = [0, 0, 0, 0]
+
+
+func get_adjusted_angles(angles : Vector3):
+	var result = angles
+	var correction = 0
+	
+	for i in range(3):
+		# Check sign changes by difference with PI as arbitrary threshold
+		if abs(angles[i] - first_angles[i]) > PI:
+			if first_angles[i] > 0:
+				correction = 1
+			else:
+				correction = -1
+			result[i] = angles[i] + 2 * PI * correction
+	
+	return result
