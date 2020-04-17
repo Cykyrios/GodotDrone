@@ -24,5 +24,12 @@ func _ready():
 		marker.rect_position = Vector2(horizon.rect_size.x / 2, -i * pitch_marker_spacing)
 
 func update_ladder(pitch : float, roll : float):
-	horizon.rect_rotation = rad2deg(roll)
+	var horizon_length = rect_size.x / abs(cos(roll))
+	if horizon_length > rect_size.length():
+		horizon_length = rect_size.y / abs(sin(roll))
+	horizon.rect_size.x = horizon_length - 10
+	horizon.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_KEEP_SIZE)
+	center_pos = rect_size / 2.0 - horizon.rect_size / 2.0
 	horizon.rect_position = center_pos + rad2deg(pitch * pitch_marker_spacing) * Vector2(-sin(roll), cos(roll))
+	horizon.rect_pivot_offset = horizon.rect_size / 2.0
+	horizon.rect_rotation = rad2deg(roll)

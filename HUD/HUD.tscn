@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://HUD/HUD.gd" type="Script" id=1]
 [ext_resource path="res://HUD/HUDLadder.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://HUD/HUDAltitudeScale.tscn" type="PackedScene" id=5]
 [ext_resource path="res://HUD/HUDStickInput.tscn" type="PackedScene" id=6]
 [ext_resource path="res://HUD/HUDRPM.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/HUD/Crosshair.png" type="Texture" id=8]
 
 [node name="HUD" type="Control"]
 anchor_right = 1.0
@@ -14,20 +15,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-color = Color( 0, 1, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -119,10 +106,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 835.0
-margin_top = 27.0
+margin_left = 807.0
+margin_top = 13.0
 margin_right = 935.0
-margin_bottom = 127.0
+margin_bottom = 141.0
 
 [node name="HUDStickRight" parent="VBoxContainer/HBoxInput" instance=ExtResource( 6 )]
 anchor_left = 0.0
@@ -130,9 +117,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 985.0
-margin_top = 27.0
-margin_right = 1085.0
-margin_bottom = 127.0
+margin_top = 13.0
+margin_right = 1113.0
+margin_bottom = 141.0
 
 [node name="HUDRPM" parent="." instance=ExtResource( 7 )]
 anchor_left = 0.0
@@ -143,3 +130,18 @@ margin_left = 1328.77
 margin_top = 930.63
 margin_right = 1328.77
 margin_bottom = 1084.63
+
+[node name="Crosshair" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -24.0
+margin_top = -24.0
+margin_right = 24.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 48, 48 )
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

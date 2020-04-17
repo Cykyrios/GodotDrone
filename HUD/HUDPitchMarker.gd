@@ -5,6 +5,8 @@ export (int) var angle = 0
 onready var left_half = $HBoxContainer/LeftHalf
 onready var right_half = $HBoxContainer/RightHalf
 
+var texture_neg = load("res://Assets/HUD/PitchMarkerNegative.png")
+
 
 func _ready():
 	update_marker(angle)
@@ -13,8 +15,8 @@ func _ready():
 func update_marker(a : int):
 	angle = a
 	if angle < 0:
-		left_half.get_node("HorizontalLine").size_flags_vertical = SIZE_SHRINK_END
-		right_half.get_node("HorizontalLine").size_flags_vertical = SIZE_SHRINK_END
+		left_half.get_node("Line").texture = texture_neg
+		right_half.get_node("Line").texture = texture_neg
 	
 	var text = "%02d" % angle
 	left_half.get_node("Label").text = text

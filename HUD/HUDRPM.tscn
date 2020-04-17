@@ -36,7 +36,7 @@ margin_right = 85.0
 margin_bottom = 33.0
 size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color = Color( 0.196078, 0.901961, 0.196078, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "00000"
 
 [node name="LabelMotor2" type="Label" parent="GridContainer"]
@@ -45,7 +45,7 @@ margin_right = 190.0
 margin_bottom = 33.0
 size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color = Color( 0.196078, 0.901961, 0.196078, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "00000"
 
 [node name="LabelMotor3" type="Label" parent="GridContainer"]
@@ -54,7 +54,7 @@ margin_right = 85.0
 margin_bottom = 66.0
 size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color = Color( 0.196078, 0.901961, 0.196078, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "00000"
 
 [node name="LabelMotor4" type="Label" parent="GridContainer"]
@@ -64,5 +64,5 @@ margin_right = 190.0
 margin_bottom = 66.0
 size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color = Color( 0.196078, 0.901961, 0.196078, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "00000"
