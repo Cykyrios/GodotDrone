@@ -48,7 +48,7 @@ custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "00000"
 
-[node name="LabelMotor3" type="Label" parent="GridContainer"]
+[node name="LabelMotor4" type="Label" parent="GridContainer"]
 margin_top = 33.0
 margin_right = 85.0
 margin_bottom = 66.0
@@ -57,7 +57,7 @@ custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "00000"
 
-[node name="LabelMotor4" type="Label" parent="GridContainer"]
+[node name="LabelMotor3" type="Label" parent="GridContainer"]
 margin_left = 105.0
 margin_top = 33.0
 margin_right = 190.0
