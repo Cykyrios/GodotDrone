@@ -1,0 +1,156 @@
+[gd_resource type="VisualShader" load_steps=16 format=2]
+
+[ext_resource path="res://Assets/Grid.png" type="Texture" id=1]
+
+[sub_resource type="VisualShaderNodeInput" id=1]
+output_port_for_preview = 0
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=2]
+uniform_name = "TileX"
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=3]
+uniform_name = "TileY"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=4]
+default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 3, 2, 1 ) ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorFunc" id=5]
+output_port_for_preview = 0
+function = 20
+
+[sub_resource type="VisualShaderNodeVectorCompose" id=6]
+
+[sub_resource type="VisualShaderNodeVectorOp" id=7]
+operator = 2
+
+[sub_resource type="VisualShaderNodeColorUniform" id=8]
+uniform_name = "Color1"
+
+[sub_resource type="VisualShaderNodeColorUniform" id=9]
+uniform_name = "Color2"
+
+[sub_resource type="VisualShaderNodeTexture" id=10]
+texture = ExtResource( 1 )
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeVectorOp" id=11]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorOp" id=12]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorOp" id=13]
+default_input_values = [ 0, Vector3( 1, 1, 1 ), 1, Vector3( 0, 0, 0 ) ]
+operator = 1
+
+[sub_resource type="VisualShaderNodeVectorInterp" id=14]
+
+[resource]
+code = "shader_type spatial;
+uniform float TileX;
+uniform float TileY;
+uniform sampler2D tex_frg_81 : hint_albedo;
+uniform vec4 Color1 : hint_color;
+uniform vec4 Color2 : hint_color;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// ScalarUniform:22
+	float n_out22p0 = TileX;
+
+// ScalarUniform:61
+	float n_out61p0 = TileY;
+
+// VectorCompose:77
+	float n_in77p2 = 0.00000;
+	vec3 n_out77p0 = vec3(n_out22p0, n_out61p0, n_in77p2);
+
+// Input:2
+	vec3 n_out2p0 = vec3(UV, 0.0);
+
+// VectorOp:67
+	vec3 n_in67p1 = vec3(3.00000, 2.00000, 1.00000);
+	vec3 n_out67p0 = n_out2p0 * n_in67p1;
+
+// VectorFunc:76
+	vec3 n_out76p0 = fract(n_out67p0);
+
+// VectorOp:78
+	vec3 n_out78p0 = n_out77p0 * n_out76p0;
+
+// Texture:81
+	vec4 tex_frg_81_read = texture(tex_frg_81, n_out78p0.xy);
+	vec3 n_out81p0 = tex_frg_81_read.rgb;
+	float n_out81p1 = tex_frg_81_read.a;
+
+// ColorUniform:79
+	vec3 n_out79p0 = Color1.rgb;
+	float n_out79p1 = Color1.a;
+
+// VectorOp:82
+	vec3 n_out82p0 = n_out81p0 * n_out79p0;
+
+// VectorOp:84
+	vec3 n_in84p0 = vec3(1.00000, 1.00000, 1.00000);
+	vec3 n_out84p0 = n_in84p0 - n_out81p0;
+
+// ColorUniform:80
+	vec3 n_out80p0 = Color2.rgb;
+	float n_out80p1 = Color2.a;
+
+// VectorOp:83
+	vec3 n_out83p0 = n_out84p0 * n_out80p0;
+
+// VectorMix:85
+	vec3 n_in85p2 = vec3(0.50000, 0.50000, 0.50000);
+	vec3 n_out85p0 = mix(n_out82p0, n_out83p0, n_in85p2);
+
+// Output:0
+	ALBEDO = n_out85p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -630.5, -301.25 )
+nodes/fragment/0/position = Vector2( 400, 0 )
+nodes/fragment/2/node = SubResource( 1 )
+nodes/fragment/2/position = Vector2( -1400, 0 )
+nodes/fragment/22/node = SubResource( 2 )
+nodes/fragment/22/position = Vector2( -1200, -140 )
+nodes/fragment/61/node = SubResource( 3 )
+nodes/fragment/61/position = Vector2( -1200, -80 )
+nodes/fragment/67/node = SubResource( 4 )
+nodes/fragment/67/position = Vector2( -1200, 0 )
+nodes/fragment/76/node = SubResource( 5 )
+nodes/fragment/76/position = Vector2( -1000, 0 )
+nodes/fragment/77/node = SubResource( 6 )
+nodes/fragment/77/position = Vector2( -1000, -140 )
+nodes/fragment/78/node = SubResource( 7 )
+nodes/fragment/78/position = Vector2( -800, -140 )
+nodes/fragment/79/node = SubResource( 8 )
+nodes/fragment/79/position = Vector2( -400, 200 )
+nodes/fragment/80/node = SubResource( 9 )
+nodes/fragment/80/position = Vector2( -400, 320 )
+nodes/fragment/81/node = SubResource( 10 )
+nodes/fragment/81/position = Vector2( -600, -180 )
+nodes/fragment/82/node = SubResource( 11 )
+nodes/fragment/82/position = Vector2( -180, -80 )
+nodes/fragment/83/node = SubResource( 12 )
+nodes/fragment/83/position = Vector2( -180, 40 )
+nodes/fragment/84/node = SubResource( 13 )
+nodes/fragment/84/position = Vector2( -400, 20 )
+nodes/fragment/85/node = SubResource( 14 )
+nodes/fragment/85/position = Vector2( 0, 0 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 67, 0, 67, 0, 76, 0, 22, 0, 77, 0, 61, 0, 77, 1, 77, 0, 78, 0, 76, 0, 78, 1, 78, 0, 81, 0, 81, 0, 82, 0, 79, 0, 82, 1, 81, 0, 84, 1, 84, 0, 83, 0, 80, 0, 83, 1, 82, 0, 85, 0, 83, 0, 85, 1, 85, 0, 0, 0 )
