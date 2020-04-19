@@ -30,18 +30,6 @@ func _ready():
 	max_ray_length = ray.cast_to.length()
 
 
-func _physics_process(delta):
-	if Engine.editor_hint:
-		return
-	
-	var rot = rpm * PI / 30.0
-	if clockwise:
-		rot = -rot
-	rotate_object_local(Vector3.UP, rot * delta)
-	
-	transform = transform.orthonormalized()
-
-
 func set_clockwise(cw : bool):
 	clockwise = cw
 	set_visibility()

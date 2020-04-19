@@ -20,12 +20,12 @@ var rpm_target = 0.0 setget set_rpm_target, get_rpm_target
 var max_rpm_change = 0.0
 var powered = false
 
-
-func _enter_tree():
-	set_clockwise(clockwise)
+onready var rotor = $Motor_Rotor
 
 
 func _ready():
+	set_clockwise(clockwise)
+	
 	if Engine.editor_hint:
 		return
 	
@@ -33,9 +33,18 @@ func _ready():
 	max_rpm_change = MAX_TORQUE * RPM_ACCELERATION
 
 
-func _physics_process(delta):
+func _process(delta):
 	if Engine.editor_hint:
 		return
+	
+	var rot = rpm * PI / 30.0
+	if clockwise:
+		rot = -rot
+	rotor.rotate_object_local(Vector3.UP, rot * delta)
+	propeller.rotate_object_local(Vector3.UP, rot * delta)
+	
+	rotor.transform = rotor.transform.orthonormalized()
+	propeller.transform = propeller.transform.orthonormalized()
 
 
 func update_thrust(delta):
@@ -49,9 +58,8 @@ func update_thrust(delta):
 
 func set_clockwise(cw : bool):
 	clockwise = cw
-	for node in get_children():
-		if node is Propeller:
-			node.set_clockwise(clockwise)
+	if propeller:
+		propeller.set_clockwise(clockwise)
 
 
 func set_torque(x : float):
