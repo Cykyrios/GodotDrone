@@ -1,0 +1,12 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type spatial;
+
+uniform vec4 propeller_color : hint_color;
+
+
+void fragment() {
+	ALBEDO = COLOR.rgb * propeller_color.rgb;
+}
+"

@@ -1,0 +1,18 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type spatial;
+render_mode cull_disabled, depth_draw_always;
+
+uniform sampler2D prop_blur : hint_albedo;
+uniform vec4 propeller_color : hint_color;
+uniform float alpha_boost : hint_range(1.0, 5.0);
+
+
+void fragment() {
+	vec4 col = texture(prop_blur, UV);
+	
+	ALBEDO = col.rgb * propeller_color.rgb;
+	ALPHA = clamp(col.a * alpha_boost, 0.0, 1.0);
+}
+"
