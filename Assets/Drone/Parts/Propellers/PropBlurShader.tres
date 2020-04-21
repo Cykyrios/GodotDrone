@@ -2,7 +2,7 @@
 
 [resource]
 code = "shader_type spatial;
-render_mode cull_disabled, depth_draw_always;
+render_mode cull_disabled, depth_draw_alpha_prepass;
 
 uniform sampler2D prop_blur : hint_albedo;
 uniform vec4 propeller_color : hint_color;
