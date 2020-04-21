@@ -16,13 +16,13 @@ export (int, 2, 6) var num_blades = 2
 var clockwise = false setget set_clockwise
 var rpm = 0.0
 
+var velocity = Vector3.ZERO setget set_velocity
+var thrust = 0.0
+
 
 func _ready():
 	if Engine.editor_hint:
 		return
-	
-	diameter *= 0.0254
-	pitch *= 0.0254
 	
 	set_visibility()
 	
@@ -52,9 +52,20 @@ func set_visibility():
 	$CCW.visible = !clockwise
 
 
+func set_velocity(vel : Vector3):
+	velocity = vel
+
+
 func get_thrust():
-	var rot_speed = rpm * PI / 30.0 * radius
-	return (pow(rot_speed, 2) * LIFT_RATIO / 1000) * (1 + 0 * 0.3 * get_ground_effect())
+	var v0 = velocity.y
+	# Dynamic thrust from ElectricAircraftGuy
+	var d = diameter * 0.0254
+	var p = pitch * 0.0254
+	var area = PI * pow(d, 2) / 4.0
+	var ve = rpm * p / 60.0
+	thrust = 1.225 * area * (pow(ve, 2) - ve * v0) * pow(d / p / 3.29546, 1.5) * 1.5
+	
+	return thrust
 
 
 func get_ground_effect():
