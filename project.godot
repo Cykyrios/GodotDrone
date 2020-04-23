@@ -99,7 +99,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Drone"
-run/main_scene="res://Level1.tscn"
+run/main_scene="res://GUI/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [display]

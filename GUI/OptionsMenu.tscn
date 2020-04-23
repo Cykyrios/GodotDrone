@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUI/MenuFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://GUI/OptionsMenu.gd" type="Script" id=2]
+
+[node name="OptionsMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -122.5
+margin_top = -105.0
+margin_right = 122.5
+margin_bottom = 105.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+margin_right = 245.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+text = "Options"
+align = 1
+valign = 1
+
+[node name="ButtonSystem" type="Button" parent="VBoxContainer"]
+margin_top = 49.0
+margin_right = 245.0
+margin_bottom = 100.0
+custom_fonts/font = ExtResource( 1 )
+text = "System Settings"
+
+[node name="ButtonControls" type="Button" parent="VBoxContainer"]
+margin_top = 104.0
+margin_right = 245.0
+margin_bottom = 155.0
+custom_fonts/font = ExtResource( 1 )
+text = "Controls"
+
+[node name="ButtonBack" type="Button" parent="VBoxContainer"]
+margin_top = 159.0
+margin_right = 245.0
+margin_bottom = 210.0
+custom_fonts/font = ExtResource( 1 )
+text = "Back to Menu"
