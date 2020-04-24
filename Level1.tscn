@@ -96,6 +96,7 @@ speed = 10
 look_around_speed = 5
 
 [node name="Drone" parent="." instance=ExtResource( 6 )]
+pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0 )
 expo_pitch = 0.3
 expo_roll = 0.3
@@ -299,12 +300,15 @@ shape = SubResource( 12 )
 script = ExtResource( 2 )
 
 [node name="HUD" parent="." instance=ExtResource( 1 )]
+pause_mode = 1
 
 [node name="RadioController" type="Node" parent="."]
+pause_mode = 1
 script = ExtResource( 5 )
 target_path = NodePath("../Drone")
 
 [node name="Track" parent="." instance=ExtResource( 10 )]
+pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 0 )
 edit_track = false
 selected_checkpoint = -1
@@ -312,24 +316,28 @@ course = ""
 laps = 3
 
 [node name="Track2" parent="." instance=ExtResource( 11 )]
+pause_mode = 1
 edit_track = false
 selected_checkpoint = -1
 course = ""
 laps = 3
 
 [node name="Track3" parent="." instance=ExtResource( 7 )]
+pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 80 )
 edit_track = false
 selected_checkpoint = -1
 laps = 3
 
 [node name="Track4" parent="." instance=ExtResource( 12 )]
+pause_mode = 1
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -80, 0, 50 )
 edit_track = false
 selected_checkpoint = -1
 laps = 3
 
 [node name="Track5" parent="." instance=ExtResource( 13 )]
+pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -70, 0, -50 )
 edit_track = false
 selected_checkpoint = -1
