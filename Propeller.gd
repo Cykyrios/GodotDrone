@@ -18,6 +18,8 @@ var rpm = 0.0
 var use_blur = false
 export (Color) var color = Color(1.0, 1.0, 1.0, 1.0) setget set_color
 export (float, 1, 3) var prop_disk_alpha = 1.0 setget set_prop_disk_alpha
+export (float, 0, 2) var prop_disk_emission = 0.0 setget set_prop_disk_emission
+export (int, 1, 20) var prop_disk_falloff = 10 setget set_prop_disk_falloff
 
 
 func _ready():
@@ -74,6 +76,16 @@ func set_color(col : Color):
 func set_prop_disk_alpha(alpha : float):
 	prop_disk_alpha = alpha
 	$PropBlurDisk.mesh.surface_get_material(0).set_shader_param("alpha_boost", prop_disk_alpha)
+
+
+func set_prop_disk_emission(emission : float):
+	prop_disk_emission = emission
+	$PropBlurDisk.mesh.surface_get_material(0).set_shader_param("emission_power", prop_disk_emission)
+
+
+func set_prop_disk_falloff(falloff : float):
+	prop_disk_falloff = falloff
+	$PropBlurDisk.mesh.surface_get_material(0).set_shader_param("emission_falloff", prop_disk_falloff)
 
 
 func get_thrust():
