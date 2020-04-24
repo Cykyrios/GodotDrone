@@ -42,7 +42,7 @@ func _physics_process(delta):
 
 
 func read_input():
-	var power = (Input.get_action_strength("increase_power") - Input.get_action_strength("decrease_power") + 1) / 2
+	var power = (Input.get_action_strength("throttle_up") - Input.get_action_strength("throttle_down") + 1) / 2
 	var pitch = Input.get_action_strength("pitch_up") - Input.get_action_strength("pitch_down")
 	var roll = Input.get_action_strength("roll_right") - Input.get_action_strength("roll_left")
 	var yaw = Input.get_action_strength("yaw_right") - Input.get_action_strength("yaw_left")

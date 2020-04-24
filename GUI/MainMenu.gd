@@ -12,6 +12,8 @@ func _ready():
 	$VBoxContainer/ButtonQuit.connect("pressed", self, "_on_quit_pressed")
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+	load_input_map()
 
 
 func _on_fly_pressed():
@@ -41,3 +43,15 @@ func _on_quit_pressed():
 		get_tree().quit()
 	else:
 		confirm_dialog.queue_free()
+
+
+func load_input_map():
+	var path = "user://InputMap.cfg"
+	var config = ConfigFile.new()
+	var err = config.load(path)
+	print(err)
+	if err == OK:
+		var actions = config.get_section_keys("controls")
+		for action in actions:
+			InputMap.action_erase_events(action)
+			InputMap.action_add_event(action, config.get_value("controls", action))
