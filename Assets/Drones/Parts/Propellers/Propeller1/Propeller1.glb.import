@@ -2,28 +2,29 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/dev_prototype.glb-2834f1000b3450d5f054ef5f532a3048.scn"
+path="res://.import/Propeller1.glb-425ed54789c482200948ad351e4da295.scn"
 
 [deps]
 
-source_file="res://Assets/Drone/Parts/Bodies/dev_prototype/dev_prototype.glb"
-dest_files=[ "res://.import/dev_prototype.glb-2834f1000b3450d5f054ef5f532a3048.scn" ]
+source_file="res://Assets/Drones/Parts/Propellers/Propeller1/Propeller1.glb"
+dest_files=[ "res://.import/Propeller1.glb-425ed54789c482200948ad351e4da295.scn" ]
 
 [params]
 
-nodes/root_type="Drone (Drone.gd)"
+nodes/root_type="Propeller (Propeller.gd)"
 nodes/root_name="Scene Root"
 nodes/root_scale=1.0
 nodes/custom_script="res://RemoveCollisionsHierarchy.gd"
 nodes/storage=0
 materials/location=1
-materials/storage=1
-materials/keep_on_reimport=true
+materials/storage=0
+materials/keep_on_reimport=false
 meshes/compress=true
 meshes/ensure_tangents=true
 meshes/storage=0
 meshes/light_baking=0
 meshes/lightmap_texel_size=0.1
+skins/use_named_skins=true
 external_files/store_in_subdir=false
 animation/import=false
 animation/fps=15

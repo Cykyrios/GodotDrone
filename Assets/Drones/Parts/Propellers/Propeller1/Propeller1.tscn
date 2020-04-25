@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/Drones/Parts/Propellers/Propeller1/Propeller1.glb" type="PackedScene" id=1]
+
+[node name="Propeller1" instance=ExtResource( 1 )]
+radius = 0.065
+LIFT_RATIO = 2.2
+diameter = 5.1
+pitch = 4.8
+num_blades = 3

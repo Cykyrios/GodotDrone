@@ -1,17 +1,8 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://Propeller.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Drone.gd" type="Script" id=2]
-[ext_resource path="res://FlightController.gd" type="Script" id=3]
-[ext_resource path="res://LED.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Assets/Drones/Parts/Frames/dev_prototype/RightGreen.material" type="Material" id=5]
-[ext_resource path="res://Assets/Drones/Parts/Frames/dev_prototype/LeftRed.material" type="Material" id=6]
-[ext_resource path="res://Assets/Drones/Parts/Frames/dev_prototype/DroneBody.material" type="Material" id=7]
-[ext_resource path="res://Assets/Drones/Parts/Motors/Motor1/Motor1.glb" type="PackedScene" id=8]
-
-
-
-
+[ext_resource path="res://Assets/Drones/Parts/Frames/dev_prototype/LeftRed.material" type="Material" id=1]
+[ext_resource path="res://Assets/Drones/Parts/Frames/dev_prototype/RightGreen.material" type="Material" id=2]
+[ext_resource path="res://Assets/Drones/Parts/Frames/dev_prototype/DroneBody.material" type="Material" id=3]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Body"
@@ -22,7 +13,7 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 97303,
 "index_count": 0,
-"material": ExtResource( 7 ),
+"material": ExtResource( 3 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 900
@@ -34,7 +25,7 @@ surfaces/1 = {
 "blend_shape_data": [  ],
 "format": 97303,
 "index_count": 0,
-"material": ExtResource( 6 ),
+"material": ExtResource( 1 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 372
@@ -46,7 +37,7 @@ surfaces/2 = {
 "blend_shape_data": [  ],
 "format": 97303,
 "index_count": 0,
-"material": ExtResource( 5 ),
+"material": ExtResource( 2 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 372
@@ -91,14 +82,9 @@ height = 0.25
 radius = 0.05
 height = 0.25
 
-[node name="dev_prototype" type="RigidBody"]
-mass = 5.0
-custom_integrator = true
-continuous_cd = true
-script = ExtResource( 2 )
-base_drag = 5.0
+[node name="Body" type="StaticBody"]
 
-[node name="Body" type="MeshInstance" parent="."]
+[node name="Body_Mesh" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
 material/0 = null
 material/1 = null
@@ -146,79 +132,3 @@ shape = SubResource( 11 )
 [node name="RightSide-col" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, 0 )
 shape = SubResource( 12 )
-
-[node name="FlightController" type="Spatial" parent="."]
-script = ExtResource( 3 )
-
-[node name="LEDNavLeft" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.125, 0 )
-color = Color( 1, 0, 0, 1 )
-
-[node name="LEDNavRight" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.125, 0 )
-color = Color( 0, 1, 0, 1 )
-
-[node name="LEDMode" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.3 )
-
-[node name="Motor1" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.13, -0.4 )
-MAX_TORQUE = 10000.0
-RPM_ACCELERATION = 50000.0
-MIN_POWER = 5
-kv = 1000
-
-[node name="Propeller1" parent="Motor1" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0 )
-radius = 0.2
-LIFT_RATIO = 1.0
-diameter = 10.0
-pitch = 10.0
-num_blades = 2
-
-[node name="Motor2" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.13, -0.4 )
-clockwise = false
-MAX_TORQUE = 10000.0
-RPM_ACCELERATION = 50000.0
-MIN_POWER = 5
-kv = 1000
-
-[node name="Propeller2" parent="Motor2" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0 )
-radius = 0.2
-LIFT_RATIO = 1.0
-diameter = 10.0
-pitch = 10.0
-num_blades = 2
-
-[node name="Motor3" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.13, 0.4 )
-MAX_TORQUE = 10000.0
-RPM_ACCELERATION = 50000.0
-MIN_POWER = 5
-kv = 1000
-
-[node name="Propeller3" parent="Motor3" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0 )
-radius = 0.2
-LIFT_RATIO = 1.0
-diameter = 10.0
-pitch = 10.0
-num_blades = 2
-
-[node name="Motor4" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.13, 0.4 )
-clockwise = false
-MAX_TORQUE = 10000.0
-RPM_ACCELERATION = 50000.0
-MIN_POWER = 5
-kv = 1000
-
-[node name="Propeller4" parent="Motor4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0 )
-radius = 0.2
-LIFT_RATIO = 1.0
-diameter = 15.0
-pitch = 15.0
-num_blades = 2

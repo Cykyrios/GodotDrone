@@ -5,7 +5,7 @@ code = "shader_type spatial;
 render_mode cull_disabled, depth_draw_alpha_prepass;
 
 uniform sampler2D prop_blur : hint_albedo;
-uniform vec4 propeller_color : hint_color;
+uniform vec4 propeller_color : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
 uniform float alpha_boost : hint_range(1.0, 5.0);
 uniform float emission_power : hint_range(0.0, 2.0) = 0.0;
 uniform float emission_falloff : hint_range(5.0, 20.0) = 10.0;

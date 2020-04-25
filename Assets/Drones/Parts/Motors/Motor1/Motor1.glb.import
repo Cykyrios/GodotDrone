@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/motor1.glb-ede0d750b78d3aae156a982e20e54b6d.scn"
+path="res://.import/Motor1.glb-78b60db4689e4883a0d0db1ab7db0c0e.scn"
 
 [deps]
 
-source_file="res://Assets/Drone/Parts/Motors/motor1/motor1.glb"
-dest_files=[ "res://.import/motor1.glb-ede0d750b78d3aae156a982e20e54b6d.scn" ]
+source_file="res://Assets/Drones/Parts/Motors/Motor1/Motor1.glb"
+dest_files=[ "res://.import/Motor1.glb-78b60db4689e4883a0d0db1ab7db0c0e.scn" ]
 
 [params]
 
@@ -24,6 +24,7 @@ meshes/ensure_tangents=true
 meshes/storage=0
 meshes/light_baking=0
 meshes/lightmap_texel_size=0.1
+skins/use_named_skins=true
 external_files/store_in_subdir=false
 animation/import=false
 animation/fps=15

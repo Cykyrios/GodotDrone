@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Assets/Drone/Parts/Bodies/drone1/drone1.glb" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Drones/Parts/Frames/Frame1/Frame1.glb" type="PackedScene" id=1]
 [ext_resource path="res://Drone.gd" type="Script" id=2]
 [ext_resource path="res://FlightController.gd" type="Script" id=3]
 [ext_resource path="res://LED.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Assets/Drone/Parts/Propellers/prop1/prop1.glb" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Drone/Parts/Motors/motor1/motor1.glb" type="PackedScene" id=7]
+[ext_resource path="res://Assets/Drones/Parts/Propellers/Propeller1/Propeller1.glb" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Drones/Parts/Motors/Motor1/Motor1.glb" type="PackedScene" id=7]
 
 [node name="Drone1" type="RigidBody"]
 mass = 0.7
@@ -37,9 +37,6 @@ diameter = 5.1
 pitch = 4.8
 num_blades = 3
 color = Color( 0.784314, 0, 0, 1 )
-prop_disk_alpha = 1.0
-prop_disk_emission = 0.0
-prop_disk_falloff = 10
 
 [node name="Motor2" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, -0.08 )
@@ -57,9 +54,6 @@ diameter = 5.1
 pitch = 4.8
 num_blades = 3
 color = Color( 0.784314, 0, 0, 1 )
-prop_disk_alpha = 1.0
-prop_disk_emission = 0.0
-prop_disk_falloff = 10
 
 [node name="Motor3" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, 0.08 )
@@ -76,9 +70,6 @@ diameter = 5.1
 pitch = 4.8
 num_blades = 3
 color = Color( 0.784314, 0, 0, 1 )
-prop_disk_alpha = 1.0
-prop_disk_emission = 0.0
-prop_disk_falloff = 10
 
 [node name="Motor4" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, 0.08 )
@@ -97,5 +88,3 @@ pitch = 4.8
 num_blades = 3
 color = Color( 0.784314, 0, 0, 1 )
 prop_disk_alpha = 1.5
-prop_disk_emission = 0.0
-prop_disk_falloff = 10

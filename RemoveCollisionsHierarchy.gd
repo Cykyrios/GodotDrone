@@ -76,7 +76,7 @@ func post_import(scene):
 					# PropBlurDisk
 					var mat = node.mesh.surface_get_material(0) as SpatialMaterial
 					mat.flags_transparent = true
-					var disk_shader = load("res://Assets/Drone/Parts/Propellers/PropBlurShader.tres") as Shader
+					var disk_shader = load("res://Assets/Drones/Parts/Propellers/PropBlurShader.tres") as Shader
 					var disk_mat = ShaderMaterial.new()
 					disk_mat.shader = disk_shader
 #					var blur_texture = load("res://Assets/Drone/Parts/Propellers/prop_blur_disk.png") as Texture
@@ -86,7 +86,7 @@ func post_import(scene):
 					disk_mat.set_shader_param("alpha_boost", 1)
 					node.mesh.surface_set_material(0, disk_mat)
 		var mat = children[0].mesh.surface_get_material(0) as SpatialMaterial
-		var prop_shader = load("res://Assets/Drone/Parts/Propellers/PropellerShader.tres") as Shader
+		var prop_shader = load("res://Assets/Drones/Parts/Propellers/PropellerShader.tres") as Shader
 		var prop_mat = ShaderMaterial.new()
 		prop_mat.shader = prop_shader
 		for i in range(2):
