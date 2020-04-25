@@ -6,7 +6,7 @@ func post_import(scene):
 	if scene == null:
 		print("Scene is empty.")
 		return
-	if scene is Drone:
+	if scene is Frame:
 		for node in scene.get_children():
 			if node is MeshInstance:
 				var node_name = node.name

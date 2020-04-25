@@ -40,6 +40,11 @@ _global_script_classes=[ {
 "path": "res://FlightController.gd"
 }, {
 "base": "Spatial",
+"class": "Frame",
+"language": "GDScript",
+"path": "res://Frame.gd"
+}, {
+"base": "Spatial",
 "class": "Gate",
 "language": "GDScript",
 "path": "res://Gate.gd"
@@ -86,6 +91,7 @@ _global_script_class_icons={
 "DebugGeometry": "",
 "Drone": "",
 "FlightController": "",
+"Frame": "",
 "Gate": "",
 "HUD": "",
 "HUDLadder": "",

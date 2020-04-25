@@ -25,6 +25,9 @@ var b_debug = false
 
 
 func _ready():
+	for shape in $Frame.collision_shapes:
+		$Frame.remove_child(shape)
+		add_child(shape)
 	motors = [$Motor1, $Motor2, $Motor3, $Motor4]
 	flight_controller.set_motors(motors)
 #	var prop = motors[0].propeller
