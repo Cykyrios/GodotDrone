@@ -1,9 +1,11 @@
 extends Control
 
 
+onready var title = $VBoxContainer/Title
 onready var label_action = $VBoxContainer/LabelAction
 
 var calibration_step = -1
+var device = 0
 var axes = []
 var throttle = []
 var yaw = []
@@ -11,6 +13,8 @@ var pitch = []
 var roll = []
 
 var calibration_done = false
+var packed_popup = load("res://GUI/ConfirmationPopup.tscn")
+var display_popup = false
 
 signal calibration_done
 signal back
@@ -20,19 +24,19 @@ func _ready():
 	$VBoxContainer/ButtonCancel.connect("pressed", self, "_on_cancel_pressed")
 	connect("calibration_done", self, "_on_calibration_done")
 	
-	go_to_next_step()
+	reset_calibration()
 
 
 func _process(delta):
 	var next_step_ready = true
 	if calibration_step == 0 and axes.size() == 4:
 		for i in range(4):
-			if abs(Input.get_joy_axis(0, i)) < 0.5:
+			if abs(Input.get_joy_axis(device, i)) < 0.5:
 				next_step_ready = false
 				break
 	elif calibration_step == 1:
 		for i in range(4):
-			if abs(Input.get_joy_axis(0, i)) > 0.2:
+			if abs(Input.get_joy_axis(device, i)) > 0.2:
 				next_step_ready = false
 				break
 	else:
@@ -45,6 +49,19 @@ func _input(event):
 	if event is InputEventJoypadMotion:
 		if calibration_step == 0:
 			if abs(event.axis_value) > 0.9:
+				if axes.size() == 0:
+					device = event.device
+					title.text = "Calibrating %s..." % [Input.get_joy_name(device)]
+				elif event.device != device and !display_popup:
+					display_popup = true
+					var popup = packed_popup.instance()
+					add_child(popup)
+					popup.set_text("Please input axes from %s." % [Input.get_joy_name(device)])
+					popup.set_buttons("OK")
+					popup.show_modal(true)
+					yield(popup, "validated")
+					popup.queue_free()
+					display_popup = false
 				if axes.find(event.axis) < 0:
 					axes.append(event.axis)
 		elif calibration_step == 2:
@@ -172,19 +189,50 @@ func save_input_map():
 	var err = config.load(path)
 	print(err)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
-		config.set_value("controls", "throttle_up", throttle[1])
-		config.set_value("controls", "throttle_down", throttle[2])
-		config.set_value("controls", "yaw_left", yaw[1])
-		config.set_value("controls", "yaw_right", yaw[2])
-		config.set_value("controls", "pitch_down", pitch[1])
-		config.set_value("controls", "pitch_up", pitch[2])
-		config.set_value("controls", "roll_left", roll[1])
-		config.set_value("controls", "roll_right", roll[2])
+		var guid = Input.get_joy_guid(device)
+		config.set_value("controls", "active_controller_guid", guid)
+		config.set_value("controls", "active_controller_name", Input.get_joy_name(device))
+#		config.set_value("controls_%s" % [guid], "throttle_up", Input.get_joy_axis_string(throttle[1].axis))
+#		config.set_value("controls_%s" % [guid], "throttle_down", Input.get_joy_axis_string(throttle[2].axis))
+#		config.set_value("controls_%s" % [guid], "yaw_left", Input.get_joy_axis_string(yaw[1].axis))
+#		config.set_value("controls_%s" % [guid], "yaw_right", Input.get_joy_axis_string(yaw[2].axis))
+#		config.set_value("controls_%s" % [guid], "pitch_down", Input.get_joy_axis_string(pitch[1].axis))
+#		config.set_value("controls_%s" % [guid], "pitch_up", Input.get_joy_axis_string(pitch[2].axis))
+#		config.set_value("controls_%s" % [guid], "roll_left", Input.get_joy_axis_string(roll[1].axis))
+#		config.set_value("controls_%s" % [guid], "roll_right", Input.get_joy_axis_string(roll[2].axis))
+		
+		config.set_value("controls_%s" % [guid], "throttle_up", Input.get_joy_axis_string(throttle[1].axis))
+		var inverted = false
+		if sign(throttle[2].axis_value) < 0:
+			inverted = true
+		config.set_value("controls_%s" % [guid], "throttle_inverted", inverted)
+		config.set_value("controls_%s" % [guid], "yaw_left", Input.get_joy_axis_string(yaw[1].axis))
+		inverted = false
+		if sign(yaw[2].axis_value) < 0:
+			inverted = true
+		config.set_value("controls_%s" % [guid], "yaw_inverted", inverted)
+		config.set_value("controls_%s" % [guid], "pitch_up", Input.get_joy_axis_string(pitch[1].axis))
+		inverted = false
+		if sign(pitch[2].axis_value) > 0:
+			inverted = true
+		config.set_value("controls_%s" % [guid], "pitch_inverted", inverted)
+		config.set_value("controls_%s" % [guid], "roll_left", Input.get_joy_axis_string(roll[1].axis))
+		inverted = false
+		if sign(roll[2].axis_value) < 0:
+			inverted = true
+		config.set_value("controls_%s" % [guid], "roll_inverted", inverted)
 		config.save(path)
 
 
 func reset_calibration():
-	calibration_step = 0
+	calibration_done = false
+	calibration_step = -1
+	axes.clear()
+	throttle.clear()
+	yaw.clear()
+	pitch.clear()
+	roll.clear()
+	go_to_next_step()
 
 
 func _on_cancel_pressed():

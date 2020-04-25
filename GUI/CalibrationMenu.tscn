@@ -26,6 +26,9 @@ margin_left = -119.5
 margin_top = -74.5
 margin_right = 119.5
 margin_bottom = 74.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
