@@ -13,6 +13,12 @@ func _ready():
 	button_yes.connect("pressed", self, "_on_button_pressed", [0])
 	button_no.connect("pressed", self, "_on_button_pressed", [1])
 	button_alt.connect("pressed", self, "_on_button_pressed", [2])
+	$PanelContainer.connect("resized", self, "_on_resized")
+
+
+func _on_resized():
+	rect_size = $PanelContainer.rect_size
+	rect_position = (get_parent().rect_size - rect_size) / 2
 
 
 func _on_button_pressed(choice : int):
