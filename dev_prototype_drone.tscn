@@ -4,10 +4,14 @@
 [ext_resource path="res://Drone.gd" type="Script" id=2]
 [ext_resource path="res://FlightController.gd" type="Script" id=3]
 [ext_resource path="res://LED.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Assets/Drone/Parts/Bodies/dev_prototype/RightGreen.material" type="Material" id=5]
-[ext_resource path="res://Assets/Drone/Parts/Bodies/dev_prototype/LeftRed.material" type="Material" id=6]
-[ext_resource path="res://Assets/Drone/Parts/Bodies/dev_prototype/DroneBody.material" type="Material" id=7]
-[ext_resource path="res://Assets/Drone/Parts/Motors/motor1/motor1.glb" type="PackedScene" id=8]
+[ext_resource path="res://Assets/Drones/Parts/Frames/dev_prototype/RightGreen.material" type="Material" id=5]
+[ext_resource path="res://Assets/Drones/Parts/Frames/dev_prototype/LeftRed.material" type="Material" id=6]
+[ext_resource path="res://Assets/Drones/Parts/Frames/dev_prototype/DroneBody.material" type="Material" id=7]
+[ext_resource path="res://Assets/Drones/Parts/Motors/Motor1/Motor1.glb" type="PackedScene" id=8]
+
+
+
+
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Body"

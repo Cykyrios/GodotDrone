@@ -126,6 +126,7 @@ func _on_disarm_input():
 	set_armed(false)
 	for controller in pid_controllers:
 		controller.set_disabled(true)
+		controller.reset()
 
 
 func set_armed(arm : bool):

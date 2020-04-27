@@ -1,0 +1,98 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUI/MenuFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://GUI/ConfirmationPopup.gd" type="Script" id=2]
+
+[node name="ConfirmationPopup" type="Popup"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -80.0
+margin_right = 200.0
+margin_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 200, 100 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+popup_exclusive = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 4.0
+margin_right = -8.0
+margin_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 392.0
+margin_bottom = 153.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+custom_constants/separation = 50
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+margin_right = 385.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+text = "Do you want to continue?"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 95.0
+margin_right = 385.0
+margin_bottom = 146.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+custom_constants/separation = 50
+
+[node name="ButtonYes" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_right = 95.0
+margin_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Yes"
+
+[node name="ButtonNo" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 145.0
+margin_right = 240.0
+margin_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "No"
+
+[node name="ButtonAlt" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 290.0
+margin_right = 385.0
+margin_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Alt"

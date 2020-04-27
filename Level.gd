@@ -1,5 +1,8 @@
 extends Spatial
 
+
+var pause_menu = preload("res://GUI/PauseMenu.tscn")
+
 var cameras = []
 var camera_index = 0
 var camera : Camera
@@ -10,7 +13,9 @@ onready var radio_controller = $RadioController
 
 var tracks = []
 
-# Called when the node enters the scene tree for the first time.
+signal quit_to_menu
+
+
 func _ready():
 	cameras.append($FollowCamera)
 	cameras.append($Drone/CameraFPV)
@@ -26,6 +31,12 @@ func _ready():
 			tracks.append(c)
 	
 	radio_controller.connect("reset_requested", self, "_on_drone_reset")
+	
+	pause_menu = pause_menu.instance()
+	add_child(pause_menu)
+	pause_menu.visible = false
+	pause_menu.connect("resumed", self, "_on_resume")
+	pause_menu.connect("menu", self, "_on_return_to_menu")
 
 
 func _process(delta):
@@ -48,7 +59,10 @@ func _input(event):
 		change_camera()
 	
 	if Input.is_action_just_pressed("pause"):
-		get_tree().paused = !get_tree().paused
+		if !get_tree().paused:
+			get_tree().paused = true
+			pause_menu.visible = true
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func change_camera():
@@ -65,3 +79,15 @@ func change_camera():
 func _on_drone_reset():
 	for track in tracks:
 		track.reset_track()
+
+
+func _on_resume():
+	if pause_menu.can_resume:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		pause_menu.visible = false
+		get_tree().paused = false
+
+
+func _on_return_to_menu():
+	get_tree().change_scene("res://GUI/MainMenu.tscn")
+	queue_free()

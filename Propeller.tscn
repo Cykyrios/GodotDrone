@@ -1,7 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Propeller.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Drone/Parts/Propellers/dev_prop/Propeller.material" type="Material" id=2]
+[ext_resource path="res://Assets/Drones/Parts/Propellers/dev_prop/Propeller.material" type="Material" id=2]
+
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "CW"

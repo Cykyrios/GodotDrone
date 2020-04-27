@@ -13,9 +13,9 @@ export (float, 0.0, 1.0) var expo_pitch = 0.2
 export (float, 0.0, 1.0) var expo_roll = 0.2
 export (float, 0.0, 1.0) var expo_yaw = 0.2
 
-var drone_transform = Transform()
-var drone_pos = Vector3()
-var drone_basis = Vector3()
+var drone_transform = Transform.IDENTITY
+var drone_pos = Vector3.ZERO
+var drone_basis = Basis.IDENTITY
 
 export (Vector3) var projected_area = Vector3(0.1, 0.1, 0.1)
 export (Vector3) var cd = Vector3(0.3, 1.3, 0.3)
@@ -25,6 +25,9 @@ var b_debug = false
 
 
 func _ready():
+	for shape in $Frame.collision_shapes:
+		$Frame.remove_child(shape)
+		add_child(shape)
 	motors = [$Motor1, $Motor2, $Motor3, $Motor4]
 	flight_controller.set_motors(motors)
 #	var prop = motors[0].propeller

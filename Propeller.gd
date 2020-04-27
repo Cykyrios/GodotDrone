@@ -15,6 +15,11 @@ export (int, 2, 6) var num_blades = 2
 
 var clockwise = false setget set_clockwise
 var rpm = 0.0
+var use_blur = false
+export (Color) var color = Color(1.0, 1.0, 1.0, 1.0) setget set_color
+export (float, 1, 3) var prop_disk_alpha = 1.0 setget set_prop_disk_alpha
+export (float, 0, 2) var prop_disk_emission = 0.0 setget set_prop_disk_emission
+export (int, 1, 20) var prop_disk_falloff = 10 setget set_prop_disk_falloff
 
 var velocity = Vector3.ZERO setget set_velocity
 var thrust = 0.0
@@ -24,32 +29,63 @@ func _ready():
 	if Engine.editor_hint:
 		return
 	
-	set_visibility()
+	set_visibility(true)
+	$PropBlurDisk.visible = false
 	
 	ray.add_exception(get_parent())
 	max_ray_length = ray.cast_to.length()
 
 
-func _physics_process(delta):
+func _process(delta):
 	if Engine.editor_hint:
 		return
 	
-	var rot = rpm * PI / 30.0
-	if clockwise:
-		rot = -rot
-	rotate_object_local(Vector3.UP, rot * delta)
-	
-	transform = transform.orthonormalized()
+	if rpm > 500:
+		if !use_blur:
+			use_blur = true
+			$PropBlurDisk.visible = true
+			set_visibility(false)
+	else:
+		if use_blur:
+			use_blur = false
+			$PropBlurDisk.visible = false
+			set_visibility(true)
 
 
 func set_clockwise(cw : bool):
 	clockwise = cw
-	set_visibility()
+	set_visibility(true)
 
 
-func set_visibility():
-	$CW.visible = clockwise
-	$CCW.visible = !clockwise
+func set_visibility(show_prop : bool):
+	if show_prop:
+		$CW.visible = clockwise
+		$CCW.visible = !clockwise
+	else:
+		$CW.visible = false
+		$CCW.visible = false
+
+
+func set_color(col : Color):
+	color = col
+	$CW.mesh.surface_get_material(0).set_shader_param("propeller_color", color)
+	$CCW.mesh.surface_get_material(0).set_shader_param("propeller_color", color)
+	$PropBlurDisk.mesh.surface_get_material(0).set_shader_param("propeller_color", color)
+
+
+func set_prop_disk_alpha(alpha : float):
+	prop_disk_alpha = alpha
+	$PropBlurDisk.mesh.surface_get_material(0).set_shader_param("alpha_boost", prop_disk_alpha)
+
+
+func set_prop_disk_emission(emission : float):
+	prop_disk_emission = emission
+	$PropBlurDisk.mesh.surface_get_material(0).set_shader_param("emission_power", prop_disk_emission)
+
+
+func set_prop_disk_falloff(falloff : float):
+	prop_disk_falloff = falloff
+	$PropBlurDisk.mesh.surface_get_material(0).set_shader_param("emission_falloff", prop_disk_falloff)
 
 
 func set_velocity(vel : Vector3):
