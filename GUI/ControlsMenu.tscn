@@ -52,3 +52,81 @@ margin_right = 262.0
 margin_bottom = 210.0
 custom_fonts/font = ExtResource( 1 )
 text = "Back to Menu"
+
+[node name="ControlsVBox" type="VBoxContainer" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 100.0
+margin_top = -260.5
+margin_right = 300.0
+margin_bottom = 260.5
+custom_constants/separation = 30
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ControllerVBox" type="VBoxContainer" parent="ControlsVBox"]
+margin_right = 264.0
+margin_bottom = 106.0
+custom_constants/separation = 10
+
+[node name="LabelController" type="Label" parent="ControlsVBox/ControllerVBox"]
+margin_right = 264.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+text = "Active controller:"
+
+[node name="MenuButton" type="MenuButton" parent="ControlsVBox/ControllerVBox"]
+margin_top = 55.0
+margin_right = 264.0
+margin_bottom = 106.0
+custom_fonts/font = ExtResource( 1 )
+text = "None"
+flat = false
+
+[node name="AxesVBox" type="VBoxContainer" parent="ControlsVBox"]
+margin_top = 136.0
+margin_right = 200.0
+margin_bottom = 291.0
+size_flags_horizontal = 0
+custom_constants/separation = 10
+
+[node name="LabelAxes" type="Label" parent="ControlsVBox/AxesVBox"]
+margin_right = 200.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+text = "Axes:"
+
+[node name="AxesList" type="VBoxContainer" parent="ControlsVBox/AxesVBox"]
+margin_top = 55.0
+margin_right = 200.0
+margin_bottom = 155.0
+rect_min_size = Vector2( 200, 100 )
+size_flags_vertical = 3
+custom_constants/separation = 20
+alignment = 1
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="ControlsVBox"]
+margin_top = 321.0
+margin_right = 200.0
+margin_bottom = 576.0
+size_flags_horizontal = 0
+custom_constants/separation = 10
+
+[node name="LabelButtons" type="Label" parent="ControlsVBox/ButtonsVBox"]
+margin_right = 200.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+text = "Buttons:"
+
+[node name="ButtonGrid" type="GridContainer" parent="ControlsVBox/ButtonsVBox"]
+margin_top = 55.0
+margin_right = 200.0
+margin_bottom = 255.0
+rect_min_size = Vector2( 200, 200 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/vseparation = 30
+custom_constants/hseparation = 30
+columns = 4
