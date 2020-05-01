@@ -32,6 +32,11 @@ func _input(event):
 			emit_signal("arm_input")
 		else:
 			emit_signal("disarm_input")
+	elif event.is_action("arm"):
+		if Input.is_action_just_pressed("arm"):
+			emit_signal("arm_input")
+		elif Input.is_action_just_released("arm"):
+			emit_signal("disarm_input")
 
 
 func _physics_process(delta):
