@@ -58,11 +58,13 @@ func _input(event):
 			camera_index = 0
 		change_camera()
 	
-	if Input.is_action_just_pressed("pause"):
+	if Input.is_action_just_pressed("pause_menu"):
 		if !get_tree().paused:
 			get_tree().paused = true
 			pause_menu.visible = true
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		elif pause_menu.visible:
+			pause_menu.emit_signal("resumed")
 
 
 func change_camera():
