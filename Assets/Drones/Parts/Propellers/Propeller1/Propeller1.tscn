@@ -3,8 +3,11 @@
 [ext_resource path="res://Assets/Drones/Parts/Propellers/Propeller1/Propeller1.glb" type="PackedScene" id=1]
 
 [node name="Propeller1" instance=ExtResource( 1 )]
-radius = 0.065
-LIFT_RATIO = 2.2
 diameter = 5.1
 pitch = 4.8
 num_blades = 3
+c_tip = 0.04
+cla = 0.05
+cd0 = 0.05
+color = Color( 0.784314, 0, 0, 1 )
+prop_disk_alpha = 1.5
