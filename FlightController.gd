@@ -44,7 +44,7 @@ export (float, 0.0, 1000.0) var pid_yaw_d = 0.0
 
 
 var telemetry_file = File.new()
-export (bool) var b_telemetry = true
+export (bool) var b_telemetry = false
 
 signal flight_mode_changed
 

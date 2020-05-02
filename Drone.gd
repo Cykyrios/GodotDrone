@@ -98,12 +98,24 @@ func _integrate_forces(state):
 		for motor in motors:
 			motor.update_thrust(dt)
 			var prop = motor.propeller
-			var prop_xform = motor.transform * prop.transform
-			var prop_force = xform.basis.xform(prop_xform.basis.y) * prop.get_thrust()
-			vec_force += prop_force
-			vec_torque += motor.get_torque() * basis.y
 			var prop_pos = prop.global_transform.origin - global_transform.origin
-			vec_torque -= prop_force.cross(xform.basis.xform(prop_xform.origin))
+			var prop_xform = motor.transform * prop.transform
+			var prop_local_pos = prop_xform.xform_inv(prop_pos)
+			prop.set_velocity(xform.basis.xform_inv(lin_vel) + xform.basis.xform_inv(ang_vel).cross(prop_local_pos))
+			prop.update_forces()
+			var prop_forces = prop.get_forces()
+			var prop_thrust = xform.basis.xform(prop_forces[0])
+			var prop_drag = xform.basis.xform(prop_forces[1])
+			if b_debug and i == 0 and prop.name == "Propeller1":
+				print("V: %5.2f, T: %5.2f, D: %5.2f" % [prop.velocity.y, prop_forces[0].length(), prop_forces[1].length()])
+				# Draw debug arrows relative to FPV camera
+				debug_geom.draw_debug_arrow(0.016, xform.xform(Vector3(0, 1, -2)),
+						prop_thrust.normalized(), prop_thrust.length() / 10.0, Color(1, 0, 0))
+				debug_geom.draw_debug_arrow(0.016, xform.xform(Vector3(0, 1, -2)),
+						prop_drag.normalized(), prop_drag.length() / 5.0, Color(0, 1, 0))
+			vec_force += prop_thrust + prop_drag
+			vec_torque += motor.get_torque() * basis.y
+			vec_torque -= prop_thrust.cross(xform.basis.xform(prop_xform.origin))
 
 		var drag = get_drag(lin_vel, ang_vel, basis)
 		vec_force += drag[0]
