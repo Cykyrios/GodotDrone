@@ -67,28 +67,41 @@ __meta__ = {
 }
 
 [node name="ControllerVBox" type="VBoxContainer" parent="ControlsVBox"]
-margin_right = 264.0
-margin_bottom = 106.0
+margin_right = 366.0
+margin_bottom = 169.0
 custom_constants/separation = 10
 
 [node name="LabelController" type="Label" parent="ControlsVBox/ControllerVBox"]
-margin_right = 264.0
+margin_right = 366.0
 margin_bottom = 45.0
 custom_fonts/font = ExtResource( 1 )
 text = "Active controller:"
 
 [node name="MenuButton" type="MenuButton" parent="ControlsVBox/ControllerVBox"]
 margin_top = 55.0
-margin_right = 264.0
+margin_right = 366.0
 margin_bottom = 106.0
 custom_fonts/font = ExtResource( 1 )
 text = "None"
 flat = false
 
+[node name="ControllerCheckButton" type="CheckButton" parent="ControlsVBox/ControllerVBox"]
+margin_top = 116.0
+margin_right = 366.0
+margin_bottom = 169.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+size_flags_horizontal = 0
+custom_fonts/font = ExtResource( 1 )
+custom_constants/hseparation = 20
+enabled_focus_mode = 0
+text = "Default controller"
+
 [node name="AxesVBox" type="VBoxContainer" parent="ControlsVBox"]
-margin_top = 136.0
+margin_top = 199.0
 margin_right = 200.0
-margin_bottom = 291.0
+margin_bottom = 354.0
 size_flags_horizontal = 0
 custom_constants/separation = 10
 
@@ -108,9 +121,9 @@ custom_constants/separation = 20
 alignment = 1
 
 [node name="ButtonsVBox" type="VBoxContainer" parent="ControlsVBox"]
-margin_top = 321.0
+margin_top = 384.0
 margin_right = 200.0
-margin_bottom = 576.0
+margin_bottom = 639.0
 size_flags_horizontal = 0
 custom_constants/separation = 10
 

@@ -177,29 +177,28 @@ func _on_calibration_done():
 	InputMap.action_erase_events("roll_right")
 	InputMap.action_add_event("roll_left", roll[1])
 	InputMap.action_add_event("roll_right", roll[2])
-	save_input_map()
+	var err = save_input_map()
+	if err != OK:
+		var popup = packed_popup.instance()
+		add_child(popup)
+		popup.set_text("Write Error: Could not save calibration data to file.")
+		popup.set_buttons("OK")
+		popup.show_modal(true)
+		yield(popup, "validated")
+		popup.queue_free()
 	
 	yield(get_tree().create_timer(2.0), "timeout")
 	emit_signal("back")
 
 
 func save_input_map():
-	var path = "user://InputMap.cfg"
 	var config = ConfigFile.new()
-	var err = config.load(path)
+	var err = config.load(Global.input_map_path)
 	print(err)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
 		var guid = Input.get_joy_guid(device)
 		config.set_value("controls", "active_controller_guid", guid)
 		config.set_value("controls", "active_controller_name", Input.get_joy_name(device))
-#		config.set_value("controls_%s" % [guid], "throttle_up", Input.get_joy_axis_string(throttle[1].axis))
-#		config.set_value("controls_%s" % [guid], "throttle_down", Input.get_joy_axis_string(throttle[2].axis))
-#		config.set_value("controls_%s" % [guid], "yaw_left", Input.get_joy_axis_string(yaw[1].axis))
-#		config.set_value("controls_%s" % [guid], "yaw_right", Input.get_joy_axis_string(yaw[2].axis))
-#		config.set_value("controls_%s" % [guid], "pitch_down", Input.get_joy_axis_string(pitch[1].axis))
-#		config.set_value("controls_%s" % [guid], "pitch_up", Input.get_joy_axis_string(pitch[2].axis))
-#		config.set_value("controls_%s" % [guid], "roll_left", Input.get_joy_axis_string(roll[1].axis))
-#		config.set_value("controls_%s" % [guid], "roll_right", Input.get_joy_axis_string(roll[2].axis))
 		
 		config.set_value("controls_%s" % [guid], "throttle_up", Input.get_joy_axis_string(throttle[1].axis))
 		var inverted = false
@@ -221,7 +220,7 @@ func save_input_map():
 		if sign(roll[2].axis_value) < 0:
 			inverted = true
 		config.set_value("controls_%s" % [guid], "roll_inverted", inverted)
-		config.save(path)
+		config.save(Global.input_map_path)
 
 
 func reset_calibration():

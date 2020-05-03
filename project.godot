@@ -108,6 +108,10 @@ config/name="Drone"
 run/main_scene="res://GUI/MainMenu.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://Global.gd"
+
 [debug]
 
 gdscript/warnings/unused_variable=false

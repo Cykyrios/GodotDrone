@@ -4,12 +4,14 @@ extends Control
 var packed_calibration_menu = preload("res://GUI/CalibrationMenu.tscn")
 
 onready var controller_list = $ControlsVBox/ControllerVBox/MenuButton
+onready var controller_checkbutton = $ControlsVBox/ControllerVBox/ControllerCheckButton
 onready var axes_list = $ControlsVBox/AxesVBox/AxesList
 onready var button_grid = $ControlsVBox/ButtonsVBox/ButtonGrid
 
 var connected_joypads = []
 var auto_detect_controller = false
-var active_controller = 0
+var active_controller = -1
+var default_controller = -1
 
 signal controller_detected
 signal back
@@ -28,8 +30,9 @@ func _ready():
 	controller_list.get_popup().connect("id_pressed", self, "_on_controller_selected")
 	controller_list.get_popup().connect("modal_closed", self, "_on_controller_select_aborted")
 	controller_list.get_popup().add_font_override("font", load("res://GUI/MenuFont.tres"))
-	# TODO: read InputMap.cfg to get active controller, replace text with controller name
-	# if active controller is not found, default to first in list of connected devices
+	
+	controller_checkbutton.connect("toggled", self, "_on_checkbutton_toggled")
+	
 	# TODO: only allow calibration for active controller OR update controller list
 	
 	var axis = TextureProgress.new()
@@ -58,6 +61,29 @@ func _ready():
 	for i in range(16):
 		button_grid.add_child(button.duplicate())
 	button.queue_free()
+	
+	var active_controller_found = false
+	var active_device = -1
+	connected_joypads = Input.get_connected_joypads()
+	for joypad in connected_joypads:
+		if Input.get_joy_guid(joypad) == Global.active_controller_guid:
+			active_controller_found = true
+			active_device = joypad
+			break
+	if !active_controller_found:
+		var default_controller_found = false
+		if default_controller >= 0:
+			for joypad in connected_joypads:
+				if Input.get_joy_guid(joypad) == Global.default_controller_guid:
+					default_controller_found = true
+					default_controller = joypad
+					active_device = joypad
+		if !default_controller_found:
+			if connected_joypads.empty():
+				active_device = -1
+			else:
+				active_device = connected_joypads[0]
+	controller_list.get_popup().emit_signal("id_pressed", connected_joypads.find(active_device))
 
 
 func _input(event):
@@ -92,9 +118,13 @@ func update_controller_list():
 	if connected_joypads.empty():
 		controller_list.get_popup().add_item("No controller found")
 		controller_list.text = "No controller found"
+		active_controller = -1
+		controller_checkbutton.disabled = true
+		controller_checkbutton.pressed = false
 	else:
 		for joypad in connected_joypads:
 			controller_list.get_popup().add_item(Input.get_joy_name(joypad))
+		controller_checkbutton.disabled = false
 
 
 func _on_joypad_connection_changed(device: int, connected: bool):
@@ -105,7 +135,7 @@ func _on_joypad_connection_changed(device: int, connected: bool):
 			active_controller_found = true
 			break
 	if !active_controller_found:
-		active_controller = 0
+		active_controller = -1
 		controller_list.get_popup().emit_signal("id_pressed", active_controller)
 
 
@@ -124,14 +154,31 @@ func _on_controller_autodetected(device: int):
 
 
 func _on_controller_selected(id: int):
-	if connected_joypads.empty():
-		return
 	if controller_list.get_popup().visible:
 		controller_list.get_popup().hide()
 	auto_detect_controller = false
-	active_controller = connected_joypads[id]
-	update_config_file()
-	update_axes_and_buttons(active_controller)
+	if connected_joypads.empty():
+		return
+	if connected_joypads[id] != active_controller:
+		active_controller = connected_joypads[id]
+		var checkbutton_pressed = (Input.get_joy_guid(active_controller) == Global.default_controller_guid)
+		print("Active: %s, default: %s, check: %s" % [Input.get_joy_guid(active_controller), Global.default_controller_guid, checkbutton_pressed])
+		controller_checkbutton.pressed = checkbutton_pressed
+		Global.update_active_device(active_controller)
+		update_input_map()
+		update_axes_and_buttons(active_controller)
+
+
+func _on_checkbutton_toggled(pressed: bool):
+	if (!pressed and active_controller != default_controller) or (pressed and active_controller == default_controller):
+		return
+	if pressed:
+		default_controller = active_controller
+	else:
+		default_controller = -1
+	var err = Global.update_default_device(default_controller)
+	if err != OK:
+		print_debug("Controller checkbox input map save error")
 
 
 func update_axes_and_buttons(device: int):
@@ -154,6 +201,6 @@ func update_button_value(id: int, pressed: bool):
 		button.modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 
-func update_config_file():
-	# TODO: add autoload node to manage config file -> update active controller
+func update_input_map():
+	# TODO: read cfg file and update input map
 	pass
