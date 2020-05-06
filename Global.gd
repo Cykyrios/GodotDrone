@@ -24,7 +24,10 @@ func update_default_device(device: int):
 	var config = ConfigFile.new()
 	var err = config.load(input_map_path)
 	if err == OK:
-		default_controller_guid = Input.get_joy_guid(device)
+		if device >= 0:
+			default_controller_guid = Input.get_joy_guid(device)
+		else:
+			default_controller_guid = ""
 		config.set_value("controls", "default_controller", default_controller_guid)
 		err = config.save(input_map_path)
 	else:
