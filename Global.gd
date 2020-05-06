@@ -7,12 +7,23 @@ var default_controller_guid = ""
 
 var startup = true
 
+var action_dict = [{"action": "arm", "label": "Arm"},
+		{"action": "toggle_arm", "label": "Arm (toggle)"},
+		{"action": "respawn", "label": "Reset drone"},
+		{"action": "cycle_flight_modes", "label": "Cycle modes"},
+		{"action": "mode_horizon", "label": "Mode: Horizon"},
+		{"action": "mode_angle", "label": "Mode: Angle"},
+		{"action": "mode_speed", "label": "Mode: Speed"},
+		{"action": "mode_position", "label": "Mode: Position"},
+		{"action": "altitude_hold", "label": "Altitude hold"}]
+
 
 func update_active_device(device: int):
+	active_controller_guid = Input.get_joy_guid(device)
 	var config = ConfigFile.new()
 	var err = config.load(input_map_path)
 	if err == OK:
-		config.set_value("controls", "active_controller_guid", Input.get_joy_guid(device))
+		config.set_value("controls", "active_controller_guid", active_controller_guid)
 		config.set_value("controls", "active_controller_name", Input.get_joy_name(device))
 		err = config.save(input_map_path)
 	else:

@@ -11,7 +11,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MenuVBox" type="VBoxContainer" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -24,7 +24,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="VBoxContainer"]
+[node name="Title" type="Label" parent="MenuVBox"]
 margin_right = 262.0
 margin_bottom = 45.0
 custom_fonts/font = ExtResource( 1 )
@@ -32,28 +32,28 @@ text = "Controls"
 align = 1
 valign = 1
 
-[node name="ButtonCalibrate" type="Button" parent="VBoxContainer"]
+[node name="ButtonCalibrate" type="Button" parent="MenuVBox"]
 margin_top = 49.0
 margin_right = 262.0
 margin_bottom = 100.0
 custom_fonts/font = ExtResource( 1 )
 text = "Calibrate axes"
 
-[node name="ButtonReset" type="Button" parent="VBoxContainer"]
+[node name="ButtonReset" type="Button" parent="MenuVBox"]
 margin_top = 104.0
 margin_right = 262.0
 margin_bottom = 155.0
 custom_fonts/font = ExtResource( 1 )
 text = "Reset to Defaults"
 
-[node name="ButtonBack" type="Button" parent="VBoxContainer"]
+[node name="ButtonBack" type="Button" parent="MenuVBox"]
 margin_top = 159.0
 margin_right = 262.0
 margin_bottom = 210.0
 custom_fonts/font = ExtResource( 1 )
 text = "Back to Menu"
 
-[node name="ControlsVBox" type="VBoxContainer" parent="."]
+[node name="ControllerVBox" type="VBoxContainer" parent="."]
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 100.0
@@ -66,18 +66,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ControllerVBox" type="VBoxContainer" parent="ControlsVBox"]
+[node name="ControllerVBox" type="VBoxContainer" parent="ControllerVBox"]
 margin_right = 366.0
 margin_bottom = 169.0
 custom_constants/separation = 10
 
-[node name="LabelController" type="Label" parent="ControlsVBox/ControllerVBox"]
+[node name="LabelController" type="Label" parent="ControllerVBox/ControllerVBox"]
 margin_right = 366.0
 margin_bottom = 45.0
 custom_fonts/font = ExtResource( 1 )
 text = "Active controller:"
 
-[node name="MenuButton" type="MenuButton" parent="ControlsVBox/ControllerVBox"]
+[node name="MenuButton" type="MenuButton" parent="ControllerVBox/ControllerVBox"]
 margin_top = 55.0
 margin_right = 366.0
 margin_bottom = 106.0
@@ -85,7 +85,7 @@ custom_fonts/font = ExtResource( 1 )
 text = "None"
 flat = false
 
-[node name="ControllerCheckButton" type="CheckButton" parent="ControlsVBox/ControllerVBox"]
+[node name="ControllerCheckButton" type="CheckButton" parent="ControllerVBox/ControllerVBox"]
 margin_top = 116.0
 margin_right = 366.0
 margin_bottom = 169.0
@@ -98,20 +98,20 @@ custom_constants/hseparation = 20
 enabled_focus_mode = 0
 text = "Default controller"
 
-[node name="AxesVBox" type="VBoxContainer" parent="ControlsVBox"]
+[node name="AxesVBox" type="VBoxContainer" parent="ControllerVBox"]
 margin_top = 199.0
 margin_right = 200.0
 margin_bottom = 354.0
 size_flags_horizontal = 0
 custom_constants/separation = 10
 
-[node name="LabelAxes" type="Label" parent="ControlsVBox/AxesVBox"]
+[node name="LabelAxes" type="Label" parent="ControllerVBox/AxesVBox"]
 margin_right = 200.0
 margin_bottom = 45.0
 custom_fonts/font = ExtResource( 1 )
 text = "Axes:"
 
-[node name="AxesList" type="VBoxContainer" parent="ControlsVBox/AxesVBox"]
+[node name="AxesList" type="VBoxContainer" parent="ControllerVBox/AxesVBox"]
 margin_top = 55.0
 margin_right = 200.0
 margin_bottom = 155.0
@@ -120,20 +120,20 @@ size_flags_vertical = 3
 custom_constants/separation = 20
 alignment = 1
 
-[node name="ButtonsVBox" type="VBoxContainer" parent="ControlsVBox"]
+[node name="ButtonsVBox" type="VBoxContainer" parent="ControllerVBox"]
 margin_top = 384.0
 margin_right = 200.0
 margin_bottom = 639.0
 size_flags_horizontal = 0
 custom_constants/separation = 10
 
-[node name="LabelButtons" type="Label" parent="ControlsVBox/ButtonsVBox"]
+[node name="LabelButtons" type="Label" parent="ControllerVBox/ButtonsVBox"]
 margin_right = 200.0
 margin_bottom = 45.0
 custom_fonts/font = ExtResource( 1 )
 text = "Buttons:"
 
-[node name="ButtonGrid" type="GridContainer" parent="ControlsVBox/ButtonsVBox"]
+[node name="ButtonGrid" type="GridContainer" parent="ControllerVBox/ButtonsVBox"]
 margin_top = 55.0
 margin_right = 200.0
 margin_bottom = 255.0
@@ -143,3 +143,31 @@ size_flags_vertical = 3
 custom_constants/vseparation = 30
 custom_constants/hseparation = 30
 columns = 4
+
+[node name="BindingsVBox" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -140.0
+margin_top = -20.0
+margin_right = -100.0
+margin_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelActions" type="Label" parent="BindingsVBox"]
+margin_right = 143.0
+margin_bottom = 45.0
+custom_fonts/font = ExtResource( 1 )
+text = "Bindings:"
+
+[node name="ActionsVBox" type="VBoxContainer" parent="BindingsVBox"]
+margin_top = 49.0
+margin_right = 143.0
+margin_bottom = 49.0
+custom_constants/separation = 10
