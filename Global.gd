@@ -63,6 +63,9 @@ func load_input_map(update_controller: bool = false):
 				active_device = default_device
 				active_controller_guid = default_controller_guid
 				update_active_device(active_device)
+			if default_device < 0 and !Input.get_connected_joypads().empty():
+				active_device = Input.get_connected_joypads()[0]
+				update_active_device(active_device)
 		if active_device >= 0:
 			var section = "controls_%s" % [active_controller_guid]
 			var actions = config.get_section_keys(section)
