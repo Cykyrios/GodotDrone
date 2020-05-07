@@ -105,8 +105,11 @@ func update_binding(event: InputEvent):
 			add_axis_range(event)
 			dict["type"] = "axis"
 			dict["axis"] = axis
-			dict["min"] = axis_range.bound_low
-			dict["max"] = axis_range.bound_high
+			if dict.has("min") and dict.has("max"):
+				axis_range.call_deferred("set_bounds", dict["min"], dict["max"])
+			else:
+				dict["min"] = axis_range.bound_low
+				dict["max"] = axis_range.bound_high
 	else:
 		remove_binding()
 	emit_signal("binding_updated")

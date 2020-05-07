@@ -13,9 +13,17 @@ var target = null
 
 var input = [0.0, 0.0, 0.0, 0.0]
 
+var axis_bindings = []
+
 
 func _ready():
 	target = get_node(target_path)
+	
+	var dict_list = Global.action_dict
+	for dict in dict_list:
+		if dict["type"] == "axis":
+			axis_bindings.append(dict)
+	
 	connect("reset_requested", target, "_on_reset")
 	connect("mode_changed", target.flight_controller, "_on_cycle_flight_modes")
 	connect("arm_input", target.flight_controller, "_on_arm_input")
@@ -23,7 +31,20 @@ func _ready():
 
 
 func _input(event):
-	if Input.is_action_just_pressed("respawn"):
+	if event is InputEventJoypadMotion:
+		var dict = null
+		for i in range(axis_bindings.size()):
+			if event.axis == axis_bindings[i]["axis"]:
+				dict = axis_bindings[i]
+				var action = dict["action"]
+				var bound_low = dict["min"]
+				var bound_high = dict["max"]
+				var axis_value = event.axis_value
+				if !Input.is_action_pressed(action) and axis_value >= bound_low and axis_value <= bound_high:
+					Input.parse_input_event(simulate_action_event(action, true))
+				elif Input.is_action_pressed(action) and (axis_value < bound_low or axis_value > bound_high):
+					Input.parse_input_event(simulate_action_event(action, false))
+	elif Input.is_action_just_pressed("respawn"):
 		emit_signal("reset_requested")
 	elif event.is_action_pressed("cycle_flight_modes"):
 		emit_signal("mode_changed")
@@ -53,3 +74,10 @@ func read_input():
 	var yaw = Input.get_action_strength("yaw_right") - Input.get_action_strength("yaw_left")
 #	print("Pow: %6.3f ptc: %6.3f rol: %6.3f yaw: %6.3f" % [power, pitch, roll, yaw])
 	input = [power, yaw, roll, pitch]
+
+
+func simulate_action_event(action_name: String, action_pressed: bool) -> InputEventAction:
+	var event = InputEventAction.new()
+	event.action = action_name
+	event.pressed = action_pressed
+	return event

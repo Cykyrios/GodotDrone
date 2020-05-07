@@ -32,8 +32,6 @@ func _ready():
 	$MenuVBox/ButtonCalibrate.connect("pressed", self, "_on_calibrate_pressed")
 	$MenuVBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
 	
-	Input.emit_signal("joy_connection_changed", -1, false)
-	
 	controller_list.connect("pressed", self, "_on_controller_list_pressed")
 	controller_list.get_popup().connect("id_pressed", self, "_on_controller_selected")
 	controller_list.get_popup().connect("modal_closed", self, "_on_controller_select_aborted")
@@ -183,8 +181,8 @@ func _on_controller_selected(id: int):
 		var checkbutton_pressed = (Input.get_joy_guid(active_controller) == Global.default_controller_guid)
 		controller_checkbutton.pressed = checkbutton_pressed
 		Global.update_active_device(active_controller)
-		update_input_map()
-		update_axes_and_buttons(active_controller)
+		call_deferred("update_input_map")
+		call_deferred("update_axes_and_buttons", active_controller)
 
 
 func _on_checkbutton_toggled(pressed: bool):
@@ -217,8 +215,24 @@ func update_button_value(id: int, pressed: bool):
 
 
 func update_input_map():
-	# TODO: read cfg file and update input map
-	pass
+	for binding in actions_list.get_children():
+		binding.remove_binding()
+	Global.load_input_map()
+	var dict_list = Global.action_dict
+	for i in range(dict_list.size()):
+		var dict = dict_list[i]
+		var binding = actions_list.get_child(i)
+		if dict["bound"]:
+			if dict["type"] == "button":
+				var event = InputEventJoypadButton.new()
+				event.button_index = dict["button"]
+				event.device = active_controller
+				call_deferred("update_binding", binding, event)
+			elif dict["type"] == "axis":
+				var event = InputEventJoypadMotion.new()
+				event.axis = dict["axis"]
+				event.device = active_controller
+				call_deferred("update_binding", binding, event)
 
 
 func save_input_map():
@@ -233,7 +247,7 @@ func save_input_map():
 				for key in ["_button", "_axis", "_min", "_max"]:
 					if config.has_section_key(section, action_name + key):
 						config.erase_section_key(section, action_name + key)
-			if action.get("bound", false):
+			if action.has("bound") and action["bound"]:
 				config.set_value(section, action_name, action["type"])
 				if action["type"] == "button":
 					config.set_value(section, action_name + "_button", Input.get_joy_button_string(action["button"]))

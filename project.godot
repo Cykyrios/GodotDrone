@@ -284,6 +284,26 @@ arm={
 "deadzone": 0.5,
 "events": [  ]
 }
+mode_horizon={
+"deadzone": 0.5,
+"events": [  ]
+}
+mode_angle={
+"deadzone": 0.5,
+"events": [  ]
+}
+mode_speed={
+"deadzone": 0.5,
+"events": [  ]
+}
+mode_position={
+"deadzone": 0.5,
+"events": [  ]
+}
+altitude_hold={
+"deadzone": 0.5,
+"events": [  ]
+}
 
 [network]
 
