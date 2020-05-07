@@ -166,6 +166,7 @@ func check_action_state():
 		if dict["type"] == "button":
 			Input.parse_input_event(simulate_action_event(action, Input.is_joy_button_pressed(device, button)))
 		else:
+			axis_range.axis_monitor.value = axis_value
 			var bound_low = axis_range.bound_low
 			var bound_high = axis_range.bound_high
 			if !Input.is_action_pressed(action) and axis_value >= bound_low and axis_value <= bound_high:
