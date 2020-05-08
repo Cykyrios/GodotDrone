@@ -111,7 +111,7 @@ func _input(event):
 					var axis = event.axis
 					binding_text = "Axis %d (%s)" % [axis, Input.get_joy_axis_string(axis)]
 					binding_valid = true
-				elif event is InputEventJoypadButton:
+				elif event is InputEventJoypadButton and event.button_index < JOY_BUTTON_MAX:
 					var button = event.button_index
 					binding_text = "Button %d (%s)" % [button, Input.get_joy_button_string(button)]
 					binding_valid = true
