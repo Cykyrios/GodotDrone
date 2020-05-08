@@ -36,6 +36,7 @@ func _ready():
 	controller_list.get_popup().connect("id_pressed", self, "_on_controller_selected")
 	controller_list.get_popup().connect("modal_closed", self, "_on_controller_select_aborted")
 	controller_list.get_popup().add_font_override("font", load("res://GUI/MenuFont.tres"))
+	controller_list.clip_text = true
 	
 	controller_checkbutton.connect("toggled", self, "_on_checkbutton_toggled")
 	
@@ -78,6 +79,8 @@ func _ready():
 				active_device = connected_joypads[0]
 	controller_list.get_popup().emit_signal("id_pressed", connected_joypads.find(active_device))
 	
+	$ControllerVBox.rect_position.y = (rect_size - $ControllerVBox.rect_size).y / 2
+	
 	# Actions bindings
 	for action in Global.action_dict:
 		var binding = GUIControllerBinding.new()
@@ -105,10 +108,12 @@ func _input(event):
 				var binding_text = ""
 				var binding_valid = false
 				if event is InputEventJoypadMotion and abs(event.axis_value) > 0.8:
-					binding_text = Input.get_joy_axis_string(event.axis)
+					var axis = event.axis
+					binding_text = "Axis %d (%s)" % [axis, Input.get_joy_axis_string(axis)]
 					binding_valid = true
 				elif event is InputEventJoypadButton:
-					binding_text = Input.get_joy_button_string(event.button_index)
+					var button = event.button_index
+					binding_text = "Button %d (%s)" % [button, Input.get_joy_button_string(button)]
 					binding_valid = true
 				if binding_valid:
 					binding_event = event
@@ -277,9 +282,11 @@ func _on_binding_clicked(binding: GUIControllerBinding):
 		var action_events = InputMap.get_action_list(binding.action)
 		if !action_events.empty():
 			if action_events[0] is InputEventJoypadMotion:
-				current_binding_text = Input.get_joy_axis_string(action_events[0].axis)
+				var axis = action_events[0].axis
+				current_binding_text = "Axis %d (%s)" % [axis, Input.get_joy_axis_string(axis)]
 			elif action_events[0] is InputEventJoypadButton:
-				current_binding_text = Input.get_joy_button_string(action_events[0].button_index)
+				var button = action_events[0].button_index
+				current_binding_text = "Button %d (%s)"  % [button, Input.get_joy_button_string(button)]
 	binding_popup.set_text(binding_popup_text + "\n" + current_binding_text)
 	binding_popup.set_buttons("Confirm", "Cancel", "Clear")
 	show_binding_popup = true
