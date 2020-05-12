@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://HUD/HUD.tscn" type="PackedScene" id=1]
 [ext_resource path="res://DebugGeometry.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Assets/Tracks/Track2.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Assets/Tracks/Track_MultiGP_2020_Global_Qualifier.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Assets/Tracks/Track_MultiGP_2018_Regional_Final.tscn" type="PackedScene" id=13]
+[ext_resource path="res://FPVCamera/FPVCamera.gd" type="Script" id=14]
 
 
 [sub_resource type="BoxShape" id=1]
@@ -103,10 +104,10 @@ expo_pitch = 0.3
 expo_roll = 0.3
 expo_yaw = 0.3
 
-[node name="CameraFPV" type="Camera" parent="Drone"]
-transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, -0.05 )
-near = 0.03
-far = 1000.0
+[node name="FPVCamera" type="Camera" parent="Drone"]
+transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0.00459784, -0.0626912 )
+cull_mask = 1024
+script = ExtResource( 14 )
 
 [node name="Objects" type="Spatial" parent="."]
 
