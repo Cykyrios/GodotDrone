@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Drone.gd"
 }, {
+"base": "Camera",
+"class": "FPVCamera",
+"language": "GDScript",
+"path": "res://FPVCamera/FPVCamera.gd"
+}, {
 "base": "Spatial",
 "class": "FlightController",
 "language": "GDScript",
@@ -110,6 +115,7 @@ _global_script_class_icons={
 "ControlProfile": "",
 "DebugGeometry": "",
 "Drone": "",
+"FPVCamera": "",
 "FlightController": "",
 "Frame": "",
 "GUIControllerAxis": "",

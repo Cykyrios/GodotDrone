@@ -18,7 +18,7 @@ signal quit_to_menu
 
 func _ready():
 	cameras.append($FollowCamera)
-	cameras.append($Drone/CameraFPV)
+	cameras.append($Drone/FPVCamera)
 	cameras.append($CameraFixed)
 	cameras.append($FlyaroundCamera/RotationHelper/Camera)
 	
@@ -68,9 +68,15 @@ func _input(event):
 
 
 func change_camera():
+	camera.visible = false
 	camera.current = false
+	if camera is FPVCamera:
+		camera.render_quad.visible = false
 	camera = cameras[camera_index]
 	camera.current = true
+	if camera is FPVCamera:
+		camera.render_quad.visible = true
+	camera.visible = true
 	
 	if camera_index == 1:
 		hud.visible = true
