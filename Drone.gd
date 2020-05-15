@@ -75,6 +75,10 @@ func _physics_process(delta):
 	drone_transform = global_transform
 	drone_pos = drone_transform.origin
 	drone_basis = drone_transform.basis
+	
+	if b_debug:
+		var drag = get_drag(linear_velocity, angular_velocity, drone_basis)[0]
+		debug_geom.draw_debug_arrow(0.01, global_transform.origin, drag.normalized(), drag.length() / 10)
 
 
 func _integrate_forces(state):
@@ -149,8 +153,11 @@ func get_drag(lin_vel : Vector3, ang_vel, orientation : Basis):
 	var drag = [Vector3(), Vector3()]
 	var local_vel = orientation.xform_inv(lin_vel)
 	var local_ang = orientation.xform_inv(ang_vel)
-	drag[0] = orientation.xform(-local_vel.length_squared() * local_vel.normalized() * projected_area * cd / 2.0 * 1.225)
-	drag[1] = orientation.xform(-local_ang.length_squared() * local_ang.normalized() * projected_area * cd / 200.0 * 1.225)
+	var local_drag = [Vector3(), Vector3()]
+	local_drag[0] = -local_vel.length() * local_vel * projected_area * cd / 2.0 * 1.225
+	local_drag[1] = -local_ang.length() * local_ang * projected_area * cd / 200.0 * 1.225
+	drag[0] = orientation.xform(local_drag[0])
+	drag[1] = orientation.xform(local_drag[1])
 	
 	return drag
 
