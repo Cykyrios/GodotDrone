@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Track.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Tracks/Objects/Launchpad.tscn" type="PackedScene" id=2]
@@ -13,7 +13,88 @@
 [ext_resource path="res://Assets/Tracks/Gates/Gate_7x6_Simple.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Assets/Tracks/Gates/Gate_Hurdle_10x5.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Assets/Tracks/Gates/Gate_7x6_Double.tscn" type="PackedScene" id=13]
+[ext_resource path="res://PathedObject.gd" type="Script" id=14]
+[ext_resource path="res://Assets/Tracks/Objects/RacingCone_1.mesh" type="ArrayMesh" id=15]
+[ext_resource path="res://Assets/Tracks/Objects/ConePattern_Up2.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Assets/Tracks/Objects/ConePattern_Arrow2.tscn" type="PackedScene" id=17]
 
+[sub_resource type="Curve3D" id=1]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -33, 0, 0 ),
+"tilts": PoolRealArray( 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=2]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, -5, 0, 0, 0, 0, 0, 5, 0, 0, -5, 0, 0, -12, 0, 3, 5, 0, 0, 0, 0, 0, -21, 0, 0 ),
+"tilts": PoolRealArray( 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=3]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, -2.5, 0, 0, 0, 0, 0, -1.25, 0, -1.25, 1.25, 0, 1.25, -2, 0, 3.5, 0, 0, 2.5, 0, 0, -10, 1.5, 0, 1.5 ),
+"tilts": PoolRealArray( 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=6]
+_data = {
+"points": PoolVector3Array( 0, 0, 5, 0, 0, -10, 0, 0, 0, -1.5, 0, 10, 0, 0, 0, 3, 0, -19 ),
+"tilts": PoolRealArray( 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=4]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, -1, 0, -5, 0, 0, 0, 1, 0, 5, 0, 0, 0, -2, 0, -9 ),
+"tilts": PoolRealArray( 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=5]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0 ),
+"tilts": PoolRealArray( 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=7]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 1, 0, -12, 0, 0, 0, 0, 0, 5, 0, 0, -8, -5.5, 0, -14 ),
+"tilts": PoolRealArray( 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=8]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 1, 0, -10, 0, 0, 0, 0, 0, 15, 0, 0, -15, 16.5, 0, 0, 0, 0, 15, 0, 0, -15, 37.5, 0, 0, 0, 0, 15, 0, 0, -5, 58.5, 0, 0, -9, 0, -3, 9, 0, 3, 74, 0, -3, 5, 0, 0, -5, 0, 0, 78, 0, 15.5, 5, 0, 0, 0, 0, -10, 65, 0, 11.5 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=9]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, -5, 0, 0, 0, 0, 0, 5, 0, 0, -5, 0, 0, -13, 0, 4, 5, 0, 0, -5, 0, 0, -26, 0, 0 ),
+"tilts": PoolRealArray( 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=10]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, -5, 0, 0, 0, 0, 0, 3, 0, -1.5, -6, 0, 3, -13, 0, 4, 0, 0, -8, 0, 0, 8, -28.5, 0, 19.5, -5, 0, 0, 5, 0, 0, -13, 0, 35, -5, 0, 0, 0, 0, 0, -9, 0, 35 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=11]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 10, 0, 0, 0, 0, 0, -3, 0, 2, 3, 0, -2, 40, 0, -4, 3, 0, 0, -10, 0, 0, 38, 0, -10, 5, 0, 0, -3, 0, 0, 15, 0, -10, 0, 0, 2, 0, 0, -1, 10, 0, -12, -1, 0, 0, 0, 0, 0, 13, 0, -13.5 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=12]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 3, 0, 0, 0, 0, 0, 5, 0, 0, -4, 0, 0, -2, 0, -3.5, -4, 0, 0, 4, 0, 0, -2, 0, -10.5 ),
+"tilts": PoolRealArray( 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=13]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 5, 0, 0, 0, 0, 0, -5, 0, 0, 5, 0, 0, 28, 0, 0, 0, 0, -5, 0, 0, 15, 36.5, 0, 8.5, 10, 0, 0, 0, 0, 0, 23, 0, 31 ),
+"tilts": PoolRealArray( 0, 0, 0, 0 )
+}
 
 [node name="Track" type="Spatial"]
 script = ExtResource( 1 )
@@ -105,3 +186,176 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 71.5, 0
 
 [node name="SuperHurdle" parent="." instance=ExtResource( 7 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 56, 0, 15.5 )
+
+[node name="Path1" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 15.5 )
+curve = SubResource( 1 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (0, 0, 0)]
+[(-33, 0, 0), (0, 0, 0), (0, 0, 0)]
+"
+spacing = 2.0
+
+[node name="Path2" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 15.5 )
+curve = SubResource( 2 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (-5, 0, 0)]
+[(-12, 0, 3), (5, 0, 0), (-5, 0, 0)]
+[(-21, 0, 0), (5, 0, 0), (0, 0, 0)]
+"
+spacing = 1.8
+
+[node name="Path3" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 15.5 )
+curve = SubResource( 3 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (-2.5, 0, 0)]
+[(-2, 0, 3.5), (-1.25, 0, -1.25), (1.25, 0, 1.25)]
+[(1.5, 0, 1.5), (0, 0, 2.5), (0, 0, -10)]
+"
+
+[node name="Path4" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, 17 )
+curve = SubResource( 6 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 5), (0, 0, -10)]
+[(3, 0, -19), (-1.5, 0, 10), (0, 0, 0)]
+"
+spacing = 1.8
+
+[node name="Path5" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -12 )
+curve = SubResource( 4 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (-1, 0, -5)]
+[(-2, 0, -9), (1, 0, 5), (0, 0, 0)]
+"
+spacing = 1.5
+
+[node name="Path6" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, -24 )
+curve = SubResource( 5 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (0, 0, 3)]
+[(3, 0, 0), (0, 0, 3), (0, 0, 0)]
+"
+
+[node name="Path7" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 0, -24 )
+curve = SubResource( 7 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (1, 0, -12)]
+[(-5.5, 0, -14), (0, 0, 5), (0, 0, -8)]
+"
+spacing = 1.5
+
+[node name="Path8" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -38 )
+curve = SubResource( 8 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (1, 0, -10)]
+[(16.5, 0, 0), (0, 0, 15), (0, 0, -15)]
+[(37.5, 0, 0), (0, 0, 15), (0, 0, -15)]
+[(58.5, 0, 0), (0, 0, 15), (0, 0, -5)]
+[(74, 0, -3), (-9, 0, -3), (9, 0, 3)]
+[(78, 0, 15.5), (5, 0, 0), (-5, 0, 0)]
+[(65, 0, 11.5), (5, 0, 0), (0, 0, -10)]
+"
+spacing = 2.0
+
+[node name="Path9" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, -26.5 )
+curve = SubResource( 9 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (-5, 0, 0)]
+[(-13, 0, 4), (5, 0, 0), (-5, 0, 0)]
+[(-26, 0, 0), (5, 0, 0), (-5, 0, 0)]
+"
+spacing = 2.0
+
+[node name="Path10" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -26.5 )
+curve = SubResource( 10 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (-5, 0, 0)]
+[(-13, 0, 4), (3, 0, -1.5), (-6, 0, 3)]
+[(-28.5, 0, 19.5), (0, 0, -8), (0, 0, 8)]
+[(-13, 0, 35), (-5, 0, 0), (5, 0, 0)]
+[(-9, 0, 35), (-5, 0, 0), (0, 0, 0)]
+"
+spacing = 2.0
+
+[node name="Path11" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 8.5 )
+curve = SubResource( 11 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (10, 0, 0)]
+[(40, 0, -4), (-3, 0, 2), (3, 0, -2)]
+[(38, 0, -10), (3, 0, 0), (-10, 0, 0)]
+[(15, 0, -10), (5, 0, 0), (-3, 0, 0)]
+[(10, 0, -12), (0, 0, 2), (0, 0, -1)]
+[(13, 0, -13.5), (-1, 0, 0), (0, 0, 0)]
+"
+spacing = 2.0
+
+[node name="Path12" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, -5 )
+curve = SubResource( 12 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (3, 0, 0)]
+[(-2, 0, -3.5), (5, 0, 0), (-4, 0, 0)]
+[(-2, 0, -10.5), (-4, 0, 0), (4, 0, 0)]
+"
+spacing = 1.5
+
+[node name="Path13" type="Path" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, -15.5 )
+curve = SubResource( 13 )
+script = ExtResource( 14 )
+mesh = ExtResource( 15 )
+spline_points = "[(0, 0, 0), (0, 0, 0), (5, 0, 0)]
+[(28, 0, 0), (-5, 0, 0), (5, 0, 0)]
+[(36.5, 0, 8.5), (0, 0, -5), (0, 0, 15)]
+[(23, 0, 31), (10, 0, 0), (0, 0, 0)]
+"
+spacing = 2.0
+
+[node name="ConePattern_Up2_5" parent="." instance=ExtResource( 16 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 18, 0, 15.5 )
+
+[node name="ConePattern_Up2_6" parent="." instance=ExtResource( 16 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17, 0, 15.5 )
+
+[node name="ConePattern_Up2_7" parent="." instance=ExtResource( 16 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9, 0, 15.5 )
+
+[node name="ConePattern_Up2_1" parent="." instance=ExtResource( 16 )]
+transform = Transform( 0.984808, 0, -0.173648, 0, 1, 0, 0.173648, 0, 0.984808, -9.5, 0, -2 )
+
+[node name="ConePattern_Arrow2_1" parent="." instance=ExtResource( 17 )]
+transform = Transform( 0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -9.5, 0, -10 )
+
+[node name="ConePattern_Up2_2" parent="." instance=ExtResource( 16 )]
+transform = Transform( 0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, 0.984808, -11.8, 0, -20 )
+
+[node name="ConePattern_Arrow2_2" parent="." instance=ExtResource( 17 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -12.5, 0, -26 )
+
+[node name="ConePattern_Up2_3" parent="." instance=ExtResource( 16 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11, 0, 8.5 )
+
+[node name="ConePattern_Up2_4" parent="." instance=ExtResource( 16 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 33, 0, -5 )
