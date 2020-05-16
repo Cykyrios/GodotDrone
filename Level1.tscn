@@ -114,6 +114,7 @@ transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0.004597
 cull_mask = 1024
 environment = SubResource( 13 )
 script = ExtResource( 14 )
+clip_near = 0.006
 
 [node name="Objects" type="Spatial" parent="."]
 
