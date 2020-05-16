@@ -24,6 +24,7 @@ func _ready():
 	render_quad.mesh = QuadMesh.new()
 	render_quad.mesh.size = Vector2(2, 2)
 	render_quad.layers = 1024
+	render_quad.cast_shadow = GeometryInstance.SHADOW_CASTING_SETTING_OFF
 	render_quad.mesh.surface_set_material(0, mat)
 	render_quad.visible = false
 	
