@@ -37,6 +37,8 @@ func _ready():
 		viewport.size = camera_resolution * Vector2.ONE
 		viewport.shadow_atlas_size = root_viewport.shadow_atlas_size
 		viewport.msaa = root_viewport.msaa
+		viewport.hdr = true
+		viewport.keep_3d_linear = true
 		viewports.append(viewport)
 		mat.set_shader_param("Texture%d" % [i], viewports[i].get_texture())
 		
