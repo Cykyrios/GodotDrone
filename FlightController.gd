@@ -59,6 +59,7 @@ func _ready():
 	
 	for i in range(Controller.size()):
 		pid_controllers.append(PID.new())
+		add_child(pid_controllers[-1])
 	
 	pid_controllers[Controller.ALTITUDE].set_coefficients(10000.0, 300000.0, 10000.0)
 #	pid_controllers[Controller.ALTITUDE].set_clamp_limits(1000.0, 100000.0)

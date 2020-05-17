@@ -35,6 +35,7 @@ func _ready():
 #	flight_controller.set_hover_rpm(hover_rpm)
 	flight_controller.set_hover_thrust(mass / 4 * 9.81)
 	
+	add_child(control_profile)
 	control_profile.set_rates(rate_pitch, rate_roll, rate_yaw)
 	control_profile.set_expo(expo_pitch, expo_roll, expo_yaw)
 	flight_controller.set_control_profile(control_profile)
