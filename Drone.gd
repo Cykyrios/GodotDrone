@@ -87,7 +87,7 @@ func _integrate_forces(state):
 		steps = 1
 	var dt = state.step / (steps as float)
 	
-	var xform = drone_transform
+	var xform = drone_transform.orthonormalized()
 	var pos = drone_pos
 	var basis = drone_basis
 	var lin_vel = state.linear_velocity

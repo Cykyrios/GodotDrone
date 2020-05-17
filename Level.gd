@@ -40,7 +40,7 @@ func _ready():
 
 
 func _process(delta):
-	var fc = $Drone/FlightController
+	var fc = drone.flight_controller
 	var angles = fc.angles
 	var velocity = fc.lin_vel
 	var position = fc.pos

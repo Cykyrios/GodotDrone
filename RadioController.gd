@@ -58,6 +58,13 @@ func _input(event):
 			emit_signal("arm_input")
 		elif Input.is_action_just_released("arm"):
 			emit_signal("disarm_input")
+	# TODO: Add other actions
+#	elif event.is_action("mode_angle"):
+#		if event.is_action_pressed("mode_angle"):
+#			print("Angle mode")
+#	elif event.is_action("mode_horizon"):
+#		if event.is_action_pressed("mode_horizon"):
+#			print("Horizon mode")
 
 
 func _physics_process(delta):
