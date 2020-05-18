@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://drone/Motor.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Drones/Parts/Motors/Motor1/Motor1.glb" type="PackedScene" id=2]
+
+
+
+
+
+[node name="Motor" type="Spatial"]
+script = ExtResource( 1 )
+kv = 2400
+
+[node name="motor1" parent="." instance=ExtResource( 2 )]

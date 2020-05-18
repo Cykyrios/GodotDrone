@@ -4,7 +4,7 @@ extends Control
 var packed_options_menu = preload("res://GUI/OptionsMenu.tscn")
 var packed_popup = preload("res://GUI/ConfirmationPopup.tscn")
 
-var level = preload("res://Level1.tscn")
+var level = preload("res://sceneries/Level1.tscn")
 
 
 func _ready():
