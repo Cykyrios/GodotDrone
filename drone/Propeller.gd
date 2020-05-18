@@ -85,6 +85,8 @@ func set_visibility(show_prop : bool):
 
 
 func set_color(col : Color):
+	if !is_inside_tree():
+		yield(self, "ready")
 	color = col
 	cw.mesh.surface_get_material(0).set_shader_param("propeller_color", color)
 	ccw.mesh.surface_get_material(0).set_shader_param("propeller_color", color)
@@ -92,16 +94,22 @@ func set_color(col : Color):
 
 
 func set_prop_disk_alpha(alpha : float):
+	if !is_inside_tree():
+		yield(self, "ready")
 	prop_disk_alpha = alpha
 	prop_disk.mesh.surface_get_material(0).set_shader_param("alpha_boost", prop_disk_alpha)
 
 
 func set_prop_disk_emission(emission : float):
+	if !is_inside_tree():
+		yield(self, "ready")
 	prop_disk_emission = emission
 	prop_disk.mesh.surface_get_material(0).set_shader_param("emission_power", prop_disk_emission)
 
 
 func set_prop_disk_falloff(falloff : float):
+	if !is_inside_tree():
+		yield(self, "ready")
 	prop_disk_falloff = falloff
 	prop_disk.mesh.surface_get_material(0).set_shader_param("emission_falloff", prop_disk_falloff)
 
