@@ -15,6 +15,7 @@ var action_dict = [{"action": "arm", "label": "Arm"},
 		{"action": "mode_angle", "label": "Mode: Angle"},
 		{"action": "mode_speed", "label": "Mode: Speed"},
 		{"action": "mode_position", "label": "Mode: Position"},
+		{"action": "mode_turtle", "label": "Mode: Turtle"},
 		{"action": "altitude_hold", "label": "Altitude hold"}]
 
 

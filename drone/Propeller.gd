@@ -58,7 +58,7 @@ func _process(delta):
 	if Engine.editor_hint:
 		return
 	
-	if rpm > 500:
+	if abs(rpm) > 500:
 		if !use_blur:
 			use_blur = true
 			prop_disk.visible = true

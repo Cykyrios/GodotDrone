@@ -110,6 +110,8 @@ func _integrate_forces(state):
 			prop.update_forces()
 			var prop_forces = prop.get_forces()
 			var prop_thrust = xform.basis.xform(prop_forces[0])
+			if motor.rpm < 0:
+				prop_thrust = -prop_thrust / 2
 			var prop_drag = xform.basis.xform(prop_forces[1])
 			if b_debug and i == 0 and prop.name == "Propeller1":
 				print("V: %5.2f, T: %5.2f, D: %5.2f" % [prop.velocity.y, prop_forces[0].length(), prop_forces[1].length()])

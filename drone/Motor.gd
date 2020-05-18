@@ -82,7 +82,7 @@ func get_rpm_target():
 
 
 func set_rpm(x : float):
-	rpm = clamp(x, 0.0, MAX_RPM)
+	rpm = clamp(x, -MAX_RPM, MAX_RPM)
 	propeller.rpm = rpm
 
 

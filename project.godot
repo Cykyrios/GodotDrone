@@ -316,6 +316,10 @@ altitude_hold={
 "deadzone": 0.5,
 "events": [  ]
 }
+mode_turtle={
+"deadzone": 0.5,
+"events": [  ]
+}
 
 [network]
 
