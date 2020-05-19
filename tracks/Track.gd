@@ -134,7 +134,6 @@ func activate_next_checkpoint():
 	current_checkpoint = checkpoints[new_cp[0].to_int()]
 	current_checkpoint.set_backward(new_cp[1])
 	current_checkpoint.set_active(true)
-	print("Next: %s, %d/%d, lap %d/%d" % [current_checkpoint, current, course.size(), current_lap, laps])
 
 
 func reset_track():

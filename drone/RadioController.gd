@@ -79,7 +79,6 @@ func read_input():
 	var pitch = Input.get_action_strength("pitch_up") - Input.get_action_strength("pitch_down")
 	var roll = Input.get_action_strength("roll_right") - Input.get_action_strength("roll_left")
 	var yaw = Input.get_action_strength("yaw_right") - Input.get_action_strength("yaw_left")
-#	print("Pow: %6.3f ptc: %6.3f rol: %6.3f yaw: %6.3f" % [power, pitch, roll, yaw])
 	input = [power, yaw, roll, pitch]
 
 

@@ -96,7 +96,6 @@ func set_bounds(low: float, high: float):
 	button_low.rect_position.x = (low + 1) * axis_monitor.rect_size.x / 2 - button_low.rect_size.x / 2
 	button_high.rect_position.x = (high + 1) * axis_monitor.rect_size.x / 2 - button_high.rect_size.x / 2
 	update_bounds()
-	print_debug("low: %5.2f, high: %5.2f, bound_low: %5.2f, bound_high: %5.2f" % [low, high, bound_low, bound_high])
 
 
 func _on_button_pressed(id: int):
