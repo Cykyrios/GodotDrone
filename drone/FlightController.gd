@@ -27,9 +27,10 @@ var armed = false setget set_armed
 
 var pid_controllers = []
 enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
-		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED}
+		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED,
+		LAUNCH}
 
-enum FlightMode {RATE, LEVEL, SPEED, TRACK, TURTLE, AUTO}
+enum FlightMode {RATE, LEVEL, SPEED, TRACK, LAUNCH, TURTLE, AUTO}
 var flight_mode = FlightMode.RATE
 
 
@@ -89,6 +90,8 @@ func _ready():
 	pid_controllers[Controller.YAW].set_coefficients(3000, 500, 1000)
 #	pid_controllers[Controller.YAW].set_clamp_limits(-1, 1)
 	
+	pid_controllers[Controller.LAUNCH].set_coefficients(100000, 10000, 20000)
+	
 	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
 	change_flight_mode(FlightMode.RATE)
 	
@@ -103,7 +106,8 @@ func _ready():
 
 func _physics_process(delta):
 	if !is_flight_safe():
-		if flight_mode != FlightMode.RATE and flight_mode != FlightMode.TURTLE and flight_mode != FlightMode.AUTO:
+		if flight_mode != FlightMode.RATE and flight_mode != FlightMode.LAUNCH \
+				and flight_mode != FlightMode.TURTLE and flight_mode != FlightMode.AUTO:
 			change_flight_mode(FlightMode.AUTO)
 
 	if flight_mode == FlightMode.TRACK:
@@ -122,6 +126,8 @@ func _on_arm_input():
 		set_armed(true)
 		if Input.is_action_pressed("mode_turtle"):
 			change_flight_mode(FlightMode.TURTLE)
+		if Input.is_action_pressed("mode_launch"):
+			change_flight_mode(FlightMode.LAUNCH)
 	for controller in pid_controllers:
 		controller.set_disabled(false)
 
@@ -339,7 +345,14 @@ func update_control(delta):
 				else:
 					motor_speed[0] = pitch * motors[0].MAX_RPM
 					motor_speed[1] = pitch * motors[1].MAX_RPM
-		
+	
+	elif flight_mode == FlightMode.LAUNCH:
+		motor_speed = [min_rpm, min_rpm, min_rpm, min_rpm]
+		motor_speed[2] = clamp(-pitch, min_rpm, max_rpm)
+		motor_speed[3] = clamp(-pitch, min_rpm, max_rpm)
+		if power > 0.2:
+			motor_speed = [power, power, power, power]
+			change_flight_mode(FlightMode.RATE)
 	
 	motors[0].set_rpm_target(motor_speed[0])
 	motors[1].set_rpm_target(motor_speed[1])
@@ -468,6 +481,13 @@ func update_command():
 		else:
 			motor_control[2] = r
 			motor_control[3] = 0
+	
+	elif flight_mode == FlightMode.LAUNCH:
+		motor_control[0] = pwr
+		
+		var pitch_input = pid_controllers[Controller.LAUNCH].target + ((1 - expo_p) * p + expo_p * pow(p, 3)) * dt
+		pid_controllers[Controller.LAUNCH].set_target(pitch_input)
+		motor_control[3] = pid_controllers[Controller.LAUNCH].get_output(angles.x, dt, false)
 	
 	elif flight_mode == FlightMode.AUTO:
 		pid_controllers[Controller.YAW_SPEED].set_target(0)

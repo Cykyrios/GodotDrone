@@ -184,3 +184,6 @@ func _on_flight_mode_changed(mode):
 	elif mode == FlightController.FlightMode.TURTLE:
 		led.change_color(Color(1, 0, 0))
 		led.set_blink_pattern([Vector2(0.1, 0.1), Vector2(0.1, 0.7)])
+	elif mode == FlightController.FlightMode.LAUNCH:
+		led.change_color(Color(1, 0, 0))
+		led.set_blink_pattern([Vector2(0.15, 0.15), Vector2(0.55, 0.15)])

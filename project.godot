@@ -332,6 +332,10 @@ mode_turtle={
 "deadzone": 0.5,
 "events": [  ]
 }
+mode_launch={
+"deadzone": 0.5,
+"events": [  ]
+}
 
 [network]
 
