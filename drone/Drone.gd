@@ -50,25 +50,27 @@ func _process(delta):
 			debug_geom.draw_debug_arrow(delta, global_transform.origin + vec_pos, vec_force, vec_force.length() / 50,
 					Color(5, 1, 0))
 		
-		debug_geom.draw_debug_grid(0.02, global_transform.xform(Vector3(0, 0, 0)), 1.5, 1.5, 1, 1,
-				Vector3.UP, global_transform.basis.xform(Vector3.RIGHT))
-		debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3.UP),
+		var global_xform = global_transform
+		var global_basis = global_xform.basis
+		debug_geom.draw_debug_grid(0.02, global_xform.xform(Vector3(0, 0, 0)), 1.5, 1.5, 1, 1,
+				Vector3.UP, global_basis.xform(Vector3.RIGHT))
+		debug_geom.draw_debug_arrow(0.02, global_xform.xform(Vector3.UP),
 				linear_velocity, linear_velocity.length() / 10)
-		debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3.UP),
+		debug_geom.draw_debug_arrow(0.02, global_xform.xform(Vector3.UP),
 				Vector3.RIGHT, linear_velocity.x / 10, Color(10, 0, 0))
-		debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3.UP),
+		debug_geom.draw_debug_arrow(0.02, global_xform.xform(Vector3.UP),
 				Vector3.UP, linear_velocity.y / 10, Color(0, 10, 0))
-		debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3.UP),
+		debug_geom.draw_debug_arrow(0.02, global_xform.xform(Vector3.UP),
 				Vector3.BACK, linear_velocity.z / 10, Color(0, 0, 10))
 		
-		debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3(0.2, 0, 0.5)),
-				global_transform.basis.xform(Vector3.RIGHT), global_transform.basis.xform_inv(linear_velocity).x / 10,
+		debug_geom.draw_debug_arrow(0.02, global_xform.xform(Vector3(0.2, 0, 0.5)),
+				global_basis.xform(Vector3.RIGHT), global_basis.xform_inv(linear_velocity).x / 10,
 				Color(10, 0, 0))
-		debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3(-0.2, 0, 0.5)),
-				global_transform.basis.xform(Vector3.UP), linear_velocity.y / 10,
+		debug_geom.draw_debug_arrow(0.02, global_xform.xform(Vector3(-0.2, 0, 0.5)),
+				global_basis.xform(Vector3.UP), linear_velocity.y / 10,
 				Color(0, 10, 0))
-		debug_geom.draw_debug_arrow(0.02, global_transform.xform(Vector3(0.2, 0, 0.5)),
-				global_transform.basis.xform(Vector3.DOWN), global_transform.basis.xform_inv(linear_velocity).z / 10,
+		debug_geom.draw_debug_arrow(0.02, global_xform.xform(Vector3(0.2, 0, 0.5)),
+				global_basis.xform(Vector3.DOWN), global_basis.xform_inv(linear_velocity).z / 10,
 				Color(0, 0, 10))
 
 
@@ -79,7 +81,7 @@ func _physics_process(delta):
 	
 	if b_debug:
 		var drag = get_drag(linear_velocity, angular_velocity, drone_basis)[0]
-		debug_geom.draw_debug_arrow(0.01, global_transform.origin, drag.normalized(), drag.length() / 10)
+		debug_geom.draw_debug_arrow(0.01, drone_pos, drag.normalized(), drag.length() / 10)
 
 
 func _integrate_forces(state):
@@ -89,8 +91,8 @@ func _integrate_forces(state):
 	var dt = state.step / (steps as float)
 	
 	var xform = drone_transform.orthonormalized()
-	var pos = drone_pos
-	var basis = drone_basis
+	var pos = xform.origin
+	var basis = xform.basis
 	var lin_vel = state.linear_velocity
 	var ang_vel = state.angular_velocity
 	
@@ -106,13 +108,13 @@ func _integrate_forces(state):
 			var prop_pos = prop.global_transform.origin - global_transform.origin
 			var prop_xform = motor.transform * prop.transform
 			var prop_local_pos = prop_xform.xform_inv(prop_pos)
-			prop.set_velocity(xform.basis.xform_inv(lin_vel) + xform.basis.xform_inv(ang_vel).cross(prop_local_pos))
+			prop.set_velocity(basis.xform_inv(lin_vel) + basis.xform_inv(ang_vel).cross(prop_local_pos))
 			prop.update_forces()
 			var prop_forces = prop.get_forces()
-			var prop_thrust = xform.basis.xform(prop_forces[0])
+			var prop_thrust = basis.xform(prop_forces[0])
 			if motor.rpm < 0:
 				prop_thrust = -prop_thrust / 2
-			var prop_drag = xform.basis.xform(prop_forces[1])
+			var prop_drag = basis.xform(prop_forces[1])
 			if b_debug and i == 0 and prop.name == "Propeller1":
 				print("V: %5.2f, T: %5.2f, D: %5.2f" % [prop.velocity.y, prop_forces[0].length(), prop_forces[1].length()])
 				# Draw debug arrows relative to FPV camera
@@ -122,7 +124,7 @@ func _integrate_forces(state):
 						prop_drag.normalized(), prop_drag.length() / 5.0, Color(0, 1, 0))
 			vec_force += prop_thrust + prop_drag
 			vec_torque += motor.get_torque() * basis.y
-			vec_torque -= prop_thrust.cross(xform.basis.xform(prop_xform.origin))
+			vec_torque -= prop_thrust.cross(basis.xform(prop_xform.origin))
 
 		var drag = get_drag(lin_vel, ang_vel, basis)
 		vec_force += drag[0]
