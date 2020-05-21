@@ -169,7 +169,7 @@ func get_drag(lin_vel : Vector3, ang_vel, orientation : Basis):
 
 func _on_flight_mode_changed(mode):
 	var led = $LEDMode
-	led.set_blink(0)
+	led.set_blink_pattern()
 	if mode == FlightController.FlightMode.RATE:
 		led.change_color(Color(1, 0, 0))
 	elif mode == FlightController.FlightMode.LEVEL:
@@ -180,4 +180,7 @@ func _on_flight_mode_changed(mode):
 		led.change_color(Color(0, 1, 0))
 	elif mode == FlightController.FlightMode.AUTO:
 		led.change_color(Color(1, 0, 0))
-		led.set_blink(0.25)
+		led.set_blink_pattern([Vector2(0.25, 0.25)])
+	elif mode == FlightController.FlightMode.TURTLE:
+		led.change_color(Color(1, 0, 0))
+		led.set_blink_pattern([Vector2(0.1, 0.1), Vector2(0.1, 0.7)])
