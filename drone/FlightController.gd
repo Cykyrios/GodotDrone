@@ -42,7 +42,7 @@ export (float, 0.0, 1000.0) var pid_pitch_i = 10.0
 export (float, 0.0, 1000.0) var pid_pitch_d = 2.0
 export (float, 0.0, 1000.0) var pid_yaw_p = 50.0
 export (float, 0.0, 1000.0) var pid_yaw_i = 30.0
-export (float, 0.0, 1000.0) var pid_yaw_d = 0.0
+export (float, 0.0, 1000.0) var pid_yaw_d = 2.0
 
 
 var telemetry_file = File.new()
