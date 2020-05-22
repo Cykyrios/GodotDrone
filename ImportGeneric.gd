@@ -30,15 +30,22 @@ func post_import(scene):
 
 func collision_shape(node : Spatial, shape : String):
 	var collision = CollisionShape.new()
+	var min_size: float
 	match shape:
 		"box":
 			var collision_shape = BoxShape.new()
 			collision_shape.extents = node.scale
+			min_size = collision_shape.extents[collision_shape.extents.min_axis()]
+			if min_size < collision_shape.margin:
+				collision_shape.margin = min_size
 			collision.shape = collision_shape
 		"cylinder":
 			var collision_shape = CylinderShape.new()
 			collision_shape.radius = node.scale.x
 			collision_shape.height = node.scale.y * 2.0
+			min_size = min(collision_shape.radius, collision_shape.height)
+			if min_size < collision_shape.margin:
+				collision_shape.margin = min_size
 			collision.shape = collision_shape
 		"mesh":
 			var collision_shape = ConvexPolygonShape.new()
