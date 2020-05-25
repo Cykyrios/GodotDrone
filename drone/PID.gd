@@ -5,6 +5,7 @@ class_name PID
 var target = 0.0 setget set_target, get_target
 var err = 0.0
 var err_prev = 0.0
+var mv_prev = 0.0
 var integral = 0.0
 var freeze_integral = false
 var output = 0.0
@@ -65,6 +66,7 @@ func reset():
 	set_target(0.0)
 	err = 0.0
 	err_prev = 0.0
+	mv_prev = 0.0
 	reset_integral()
 	freeze_integral = false
 	output = 0.0
@@ -82,8 +84,13 @@ func get_output(mv, dt, p_print = false):
 	err = target - mv
 	if not is_saturated():
 		integral += err * dt
-	var deriv = (err - err_prev) / dt
 	err_prev = err
+	# Derivative on measurement: opposite sign from derivative on error
+	var deriv = (mv_prev - mv) / dt
+	mv_prev = mv
+	# TODO: add low-pass filter on derivative
+	# deriv = (2 * kd * (mv_prev - mv) + (2 * tau - T) * deriv) / (2 * tau + T)
+	# with tau = filter time constant and T = sampling time = dt
 	
 	output = kp * err + ki * integral + kd * deriv
 	clamped_output = clamp(output, clamp_low, clamp_high)
