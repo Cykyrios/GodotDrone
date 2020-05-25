@@ -8,6 +8,8 @@ var err_prev = 0.0
 var mv_prev = 0.0
 var integral = 0.0
 var freeze_integral = false
+var derivative = 0.0
+var tau = 0.01
 var output = 0.0
 
 var clamp_low = -INF
@@ -55,6 +57,16 @@ func set_clamp_limits(low, high):
 	clamp_high = high
 
 
+func set_derivative_filter_tau(t = 0.01):
+	tau = abs(t)
+
+
+func set_derivative_filter_frequency(f = 16.0):
+	# Default frequency of 16 Hz corresponds to tau = 0.01
+	if f > 0:
+		tau = 1 / (2 * PI * f)
+
+
 func is_saturated():
 	var saturated = false
 	if abs(clamped_output - output) > 0.00001 and sign(output) == sign(err_prev):
@@ -69,6 +81,7 @@ func reset():
 	mv_prev = 0.0
 	reset_integral()
 	freeze_integral = false
+	derivative = 0.0
 	output = 0.0
 	clamped_output = 0.0
 
@@ -82,20 +95,23 @@ func get_output(mv, dt, p_print = false):
 		return 0.0
 	
 	err = target - mv
-	if not is_saturated():
-		integral += err * dt
-	err_prev = err
-	# Derivative on measurement: opposite sign from derivative on error
-	var deriv = (mv_prev - mv) / dt
-	mv_prev = mv
-	# TODO: add low-pass filter on derivative
-	# deriv = (2 * kd * (mv_prev - mv) + (2 * tau - T) * deriv) / (2 * tau + T)
-	# with tau = filter time constant and T = sampling time = dt
 	
-	output = kp * err + ki * integral + kd * deriv
+	var proportional = kp * err
+	
+	if not is_saturated():
+		integral += 0.5 * ki * dt * (err + err_prev)
+	
+	# Derivative on measurement: opposite sign from derivative on error
+	# Low-pass filter on derivative
+	derivative = (2 * kd * (mv_prev - mv) + (2 * tau - dt) * derivative) / (2 * tau + dt)
+	
+	err_prev = err
+	mv_prev = mv
+	
+	output = proportional + integral + derivative
 	clamped_output = clamp(output, clamp_low, clamp_high)
 	if p_print:
 		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f total: %8.3f clamped: %8.3f sat: %s"
-				% [target, err, kp * err, ki * integral, kd * deriv, output, clamped_output, is_saturated()])
+				% [target, err, proportional, integral, derivative, output, clamped_output, is_saturated()])
 	
 	return clamped_output
