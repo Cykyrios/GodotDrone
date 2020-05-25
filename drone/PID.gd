@@ -2,40 +2,32 @@ extends Node
 
 class_name PID
 
-var target = 0.0 setget set_target, get_target
-var err = 0.0
-var err_prev = 0.0
-var mv_prev = 0.0
-var integral = 0.0
-var freeze_integral = false
-var derivative = 0.0
-var tau = 0.01
-var output = 0.0
+var target: float = 0.0 setget set_target, get_target
+var err: float = 0.0
+var err_prev: float = 0.0
+var mv_prev: float = 0.0
+var integral: float = 0.0
+var freeze_integral: bool = false
+var derivative: float = 0.0
+var tau: float = 0.01
+var output: float = 0.0
 
-var clamp_low = -INF
-var clamp_high = INF
-var clamped_output = 0.0
+var clamp_low: float = -INF
+var clamp_high: float = INF
+var clamped_output: float = 0.0
 
-var disabled = false setget set_disabled
+var disabled: bool = false setget set_disabled
 
-export (float) var kp = 0.0
-export (float) var ki = 0.0
-export (float) var kd = 0.0
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+export (float) var kp: float = 0.0
+export (float) var ki: float = 0.0
+export (float) var kd: float = 0.0
 
 
-func set_disabled(d : bool):
+func set_disabled(d: bool):
 	disabled = d
 
 
-func set_coefficients(p : float, i : float, d : float):
+func set_coefficients(p: float, i: float, d: float):
 	if p > 0:
 		kp = p
 	if i > 0:
@@ -44,7 +36,7 @@ func set_coefficients(p : float, i : float, d : float):
 		kd = d
 
 
-func set_target(t):
+func set_target(t: float):
 	target = t
 
 
@@ -52,23 +44,23 @@ func get_target():
 	return target
 
 
-func set_clamp_limits(low, high):
+func set_clamp_limits(low: float, high: float):
 	clamp_low = low
 	clamp_high = high
 
 
-func set_derivative_filter_tau(t = 0.01):
+func set_derivative_filter_tau(t: float = 0.01):
 	tau = abs(t)
 
 
-func set_derivative_filter_frequency(f = 16.0):
+func set_derivative_filter_frequency(f: float = 16.0):
 	# Default frequency of 16 Hz corresponds to tau = 0.01
 	if f > 0:
 		tau = 1 / (2 * PI * f)
 
 
 func is_saturated():
-	var saturated = false
+	var saturated: bool = false
 	if abs(clamped_output - output) > 0.00001 and sign(output) == sign(err_prev):
 		saturated = true
 	return saturated
@@ -86,17 +78,17 @@ func reset():
 	clamped_output = 0.0
 
 
-func reset_integral(i = 0.0):
+func reset_integral(i: float = 0.0):
 	integral = i
 
 
-func get_output(mv, dt, p_print = false):
+func get_output(mv: float, dt: float, p_print: bool = false):
 	if disabled:
 		return 0.0
 	
 	err = target - mv
 	
-	var proportional = kp * err
+	var proportional: float = kp * err
 	
 	if not is_saturated():
 		integral += 0.5 * ki * dt * (err + err_prev)
