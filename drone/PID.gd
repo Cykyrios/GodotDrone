@@ -7,7 +7,7 @@ var err: float = 0.0
 var err_prev: float = 0.0
 var mv_prev: float = 0.0
 var integral: float = 0.0
-var freeze_integral: bool = false
+var saturated: bool = false
 var derivative: float = 0.0
 var tau: float = 0.01
 var output: float = 0.0
@@ -59,20 +59,13 @@ func set_derivative_filter_frequency(f: float = 16.0):
 		tau = 1 / (2 * PI * f)
 
 
-func is_saturated():
-	var saturated: bool = false
-	if abs(clamped_output - output) > 0.00001 and sign(output) == sign(err_prev):
-		saturated = true
-	return saturated
-
-
 func reset():
 	set_target(0.0)
 	err = 0.0
 	err_prev = 0.0
 	mv_prev = 0.0
 	reset_integral()
-	freeze_integral = false
+	saturated = false
 	derivative = 0.0
 	output = 0.0
 	clamped_output = 0.0
@@ -90,8 +83,14 @@ func get_output(mv: float, dt: float, p_print: bool = false):
 	
 	var proportional: float = kp * err
 	
-	if not is_saturated():
-		integral += 0.5 * ki * dt * (err + err_prev)
+	integral += 0.5 * ki * dt * (err + err_prev)
+	var integral_max: float = max(clamp_high - proportional, 0)
+	var integral_min: float = min(clamp_low - proportional, 0)
+	integral = clamp(integral, integral_min, integral_max)
+	if integral == integral_min or integral == integral_max:
+		saturated = true
+	else:
+		saturated = false
 	
 	# Derivative on measurement: opposite sign from derivative on error
 	# Low-pass filter on derivative
@@ -104,6 +103,6 @@ func get_output(mv: float, dt: float, p_print: bool = false):
 	clamped_output = clamp(output, clamp_low, clamp_high)
 	if p_print:
 		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f total: %8.3f clamped: %8.3f sat: %s"
-				% [target, err, proportional, integral, derivative, output, clamped_output, is_saturated()])
+				% [target, err, proportional, integral, derivative, output, clamped_output, saturated])
 	
 	return clamped_output
