@@ -6,8 +6,9 @@ var target: float = 0.0 setget set_target, get_target
 var err: float = 0.0
 var err_prev: float = 0.0
 var mv_prev: float = 0.0
+var proportional: float = 0.0
 var integral: float = 0.0
-var saturated: bool = false
+var windup: bool = false
 var derivative: float = 0.0
 var tau: float = 0.01
 var output: float = 0.0
@@ -15,6 +16,7 @@ var output: float = 0.0
 var clamp_low: float = -INF
 var clamp_high: float = INF
 var clamped_output: float = 0.0
+var saturated: bool = false
 
 var disabled: bool = false setget set_disabled
 
@@ -81,16 +83,16 @@ func get_output(mv: float, dt: float, p_print: bool = false):
 	
 	err = target - mv
 	
-	var proportional: float = kp * err
+	proportional = kp * err
 	
 	integral += 0.5 * ki * dt * (err + err_prev)
 	var integral_max: float = max(clamp_high - proportional, 0)
 	var integral_min: float = min(clamp_low - proportional, 0)
-	integral = clamp(integral, integral_min, integral_max)
-	if integral == integral_min or integral == integral_max:
-		saturated = true
+	if integral <= integral_min or integral >= integral_max:
+		windup = true
 	else:
-		saturated = false
+		windup = false
+	integral = clamp(integral, integral_min, integral_max)
 	
 	# Derivative on measurement: opposite sign from derivative on error
 	# Low-pass filter on derivative
@@ -101,8 +103,12 @@ func get_output(mv: float, dt: float, p_print: bool = false):
 	
 	output = proportional + integral + derivative
 	clamped_output = clamp(output, clamp_low, clamp_high)
+	if abs(output) >= abs(clamped_output):
+		saturated = true
+	else:
+		saturated = false
 	if p_print:
-		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f total: %8.3f clamped: %8.3f sat: %s"
-				% [target, err, proportional, integral, derivative, output, clamped_output, saturated])
+		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f total: %8.3f clamped: %8.3f windup: %s"
+				% [target, err, proportional, integral, derivative, output, clamped_output, windup])
 	
 	return clamped_output
