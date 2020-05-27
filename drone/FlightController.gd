@@ -105,10 +105,11 @@ func _ready():
 
 
 func _physics_process(delta):
-	if !is_flight_safe():
-		if flight_mode != FlightMode.RATE and flight_mode != FlightMode.LAUNCH \
-				and flight_mode != FlightMode.TURTLE and flight_mode != FlightMode.AUTO:
-			change_flight_mode(FlightMode.AUTO)
+	if (flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED \
+			or flight_mode == FlightMode.TRACK) and not is_flight_safe():
+		change_flight_mode(FlightMode.AUTO)
+	elif flight_mode == FlightMode.LAUNCH and (angles.x < deg2rad(-80) or angles.x > deg2rad(10)):
+		_on_disarm_input()
 
 	if flight_mode == FlightMode.TRACK:
 		debug_geom.draw_debug_cube(0.02, get_tracking_target(), Vector3(0.2, 0.2, 0.2))
