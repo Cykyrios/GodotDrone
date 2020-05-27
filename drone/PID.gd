@@ -2,38 +2,34 @@ extends Node
 
 class_name PID
 
-var target = 0.0 setget set_target, get_target
-var err = 0.0
-var err_prev = 0.0
-var mv_prev = 0.0
-var integral = 0.0
-var freeze_integral = false
-var output = 0.0
+var target: float = 0.0 setget set_target, get_target
+var err: float = 0.0
+var err_prev: float = 0.0
+var mv_prev: float = 0.0
+var proportional: float = 0.0
+var integral: float = 0.0
+var windup: bool = false
+var derivative: float = 0.0
+var tau: float = 0.01
+var output: float = 0.0
 
-var clamp_low = -INF
-var clamp_high = INF
-var clamped_output = 0.0
+var clamp_low: float = -INF
+var clamp_high: float = INF
+var clamped_output: float = 0.0
+var saturated: bool = false
 
-var disabled = false setget set_disabled
+var disabled: bool = false setget set_disabled
 
-export (float) var kp = 0.0
-export (float) var ki = 0.0
-export (float) var kd = 0.0
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+export (float) var kp: float = 0.0
+export (float) var ki: float = 0.0
+export (float) var kd: float = 0.0
 
 
-func set_disabled(d : bool):
+func set_disabled(d: bool):
 	disabled = d
 
 
-func set_coefficients(p : float, i : float, d : float):
+func set_coefficients(p: float, i: float, d: float):
 	if p > 0:
 		kp = p
 	if i > 0:
@@ -42,7 +38,7 @@ func set_coefficients(p : float, i : float, d : float):
 		kd = d
 
 
-func set_target(t):
+func set_target(t: float):
 	target = t
 
 
@@ -50,16 +46,19 @@ func get_target():
 	return target
 
 
-func set_clamp_limits(low, high):
+func set_clamp_limits(low: float, high: float):
 	clamp_low = low
 	clamp_high = high
 
 
-func is_saturated():
-	var saturated = false
-	if abs(clamped_output - output) > 0.00001 and sign(output) == sign(err_prev):
-		saturated = true
-	return saturated
+func set_derivative_filter_tau(t: float = 0.01):
+	tau = abs(t)
+
+
+func set_derivative_filter_frequency(f: float = 16.0):
+	# Default frequency of 16 Hz corresponds to tau = 0.01
+	if f > 0:
+		tau = 1 / (2 * PI * f)
 
 
 func reset():
@@ -68,34 +67,48 @@ func reset():
 	err_prev = 0.0
 	mv_prev = 0.0
 	reset_integral()
-	freeze_integral = false
+	saturated = false
+	derivative = 0.0
 	output = 0.0
 	clamped_output = 0.0
 
 
-func reset_integral(i = 0.0):
+func reset_integral(i: float = 0.0):
 	integral = i
 
 
-func get_output(mv, dt, p_print = false):
+func get_output(mv: float, dt: float, p_print: bool = false):
 	if disabled:
 		return 0.0
 	
 	err = target - mv
-	if not is_saturated():
-		integral += err * dt
-	err_prev = err
-	# Derivative on measurement: opposite sign from derivative on error
-	var deriv = (mv_prev - mv) / dt
-	mv_prev = mv
-	# TODO: add low-pass filter on derivative
-	# deriv = (2 * kd * (mv_prev - mv) + (2 * tau - T) * deriv) / (2 * tau + T)
-	# with tau = filter time constant and T = sampling time = dt
 	
-	output = kp * err + ki * integral + kd * deriv
+	proportional = kp * err
+	
+	integral += 0.5 * ki * dt * (err + err_prev)
+	var integral_max: float = max(clamp_high - proportional, 0)
+	var integral_min: float = min(clamp_low - proportional, 0)
+	if integral <= integral_min or integral >= integral_max:
+		windup = true
+	else:
+		windup = false
+	integral = clamp(integral, integral_min, integral_max)
+	
+	# Derivative on measurement: opposite sign from derivative on error
+	# Low-pass filter on derivative
+	derivative = (2 * kd * (mv_prev - mv) + (2 * tau - dt) * derivative) / (2 * tau + dt)
+	
+	err_prev = err
+	mv_prev = mv
+	
+	output = proportional + integral + derivative
 	clamped_output = clamp(output, clamp_low, clamp_high)
+	if abs(output) >= abs(clamped_output):
+		saturated = true
+	else:
+		saturated = false
 	if p_print:
-		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f total: %8.3f clamped: %8.3f sat: %s"
-				% [target, err, kp * err, ki * integral, kd * deriv, output, clamped_output, is_saturated()])
+		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f total: %8.3f clamped: %8.3f windup: %s"
+				% [target, err, proportional, integral, derivative, output, clamped_output, windup])
 	
 	return clamped_output
