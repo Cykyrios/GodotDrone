@@ -352,7 +352,7 @@ func update_control(delta):
 		motor_speed[2] = clamp(-pitch, min_rpm, max_rpm)
 		motor_speed[3] = clamp(-pitch, min_rpm, max_rpm)
 		if power > 0.2:
-			motor_speed = [power, power, power, power]
+			motor_speed = [-pitch, -pitch, -pitch, -pitch]
 			change_flight_mode(FlightMode.RATE)
 	
 	motors[0].set_rpm_target(motor_speed[0])
