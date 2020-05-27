@@ -90,7 +90,7 @@ func _ready():
 	pid_controllers[Controller.YAW].set_coefficients(3000, 500, 1000)
 #	pid_controllers[Controller.YAW].set_clamp_limits(-1, 1)
 	
-	pid_controllers[Controller.LAUNCH].set_coefficients(100000, 10000, 20000)
+	pid_controllers[Controller.LAUNCH].set_coefficients(50000, 10000, 1500)
 	
 	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
 	change_flight_mode(FlightMode.RATE)
@@ -126,7 +126,7 @@ func _on_arm_input():
 		set_armed(true)
 		if Input.is_action_pressed("mode_turtle"):
 			change_flight_mode(FlightMode.TURTLE)
-		if Input.is_action_pressed("mode_launch"):
+		elif Input.is_action_pressed("mode_launch"):
 			change_flight_mode(FlightMode.LAUNCH)
 	for controller in pid_controllers:
 		controller.set_disabled(false)
@@ -134,7 +134,7 @@ func _on_arm_input():
 
 func _on_disarm_input():
 	set_armed(false)
-	if flight_mode == FlightMode.TURTLE:
+	if flight_mode == FlightMode.TURTLE or flight_mode == FlightMode.LAUNCH:
 		change_flight_mode(FlightMode.RATE)
 	for controller in pid_controllers:
 		controller.set_disabled(true)
