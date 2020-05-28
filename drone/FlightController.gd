@@ -35,14 +35,17 @@ var flight_mode = FlightMode.RATE
 
 
 export (float, 0.0, 1000.0) var pid_roll_p = 50.0
-export (float, 0.0, 1000.0) var pid_roll_i = 10.0
-export (float, 0.0, 1000.0) var pid_roll_d = 2.0
+export (float, 0.0, 1000.0) var pid_roll_i = 30.0
+export (float, 0.0, 1000.0) var pid_roll_d = 30.0
 export (float, 0.0, 1000.0) var pid_pitch_p = 50.0
-export (float, 0.0, 1000.0) var pid_pitch_i = 10.0
-export (float, 0.0, 1000.0) var pid_pitch_d = 2.0
-export (float, 0.0, 1000.0) var pid_yaw_p = 50.0
-export (float, 0.0, 1000.0) var pid_yaw_i = 30.0
-export (float, 0.0, 1000.0) var pid_yaw_d = 2.0
+export (float, 0.0, 1000.0) var pid_pitch_i = 30.0
+export (float, 0.0, 1000.0) var pid_pitch_d = 30.0
+export (float, 0.0, 1000.0) var pid_yaw_p = 40.0
+export (float, 0.0, 1000.0) var pid_yaw_i = 90.0
+export (float, 0.0, 1000.0) var pid_yaw_d = 30.0
+var pid_scale_p: float = 0.004
+var pid_scale_i: float = 0.002
+var pid_scale_d: float = 0.0002
 
 
 var telemetry_file = File.new()
@@ -62,13 +65,13 @@ func _ready():
 		pid_controllers.append(PID.new())
 		add_child(pid_controllers[-1])
 	
-	pid_controllers[Controller.ALTITUDE].set_coefficients(10000.0, 300000.0, 10000.0)
+	pid_controllers[Controller.ALTITUDE].set_coefficients(80 * pid_scale_p, 100 * pid_scale_i, 1500 * pid_scale_d)
 #	pid_controllers[Controller.ALTITUDE].set_clamp_limits(1000.0, 100000.0)
-	pid_controllers[Controller.VERTICAL_SPEED].set_coefficients(100000.0, 50000.0, 10000.0)
+	pid_controllers[Controller.VERTICAL_SPEED].set_coefficients(800 * pid_scale_p, 800 * pid_scale_i, 1500 * pid_scale_d)
 #	pid_controllers[Controller.VERTICAL_SPEED].set_clamp_limits(-2, 2)
-	pid_controllers[Controller.ROLL].set_coefficients(3000, 1000, 700)
+	pid_controllers[Controller.ROLL].set_coefficients(25 * pid_scale_p, 17 * pid_scale_i, 115 * pid_scale_d)
 #	pid_controllers[Controller.ROLL].set_clamp_limits(-0.5, 0.5)
-	pid_controllers[Controller.PITCH].set_coefficients(3000, 1000, 700)
+	pid_controllers[Controller.PITCH].set_coefficients(25 * pid_scale_p, 17 * pid_scale_i, 115 * pid_scale_d)
 #	pid_controllers[Controller.PITCH].set_clamp_limits(-0.5, 0.5)
 	
 	pid_controllers[Controller.FORWARD_SPEED].set_coefficients(0.1, 0, 0)
@@ -76,21 +79,21 @@ func _ready():
 	pid_controllers[Controller.LATERAL_SPEED].set_coefficients(0.1, 0, 0)
 #	pid_controllers[Controller.LATERAL_SPEED].set_clamp_limits(-0.5, 0.5)
 	
-	pid_controllers[Controller.YAW_SPEED].set_coefficients(100 * pid_yaw_p, 100 * pid_yaw_i, 100 * pid_yaw_d)
+	pid_controllers[Controller.YAW_SPEED].set_coefficients(pid_scale_p * pid_yaw_p, pid_scale_i * pid_yaw_i, pid_scale_d * pid_yaw_d)
 #	pid_controllers[Controller.YAW_SPEED].set_clamp_limits(-10, 10)
-	pid_controllers[Controller.ROLL_SPEED].set_coefficients(100 * pid_roll_p, 100 * pid_roll_i, 100 * pid_roll_d)
+	pid_controllers[Controller.ROLL_SPEED].set_coefficients(pid_scale_p * pid_roll_p, pid_scale_i * pid_roll_i, pid_scale_d * pid_roll_d)
 #	pid_controllers[Controller.ROLL_SPEED].set_clamp_limits(-10, 10)
-	pid_controllers[Controller.PITCH_SPEED].set_coefficients(100 * pid_pitch_p, 100 * pid_pitch_i, 100 * pid_pitch_d)
+	pid_controllers[Controller.PITCH_SPEED].set_coefficients(pid_scale_p * pid_pitch_p, pid_scale_i * pid_pitch_i, pid_scale_d * pid_pitch_d)
 #	pid_controllers[Controller.PITCH_SPEED].set_clamp_limits(-10, 10)
 	
 	pid_controllers[Controller.POS_X].set_coefficients(0.2, 0.05, 0.2)
 #	pid_controllers[Controller.POS_X].set_clamp_limits(-1, 1)
 	pid_controllers[Controller.POS_Z].set_coefficients(0.2, 0.05, 0.2)
 #	pid_controllers[Controller.POS_Z].set_clamp_limits(-1, 1)
-	pid_controllers[Controller.YAW].set_coefficients(3000, 500, 1000)
+	pid_controllers[Controller.YAW].set_coefficients(25 * pid_scale_p, 8 * pid_scale_i, 165 * pid_scale_d)
 #	pid_controllers[Controller.YAW].set_clamp_limits(-1, 1)
 	
-	pid_controllers[Controller.LAUNCH].set_coefficients(50000, 10000, 1500)
+	pid_controllers[Controller.LAUNCH].set_coefficients(400 * pid_scale_p, 165 * pid_scale_i, 250 * pid_scale_d)
 	
 	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
 	change_flight_mode(FlightMode.RATE)
@@ -311,54 +314,53 @@ func update_control(delta):
 	var yaw = motor_control[1]
 	var roll = motor_control[2]
 	var pitch = motor_control[3]
-	var motor_speed = [power + yaw + roll + pitch,
+	var motor_pwm = [power + yaw + roll + pitch,
 			power - yaw - roll + pitch,
 			power + yaw - roll - pitch,
 			power - yaw + roll - pitch]
 	
 	# Air Mode
 	var offset = 0.0
-	var max_rpm = motors[0].MAX_RPM
-	var min_rpm = max_rpm * motors[0].MIN_POWER / 100.0
-	for speed in motor_speed:
-		if (speed < min_rpm and speed < offset):
-			offset = speed - min_rpm
-		elif (speed > max_rpm and speed > offset):
-			offset = speed - max_rpm
+	var min_pwm = motors[0].MIN_POWER / 100.0
+	for pwm in motor_pwm:
+		if (pwm < min_pwm and pwm < offset):
+			offset = pwm - min_pwm
+		elif (pwm > 1 and pwm > offset):
+			offset = pwm - 1
 	for i in range(4):
-		motor_speed[i] -= offset
+		motor_pwm[i] -= offset
 	
 	if flight_mode == FlightMode.TURTLE:
-		motor_speed = [0, 0, 0, 0]
+		motor_pwm = [0, 0, 0, 0]
 		if abs(roll) > abs(pitch):
 			if abs(roll) > 0.2:
 				if roll > 0:
-					motor_speed[1] = -roll * motors[1].MAX_RPM
-					motor_speed[2] = -roll * motors[2].MAX_RPM
+					motor_pwm[1] = -roll
+					motor_pwm[2] = -roll
 				else:
-					motor_speed[0] = roll * motors[0].MAX_RPM
-					motor_speed[3] = roll * motors[3].MAX_RPM
+					motor_pwm[0] = roll
+					motor_pwm[3] = roll
 		else:
 			if abs(pitch) > 0.2:
 				if pitch > 0:
-					motor_speed[2] = -pitch * motors[2].MAX_RPM
-					motor_speed[3] = -pitch * motors[3].MAX_RPM
+					motor_pwm[2] = -pitch
+					motor_pwm[3] = -pitch
 				else:
-					motor_speed[0] = pitch * motors[0].MAX_RPM
-					motor_speed[1] = pitch * motors[1].MAX_RPM
+					motor_pwm[0] = pitch
+					motor_pwm[1] = pitch
 	
 	elif flight_mode == FlightMode.LAUNCH:
-		motor_speed = [min_rpm, min_rpm, min_rpm, min_rpm]
-		motor_speed[2] = clamp(-pitch, min_rpm, max_rpm)
-		motor_speed[3] = clamp(-pitch, min_rpm, max_rpm)
+		motor_pwm = [min_pwm, min_pwm, min_pwm, min_pwm]
+		motor_pwm[2] = clamp(-pitch, min_pwm, 1)
+		motor_pwm[3] = clamp(-pitch, min_pwm, 1)
 		if power > 0.2:
-			motor_speed = [-pitch, -pitch, -pitch, -pitch]
+			motor_pwm = [-pitch, -pitch, -pitch, -pitch]
 			change_flight_mode(FlightMode.RATE)
 	
-	motors[0].set_rpm_target(motor_speed[0])
-	motors[1].set_rpm_target(motor_speed[1])
-	motors[2].set_rpm_target(motor_speed[2])
-	motors[3].set_rpm_target(motor_speed[3])
+	motors[0].set_pwm(motor_pwm[0])
+	motors[1].set_pwm(motor_pwm[1])
+	motors[2].set_pwm(motor_pwm[2])
+	motors[3].set_pwm(motor_pwm[3])
 
 
 func update_command():
@@ -377,7 +379,7 @@ func update_command():
 	var rate_p = control_profile.rate_pitch
 	
 	if flight_mode == FlightMode.RATE:
-		motor_control[0] = pwr * motors[0].MAX_RPM
+		motor_control[0] = pwr
 		
 		var yaw_input = -((1 - expo_y) * y + expo_y * pow(y, 3)) * deg2rad(rate_y)
 		pid_controllers[Controller.YAW_SPEED].set_target(yaw_input)

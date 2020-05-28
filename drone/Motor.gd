@@ -73,6 +73,10 @@ func get_torque():
 		return -torque
 
 
+func set_pwm(p: float):
+	set_rpm_target(p * MAX_RPM)
+
+
 func set_rpm_target(x : float):
 	rpm_target = x
 
