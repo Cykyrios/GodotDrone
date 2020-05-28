@@ -13,8 +13,6 @@ onready var radio_controller = $RadioController
 
 var tracks = []
 
-signal quit_to_menu
-
 
 func _ready():
 	cameras.append($FollowCamera)
