@@ -320,15 +320,23 @@ func update_control(delta):
 			power - yaw + roll - pitch]
 	
 	# Air Mode
+	var pwm_min = motor_pwm.min()
+	var pwm_max = motor_pwm.max()
+	var idle_pwm = motors[0].MIN_POWER / 100.0
+	# Scale PWM to range [idle, 1] as needed
+	if pwm_max - pwm_min > 1 - idle_pwm:
+		var pwm_mid = (pwm_min + pwm_max) / 2.0
+		for i in range(4):
+			motor_pwm[i] = pwm_mid + (motor_pwm[i] - pwm_mid) * (1 - idle_pwm) / (pwm_max - pwm_min)
+	pwm_min = motor_pwm.min()
+	pwm_max = motor_pwm.max()
 	var offset = 0.0
-	var min_pwm = motors[0].MIN_POWER / 100.0
-	for pwm in motor_pwm:
-		if (pwm < min_pwm and pwm < offset):
-			offset = pwm - min_pwm
-		elif (pwm > 1 and pwm > offset):
-			offset = pwm - 1
+	if pwm_min < idle_pwm:
+		offset = idle_pwm - pwm_min
+	if pwm_max > 1:
+		offset = 1 - pwm_max
 	for i in range(4):
-		motor_pwm[i] -= offset
+		motor_pwm[i] += offset
 	
 	if flight_mode == FlightMode.TURTLE:
 		motor_pwm = [0, 0, 0, 0]
@@ -350,9 +358,9 @@ func update_control(delta):
 					motor_pwm[1] = pitch
 	
 	elif flight_mode == FlightMode.LAUNCH:
-		motor_pwm = [min_pwm, min_pwm, min_pwm, min_pwm]
-		motor_pwm[2] = clamp(-pitch, min_pwm, 1)
-		motor_pwm[3] = clamp(-pitch, min_pwm, 1)
+		motor_pwm = [idle_pwm, idle_pwm, idle_pwm, idle_pwm]
+		motor_pwm[2] = clamp(-pitch, idle_pwm, 1)
+		motor_pwm[3] = clamp(-pitch, idle_pwm, 1)
 		if power > 0.2:
 			motor_pwm = [-pitch, -pitch, -pitch, -pitch]
 			change_flight_mode(FlightMode.RATE)
