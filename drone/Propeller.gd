@@ -70,8 +70,8 @@ func _process(delta):
 			set_visibility(true)
 
 
-func set_clockwise(cw : bool):
-	clockwise = cw
+func set_clockwise(is_cw : bool):
+	clockwise = is_cw
 	set_visibility(true)
 
 
@@ -177,14 +177,14 @@ func update_forces():
 	a2 = cl0 * (disk_delta + 1)
 	a3 = cla * (lambda - 2 * theta_tip)
 	var cmr = a1 * (a2 - a3)
-	var roll = 0.5 * rho * PI * radius * radius * w * w * radius * radius * radius * cmr
+	var roll_moment = 0.5 * rho * PI * radius * radius * w * w * radius * radius * radius * cmr
 	
 	# Pitching moment
 	a1 = c_tip / (2 * disk_delta * radius) * sigma * mu
 	a2 = cma * (disk_delta - 1) * (lambda - 2 * theta_tip)
 	a3 = 2 * cm0 * disk_delta * log(disk_delta)
 	var cmp = a1 * (a2 - a3)
-	var pitch = 0.5 * rho * PI * radius * radius * w * w * radius * radius * radius * cmp
+	var pitch_moment = 0.5 * rho * PI * radius * radius * w * w * radius * radius * radius * cmp
 	
 	# Vector form
 	var direction = 1
@@ -196,15 +196,17 @@ func update_forces():
 		if debug >= 10:
 			debug = 1
 			if name == "Propeller1":
-				print("beta: %5.3f, lamb_c: %5.3f, mu: %5.3f, lamb_i: %5.3f" % [beta, lambda_c, mu, lambda_i])
-				print("T: %5.3f, D: %5.3f, Q: %5.3f, R: %5.3f, P: %5.3f" % [thrust, drag, torque, roll, pitch])
+				print("beta: %5.3f, lamb_c: %5.3f, mu: %5.3f, lamb_i: %5.3f"
+						% [beta, lambda_c, mu, lambda_i])
+				print("T: %5.3f, D: %5.3f, Q: %5.3f, R: %5.3f, P: %5.3f"
+						% [thrust, drag, torque, roll_moment, pitch_moment])
 	thrust *= Vector3.UP
 	drag *= drag_direction
 	torque *= Vector3.UP * direction
-	roll *= drag_direction * direction
-	pitch *= Vector3.UP.cross(drag_direction)
+	roll_moment *= drag_direction * direction
+	pitch_moment *= Vector3.UP.cross(drag_direction)
 	
-	forces = [thrust, drag, torque, roll, pitch]
+	forces = [thrust, drag, torque, roll_moment, pitch_moment]
 
 
 func get_forces():
