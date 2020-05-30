@@ -513,9 +513,9 @@ func update_command():
 		
 		var bank_limit = deg2rad(20)
 		if is_flight_safe():
-			var target_speed = -3
+			var target_speed = -5
 			if pos.y < 1:
-				set_armed(false)
+				_on_disarm_input()
 			pid_controllers[Controller.VERTICAL_SPEED].set_target(target_speed)
 			motor_control[0] = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 			
