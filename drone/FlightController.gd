@@ -455,7 +455,11 @@ func update_command():
 			hdg_delta = 2 * PI
 			if target < 0:
 				hdg_delta = -hdg_delta
-		motor_control[1] = pid_controllers[Controller.YAW].get_output(angles.y + hdg_delta, dt, false)
+		var measurement = angles.y + hdg_delta
+		# Manually correct previous PID measurement to remove discontinuity
+		if abs(pid_controllers[Controller.YAW].mv_prev - measurement) > PI:
+			pid_controllers[Controller.YAW].mv_prev += hdg_delta
+		motor_control[1] = pid_controllers[Controller.YAW].get_output(measurement, dt, false)
 		
 		var xform = Transform(basis, pos)
 		target = get_tracking_target()
