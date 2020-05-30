@@ -409,7 +409,7 @@ func update_command():
 		pid_controllers[Controller.VERTICAL_SPEED].set_target((pwr - 0.5) * 10.0)
 		motor_control[0] = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 		
-		pid_controllers[Controller.YAW_SPEED].set_target(-((1 - expo_y) * y + expo_y * pow(y, 3)) * 2)
+		pid_controllers[Controller.YAW_SPEED].set_target(-((1 - expo_y) * y + expo_y * pow(y, 3)) * 2 * PI)
 		motor_control[1] = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 		
 		pid_controllers[Controller.ROLL].set_target(((1 - expo_r) * r + expo_r * pow(r, 3)) * bank_limit)
