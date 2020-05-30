@@ -281,8 +281,9 @@ func get_angles_from_basis():
 
 
 func is_flight_safe():
+	var max_angle = deg2rad(50)
 	var safe = true
-	if abs(angles.x) > PI / 4 or abs(angles.z) > PI / 4:
+	if abs(angles.x) > max_angle or abs(angles.z) > max_angle:
 		safe = false
 	return safe
 
