@@ -15,6 +15,9 @@ def setup_plot():
     ax.minorticks_on()
     ax.grid(which="major")
     ax.grid(which="minor", alpha=0.2)
+    
+    ax.set_zorder(10)
+    ax.patch.set_alpha(0)
 
 
 figure_size = [10, 6]
@@ -350,14 +353,14 @@ lines = [p1, p2, p3]
 ax.legend(lines, [l.get_label() for l in lines])
 
 
-plt.figure("PID Lateral Position", figsize=figure_size)
+plt.figure("PID X Position", figsize=figure_size)
 ax = plt.gca()
 p1, = ax.plot(data["t"], data["pid.posx.tgt"], color="red", label="Target")
-p2, = ax.plot(data["t"], data["delta_posx"], color="green", label="Delta_X")
+p2, = ax.plot(data["t"], data["x"], color="green", label="X Position")
 ax.set_xlim(x_limits)
 ax.set_ylim(y_limits)
-ax.set_ylabel("Offset (m)")
-ax.set_title("Lateral Position PID vs Time")
+ax.set_ylabel("X Position (m)")
+ax.set_title("X Position PID vs Time")
 ax2 = ax.twinx()
 p3, = ax2.plot(data["t"], data["pid.posx.clamp"], color="blue", label="Output")
 ax2.set_ylabel("Output")
@@ -370,14 +373,14 @@ lines = [p1, p2, p3]
 ax.legend(lines, [l.get_label() for l in lines])
 
 
-plt.figure("PID Longitudinal Position", figsize=figure_size)
+plt.figure("PID Z Position", figsize=figure_size)
 ax = plt.gca()
 p1, = ax.plot(data["t"], data["pid.posz.tgt"], color="red", label="Target")
-p2, = ax.plot(data["t"], data["delta_posz"], color="green", label="Delta_Z")
+p2, = ax.plot(data["t"], data["z"], color="green", label="Z Position")
 ax.set_xlim(x_limits)
 ax.set_ylim(y_limits)
-ax.set_ylabel("Offset (m)")
-ax.set_title("Longitudindal Position PID vs Time")
+ax.set_ylabel("Z Position (m)")
+ax.set_title("Z Position PID vs Time")
 ax2 = ax.twinx()
 p3, = ax2.plot(data["t"], data["pid.posz.clamp"], color="blue", label="Output")
 ax2.set_ylabel("Output")
@@ -388,6 +391,46 @@ plt.sca(ax)
 setup_plot()
 lines = [p1, p2, p3]
 ax.legend(lines, [l.get_label() for l in lines])
+
+
+# plt.figure("PID Lateral Position", figsize=figure_size)
+# ax = plt.gca()
+# p1, = ax.plot(data["t"], data["pid.posx.tgt"], color="red", label="Target")
+# p2, = ax.plot(data["t"], data["delta_posx"], color="green", label="Delta_X")
+# ax.set_xlim(x_limits)
+# ax.set_ylim(y_limits)
+# ax.set_ylabel("Offset (m)")
+# ax.set_title("Lateral Position PID vs Time")
+# ax2 = ax.twinx()
+# p3, = ax2.plot(data["t"], data["pid.posx.clamp"], color="blue", label="Output")
+# ax2.set_ylabel("Output")
+# ax2.yaxis.label.set_color(p3.get_color())
+# ax2.spines["right"].set_color(p3.get_color())
+# ax2.tick_params(axis="y", colors=p3.get_color())
+# plt.sca(ax)
+# setup_plot()
+# lines = [p1, p2, p3]
+# ax.legend(lines, [l.get_label() for l in lines])
+
+
+# plt.figure("PID Longitudinal Position", figsize=figure_size)
+# ax = plt.gca()
+# p1, = ax.plot(data["t"], data["pid.posz.tgt"], color="red", label="Target")
+# p2, = ax.plot(data["t"], data["delta_posz"], color="green", label="Delta_Z")
+# ax.set_xlim(x_limits)
+# ax.set_ylim(y_limits)
+# ax.set_ylabel("Offset (m)")
+# ax.set_title("Longitudindal Position PID vs Time")
+# ax2 = ax.twinx()
+# p3, = ax2.plot(data["t"], data["pid.posz.clamp"], color="blue", label="Output")
+# ax2.set_ylabel("Output")
+# ax2.yaxis.label.set_color(p3.get_color())
+# ax2.spines["right"].set_color(p3.get_color())
+# ax2.tick_params(axis="y", colors=p3.get_color())
+# plt.sca(ax)
+# setup_plot()
+# lines = [p1, p2, p3]
+# ax.legend(lines, [l.get_label() for l in lines])
 
 
 #plt.figure("PID Propellers", figsize=figure_size)
