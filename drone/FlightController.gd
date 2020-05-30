@@ -231,7 +231,7 @@ func write_telemetry():
 			angles.y, angles.z, angles.x, ang_vel.y, ang_vel.z, ang_vel.x,
 			(get_tracking_target() - pos).x, (get_tracking_target() - pos).y, (get_tracking_target() - pos).z,
 			motors[0].get_rpm(), motors[1].get_rpm(), motors[2].get_rpm(), motors[3].get_rpm(),
-			motors[0].propeller.get_thrust(), motors[1].propeller.get_thrust(), motors[2].propeller.get_thrust(), motors[3].propeller.get_thrust(),
+			motors[0].propeller.forces[0].length(), motors[1].propeller.forces[0].length(), motors[2].propeller.forces[0].length(), motors[3].propeller.forces[0].length(),
 			pid_controllers[Controller.ALTITUDE].target, pid_controllers[Controller.ALTITUDE].err, pid_controllers[Controller.ALTITUDE].output, pid_controllers[Controller.ALTITUDE].clamped_output,
 			pid_controllers[Controller.PITCH].target, pid_controllers[Controller.PITCH].err, pid_controllers[Controller.PITCH].output, pid_controllers[Controller.PITCH].clamped_output,
 			pid_controllers[Controller.ROLL].target, pid_controllers[Controller.ROLL].err, pid_controllers[Controller.ROLL].output, pid_controllers[Controller.ROLL].clamped_output,
