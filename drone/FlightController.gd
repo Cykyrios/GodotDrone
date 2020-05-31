@@ -219,7 +219,8 @@ func init_telemetry():
 			"pid.latspeed.tgt", "pid.latspeed.err", "pid.latspeed.out", "pid.latspeed.clamp",
 			"pid.vrtspeed.tgt", "pid.vrtspeed.err", "pid.vrtspeed.out", "pid.vrtspeed.clamp",
 			"pid.posx.tgt", "pid.posx.err", "pid.posx.out", "pid.posx.clamp",
-			"pid.posz.tgt", "pid.posz.err", "pid.posz.out", "pid.posz.clamp"])
+			"pid.posz.tgt", "pid.posz.err", "pid.posz.out", "pid.posz.clamp",
+			"pid.launch.tgt", "pid.launch.err", "pid.launch.out", "pid.launch.clamp"])
 	telemetry_file.close()
 
 
@@ -229,10 +230,11 @@ func write_telemetry():
 	
 	telemetry_file.open("user://telemetry.csv", File.READ_WRITE)
 	telemetry_file.seek_end()
+	var delta_pos = (get_tracking_target() - pos).rotated(Vector3.UP, -angles.y)
 	var data = PoolStringArray([time, input[0], input[1], input[2], input[3],
 			pos.x, pos.y, pos.z, lin_vel.x, lin_vel.y, lin_vel.z, local_vel.x, local_vel.y, local_vel.z,
 			angles.y, angles.z, angles.x, ang_vel.y, ang_vel.z, ang_vel.x,
-			(get_tracking_target() - pos).x, (get_tracking_target() - pos).y, (get_tracking_target() - pos).z,
+			delta_pos.x, delta_pos.y, delta_pos.z,
 			motors[0].get_rpm(), motors[1].get_rpm(), motors[2].get_rpm(), motors[3].get_rpm(),
 			motors[0].propeller.forces[0].length(), motors[1].propeller.forces[0].length(), motors[2].propeller.forces[0].length(), motors[3].propeller.forces[0].length(),
 			pid_controllers[Controller.ALTITUDE].target, pid_controllers[Controller.ALTITUDE].err, pid_controllers[Controller.ALTITUDE].output, pid_controllers[Controller.ALTITUDE].clamped_output,
@@ -246,7 +248,8 @@ func write_telemetry():
 			pid_controllers[Controller.LATERAL_SPEED].target, pid_controllers[Controller.LATERAL_SPEED].err, pid_controllers[Controller.LATERAL_SPEED].output, pid_controllers[Controller.LATERAL_SPEED].clamped_output,
 			pid_controllers[Controller.VERTICAL_SPEED].target, pid_controllers[Controller.VERTICAL_SPEED].err, pid_controllers[Controller.VERTICAL_SPEED].output, pid_controllers[Controller.VERTICAL_SPEED].clamped_output,
 			pid_controllers[Controller.POS_X].target, pid_controllers[Controller.POS_X].err, pid_controllers[Controller.POS_X].output, pid_controllers[Controller.POS_X].clamped_output,
-			pid_controllers[Controller.POS_Z].target, pid_controllers[Controller.POS_Z].err, pid_controllers[Controller.POS_Z].output, pid_controllers[Controller.POS_Z].clamped_output])
+			pid_controllers[Controller.POS_Z].target, pid_controllers[Controller.POS_Z].err, pid_controllers[Controller.POS_Z].output, pid_controllers[Controller.POS_Z].clamped_output,
+			pid_controllers[Controller.LAUNCH].target, pid_controllers[Controller.LAUNCH].err, pid_controllers[Controller.LAUNCH].output, pid_controllers[Controller.LAUNCH].clamped_output])
 	telemetry_file.store_csv_line(data)
 	telemetry_file.close()
 

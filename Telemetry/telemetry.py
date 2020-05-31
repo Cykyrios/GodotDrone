@@ -439,6 +439,26 @@ ax.legend(lines, [l.get_label() for l in lines])
 #ax.set_ylim(ymin=0, ymax=30)
 
 
+plt.figure("PID Launch Control", figsize=figure_size)
+ax = plt.gca()
+p1, = ax.plot(data["t"], data["pid.launch.tgt"], color="red", label="Target")
+p2, = ax.plot(data["t"], data["pitch"], color="green", label="Z Position")
+ax.set_xlim(x_limits)
+ax.set_ylim(y_limits)
+ax.set_ylabel("Pitch angle (rad)")
+ax.set_title("Launch control PID vs Time")
+ax2 = ax.twinx()
+p3, = ax2.plot(data["t"], data["pid.launch.clamp"], color="blue", label="Output")
+ax2.set_ylabel("Output")
+ax2.yaxis.label.set_color(p3.get_color())
+ax2.spines["right"].set_color(p3.get_color())
+ax2.tick_params(axis="y", colors=p3.get_color())
+plt.sca(ax)
+setup_plot()
+lines = [p1, p2, p3]
+ax.legend(lines, [l.get_label() for l in lines])
+
+
 from mpl_toolkits.mplot3d import Axes3D
 fig = plt.figure("3D Path", figsize=[1.5*figure_size[0], 1.5*figure_size[1]])
 ax = fig.add_subplot(111, projection="3d")
