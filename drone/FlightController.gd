@@ -95,7 +95,8 @@ func _ready():
 	pid_controllers[Controller.YAW].set_coefficients(50 * pid_scale_p, 20 * pid_scale_i, 100 * pid_scale_d)
 	pid_controllers[Controller.YAW].set_clamp_limits(-0.5, 0.5)
 	
-	pid_controllers[Controller.LAUNCH].set_coefficients(400 * pid_scale_p, 165 * pid_scale_i, 250 * pid_scale_d)
+	pid_controllers[Controller.LAUNCH].set_coefficients(700 * pid_scale_p, 300 * pid_scale_i, 700 * pid_scale_d)
+	pid_controllers[Controller.LAUNCH].set_clamp_limits(-0.5, 0)
 	
 	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
 	change_flight_mode(FlightMode.RATE)
