@@ -25,8 +25,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.015, 0.045 )
 [node name="Motor1" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, -0.08 )
 MAX_RPM = 30000.0
-RPM_ACCELERATION = 80000.0
-MIN_POWER = 5
+RPM_ACCELERATION = 150000.0
+MIN_POWER = 2
 kv = 2400
 
 [node name="Propeller1" parent="Motor1" instance=ExtResource( 5 )]
@@ -36,8 +36,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0095, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, -0.08 )
 clockwise = false
 MAX_RPM = 30000.0
-RPM_ACCELERATION = 80000.0
-MIN_POWER = 5
+RPM_ACCELERATION = 150000.0
+MIN_POWER = 2
 kv = 2400
 
 [node name="Propeller2" parent="Motor2" instance=ExtResource( 5 )]
@@ -46,8 +46,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0095, 0 )
 [node name="Motor3" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, 0.08 )
 MAX_RPM = 30000.0
-RPM_ACCELERATION = 80000.0
-MIN_POWER = 5
+RPM_ACCELERATION = 150000.0
+MIN_POWER = 2
 kv = 2400
 
 [node name="Propeller3" parent="Motor3" instance=ExtResource( 5 )]
@@ -57,8 +57,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0095, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, 0.08 )
 clockwise = false
 MAX_RPM = 30000.0
-RPM_ACCELERATION = 80000.0
-MIN_POWER = 5
+RPM_ACCELERATION = 150000.0
+MIN_POWER = 2
 kv = 2400
 
 [node name="Propeller4" parent="Motor4" instance=ExtResource( 5 )]
