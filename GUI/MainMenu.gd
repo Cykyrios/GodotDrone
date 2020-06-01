@@ -8,9 +8,9 @@ var level = preload("res://sceneries/Level1.tscn")
 
 
 func _ready():
-	$VBoxContainer/ButtonFly.connect("pressed", self, "_on_fly_pressed")
-	$VBoxContainer/ButtonOptions.connect("pressed", self, "_on_options_pressed")
-	$VBoxContainer/ButtonQuit.connect("pressed", self, "_on_quit_pressed")
+	$PanelContainer/VBoxContainer/ButtonFly.connect("pressed", self, "_on_fly_pressed")
+	$PanelContainer/VBoxContainer/ButtonOptions.connect("pressed", self, "_on_options_pressed")
+	$PanelContainer/VBoxContainer/ButtonQuit.connect("pressed", self, "_on_quit_pressed")
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
@@ -34,10 +34,10 @@ func _on_options_pressed():
 	if packed_options_menu.can_instance():
 		var options_menu = packed_options_menu.instance()
 		add_child(options_menu)
-		$VBoxContainer.visible = false
+		$PanelContainer.visible = false
 		yield(options_menu, "back")
 		options_menu.queue_free()
-		$VBoxContainer.visible = true
+		$PanelContainer.visible = true
 
 
 func _on_quit_pressed():
