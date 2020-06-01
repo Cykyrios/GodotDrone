@@ -153,12 +153,17 @@ __meta__ = {
 }
 
 [node name="LabelActions" type="Label" parent="BindingsVBox"]
-margin_right = 143.0
+margin_right = 200.0
 margin_bottom = 45.0
 text = "Bindings:"
 
-[node name="ActionsVBox" type="VBoxContainer" parent="BindingsVBox"]
+[node name="ScrollContainer" type="ScrollContainer" parent="BindingsVBox"]
 margin_top = 49.0
-margin_right = 143.0
-margin_bottom = 49.0
+margin_right = 200.0
+margin_bottom = 549.0
+rect_min_size = Vector2( 200, 500 )
+size_flags_horizontal = 3
+scroll_horizontal_enabled = false
+
+[node name="ActionsVBox" type="VBoxContainer" parent="BindingsVBox/ScrollContainer"]
 custom_constants/separation = 10

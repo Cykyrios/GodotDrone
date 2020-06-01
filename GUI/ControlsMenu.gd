@@ -10,7 +10,7 @@ onready var controller_checkbutton = $ControllerVBox/ControllerVBox/ControllerCh
 onready var axes_list = $ControllerVBox/AxesVBox/AxesList
 onready var button_grid = $ControllerVBox/ButtonsVBox/ButtonGrid
 
-onready var actions_list = $BindingsVBox/ActionsVBox
+onready var actions_list = $BindingsVBox/ScrollContainer/ActionsVBox
 var show_binding_popup = false
 var binding_popup_text = ""
 var binding_popup_clear = false
