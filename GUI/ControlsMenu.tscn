@@ -74,12 +74,11 @@ margin_right = 366.0
 margin_bottom = 45.0
 text = "Active controller:"
 
-[node name="MenuButton" type="MenuButton" parent="ControllerVBox/ControllerVBox"]
+[node name="OptionButton" type="OptionButton" parent="ControllerVBox/ControllerVBox"]
 margin_top = 55.0
 margin_right = 366.0
 margin_bottom = 106.0
 text = "None"
-flat = false
 
 [node name="ControllerCheckButton" type="CheckButton" parent="ControllerVBox/ControllerVBox"]
 margin_top = 116.0

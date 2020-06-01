@@ -5,7 +5,7 @@ var packed_calibration_menu = preload("res://GUI/CalibrationMenu.tscn")
 var packed_binding_popup = preload("res://GUI/ConfirmationPopup.tscn")
 var binding_popup = null
 
-onready var controller_list = $ControllerVBox/ControllerVBox/MenuButton
+onready var controller_list = $ControllerVBox/ControllerVBox/OptionButton
 onready var controller_checkbutton = $ControllerVBox/ControllerVBox/ControllerCheckButton
 onready var axes_list = $ControllerVBox/AxesVBox/AxesList
 onready var button_grid = $ControllerVBox/ButtonsVBox/ButtonGrid
