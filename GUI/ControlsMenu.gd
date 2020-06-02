@@ -29,8 +29,8 @@ func _ready():
 	connect("controller_detected", self, "_on_controller_autodetected")
 	Input.connect("joy_connection_changed", self, "_on_joypad_connection_changed")
 	
-	$HBoxContainer/MenuPanel/MenuVBox/ButtonCalibrate.connect("pressed", self, "_on_calibrate_pressed")
-	$HBoxContainer/MenuPanel/MenuVBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
+	$MenuPanel/MenuVBox/ButtonCalibrate.connect("pressed", self, "_on_calibrate_pressed")
+	$MenuPanel/MenuVBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
 	
 	controller_list.connect("pressed", self, "_on_controller_list_pressed")
 	controller_list.get_popup().connect("id_pressed", self, "_on_controller_selected")
@@ -125,10 +125,10 @@ func _on_calibrate_pressed():
 	if packed_calibration_menu.can_instance():
 		var calibration_menu = packed_calibration_menu.instance()
 		add_child(calibration_menu)
-		$HBoxContainer/MenuPanel.visible = false
+		$MenuPanel.modulate = Color(1, 1, 1, 0)
 		yield(calibration_menu, "back")
 		calibration_menu.queue_free()
-		$HBoxContainer/MenuPanel.visible = true
+		$MenuPanel.modulate = Color(1, 1, 1, 1)
 
 
 func _on_back_pressed():

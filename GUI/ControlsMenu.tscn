@@ -32,7 +32,7 @@ margin_top = 100.0
 margin_right = 406.0
 margin_bottom = 779.0
 rect_min_size = Vector2( 400, 0 )
-size_flags_horizontal = 0
+size_flags_horizontal = 2
 size_flags_vertical = 4
 __meta__ = {
 "_edit_use_anchors_": false
@@ -122,53 +122,6 @@ custom_constants/vseparation = 30
 custom_constants/hseparation = 30
 columns = 4
 
-[node name="MenuPanel" type="PanelContainer" parent="HBoxContainer"]
-margin_left = 762.0
-margin_top = 291.0
-margin_right = 1064.0
-margin_bottom = 589.0
-size_flags_horizontal = 6
-size_flags_vertical = 4
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MenuVBox" type="VBoxContainer" parent="HBoxContainer/MenuPanel"]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 282.0
-margin_bottom = 278.0
-custom_constants/separation = 20
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Title" type="Label" parent="HBoxContainer/MenuPanel/MenuVBox"]
-margin_right = 262.0
-margin_bottom = 45.0
-text = "Controls"
-align = 1
-valign = 1
-
-[node name="ButtonCalibrate" type="Button" parent="HBoxContainer/MenuPanel/MenuVBox"]
-margin_top = 65.0
-margin_right = 262.0
-margin_bottom = 116.0
-text = "Calibrate axes"
-
-[node name="ButtonReset" type="Button" parent="HBoxContainer/MenuPanel/MenuVBox"]
-margin_top = 136.0
-margin_right = 262.0
-margin_bottom = 187.0
-text = "Reset to Defaults"
-
-[node name="ButtonBack" type="Button" parent="HBoxContainer/MenuPanel/MenuVBox"]
-margin_top = 207.0
-margin_right = 262.0
-margin_bottom = 258.0
-text = "Back to Menu"
-
 [node name="BindingsPanel" type="PanelContainer" parent="HBoxContainer"]
 margin_left = 1420.0
 margin_top = 140.0
@@ -177,7 +130,7 @@ margin_bottom = 740.0
 grow_horizontal = 0
 grow_vertical = 2
 rect_min_size = Vector2( 300, 600 )
-size_flags_horizontal = 8
+size_flags_horizontal = 10
 size_flags_vertical = 4
 __meta__ = {
 "_edit_use_anchors_": false
@@ -215,3 +168,50 @@ margin_top = 10.0
 margin_right = 10.0
 margin_bottom = 10.0
 custom_constants/separation = 10
+
+[node name="MenuPanel" type="PanelContainer" parent="."]
+margin_left = 809.0
+margin_top = 391.0
+margin_right = 1111.0
+margin_bottom = 689.0
+size_flags_horizontal = 6
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuVBox" type="VBoxContainer" parent="MenuPanel"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 282.0
+margin_bottom = 278.0
+custom_constants/separation = 20
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="MenuPanel/MenuVBox"]
+margin_right = 262.0
+margin_bottom = 45.0
+text = "Controls"
+align = 1
+valign = 1
+
+[node name="ButtonCalibrate" type="Button" parent="MenuPanel/MenuVBox"]
+margin_top = 65.0
+margin_right = 262.0
+margin_bottom = 116.0
+text = "Calibrate axes"
+
+[node name="ButtonReset" type="Button" parent="MenuPanel/MenuVBox"]
+margin_top = 136.0
+margin_right = 262.0
+margin_bottom = 187.0
+text = "Reset to Defaults"
+
+[node name="ButtonBack" type="Button" parent="MenuPanel/MenuVBox"]
+margin_top = 207.0
+margin_right = 262.0
+margin_bottom = 258.0
+text = "Back to Menu"

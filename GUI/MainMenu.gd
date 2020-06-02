@@ -33,11 +33,11 @@ func _on_fly_pressed():
 func _on_options_pressed():
 	if packed_options_menu.can_instance():
 		var options_menu = packed_options_menu.instance()
-		add_child(options_menu)
-		$PanelContainer.visible = false
+		get_parent().add_child(options_menu)
+		visible = false
 		yield(options_menu, "back")
 		options_menu.queue_free()
-		$PanelContainer.visible = true
+		visible = true
 
 
 func _on_quit_pressed():

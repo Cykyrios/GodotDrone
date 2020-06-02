@@ -10,9 +10,9 @@ signal menu
 
 
 func _ready():
-	$VBoxContainer/ButtonResume.connect("pressed", self, "_on_resume_pressed")
-	$VBoxContainer/ButtonOptions.connect("pressed", self, "_on_options_pressed")
-	$VBoxContainer/ButtonMainMenu.connect("pressed", self, "_on_menu_pressed")
+	$PanelContainer/VBoxContainer/ButtonResume.connect("pressed", self, "_on_resume_pressed")
+	$PanelContainer/VBoxContainer/ButtonOptions.connect("pressed", self, "_on_options_pressed")
+	$PanelContainer/VBoxContainer/ButtonMainMenu.connect("pressed", self, "_on_menu_pressed")
 
 
 func _on_resume_pressed():
@@ -22,12 +22,12 @@ func _on_resume_pressed():
 func _on_options_pressed():
 	if packed_options_menu.can_instance():
 		var options_menu = packed_options_menu.instance()
-		add_child(options_menu)
+		get_parent().add_child(options_menu)
 		can_resume = false
-		$VBoxContainer.visible = false
+		visible = false
 		yield(options_menu, "back")
 		options_menu.queue_free()
-		$VBoxContainer.visible = true
+		visible = true
 		can_resume = true
 
 
