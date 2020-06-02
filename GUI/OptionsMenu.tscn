@@ -1,54 +1,62 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://GUI/MenuFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://GUI/ThemeMenu.tres" type="Theme" id=1]
 [ext_resource path="res://GUI/OptionsMenu.gd" type="Script" id=2]
 
-[node name="OptionsMenu" type="Control"]
+[node name="OptionsMenu" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 1 )
+custom_constants/margin_right = 100
+custom_constants/margin_top = 100
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 100
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -122.5
-margin_top = -105.0
-margin_right = 122.5
-margin_bottom = 105.0
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 817.0
+margin_top = 391.0
+margin_right = 1102.0
+margin_bottom = 689.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 265.0
+margin_bottom = 278.0
+custom_constants/separation = 20
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="VBoxContainer"]
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
 margin_right = 245.0
 margin_bottom = 45.0
-custom_fonts/font = ExtResource( 1 )
 text = "Options"
 align = 1
 valign = 1
 
-[node name="ButtonSystem" type="Button" parent="VBoxContainer"]
-margin_top = 49.0
+[node name="ButtonSystem" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 65.0
 margin_right = 245.0
-margin_bottom = 100.0
-custom_fonts/font = ExtResource( 1 )
+margin_bottom = 116.0
 text = "System Settings"
 
-[node name="ButtonControls" type="Button" parent="VBoxContainer"]
-margin_top = 104.0
+[node name="ButtonControls" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 136.0
 margin_right = 245.0
-margin_bottom = 155.0
-custom_fonts/font = ExtResource( 1 )
+margin_bottom = 187.0
 text = "Controls"
 
-[node name="ButtonBack" type="Button" parent="VBoxContainer"]
-margin_top = 159.0
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 207.0
 margin_right = 245.0
-margin_bottom = 210.0
-custom_fonts/font = ExtResource( 1 )
+margin_bottom = 258.0
 text = "Back to Menu"

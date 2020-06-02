@@ -5,12 +5,12 @@ var packed_calibration_menu = preload("res://GUI/CalibrationMenu.tscn")
 var packed_binding_popup = preload("res://GUI/ConfirmationPopup.tscn")
 var binding_popup = null
 
-onready var controller_list = $ControllerVBox/ControllerVBox/MenuButton
-onready var controller_checkbutton = $ControllerVBox/ControllerVBox/ControllerCheckButton
-onready var axes_list = $ControllerVBox/AxesVBox/AxesList
-onready var button_grid = $ControllerVBox/ButtonsVBox/ButtonGrid
+onready var controller_list = $HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox/OptionButton
+onready var controller_checkbutton = $HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox/ControllerCheckButton
+onready var axes_list = $HBoxContainer/ControllerPanel/ControllerVBox/AxesVBox/AxesList
+onready var button_grid = $HBoxContainer/ControllerPanel/ControllerVBox/ButtonsVBox/ButtonGrid
 
-onready var actions_list = $BindingsVBox/ActionsVBox
+onready var actions_list = $HBoxContainer/BindingsPanel/BindingsVBox/ScrollContainer/ActionsVBox
 var show_binding_popup = false
 var binding_popup_text = ""
 var binding_popup_clear = false
@@ -29,8 +29,8 @@ func _ready():
 	connect("controller_detected", self, "_on_controller_autodetected")
 	Input.connect("joy_connection_changed", self, "_on_joypad_connection_changed")
 	
-	$MenuVBox/ButtonCalibrate.connect("pressed", self, "_on_calibrate_pressed")
-	$MenuVBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
+	$MenuPanel/MenuVBox/ButtonCalibrate.connect("pressed", self, "_on_calibrate_pressed")
+	$MenuPanel/MenuVBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
 	
 	controller_list.connect("pressed", self, "_on_controller_list_pressed")
 	controller_list.get_popup().connect("id_pressed", self, "_on_controller_selected")
@@ -79,7 +79,8 @@ func _ready():
 				active_device = connected_joypads[0]
 	controller_list.get_popup().emit_signal("id_pressed", connected_joypads.find(active_device))
 	
-	$ControllerVBox.rect_position.y = (rect_size - $ControllerVBox.rect_size).y / 2
+	$HBoxContainer/ControllerPanel/ControllerVBox.rect_position.y = \
+			(rect_size - $HBoxContainer/ControllerPanel/ControllerVBox.rect_size).y / 2
 	
 	# Actions bindings
 	for action in Global.action_dict:
@@ -124,10 +125,10 @@ func _on_calibrate_pressed():
 	if packed_calibration_menu.can_instance():
 		var calibration_menu = packed_calibration_menu.instance()
 		add_child(calibration_menu)
-		$MenuVBox.visible = false
+		$MenuPanel.modulate = Color(1, 1, 1, 0)
 		yield(calibration_menu, "back")
 		calibration_menu.queue_free()
-		$MenuVBox.visible = true
+		$MenuPanel.modulate = Color(1, 1, 1, 1)
 
 
 func _on_back_pressed():

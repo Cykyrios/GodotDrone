@@ -1,8 +1,8 @@
 extends Control
 
 
-onready var title = $VBoxContainer/Title
-onready var label_action = $VBoxContainer/LabelAction
+onready var title = $PanelContainer/VBoxContainer/Title
+onready var label_action = $PanelContainer/VBoxContainer/LabelAction
 
 var calibration_step = -1
 var device = 0
@@ -21,7 +21,7 @@ signal back
 
 
 func _ready():
-	$VBoxContainer/ButtonCancel.connect("pressed", self, "_on_cancel_pressed")
+	$PanelContainer/VBoxContainer/ButtonCancel.connect("pressed", self, "_on_cancel_pressed")
 	connect("calibration_done", self, "_on_calibration_done")
 	
 	reset_calibration()
