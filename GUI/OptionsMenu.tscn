@@ -49,14 +49,20 @@ margin_right = 226.0
 margin_bottom = 116.0
 text = "Game Settings"
 
-[node name="ButtonControls" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonGraphics" type="Button" parent="PanelContainer/VBoxContainer"]
 margin_top = 136.0
 margin_right = 226.0
 margin_bottom = 187.0
-text = "Controls"
+text = "Graphics Settings"
 
-[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonControls" type="Button" parent="PanelContainer/VBoxContainer"]
 margin_top = 207.0
 margin_right = 226.0
 margin_bottom = 258.0
+text = "Controls"
+
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 278.0
+margin_right = 274.0
+margin_bottom = 329.0
 text = "Back to Menu"
