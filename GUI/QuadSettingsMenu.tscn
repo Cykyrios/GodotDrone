@@ -1,0 +1,338 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://GUI/ThemeMenu.tres" type="Theme" id=1]
+[ext_resource path="res://GUI/QuadSettingsMenu.gd" type="Script" id=2]
+[ext_resource path="res://GUI/RateGraph.gd" type="Script" id=3]
+
+[node name="OptionsMenu" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+custom_constants/margin_right = 100
+custom_constants/margin_top = 100
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 100
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 1820.0
+margin_bottom = 980.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 5
+size_flags_vertical = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1700.0
+margin_bottom = 860.0
+custom_constants/separation = 50
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+margin_right = 1680.0
+margin_bottom = 45.0
+text = "Quad Settings"
+align = 1
+valign = 1
+
+[node name="SettingsHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 95.0
+margin_right = 1680.0
+margin_bottom = 739.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 50
+alignment = 1
+
+[node name="QuadScroll" type="ScrollContainer" parent="PanelContainer/VBoxContainer/SettingsHBox"]
+margin_right = 815.0
+margin_bottom = 644.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Quad" type="GridContainer" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 805.0
+margin_bottom = 634.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/vseparation = 20
+custom_constants/hseparation = 50
+columns = 3
+
+[node name="DryWeightLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+margin_right = 228.0
+margin_bottom = 45.0
+text = "Dry Weight"
+
+[node name="DryWeightSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+margin_left = 278.0
+margin_top = 14.0
+margin_right = 478.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 100.0
+max_value = 1000.0
+step = 10.0
+value = 550.0
+rounded = true
+
+[node name="DryWeightCurrent" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+margin_left = 528.0
+margin_right = 607.0
+margin_bottom = 45.0
+text = "550 g"
+
+[node name="BatteryWeightLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+margin_top = 65.0
+margin_right = 228.0
+margin_bottom = 110.0
+text = "Battery Weight"
+
+[node name="BatteryWeightSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+margin_left = 278.0
+margin_top = 79.0
+margin_right = 478.0
+margin_bottom = 95.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 50.0
+max_value = 500.0
+step = 10.0
+value = 180.0
+rounded = true
+
+[node name="BatteryWeightCurrent" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+margin_left = 528.0
+margin_top = 65.0
+margin_right = 607.0
+margin_bottom = 110.0
+text = "180 g"
+
+[node name="RatesScroll" type="ScrollContainer" parent="PanelContainer/VBoxContainer/SettingsHBox"]
+margin_left = 865.0
+margin_right = 1680.0
+margin_bottom = 644.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Rates" type="VBoxContainer" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 805.0
+margin_bottom = 634.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+
+[node name="RatesLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates"]
+margin_right = 795.0
+margin_bottom = 45.0
+text = "Rates:"
+
+[node name="RateAdjust" type="GridContainer" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates"]
+margin_top = 65.0
+margin_right = 795.0
+margin_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+custom_constants/vseparation = 20
+custom_constants/hseparation = 20
+columns = 5
+
+[node name="PitchLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_right = 76.0
+margin_bottom = 45.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "Pitch"
+
+[node name="PitchSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 96.0
+margin_top = 14.0
+margin_right = 296.0
+margin_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 90.0
+max_value = 1800.0
+value = 667.0
+rounded = true
+
+[node name="PitchRate" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 316.0
+margin_right = 455.0
+margin_bottom = 45.0
+text = "667 deg/s"
+
+[node name="PitchExpoSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 475.0
+margin_top = 14.0
+margin_right = 575.0
+margin_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 5
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="PitchExpo" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 595.0
+margin_right = 742.0
+margin_bottom = 45.0
+text = "Expo 0.10"
+
+[node name="RollLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_top = 65.0
+margin_right = 76.0
+margin_bottom = 110.0
+custom_colors/font_color = Color( 0, 1, 0, 1 )
+text = "Roll"
+
+[node name="RollSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 96.0
+margin_top = 79.0
+margin_right = 296.0
+margin_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 90.0
+max_value = 1800.0
+value = 667.0
+rounded = true
+
+[node name="RollRate" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 316.0
+margin_top = 65.0
+margin_right = 455.0
+margin_bottom = 110.0
+text = "667 deg/s"
+
+[node name="RollExpoSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 475.0
+margin_top = 79.0
+margin_right = 575.0
+margin_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 5
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="RollExpo" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 595.0
+margin_top = 65.0
+margin_right = 742.0
+margin_bottom = 110.0
+text = "Expo 0.10"
+
+[node name="YawLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_top = 130.0
+margin_right = 76.0
+margin_bottom = 175.0
+custom_colors/font_color = Color( 0, 0, 1, 1 )
+text = "Yaw"
+
+[node name="YawSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 96.0
+margin_top = 144.0
+margin_right = 296.0
+margin_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 90.0
+max_value = 1800.0
+value = 667.0
+rounded = true
+
+[node name="YawRate" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 316.0
+margin_top = 130.0
+margin_right = 455.0
+margin_bottom = 175.0
+text = "667 deg/s"
+
+[node name="YawExpoSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 475.0
+margin_top = 144.0
+margin_right = 575.0
+margin_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 5
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="YawExpo" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+margin_left = 595.0
+margin_top = 130.0
+margin_right = 742.0
+margin_bottom = 175.0
+text = "Expo 0.10"
+
+[node name="RateGraph" type="Control" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates"]
+margin_top = 260.0
+margin_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource( 3 )
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 789.0
+margin_right = 1680.0
+margin_bottom = 840.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_constants/separation = 50
+alignment = 2
+
+[node name="ButtonDefaults" type="Button" parent="PanelContainer/VBoxContainer/ButtonsHBox"]
+margin_left = 1193.0
+margin_right = 1411.0
+margin_bottom = 51.0
+text = "Reset Settings"
+
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/ButtonsHBox"]
+margin_left = 1461.0
+margin_right = 1680.0
+margin_bottom = 51.0
+text = "Back to Menu"

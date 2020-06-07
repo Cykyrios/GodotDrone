@@ -15,9 +15,9 @@ script = ExtResource( 2 )
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 margin_left = 771.0
-margin_top = 391.0
+margin_top = 355.0
 margin_right = 1148.0
-margin_bottom = 689.0
+margin_bottom = 724.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -27,7 +27,7 @@ size_flags_vertical = 4
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 357.0
-margin_bottom = 278.0
+margin_bottom = 349.0
 custom_constants/separation = 20
 __meta__ = {
 "_edit_use_anchors_": false
@@ -46,14 +46,20 @@ margin_right = 337.0
 margin_bottom = 116.0
 text = "Resume"
 
-[node name="ButtonOptions" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonQuad" type="Button" parent="PanelContainer/VBoxContainer"]
 margin_top = 136.0
 margin_right = 337.0
 margin_bottom = 187.0
-text = "Options"
+text = "Quad Settings"
 
-[node name="ButtonMainMenu" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonOptions" type="Button" parent="PanelContainer/VBoxContainer"]
 margin_top = 207.0
 margin_right = 337.0
 margin_bottom = 258.0
+text = "Options"
+
+[node name="ButtonMainMenu" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 278.0
+margin_right = 337.0
+margin_bottom = 329.0
 text = "Return to Main Menu"
