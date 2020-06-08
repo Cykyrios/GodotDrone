@@ -165,7 +165,7 @@ columns = 5
 [node name="PitchLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
 margin_right = 76.0
 margin_bottom = 45.0
-custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 0.196078, 0.196078, 1 )
 text = "Pitch"
 
 [node name="PitchSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
@@ -213,7 +213,7 @@ text = "Expo 0.10"
 margin_top = 65.0
 margin_right = 76.0
 margin_bottom = 110.0
-custom_colors/font_color = Color( 0, 1, 0, 1 )
+custom_colors/font_color = Color( 0.392157, 1, 0.392157, 1 )
 text = "Roll"
 
 [node name="RollSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
@@ -263,7 +263,7 @@ text = "Expo 0.10"
 margin_top = 130.0
 margin_right = 76.0
 margin_bottom = 175.0
-custom_colors/font_color = Color( 0, 0, 1, 1 )
+custom_colors/font_color = Color( 0.392157, 0.588235, 1, 1 )
 text = "Yaw"
 
 [node name="YawSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
@@ -311,6 +311,7 @@ text = "Expo 0.10"
 
 [node name="RateGraph" type="Control" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates"]
 margin_top = 260.0
+margin_right = 795.0
 margin_bottom = 260.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -325,11 +326,17 @@ grow_vertical = 2
 custom_constants/separation = 50
 alignment = 2
 
-[node name="ButtonDefaults" type="Button" parent="PanelContainer/VBoxContainer/ButtonsHBox"]
-margin_left = 1193.0
+[node name="ButtonResetQuad" type="Button" parent="PanelContainer/VBoxContainer/ButtonsHBox"]
+margin_left = 998.0
+margin_right = 1180.0
+margin_bottom = 51.0
+text = "Reset Quad"
+
+[node name="ButtonResetRates" type="Button" parent="PanelContainer/VBoxContainer/ButtonsHBox"]
+margin_left = 1230.0
 margin_right = 1411.0
 margin_bottom = 51.0
-text = "Reset Settings"
+text = "Reset Rates"
 
 [node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/ButtonsHBox"]
 margin_left = 1461.0

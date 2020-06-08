@@ -58,17 +58,23 @@ func update_rates(rates: Vector3, expos: Vector3):
 
 
 func _draw():
+	var color_background := Color(0.2, 0.2, 0.2)
+	var color_frame := Color(0.8, 0.8, 0.8)
+	var color_lines := Color(0.5, 0.5, 0.5)
+	var color_pitch := Color(1.0, 0.2, 0.2)
+	var color_roll := Color(0.35, 1.0, 0.35)
+	var color_yaw := Color(0.3, 0.5, 1.0)
 	# Background
-	draw_rect(Rect2(Vector2(0, 0), Vector2(graph_size, graph_size)), Color(0.9, 0.9, 0.9))
+	draw_rect(Rect2(Vector2(0, 0), Vector2(graph_size, graph_size)), color_background)
 	# Center lines
-	draw_line(Vector2(0, graph_size / 2), Vector2(graph_size, graph_size / 2), Color(0.4, 0.4, 0.4), 1)
-	draw_line(Vector2(graph_size / 2, 0), Vector2(graph_size / 2, graph_size), Color(0.4, 0.4, 0.4), 1)
+	draw_line(Vector2(0, graph_size / 2), Vector2(graph_size, graph_size / 2), color_lines, 1)
+	draw_line(Vector2(graph_size / 2, 0), Vector2(graph_size / 2, graph_size), color_lines, 1)
 	# Rates
-	draw_polyline(PoolVector2Array(pitch), Color(1, 0, 0, 1), 1.5, true)
-	draw_polyline(PoolVector2Array(roll), Color(0, 1, 0, 1), 1.5, true)
-	draw_polyline(PoolVector2Array(yaw), Color(0, 0, 1, 1), 1.5, true)
+	draw_polyline(PoolVector2Array(pitch), color_pitch, 1.5, true)
+	draw_polyline(PoolVector2Array(roll), color_roll, 1.5, true)
+	draw_polyline(PoolVector2Array(yaw), color_yaw, 1.5, true)
 	# Frame
-	draw_line(Vector2(0, 0), Vector2(graph_size, 0), Color(0, 0, 0), 2)
-	draw_line(Vector2(graph_size, 0), Vector2(graph_size, graph_size), Color(0, 0, 0), 2)
-	draw_line(Vector2(graph_size, graph_size), Vector2(0, graph_size), Color(0, 0, 0), 2)
-	draw_line(Vector2(0, graph_size), Vector2(0, 0), Color(0, 0, 0), 2)
+	draw_line(Vector2(0, 0), Vector2(graph_size, 0), Color(0.8, 0.8, 0.8), 2)
+	draw_line(Vector2(graph_size, 0), Vector2(graph_size, graph_size), Color(0.8, 0.8, 0.8), 2)
+	draw_line(Vector2(graph_size, graph_size), Vector2(0, graph_size), Color(0.8, 0.8, 0.8), 2)
+	draw_line(Vector2(0, graph_size), Vector2(0, 0), color_frame, 2)

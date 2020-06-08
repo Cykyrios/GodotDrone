@@ -30,8 +30,8 @@ func _ready():
 	
 	dry_weight_slider.connect("value_changed", self, "_on_dry_weight_changed")
 	battery_weight_slider.connect("value_changed", self, "_on_battery_weight_changed")
-	dry_weight_slider.value = QuadSettings.dry_weight
-	battery_weight_slider.value = QuadSettings.battery_weight
+	dry_weight_slider.value = QuadSettings.dry_weight * 1000
+	battery_weight_slider.value = QuadSettings.battery_weight * 1000
 	
 	rate_pitch_slider.connect("value_changed", self, "_on_rate_changed", [rate_pitch_slider])
 	rate_roll_slider.connect("value_changed", self, "_on_rate_changed", [rate_roll_slider])
@@ -39,8 +39,15 @@ func _ready():
 	expo_pitch_slider.connect("value_changed", self, "_on_expo_changed", [expo_pitch_slider])
 	expo_roll_slider.connect("value_changed", self, "_on_expo_changed", [expo_roll_slider])
 	expo_yaw_slider.connect("value_changed", self, "_on_expo_changed", [expo_yaw_slider])
+	rate_pitch_slider.value = QuadSettings.rate_pitch
+	rate_roll_slider.value = QuadSettings.rate_roll
+	rate_yaw_slider.value = QuadSettings.rate_yaw
+	expo_pitch_slider.value = QuadSettings.expo_pitch
+	expo_roll_slider.value = QuadSettings.expo_roll
+	expo_yaw_slider.value = QuadSettings.expo_yaw
 	
-	$PanelContainer/VBoxContainer/ButtonsHBox/ButtonDefaults.connect("pressed", self, "_on_reset_pressed")
+	$PanelContainer/VBoxContainer/ButtonsHBox/ButtonResetQuad.connect("pressed", self, "_on_reset_quad_pressed")
+	$PanelContainer/VBoxContainer/ButtonsHBox/ButtonResetRates.connect("pressed", self, "_on_reset_rates_pressed")
 	$PanelContainer/VBoxContainer/ButtonsHBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
 
 
@@ -58,10 +65,13 @@ func _on_rate_changed(value: float, slider: HSlider):
 	var text = "%d deg/s" % int(value)
 	if slider == rate_pitch_slider:
 		rate_pitch_label.text = text
+		QuadSettings.rate_pitch = value
 	elif slider == rate_roll_slider:
 		rate_roll_label.text = text
+		QuadSettings.rate_roll = value
 	elif slider == rate_yaw_slider:
 		rate_yaw_label.text = text
+		QuadSettings.rate_yaw = value
 	update_graph()
 
 
@@ -69,10 +79,13 @@ func _on_expo_changed(value: float, slider: HSlider):
 	var text = "Expo %1.2f" % value
 	if slider == expo_pitch_slider:
 		expo_pitch_label.text = text
+		QuadSettings.expo_pitch = value
 	elif slider == expo_roll_slider:
 		expo_roll_label.text = text
+		QuadSettings.expo_roll = value
 	elif slider == expo_yaw_slider:
 		expo_yaw_label.text = text
+		QuadSettings.expo_yaw = value
 	update_graph()
 
 
@@ -81,10 +94,20 @@ func update_graph():
 			Vector3(expo_pitch_slider.value, expo_roll_slider.value, expo_yaw_slider.value))
 
 
-func _on_reset_pressed():
-	QuadSettings.reset()
+func _on_reset_quad_pressed():
+	QuadSettings.reset_quad()
 	dry_weight_slider.value = QuadSettings.dry_weight * 1000
 	battery_weight_slider.value = QuadSettings.battery_weight * 1000
+
+
+func _on_reset_rates_pressed():
+	QuadSettings.reset_rates()
+	rate_pitch_slider.value = QuadSettings.rate_pitch
+	rate_roll_slider.value = QuadSettings.rate_roll
+	rate_yaw_slider.value = QuadSettings.rate_yaw
+	expo_pitch_slider.value = QuadSettings.expo_pitch
+	expo_roll_slider.value = QuadSettings.expo_roll
+	expo_yaw_slider.value = QuadSettings.expo_yaw
 
 
 func _on_back_pressed():
