@@ -23,7 +23,7 @@ func load_quad_settings():
 	var err = config.load(quad_settings_path)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
 		if config.has_section_key("quad", "angle"):
-			dry_weight = clamp(config.get_value("quad", "angle"), -20, 80)
+			angle = clamp(config.get_value("quad", "angle"), -20, 80)
 		if config.has_section_key("quad", "dry_weight"):
 			dry_weight = clamp(config.get_value("quad", "dry_weight"), 0.1, 1.0)
 		if config.has_section_key("quad", "battery_weight"):
