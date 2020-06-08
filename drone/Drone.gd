@@ -40,6 +40,7 @@ func _ready():
 	control_profile.set_expo(expo_pitch, expo_roll, expo_yaw)
 	flight_controller.set_control_profile(control_profile)
 	
+	QuadSettings.load_quad_settings()
 	QuadSettings.connect("settings_updated", self, "_on_quad_settings_updated")
 	_on_quad_settings_updated()
 
