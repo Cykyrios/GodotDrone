@@ -1,6 +1,7 @@
 extends Control
 
 
+var packed_quad_settings_menu = preload("res://GUI/QuadSettingsMenu.tscn")
 var packed_options_menu = preload("res://GUI/OptionsMenu.tscn")
 var packed_popup = preload("res://GUI/ConfirmationPopup.tscn")
 
@@ -9,6 +10,7 @@ var level = preload("res://sceneries/Level1.tscn")
 
 func _ready():
 	$PanelContainer/VBoxContainer/ButtonFly.connect("pressed", self, "_on_fly_pressed")
+	$PanelContainer/VBoxContainer/ButtonQuad.connect("pressed", self, "_on_quad_settings_pressed")
 	$PanelContainer/VBoxContainer/ButtonOptions.connect("pressed", self, "_on_options_pressed")
 	$PanelContainer/VBoxContainer/ButtonQuit.connect("pressed", self, "_on_quit_pressed")
 	
@@ -28,6 +30,16 @@ func _ready():
 
 func _on_fly_pressed():
 	get_tree().change_scene_to(level)
+
+
+func _on_quad_settings_pressed():
+	if packed_quad_settings_menu.can_instance():
+		var quad_settings_menu = packed_quad_settings_menu.instance()
+		get_parent().add_child(quad_settings_menu)
+		visible = false
+		yield(quad_settings_menu, "back")
+		quad_settings_menu.queue_free()
+		visible = true
 
 
 func _on_options_pressed():
