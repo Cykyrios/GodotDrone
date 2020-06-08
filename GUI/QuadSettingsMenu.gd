@@ -4,6 +4,8 @@ extends Control
 signal back
 
 
+onready var angle_slider := $PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad/AngleSlider
+onready var angle_label := $PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad/AngleCurrent
 onready var dry_weight_slider := $PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad/DryWeightSlider
 onready var dry_weight_label := $PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad/DryWeightCurrent
 onready var battery_weight_slider := $PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad/BatteryWeightSlider
@@ -28,6 +30,9 @@ onready var rate_graph = $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/
 func _ready():
 	QuadSettings.load_quad_settings()
 	
+	angle_slider.connect("value_changed", self, "_on_angle_changed")
+	angle_slider.value = QuadSettings.angle
+	
 	dry_weight_slider.connect("value_changed", self, "_on_dry_weight_changed")
 	battery_weight_slider.connect("value_changed", self, "_on_battery_weight_changed")
 	dry_weight_slider.value = QuadSettings.dry_weight * 1000
@@ -49,6 +54,11 @@ func _ready():
 	$PanelContainer/VBoxContainer/ButtonsHBox/ButtonResetQuad.connect("pressed", self, "_on_reset_quad_pressed")
 	$PanelContainer/VBoxContainer/ButtonsHBox/ButtonResetRates.connect("pressed", self, "_on_reset_rates_pressed")
 	$PanelContainer/VBoxContainer/ButtonsHBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
+
+
+func _on_angle_changed(value: float):
+	angle_label.text = "%d deg" % int(value)
+	QuadSettings.angle = int(value)
 
 
 func _on_dry_weight_changed(value: float):
@@ -96,6 +106,7 @@ func update_graph():
 
 func _on_reset_quad_pressed():
 	QuadSettings.reset_quad()
+	angle_slider.value = QuadSettings.angle
 	dry_weight_slider.value = QuadSettings.dry_weight * 1000
 	battery_weight_slider.value = QuadSettings.battery_weight * 1000
 

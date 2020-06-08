@@ -194,5 +194,6 @@ func _on_flight_mode_changed(mode):
 
 func _on_quad_settings_updated():
 	mass = QuadSettings.dry_weight + QuadSettings.battery_weight
+	$FPVCamera.transform.basis = Basis.IDENTITY.rotated(Vector3.RIGHT, deg2rad(QuadSettings.angle))
 	control_profile.set_rates(QuadSettings.rate_pitch, QuadSettings.rate_roll, QuadSettings.rate_yaw)
 	control_profile.set_expo(QuadSettings.expo_pitch, QuadSettings.expo_roll, QuadSettings.expo_yaw)

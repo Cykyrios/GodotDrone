@@ -74,16 +74,42 @@ custom_constants/vseparation = 20
 custom_constants/hseparation = 50
 columns = 3
 
-[node name="DryWeightLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
-margin_right = 228.0
+[node name="AngleLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+margin_right = 282.0
 margin_bottom = 45.0
+text = "FPV Camera Angle"
+
+[node name="AngleSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+margin_left = 332.0
+margin_top = 14.0
+margin_right = 532.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = -20.0
+max_value = 80.0
+step = 1.0
+value = 30.0
+rounded = true
+
+[node name="AngleCurrent" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+margin_left = 582.0
+margin_right = 680.0
+margin_bottom = 45.0
+text = "30 deg"
+
+[node name="DryWeightLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+margin_top = 65.0
+margin_right = 282.0
+margin_bottom = 110.0
 text = "Dry Weight"
 
 [node name="DryWeightSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
-margin_left = 278.0
-margin_top = 14.0
-margin_right = 478.0
-margin_bottom = 30.0
+margin_left = 332.0
+margin_top = 79.0
+margin_right = 532.0
+margin_bottom = 95.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 5
 size_flags_vertical = 4
@@ -94,22 +120,23 @@ value = 550.0
 rounded = true
 
 [node name="DryWeightCurrent" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
-margin_left = 528.0
-margin_right = 607.0
-margin_bottom = 45.0
+margin_left = 582.0
+margin_top = 65.0
+margin_right = 680.0
+margin_bottom = 110.0
 text = "550 g"
 
 [node name="BatteryWeightLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
-margin_top = 65.0
-margin_right = 228.0
-margin_bottom = 110.0
+margin_top = 130.0
+margin_right = 282.0
+margin_bottom = 175.0
 text = "Battery Weight"
 
 [node name="BatteryWeightSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
-margin_left = 278.0
-margin_top = 79.0
-margin_right = 478.0
-margin_bottom = 95.0
+margin_left = 332.0
+margin_top = 144.0
+margin_right = 532.0
+margin_bottom = 160.0
 rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 5
 size_flags_vertical = 4
@@ -120,10 +147,10 @@ value = 180.0
 rounded = true
 
 [node name="BatteryWeightCurrent" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
-margin_left = 528.0
-margin_top = 65.0
-margin_right = 607.0
-margin_bottom = 110.0
+margin_left = 582.0
+margin_top = 130.0
+margin_right = 680.0
+margin_bottom = 175.0
 text = "180 g"
 
 [node name="RatesScroll" type="ScrollContainer" parent="PanelContainer/VBoxContainer/SettingsHBox"]
