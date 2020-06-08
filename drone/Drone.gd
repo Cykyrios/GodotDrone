@@ -39,6 +39,9 @@ func _ready():
 	control_profile.set_rates(rate_pitch, rate_roll, rate_yaw)
 	control_profile.set_expo(expo_pitch, expo_roll, expo_yaw)
 	flight_controller.set_control_profile(control_profile)
+	
+	QuadSettings.connect("settings_updated", self, "_on_quad_settings_updated")
+	_on_quad_settings_updated()
 
 
 func _process(delta):
@@ -187,3 +190,9 @@ func _on_flight_mode_changed(mode):
 	elif mode == FlightController.FlightMode.LAUNCH:
 		led.change_color(Color(1, 0, 0))
 		led.set_blink_pattern([Vector2(0.15, 0.15), Vector2(0.55, 0.15)])
+
+
+func _on_quad_settings_updated():
+	mass = QuadSettings.dry_weight + QuadSettings.battery_weight
+	control_profile.set_rates(QuadSettings.rate_pitch, QuadSettings.rate_roll, QuadSettings.rate_yaw)
+	control_profile.set_expo(QuadSettings.expo_pitch, QuadSettings.expo_roll, QuadSettings.expo_yaw)
