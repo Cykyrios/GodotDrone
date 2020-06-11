@@ -282,8 +282,8 @@ func _draw_cone(p1 : Vector3, p2 : Vector3, r1 : float, r2 : float, lon : int = 
 		elif dir != Vector3.UP and dir != Vector3.ZERO:
 			rot = Vector3.UP.cross(dir).normalized()
 			ang = Vector3.UP.angle_to(dir)
-		for i in range(points.size()):
-			points[i] = points[i].rotated(rot, ang) + p1
+		for j in range(points.size()):
+			points[j] = points[j].rotated(rot, ang) + p1
 		
 		set_color(color)
 		if b_triangles:
