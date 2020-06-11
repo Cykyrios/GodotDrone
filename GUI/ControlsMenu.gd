@@ -132,6 +132,7 @@ func _on_calibrate_pressed():
 
 
 func _on_back_pressed():
+	Global.restore_keyboard_shortcuts()
 	emit_signal("back")
 
 

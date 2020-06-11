@@ -126,6 +126,7 @@ func load_input_map(update_controller: bool = false):
 						elif action == current_action + "_max":
 							action_dict[dict_idx]["max"] = config.get_value(section, action)
 			fill_dict_keys()
+			restore_keyboard_shortcuts()
 		else:
 			var active_name = config.get_value("controls", "active_controller_name")
 			var error = """%s not found!
@@ -162,3 +163,16 @@ func get_joypad_guid_list():
 		controller_list[i] = Input.get_joy_guid(controller_list[i])
 	
 	return controller_list
+
+
+func restore_keyboard_shortcuts():
+	var e = InputEventKey.new()
+	e.scancode = KEY_M
+	if not InputMap.action_has_event("cycle_flight_modes", e):
+		InputMap.action_add_event("cycle_flight_modes", e)
+	e.scancode = KEY_SPACE
+	if not InputMap.action_has_event("toggle_arm", e):
+		InputMap.action_add_event("toggle_arm", e)
+	e.scancode = KEY_BACKSPACE
+	if not InputMap.action_has_event("respawn", e):
+		InputMap.action_add_event("respawn", e)
