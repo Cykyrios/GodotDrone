@@ -60,7 +60,7 @@ func _ready():
 	var active_device = -1
 	connected_joypads = Input.get_connected_joypads()
 	for joypad in connected_joypads:
-		if Input.get_joy_guid(joypad) == Global.active_controller_guid:
+		if Input.get_joy_guid(joypad) == Controls.active_controller_guid:
 			active_controller_found = true
 			active_device = joypad
 			break
@@ -68,7 +68,7 @@ func _ready():
 		var default_controller_found = false
 		if default_controller >= 0:
 			for joypad in connected_joypads:
-				if Input.get_joy_guid(joypad) == Global.default_controller_guid:
+				if Input.get_joy_guid(joypad) == Controls.default_controller_guid:
 					default_controller_found = true
 					default_controller = joypad
 					active_device = joypad
@@ -83,7 +83,7 @@ func _ready():
 			(rect_size - $HBoxContainer/ControllerPanel/ControllerVBox.rect_size).y / 2
 	
 	# Actions bindings
-	for action in Global.action_dict:
+	for action in Controls.action_dict:
 		var binding = GUIControllerBinding.new()
 		actions_list.add_child(binding)
 		binding.action = action["action"]
@@ -132,7 +132,7 @@ func _on_calibrate_pressed():
 
 
 func _on_back_pressed():
-	Global.restore_keyboard_shortcuts()
+	Controls.restore_keyboard_shortcuts()
 	emit_signal("back")
 
 
@@ -185,9 +185,9 @@ func _on_controller_selected(id: int):
 		return
 	if connected_joypads[id] != active_controller:
 		active_controller = connected_joypads[id]
-		var checkbutton_pressed = (Input.get_joy_guid(active_controller) == Global.default_controller_guid)
+		var checkbutton_pressed = (Input.get_joy_guid(active_controller) == Controls.default_controller_guid)
 		controller_checkbutton.pressed = checkbutton_pressed
-		Global.update_active_device(active_controller)
+		Controls.update_active_device(active_controller)
 		call_deferred("update_input_map")
 		call_deferred("update_axes_and_buttons", active_controller)
 
@@ -199,7 +199,7 @@ func _on_checkbutton_toggled(pressed: bool):
 		default_controller = active_controller
 	else:
 		default_controller = -1
-	var err = Global.update_default_device(default_controller)
+	var err = Controls.update_default_device(default_controller)
 	if err != OK:
 		print_debug("Controller checkbox input map save error")
 
@@ -224,8 +224,8 @@ func update_button_value(id: int, pressed: bool):
 func update_input_map():
 	for binding in actions_list.get_children():
 		binding.remove_binding()
-	Global.load_input_map()
-	var dict_list = Global.action_dict
+	Controls.load_input_map()
+	var dict_list = Controls.action_dict
 	for i in range(dict_list.size()):
 		var dict = dict_list[i]
 		var binding = actions_list.get_child(i)
@@ -243,11 +243,11 @@ func update_input_map():
 
 
 func save_input_map():
-	var section = "controls_" + Global.active_controller_guid
+	var section = "controls_" + Controls.active_controller_guid
 	var config = ConfigFile.new()
-	var err = config.load(Global.input_map_path)
+	var err = config.load(Controls.input_map_path)
 	if err == OK:
-		for action in Global.action_dict:
+		for action in Controls.action_dict:
 			var action_name = action["action"]
 			if config.has_section_key(section, action_name):
 				config.erase_section_key(section, action_name)
@@ -262,7 +262,7 @@ func save_input_map():
 					config.set_value(section, action_name + "_axis", Input.get_joy_axis_string(action["axis"]))
 					config.set_value(section, action_name + "_min", action["min"])
 					config.set_value(section, action_name + "_max", action["max"])
-		err = config.save(Global.input_map_path)
+		err = config.save(Controls.input_map_path)
 
 
 func update_binding(binding: GUIControllerBinding, event: InputEvent):

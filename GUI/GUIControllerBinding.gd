@@ -87,7 +87,7 @@ func _gui_input(event):
 
 func update_binding(event: InputEvent):
 	if event:
-		var dict = Global.action_dict[dict_idx]
+		var dict = Controls.action_dict[dict_idx]
 		dict["bound"] = true
 		if event is InputEventJoypadButton:
 			if dict.has("axis"):
@@ -121,7 +121,7 @@ func remove_binding():
 	button = -1
 	device = -1
 	Input.parse_input_event(simulate_action_event(action, false))
-	var dict = Global.action_dict[dict_idx]
+	var dict = Controls.action_dict[dict_idx]
 	dict["bound"] = false
 	for key in ["type", "button", "axis", "min", "max"]:
 		dict.erase(key)
@@ -151,7 +151,7 @@ func _on_axis_range_updated():
 
 
 func _on_axis_range_released():
-	var dict = Global.action_dict[dict_idx]
+	var dict = Controls.action_dict[dict_idx]
 	if dict["bound"] and dict["type"] == "axis":
 		dict["min"] = axis_range.bound_low
 		dict["max"] = axis_range.bound_high
@@ -159,7 +159,7 @@ func _on_axis_range_released():
 
 
 func check_action_state():
-	var dict = Global.action_dict[dict_idx]
+	var dict = Controls.action_dict[dict_idx]
 	if dict.get("bound", false) == false:
 		Input.parse_input_event(simulate_action_event(action, false))
 	else:

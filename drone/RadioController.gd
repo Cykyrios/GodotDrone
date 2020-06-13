@@ -19,7 +19,7 @@ var axis_bindings = []
 func _ready():
 	target = get_node(target_path)
 	
-	var dict_list = Global.action_dict
+	var dict_list = Controls.action_dict
 	for dict in dict_list:
 		if dict["type"] == "axis":
 			axis_bindings.append(dict)

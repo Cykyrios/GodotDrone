@@ -18,7 +18,7 @@ func _ready():
 	
 	if Global.startup:
 		Global.startup = false
-		var error = Global.load_input_map(true)
+		var error = Controls.load_input_map(true)
 		if error:
 			var controller_dialog = packed_popup.instance()
 			add_child(controller_dialog)

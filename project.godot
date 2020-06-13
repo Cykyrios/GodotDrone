@@ -159,6 +159,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Global="*res://Global.gd"
+Controls="*res://Controls.gd"
 QuadSettings="*res://QuadSettings.gd"
 
 [debug]
