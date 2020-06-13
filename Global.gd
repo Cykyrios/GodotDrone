@@ -20,6 +20,15 @@ var action_dict = [{"action": "arm", "label": "Arm"},
 		{"action": "altitude_hold", "label": "Altitude hold"}]
 
 
+func _ready():
+	Input.connect("joy_connection_changed", self, "_on_joy_connection_changed")
+
+
+func _on_joy_connection_changed(device: int, connected: bool):
+	if connected and Input.get_joy_guid(device) == active_controller_guid:
+		load_input_map()
+
+
 func update_active_device(device: int):
 	active_controller_guid = Input.get_joy_guid(device)
 	var config = ConfigFile.new()
@@ -128,6 +137,7 @@ func load_input_map(update_controller: bool = false):
 			fill_dict_keys()
 			restore_keyboard_shortcuts()
 		else:
+			fill_dict_keys()
 			var active_name = config.get_value("controls", "active_controller_name")
 			var error = """%s not found!
 					Please check it is properly plugged in,
