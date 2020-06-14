@@ -8,7 +8,6 @@ var camera_index = 0
 var camera : Camera
 
 onready var drone = $Drone
-onready var hud = $HUD
 onready var radio_controller = $RadioController
 
 var tracks = []
@@ -35,18 +34,6 @@ func _ready():
 	pause_menu.visible = false
 	pause_menu.connect("resumed", self, "_on_resume")
 	pause_menu.connect("menu", self, "_on_return_to_menu")
-
-
-func _process(delta):
-	var fc = drone.flight_controller
-	var angles = fc.angles
-	var velocity = fc.lin_vel
-	var position = fc.pos
-	var input = fc.input
-	var left_stick = Vector2(input[1], -2 * (input[0] - 0.5))
-	var right_stick = Vector2(input[2], input[3])
-	var rpm = [fc.motors[0].rpm, fc.motors[1].rpm, fc.motors[2].rpm, fc.motors[3].rpm]
-	hud.update_hud_data(delta, position, angles, velocity, left_stick, right_stick, rpm)
 
 
 func _input(event):
@@ -77,9 +64,9 @@ func change_camera():
 	camera.visible = true
 	
 	if camera_index == 1:
-		hud.visible = true
+		drone.hud.visible = true
 	else:
-		hud.visible = false
+		drone.hud.visible = false
 
 
 func _on_drone_reset():
