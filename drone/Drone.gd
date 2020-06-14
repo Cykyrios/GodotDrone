@@ -36,12 +36,15 @@ func _ready():
 #	flight_controller.set_hover_rpm(hover_rpm)
 	flight_controller.set_hover_thrust(mass / 4 * 9.81)
 	
+	add_child(hud)
+	flight_controller.connect("armed", hud.status, "_on_armed")
+	flight_controller.connect("disarmed", hud.status, "_on_disarmed")
+	flight_controller.connect("flight_mode_changed", hud.status, "_on_mode_changed")
+	
 	add_child(control_profile)
 	control_profile.set_rates(rate_pitch, rate_roll, rate_yaw)
 	control_profile.set_expo(expo_pitch, expo_roll, expo_yaw)
 	flight_controller.set_control_profile(control_profile)
-	
-	add_child(hud)
 	
 	QuadSettings.load_quad_settings()
 	QuadSettings.connect("settings_updated", self, "_on_quad_settings_updated")

@@ -9,6 +9,7 @@ onready var heading_scale = $VBoxContainer/HUDHeadingScale
 onready var stick_left = $VBoxContainer/HBoxInput/HUDStickLeft
 onready var stick_right = $VBoxContainer/HBoxInput/HUDStickRight
 onready var rpm_table = $HUDRPM
+onready var status = $HUDStatus
 
 # Flight data
 var hud_timer = 0.1

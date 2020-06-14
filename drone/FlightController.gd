@@ -137,11 +137,11 @@ func set_control_profile(profile : ControlProfile):
 
 func _on_arm_input():
 	if input[0] <= 0.01:
-		set_armed(true)
 		if Input.is_action_pressed("mode_turtle"):
 			change_flight_mode(FlightMode.TURTLE)
 		elif Input.is_action_pressed("mode_launch"):
 			change_flight_mode(FlightMode.LAUNCH)
+		set_armed(true)
 	for controller in pid_controllers:
 		controller.set_disabled(false)
 
@@ -159,6 +159,10 @@ func set_armed(arm : bool):
 	armed = arm
 	for motor in motors:
 		motor.powered = armed
+	if armed:
+		emit_signal("armed", flight_mode)
+	else:
+		emit_signal("disarmed")
 
 
 func integrate_loop(delta : float, drone_pos : Vector3, drone_basis : Basis):
