@@ -9,6 +9,7 @@ onready var heading_scale = $VBoxContainer/HUDHeadingScale
 onready var stick_left = $VBoxContainer/HBoxInput/HUDStickLeft
 onready var stick_right = $VBoxContainer/HBoxInput/HUDStickRight
 onready var rpm_table = $HUDRPM
+onready var status = $HUDStatus
 
 # Flight data
 var hud_timer = 0.1
@@ -24,8 +25,8 @@ var first_angles = Vector3.ZERO
 
 
 func _ready():
-	reset_hud_data()
-	update_hud_data(hud_delta, hud_position, hud_angles, hud_velocity, hud_left_stick, hud_right_stick, hud_rpm)
+	reset_data()
+	update_data(hud_delta, hud_position, hud_angles, hud_velocity, hud_left_stick, hud_right_stick, hud_rpm)
 
 
 func _process(delta):
@@ -37,11 +38,11 @@ func _process(delta):
 		hud_right_stick /= hud_delta
 		for i in range(hud_rpm.size()):
 			hud_rpm[i] /= hud_delta
-		update_hud()
-		reset_hud_data()
+		update_display()
+		reset_data()
 
 
-func update_hud():
+func update_display():
 	ladder.update_ladder(hud_angles.x, hud_angles.z)
 	speed_scale.update_speed(hud_velocity.length(), hud_delta)
 	altitude_scale.update_altitude(hud_position.y, hud_delta)
@@ -51,7 +52,7 @@ func update_hud():
 	rpm_table.update_rpm(hud_rpm[0], hud_rpm[1], hud_rpm[2], hud_rpm[3])
 
 
-func update_hud_data(dt : float, position : Vector3, angles : Vector3, velocity : Vector3,
+func update_data(dt : float, position : Vector3, angles : Vector3, velocity : Vector3,
 		left_stick : Vector2, right_stick : Vector2, rpm):
 	hud_delta += dt
 	hud_position += dt * position
@@ -67,7 +68,7 @@ func update_hud_data(dt : float, position : Vector3, angles : Vector3, velocity 
 		hud_rpm[i] += dt * rpm[i]
 
 
-func reset_hud_data():
+func reset_data():
 	is_first = true
 	first_angles = Vector3.ZERO
 	hud_delta = 0.0

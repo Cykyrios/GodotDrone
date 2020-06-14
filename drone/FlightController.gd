@@ -2,6 +2,19 @@ extends Spatial
 
 class_name FlightController
 
+
+enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
+		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED,
+		LAUNCH}
+
+enum FlightMode {RATE, LEVEL, SPEED, TRACK, LAUNCH, TURTLE, AUTO}
+
+
+signal armed(mode)
+signal disarmed
+signal flight_mode_changed(mode)
+
+
 var time = 0.0
 var dt = 0.0
 var pos = Vector3(0, 0, 0)
@@ -26,11 +39,7 @@ var armed = false setget set_armed
 
 
 var pid_controllers = []
-enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
-		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED,
-		LAUNCH}
 
-enum FlightMode {RATE, LEVEL, SPEED, TRACK, LAUNCH, TURTLE, AUTO}
 var flight_mode = FlightMode.RATE
 
 
@@ -50,8 +59,6 @@ var pid_scale_d: float = 0.0002
 
 var telemetry_file = File.new()
 export (bool) var b_telemetry = false
-
-signal flight_mode_changed
 
 onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
 
@@ -130,11 +137,11 @@ func set_control_profile(profile : ControlProfile):
 
 func _on_arm_input():
 	if input[0] <= 0.01:
-		set_armed(true)
 		if Input.is_action_pressed("mode_turtle"):
 			change_flight_mode(FlightMode.TURTLE)
 		elif Input.is_action_pressed("mode_launch"):
 			change_flight_mode(FlightMode.LAUNCH)
+		set_armed(true)
 	for controller in pid_controllers:
 		controller.set_disabled(false)
 
@@ -152,6 +159,10 @@ func set_armed(arm : bool):
 	armed = arm
 	for motor in motors:
 		motor.powered = armed
+	if armed:
+		emit_signal("armed", flight_mode)
+	else:
+		emit_signal("disarmed")
 
 
 func integrate_loop(delta : float, drone_pos : Vector3, drone_basis : Basis):

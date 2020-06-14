@@ -4,6 +4,7 @@ class_name Drone
 
 var motors = []
 onready var flight_controller = $FlightController
+var hud = preload("res://HUD/HUD.tscn").instance()
 
 var control_profile = ControlProfile.new()
 export (float, 1.0, 1800.0) var rate_pitch = 667.0
@@ -35,6 +36,11 @@ func _ready():
 #	flight_controller.set_hover_rpm(hover_rpm)
 	flight_controller.set_hover_thrust(mass / 4 * 9.81)
 	
+	add_child(hud)
+	flight_controller.connect("armed", hud.status, "_on_armed")
+	flight_controller.connect("disarmed", hud.status, "_on_disarmed")
+	flight_controller.connect("flight_mode_changed", hud.status, "_on_mode_changed")
+	
 	add_child(control_profile)
 	control_profile.set_rates(rate_pitch, rate_roll, rate_yaw)
 	control_profile.set_expo(expo_pitch, expo_roll, expo_yaw)
@@ -46,6 +52,8 @@ func _ready():
 
 
 func _process(delta):
+	update_hud_data(delta)
+	
 	if b_debug:
 		for motor in motors:
 			var prop = motor.propeller
@@ -149,6 +157,18 @@ func _integrate_forces(state):
 	
 	state.linear_velocity = lin_vel
 	state.angular_velocity = ang_vel
+
+
+func update_hud_data(delta: float):
+	var angles = flight_controller.angles
+	var velocity = flight_controller.lin_vel
+	var position = flight_controller.pos
+	var input = flight_controller.input
+	var left_stick = Vector2(input[1], -2 * (input[0] - 0.5))
+	var right_stick = Vector2(input[2], input[3])
+	var mot = flight_controller.motors
+	var rpm = [mot[0].rpm, mot[1].rpm, mot[2].rpm, mot[3].rpm]
+	hud.update_data(delta, position, angles, velocity, left_stick, right_stick, rpm)
 
 
 func _on_reset():

@@ -1,6 +1,5 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=28 format=2]
 
-[ext_resource path="res://HUD/HUD.tscn" type="PackedScene" id=1]
 [ext_resource path="res://DebugGeometry.gd" type="Script" id=2]
 [ext_resource path="res://sceneries/Level.gd" type="Script" id=3]
 [ext_resource path="res://Assets/GridShader.tres" type="Shader" id=4]
@@ -307,9 +306,6 @@ shape = SubResource( 13 )
 
 [node name="DebugGeometry" type="ImmediateGeometry" parent="."]
 script = ExtResource( 2 )
-
-[node name="HUD" parent="." instance=ExtResource( 1 )]
-pause_mode = 1
 
 [node name="RadioController" type="Node" parent="."]
 pause_mode = 1
