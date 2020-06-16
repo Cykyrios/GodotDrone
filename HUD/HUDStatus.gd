@@ -38,7 +38,7 @@ func set_status(s: int):
 
 
 func set_message(msg: String = ""):
-	text = "\n\n\n\n\n%s" % msg
+	text = "\n\n\n\n\n\n\n%s" % msg
 
 
 func clear_message():
