@@ -158,9 +158,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Global="*res://Global.gd"
-Controls="*res://Controls.gd"
-QuadSettings="*res://QuadSettings.gd"
+Global="*res://autoloads/Global.gd"
+Controls="*res://autoloads/Controls.gd"
+QuadSettings="*res://autoloads/QuadSettings.gd"
 
 [debug]
 
