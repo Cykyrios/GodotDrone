@@ -1,0 +1,177 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://GUI/ThemeMenu.tres" type="Theme" id=1]
+[ext_resource path="res://HUD/HUD.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GUI/HUDConfig.gd" type="Script" id=3]
+
+[node name="HUDConfig" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 50
+alignment = 1
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_right = 935.0
+margin_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_left = 322.0
+margin_right = 612.0
+margin_bottom = 1080.0
+size_flags_horizontal = 6
+size_flags_vertical = 3
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 248.0
+margin_right = 290.0
+margin_bottom = 303.0
+size_flags_horizontal = 3
+custom_constants/separation = 20
+alignment = 1
+
+[node name="LabelRefreshRate" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 134.0
+margin_bottom = 50.0
+size_flags_horizontal = 2
+theme = ExtResource( 1 )
+text = "HUD FPS"
+
+[node name="SpinBoxRefreshRate" type="SpinBox" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 168.0
+margin_right = 290.0
+margin_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 9
+theme = ExtResource( 1 )
+min_value = 5.0
+max_value = 60.0
+step = 5.0
+value = 10.0
+rounded = true
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+margin_top = 307.0
+margin_right = 290.0
+margin_bottom = 327.0
+custom_constants/separation = 20
+
+[node name="LabelElements" type="Label" parent="ScrollContainer/VBoxContainer"]
+margin_top = 331.0
+margin_right = 290.0
+margin_bottom = 376.0
+theme = ExtResource( 1 )
+text = "HUD Components"
+
+[node name="CheckCrosshair" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+margin_top = 380.0
+margin_right = 290.0
+margin_bottom = 433.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_constants/hseparation = 20
+pressed = true
+text = "Crosshair"
+
+[node name="CheckHorizon" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+margin_top = 437.0
+margin_right = 290.0
+margin_bottom = 490.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_constants/hseparation = 20
+pressed = true
+text = "Horizon"
+
+[node name="CheckLadder" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+margin_top = 494.0
+margin_right = 290.0
+margin_bottom = 547.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_constants/hseparation = 20
+text = "Pitch Ladder"
+
+[node name="CheckSpeed" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+margin_top = 551.0
+margin_right = 290.0
+margin_bottom = 604.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_constants/hseparation = 20
+text = "Speed"
+
+[node name="CheckAltitude" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+margin_top = 608.0
+margin_right = 290.0
+margin_bottom = 661.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_constants/hseparation = 20
+text = "Altitude"
+
+[node name="CheckHeading" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+margin_top = 665.0
+margin_right = 290.0
+margin_bottom = 718.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_constants/hseparation = 20
+text = "Heading"
+
+[node name="CheckSticks" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+margin_top = 722.0
+margin_right = 290.0
+margin_bottom = 775.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_constants/hseparation = 20
+text = "Stick Input"
+
+[node name="CheckRPM" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+margin_top = 779.0
+margin_right = 290.0
+margin_bottom = 832.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_constants/hseparation = 20
+text = "Motor RPM"
+
+[node name="HUD" parent="." instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 985.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
