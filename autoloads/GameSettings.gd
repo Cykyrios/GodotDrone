@@ -1,6 +1,9 @@
 extends Node
 
 
+signal hud_config_updated
+
+
 var game_settings_path := "user://GameSettings.cfg"
 
 var hud_config := {"fps": 10, "crosshair": true, "horizon": true, "ladder": false,
@@ -31,5 +34,6 @@ func save_hud_config():
 		for key in hud_config.keys():
 			config.set_value("hud_config", key, hud_config[key])
 		config.save(game_settings_path)
+		emit_signal("hud_config_updated")
 	else:
 		push_error("Error while saving HUD config: %s" % err)
