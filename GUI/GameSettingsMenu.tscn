@@ -1,0 +1,76 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUI/ThemeMenu.tres" type="Theme" id=1]
+[ext_resource path="res://GUI/GameSettingsMenu.gd" type="Script" id=2]
+
+[node name="GameSettingsMenu" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+custom_constants/margin_right = 100
+custom_constants/margin_top = 100
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 100
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 1820.0
+margin_bottom = 980.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 7
+size_flags_vertical = 7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1700.0
+margin_bottom = 860.0
+custom_constants/separation = 30
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer"]
+margin_right = 1680.0
+margin_bottom = 759.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Gameplay" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 63.0
+margin_right = -4.0
+margin_bottom = -4.0
+custom_constants/separation = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HUD" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -8.0
+margin_bottom = -67.0
+custom_constants/separation = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 789.0
+margin_right = 1680.0
+margin_bottom = 840.0
+size_flags_vertical = 9
+alignment = 2
+
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 1461.0
+margin_right = 1680.0
+margin_bottom = 51.0
+text = "Back to Menu"
