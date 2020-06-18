@@ -17,7 +17,7 @@ __meta__ = {
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-margin_right = 935.0
+margin_right = 623.0
 margin_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -26,8 +26,8 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
-margin_left = 322.0
-margin_right = 612.0
+margin_left = 166.0
+margin_right = 456.0
 margin_bottom = 1080.0
 size_flags_horizontal = 6
 size_flags_vertical = 3
@@ -170,8 +170,9 @@ text = "Motor RPM"
 [node name="HUD" parent="." instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 985.0
+margin_left = 673.0
 margin_right = 1920.0
 margin_bottom = 1080.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0

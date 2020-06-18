@@ -1,6 +1,7 @@
 extends HBoxContainer
 
 
+onready var fps = $ScrollContainer/VBoxContainer/HBoxContainer/SpinBoxRefreshRate
 onready var check_crosshair = $ScrollContainer/VBoxContainer/CheckCrosshair
 onready var check_horizon = $ScrollContainer/VBoxContainer/CheckHorizon
 onready var check_ladder = $ScrollContainer/VBoxContainer/CheckLadder
@@ -14,10 +15,15 @@ onready var hud = $HUD
 
 
 func _ready():
+	fps.connect("value_changed", self, "_on_hud_fps_changed")
 	var buttons := [check_crosshair, check_horizon, check_ladder, check_speed,
 			check_altitude, check_heading, check_sticks, check_rpm]
 	for button in buttons:
 		button.connect("toggled", self, "_on_button_toggled", [button])
+
+
+func _on_hud_fps_changed(value: float):
+	hud.hud_timer = 1.0 / value
 
 
 func _on_button_toggled(button_pressed: bool, button: CheckButton):
