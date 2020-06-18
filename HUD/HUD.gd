@@ -1,6 +1,9 @@
 extends Control
 class_name HUD
 
+
+enum Component {CROSSHAIR, STATUS, HEADING, SPEED, ALTITUDE, LADDER, HORIZON, STICKS, RPM}
+
 # HUD components
 onready var ladder = $VBoxContainer/HBoxLadder/HUDLadder
 onready var speed_scale = $VBoxContainer/HBoxLadder/HUDSpeedScale
@@ -40,6 +43,41 @@ func _process(delta):
 			hud_rpm[i] /= hud_delta
 		update_display()
 		reset_data()
+
+
+func show_component(component: int, show: bool = true):
+	var self_only := false
+	var mod := Color(1, 1, 1, 1)
+	if not show:
+		mod = Color(1, 1, 1, 0)
+	var hud_component := []
+	match component:
+		Component.CROSSHAIR:
+			hud_component.append($Crosshair)
+		Component.STATUS:
+			hud_component.append(status)
+		Component.HEADING:
+			hud_component.append(heading_scale)
+		Component.SPEED:
+			hud_component.append(speed_scale)
+		Component.ALTITUDE:
+			hud_component.append(altitude_scale)
+		Component.LADDER:
+			for marker in ladder.pitch_markers:
+				hud_component.append(marker)
+		Component.HORIZON:
+			hud_component.append(ladder.horizon)
+			self_only = true
+		Component.STICKS:
+			hud_component.append(stick_left)
+			hud_component.append(stick_right)
+		Component.RPM:
+			hud_component.append(rpm_table)
+	for comp in hud_component:
+		if self_only:
+			comp.self_modulate = mod
+		else:
+			comp.modulate = mod
 
 
 func update_display():

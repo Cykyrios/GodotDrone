@@ -49,6 +49,10 @@ func _ready():
 	QuadSettings.load_quad_settings()
 	QuadSettings.connect("settings_updated", self, "_on_quad_settings_updated")
 	_on_quad_settings_updated()
+	
+	GameSettings.load_hud_config()
+	GameSettings.connect("hud_config_updated", self, "_on_hud_config_updated")
+	_on_hud_config_updated()
 
 
 func _process(delta):
@@ -218,3 +222,15 @@ func _on_quad_settings_updated():
 	$FPVCamera.transform.basis = Basis.IDENTITY.rotated(Vector3.RIGHT, deg2rad(QuadSettings.angle))
 	control_profile.set_rates(QuadSettings.rate_pitch, QuadSettings.rate_roll, QuadSettings.rate_yaw)
 	control_profile.set_expo(QuadSettings.expo_pitch, QuadSettings.expo_roll, QuadSettings.expo_yaw)
+
+
+func _on_hud_config_updated():
+	hud.hud_timer = 1.0 / GameSettings.hud_config["fps"]
+	hud.show_component(HUD.Component.CROSSHAIR, GameSettings.hud_config["crosshair"])
+	hud.show_component(HUD.Component.HORIZON, GameSettings.hud_config["horizon"])
+	hud.show_component(HUD.Component.LADDER, GameSettings.hud_config["ladder"])
+	hud.show_component(HUD.Component.SPEED, GameSettings.hud_config["speed"])
+	hud.show_component(HUD.Component.ALTITUDE, GameSettings.hud_config["altitude"])
+	hud.show_component(HUD.Component.HEADING, GameSettings.hud_config["heading"])
+	hud.show_component(HUD.Component.STICKS, GameSettings.hud_config["sticks"])
+	hud.show_component(HUD.Component.RPM, GameSettings.hud_config["rpm"])
