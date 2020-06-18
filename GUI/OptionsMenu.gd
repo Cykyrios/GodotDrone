@@ -1,19 +1,27 @@
 extends Control
 
 
+var packed_game_settings_menu = preload("res://GUI/GameSettingsMenu.tscn")
 var packed_controls_menu = preload("res://GUI/ControlsMenu.tscn")
 
 signal back
 
 
 func _ready():
-	$PanelContainer/VBoxContainer/ButtonSystem.connect("pressed", self, "_on_system_pressed")
+	$PanelContainer/VBoxContainer/ButtonGame.connect("pressed", self, "_on_game_settings_pressed")
 	$PanelContainer/VBoxContainer/ButtonControls.connect("pressed", self, "_on_controls_pressed")
 	$PanelContainer/VBoxContainer/ButtonBack.connect("pressed", self, "_on_back_pressed")
 
 
-func _on_system_pressed():
-	pass
+func _on_game_settings_pressed():
+	if packed_game_settings_menu.can_instance():
+		var game_settings_menu = packed_game_settings_menu.instance()
+		get_parent().add_child(game_settings_menu)
+		visible = false
+		yield(game_settings_menu, "back")
+		game_settings_menu.queue_free()
+		visible = true
+
 
 func _on_controls_pressed():
 	if packed_controls_menu.can_instance():

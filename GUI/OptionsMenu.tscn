@@ -17,9 +17,9 @@ __meta__ = {
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-margin_left = 817.0
+margin_left = 827.0
 margin_top = 391.0
-margin_right = 1102.0
+margin_right = 1093.0
 margin_bottom = 689.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -29,7 +29,7 @@ size_flags_vertical = 4
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 265.0
+margin_right = 246.0
 margin_bottom = 278.0
 custom_constants/separation = 20
 __meta__ = {
@@ -37,26 +37,26 @@ __meta__ = {
 }
 
 [node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
-margin_right = 245.0
+margin_right = 226.0
 margin_bottom = 45.0
 text = "Options"
 align = 1
 valign = 1
 
-[node name="ButtonSystem" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonGame" type="Button" parent="PanelContainer/VBoxContainer"]
 margin_top = 65.0
-margin_right = 245.0
+margin_right = 226.0
 margin_bottom = 116.0
-text = "System Settings"
+text = "Game Settings"
 
 [node name="ButtonControls" type="Button" parent="PanelContainer/VBoxContainer"]
 margin_top = 136.0
-margin_right = 245.0
+margin_right = 226.0
 margin_bottom = 187.0
 text = "Controls"
 
 [node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer"]
 margin_top = 207.0
-margin_right = 245.0
+margin_right = 226.0
 margin_bottom = 258.0
 text = "Back to Menu"
