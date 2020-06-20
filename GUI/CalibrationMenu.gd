@@ -219,9 +219,12 @@ func save_input_map():
 		if sign(roll[2].axis_value) < 0:
 			inverted = true
 		config.set_value("controls_%s" % [guid], "roll_inverted", inverted)
-		config.save(Global.input_map_path)
+		err = config.save(Global.input_map_path)
+		if err != OK:
+			Global.log_error(err, "Could not save calibration data to file.")
 	else:
 		Global.log_error(err, "Could not save calibration data to file.")
+	return err
 
 
 func reset_calibration():

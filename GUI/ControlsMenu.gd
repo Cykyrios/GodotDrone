@@ -246,7 +246,7 @@ func save_input_map():
 	var section = "controls_" + Controls.active_controller_guid
 	var config = ConfigFile.new()
 	var err = config.load(Controls.input_map_path)
-	if err == OK:
+	if err == OK or err == ERR_FILE_NOT_FOUND:
 		for action in Controls.action_dict:
 			var action_name = action["action"]
 			if config.has_section_key(section, action_name):

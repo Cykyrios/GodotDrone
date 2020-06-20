@@ -21,7 +21,7 @@ var expo_yaw: float = 0.2
 func load_quad_settings():
 	var config = ConfigFile.new()
 	var err = config.load(quad_settings_path)
-	if err == OK or err == ERR_FILE_NOT_FOUND:
+	if err == OK:
 		if config.has_section_key("quad", "angle"):
 			angle = clamp(config.get_value("quad", "angle"), -20, 80)
 		if config.has_section_key("quad", "dry_weight"):

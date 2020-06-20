@@ -22,10 +22,12 @@ func update_active_device(device: int):
 	active_controller_guid = Input.get_joy_guid(device)
 	var config = ConfigFile.new()
 	var err = config.load(input_map_path)
-	if err == OK:
+	if err == OK or err == ERR_FILE_NOT_FOUND:
 		config.set_value("controls", "active_controller_guid", active_controller_guid)
 		config.set_value("controls", "active_controller_name", Input.get_joy_name(device))
 		err = config.save(input_map_path)
+		if err != OK:
+			Global.log_error(err, "Error while updating active device in config file.")
 	else:
 		Global.log_error(err, "Error while updating active device in config file.")
 	return err
@@ -34,13 +36,15 @@ func update_active_device(device: int):
 func update_default_device(device: int):
 	var config = ConfigFile.new()
 	var err = config.load(input_map_path)
-	if err == OK:
+	if err == OK or err == ERR_FILE_NOT_FOUND:
 		if device >= 0:
 			default_controller_guid = Input.get_joy_guid(device)
 		else:
 			default_controller_guid = ""
 		config.set_value("controls", "default_controller", default_controller_guid)
 		err = config.save(input_map_path)
+		if err != OK:
+			Global.log_error(err, "Error while updating default device in config file.")
 	else:
 		Global.log_error(err, "Error while updating default device in config file.")
 	return err
