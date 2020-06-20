@@ -75,13 +75,13 @@ func _on_rate_changed(value: float, slider: HSlider):
 	var text = "%d deg/s" % int(value)
 	if slider == rate_pitch_slider:
 		rate_pitch_label.text = text
-		QuadSettings.rate_pitch = value
+		QuadSettings.rate_pitch = int(value)
 	elif slider == rate_roll_slider:
 		rate_roll_label.text = text
-		QuadSettings.rate_roll = value
+		QuadSettings.rate_roll = int(value)
 	elif slider == rate_yaw_slider:
 		rate_yaw_label.text = text
-		QuadSettings.rate_yaw = value
+		QuadSettings.rate_yaw = int(value)
 	update_graph()
 
 
