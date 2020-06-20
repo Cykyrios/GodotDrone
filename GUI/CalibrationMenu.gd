@@ -193,7 +193,7 @@ func _on_calibration_done():
 
 func save_input_map():
 	var config = ConfigFile.new()
-	var err = config.load(Global.input_map_path)
+	var err = config.load(Controls.input_map_path)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
 		var guid = Input.get_joy_guid(device)
 		config.set_value("controls", "active_controller_guid", guid)
@@ -219,7 +219,7 @@ func save_input_map():
 		if sign(roll[2].axis_value) < 0:
 			inverted = true
 		config.set_value("controls_%s" % [guid], "roll_inverted", inverted)
-		err = config.save(Global.input_map_path)
+		err = config.save(Controls.input_map_path)
 		if err != OK:
 			Global.log_error(err, "Could not save calibration data to file.")
 	else:
