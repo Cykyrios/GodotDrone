@@ -83,11 +83,11 @@ func _ready():
 			(rect_size - $HBoxContainer/ControllerPanel/ControllerVBox.rect_size).y / 2
 	
 	# Actions bindings
-	for action in Controls.action_dict:
+	for action in Controls.action_list:
 		var binding = GUIControllerBinding.new()
 		actions_list.add_child(binding)
-		binding.action = action["action"]
-		binding.label.text = action["label"]
+		binding.action = action.action_name
+		binding.label.text = action.action_label
 		binding.connect("clicked", self, "_on_binding_clicked", [binding])
 		binding.connect("binding_updated", self, "_on_binding_updated")
 	
@@ -225,19 +225,19 @@ func update_input_map():
 	for binding in actions_list.get_children():
 		binding.remove_binding()
 	Controls.load_input_map()
-	var dict_list = Controls.action_dict
-	for i in range(dict_list.size()):
-		var dict = dict_list[i]
+	var act_list = Controls.action_list
+	for i in range(act_list.size()):
+		var act = act_list[i]
 		var binding = actions_list.get_child(i)
-		if dict["bound"]:
-			if dict["type"] == "button":
+		if act.bound:
+			if act.type == ControllerAction.Type.BUTTON:
 				var event = InputEventJoypadButton.new()
-				event.button_index = dict["button"]
+				event.button_index = act.button
 				event.device = active_controller
 				call_deferred("update_binding", binding, event)
-			elif dict["type"] == "axis":
+			elif act.type == ControllerAction.Type.AXIS:
 				var event = InputEventJoypadMotion.new()
-				event.axis = dict["axis"]
+				event.axis = act.axis
 				event.device = active_controller
 				call_deferred("update_binding", binding, event)
 
@@ -247,21 +247,21 @@ func save_input_map():
 	var config = ConfigFile.new()
 	var err = config.load(Controls.input_map_path)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
-		for action in Controls.action_dict:
-			var action_name = action["action"]
+		for action in Controls.action_list:
+			var action_name = action.action_name
 			if config.has_section_key(section, action_name):
 				config.erase_section_key(section, action_name)
 				for key in ["_button", "_axis", "_min", "_max"]:
 					if config.has_section_key(section, action_name + key):
 						config.erase_section_key(section, action_name + key)
-			if action.has("bound") and action["bound"]:
-				config.set_value(section, action_name, action["type"])
-				if action["type"] == "button":
-					config.set_value(section, action_name + "_button", Input.get_joy_button_string(action["button"]))
-				else:
-					config.set_value(section, action_name + "_axis", Input.get_joy_axis_string(action["axis"]))
-					config.set_value(section, action_name + "_min", action["min"])
-					config.set_value(section, action_name + "_max", action["max"])
+			if action.bound:
+				config.set_value(section, action_name, action.type)
+				if action.type == ControllerAction.Type.BUTTON:
+					config.set_value(section, action_name + "_button", Input.get_joy_button_string(action.button))
+				elif action.type == ControllerAction.Type.AXIS:
+					config.set_value(section, action_name + "_axis", Input.get_joy_axis_string(action.axis))
+					config.set_value(section, action_name + "_min", action.axis_min)
+					config.set_value(section, action_name + "_max", action.axis_max)
 		err = config.save(Controls.input_map_path)
 		if err != OK:
 			Global.log_error(err, "Error while saving input map.")
@@ -271,7 +271,7 @@ func save_input_map():
 
 func update_binding(binding: GUIControllerBinding, event: InputEvent):
 	var action = binding.action
-	binding.dict_idx = actions_list.get_children().find(binding)
+	binding.action_idx = actions_list.get_children().find(binding)
 	if InputMap.has_action(action):
 		InputMap.action_erase_events(action)
 		binding.update_binding(event)
