@@ -12,7 +12,7 @@ enum GameMSAA {OFF, X2, X4, X8, X16}
 enum GameAF {OFF = 0, X2 = 2, X4 = 4, X8 = 8, X16 = 16}
 enum Shadows {OFF, LOW, MEDIUM, HIGH, ULTRA}
 enum FisheyeMode {OFF, FULL, FAST}
-enum FisheyeResolution {FISHEYE_2160P, FISHEYE_1080P,
+enum FisheyeResolution {FISHEYE_2160P, FISHEYE_1080P, FISHEYE_1440P,
 		FISHEYE_720P, FISHEYE_480P, FISHEYE_240P}
 enum FisheyeMSAA {OFF, SAME_AS_GAME, X2, X4, X8, X16}
 
@@ -27,13 +27,17 @@ var graphics_settings = {"window_mode": WindowMode.FULLSCREEN,
 		"fisheye_mode": FisheyeMode.FULL,
 		"fisheye_resolution": FisheyeResolution.FISHEYE_720P,
 		"fisheye_msaa": FisheyeMSAA.SAME_AS_GAME}
+var fisheye_resolution: int = 720
+
+func _ready():
+	load_graphics_settings()
 
 
 func load_graphics_settings():
 	var config = ConfigFile.new()
 	var err = config.load(graphics_settings_path)
 	if err == OK:
-		for key in graphics_settings.keys:
+		for key in graphics_settings.keys():
 			if config.has_section_key("graphics", key):
 				graphics_settings[key] = config.get_value("graphics", key)
 #			else:
@@ -170,6 +174,8 @@ func update_fisheye_resolution(resolution_string: String = ""):
 	match resolution_string:
 		"2160p":
 			new_resolution = FisheyeResolution.FISHEYE_2160P
+		"1440p":
+			new_resolution = FisheyeResolution.FISHEYE_1440P
 		"1080p":
 			new_resolution = FisheyeResolution.FISHEYE_1080P
 		"720p":
@@ -181,8 +187,39 @@ func update_fisheye_resolution(resolution_string: String = ""):
 		"":
 			new_resolution = graphics_settings["fisheye_resolution"]
 	graphics_settings["fisheye_resolution"] = new_resolution
+	match graphics_settings["fisheye_resolution"]:
+		FisheyeResolution.FISHEYE_2160P:
+			fisheye_resolution = 2160
+		FisheyeResolution.FISHEYE_1440P:
+			fisheye_resolution = 1440
+		FisheyeResolution.FISHEYE_1080P:
+			fisheye_resolution = 1080
+		FisheyeResolution.FISHEYE_720P:
+			fisheye_resolution = 720
+		FisheyeResolution.FISHEYE_480P:
+			fisheye_resolution = 480
+		FisheyeResolution.FISHEYE_240P:
+			fisheye_resolution = 240
 	emit_signal("fisheye_resolution_changed")
 
 
 func update_fisheye_msaa():
 	emit_signal("fisheye_msaa_changed")
+
+
+func get_fisheye_resolution(resolution_setting: int):
+	var resolution: int
+	match resolution_setting:
+		FisheyeResolution.FISHEYE_2160P:
+			resolution = 2160
+		FisheyeResolution.FISHEYE_1440P:
+			resolution = 1440
+		FisheyeResolution.FISHEYE_1080P:
+			resolution = 1080
+		FisheyeResolution.FISHEYE_720P:
+			resolution = 720
+		FisheyeResolution.FISHEYE_480P:
+			resolution = 480
+		FisheyeResolution.FISHEYE_240P:
+			resolution = 240
+	return resolution

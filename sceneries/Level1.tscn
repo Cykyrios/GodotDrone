@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://DebugGeometry.gd" type="Script" id=2]
 [ext_resource path="res://sceneries/Level.gd" type="Script" id=3]
@@ -14,11 +14,6 @@
 [ext_resource path="res://tracks/tracks/Track_MultiGP_2018_Regional_Final.tscn" type="PackedScene" id=13]
 [ext_resource path="res://drone/FPVCamera/FPVCamera.gd" type="Script" id=14]
 [ext_resource path="res://tracks/tracks/Track_MultiGP_2019_Global_Qualifier.tscn" type="PackedScene" id=15]
-
-[sub_resource type="Environment" id=1]
-tonemap_mode = 2
-auto_exposure_enabled = true
-auto_exposure_speed = 10.0
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 100, 0.5, 100 )
@@ -110,8 +105,6 @@ expo_yaw = 0.3
 
 [node name="FPVCamera" type="Camera" parent="Drone"]
 transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0.00459784, -0.0626912 )
-cull_mask = 1024
-environment = SubResource( 1 )
 script = ExtResource( 14 )
 clip_near = 0.006
 

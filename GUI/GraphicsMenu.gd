@@ -61,6 +61,7 @@ func _ready():
 	fisheye_mode.select(Graphics.graphics_settings["fisheye_mode"])
 	
 	fisheye_resolution.get_popup().add_item("2160p")
+	fisheye_resolution.get_popup().add_item("1440p")
 	fisheye_resolution.get_popup().add_item("1080p")
 	fisheye_resolution.get_popup().add_item("720p")
 	fisheye_resolution.get_popup().add_item("480p")
@@ -105,11 +106,8 @@ func _on_shadows_changed(idx: int):
 
 
 func _on_fisheye_mode_changed(idx: int):
-	match idx:
-		0:
-			print("Fisheye on")
-		1:
-			print("Fisheye off")
+	Graphics.graphics_settings["fisheye_mode"] = idx
+	Graphics.update_fisheye_mode()
 	Graphics.save_graphics_settings()
 
 

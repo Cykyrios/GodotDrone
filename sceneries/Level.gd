@@ -55,11 +55,11 @@ func _input(event):
 func change_camera():
 	camera.visible = false
 	camera.current = false
-	if camera is FPVCamera:
+	if camera is FPVCamera and Graphics.graphics_settings["fisheye_mode"] != Graphics.FisheyeMode.OFF:
 		camera.render_quad.visible = false
 	camera = cameras[camera_index]
 	camera.current = true
-	if camera is FPVCamera:
+	if camera is FPVCamera and Graphics.graphics_settings["fisheye_mode"] != Graphics.FisheyeMode.OFF:
 		camera.render_quad.visible = true
 	camera.visible = true
 	

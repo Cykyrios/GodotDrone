@@ -3,27 +3,37 @@ class_name FPVCamera
 
 
 export (float, 90, 180) var fov_h = 150 setget set_fov
-export (int, 240, 2160) var camera_resolution = 720
 export (float, 0.001, 1) var clip_near = 0.005
 export (float, 10, 10000) var clip_far = 1000
 
 var viewports = []
 var cameras = []
+var camera_layer = 11
 var num_cameras = 5
 var fpv_environment: Environment = load("res://drone/FPVCamera/FPVCameraEnvironment.tres")
 
 onready var render_quad: MeshInstance = null
-var mat = load("res://drone/FPVCamera/FPVCamera.tres")
+var mat: ShaderMaterial = load("res://drone/FPVCamera/FPVCamera.tres")
 
 
 func _ready():
+	var fisheye_mode: int = Graphics.graphics_settings["fisheye_mode"]
+	if fisheye_mode == Graphics.FisheyeMode.OFF:
+		near = clip_near
+		far = clip_far
+		return
+	elif fisheye_mode == Graphics.FisheyeMode.FAST:
+		num_cameras = 2
+		mat.shader = load("res://drone/FPVCamera/FPVCamera_fast.shader")
+	environment = fpv_environment
+	cull_mask = pow(2, camera_layer - 1)
 	render_quad = MeshInstance.new()
 	add_child(render_quad)
 	render_quad.translate_object_local(Vector3.FORWARD * (near + 0.1 * (far - near)))
 	render_quad.rotate_object_local(Vector3.RIGHT, PI / 2)
 	render_quad.mesh = QuadMesh.new()
 	render_quad.mesh.size = Vector2(2, 2)
-	render_quad.layers = 1024
+	render_quad.layers = pow(2, camera_layer - 1)
 	render_quad.cast_shadow = GeometryInstance.SHADOW_CASTING_SETTING_OFF
 	render_quad.mesh.surface_set_material(0, mat)
 	render_quad.visible = false
@@ -34,7 +44,7 @@ func _ready():
 	for i in range(num_cameras):
 		var viewport = Viewport.new()
 		add_child(viewport)
-		viewport.size = camera_resolution * Vector2.ONE
+		viewport.size = Graphics.fisheye_resolution * Vector2.ONE
 		viewport.shadow_atlas_size = root_viewport.shadow_atlas_size
 		viewport.msaa = root_viewport.msaa
 		viewport.hdr = true
@@ -45,20 +55,25 @@ func _ready():
 		var camera = Camera.new()
 		viewport.add_child(camera)
 		camera.fov = 90
+		if fisheye_mode == Graphics.FisheyeMode.FAST and i == 1:
+			camera.fov = 160
 		camera.near = clip_near
 		camera.far = clip_far
-		camera.cull_mask -= 1024
+		camera.cull_mask -= pow(2, camera_layer - 1)
 		camera.environment = fpv_environment
 		cameras.append(camera)
 
 
 func _process(delta):
-	for camera in cameras:
-		camera.global_transform = global_transform
-	cameras[1].rotate_object_local(Vector3.UP, PI/2)
-	cameras[2].rotate_object_local(Vector3.UP, -PI/2)
-	cameras[3].rotate_object_local(Vector3.RIGHT, -PI/2)
-	cameras[4].rotate_object_local(Vector3.RIGHT, PI/2)
+	var fisheye_mode: int = Graphics.graphics_settings["fisheye_mode"]
+	if fisheye_mode != Graphics.FisheyeMode.OFF:
+		for camera in cameras:
+			camera.global_transform = global_transform
+		if fisheye_mode == Graphics.FisheyeMode.FULL:
+			cameras[1].rotate_object_local(Vector3.UP, PI/2)
+			cameras[2].rotate_object_local(Vector3.UP, -PI/2)
+			cameras[3].rotate_object_local(Vector3.RIGHT, -PI/2)
+			cameras[4].rotate_object_local(Vector3.RIGHT, PI/2)
 
 
 func set_fov(angle: float):
