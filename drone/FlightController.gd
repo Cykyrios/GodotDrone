@@ -105,7 +105,7 @@ func _ready():
 	pid_controllers[Controller.LAUNCH].set_coefficients(700 * pid_scale_p, 300 * pid_scale_i, 700 * pid_scale_d)
 	pid_controllers[Controller.LAUNCH].set_clamp_limits(-0.5, 0)
 	
-	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
+	var _discard = connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
 	change_flight_mode(FlightMode.RATE)
 	
 	if b_telemetry:

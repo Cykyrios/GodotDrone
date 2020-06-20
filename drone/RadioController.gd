@@ -24,10 +24,10 @@ func _ready():
 		if controller_action.type == ControllerAction.Type.AXIS:
 			axis_bindings.append(controller_action)
 	
-	connect("reset_requested", target, "_on_reset")
-	connect("mode_changed", target.flight_controller, "_on_cycle_flight_modes")
-	connect("arm_input", target.flight_controller, "_on_arm_input")
-	connect("disarm_input", target.flight_controller, "_on_disarm_input")
+	var _discard = connect("reset_requested", target, "_on_reset")
+	_discard = connect("mode_changed", target.flight_controller, "_on_cycle_flight_modes")
+	_discard = connect("arm_input", target.flight_controller, "_on_arm_input")
+	_discard = connect("disarm_input", target.flight_controller, "_on_disarm_input")
 
 
 func _input(event):

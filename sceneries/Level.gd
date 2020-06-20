@@ -82,5 +82,5 @@ func _on_resume():
 
 
 func _on_return_to_menu():
-	get_tree().change_scene("res://GUI/MainMenu.tscn")
+	var _discard = get_tree().change_scene("res://GUI/MainMenu.tscn")
 	queue_free()

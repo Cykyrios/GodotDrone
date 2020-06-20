@@ -169,12 +169,6 @@ Controls="*res://autoloads/Controls.gd"
 QuadSettings="*res://autoloads/QuadSettings.gd"
 GameSettings="*res://autoloads/GameSettings.gd"
 
-[debug]
-
-gdscript/warnings/unused_variable=false
-gdscript/warnings/unused_argument=false
-gdscript/warnings/return_value_discarded=false
-
 [display]
 
 window/size/width=1920

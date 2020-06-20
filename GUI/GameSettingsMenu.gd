@@ -5,7 +5,7 @@ signal back
 
 
 func _ready():
-	$PanelContainer/VBoxContainer/HBoxContainer/ButtonBack.connect("pressed", self, "_on_back_pressed")
+	var _discard = $PanelContainer/VBoxContainer/HBoxContainer/ButtonBack.connect("pressed", self, "_on_back_pressed")
 
 
 func _on_back_pressed():

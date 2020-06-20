@@ -21,8 +21,8 @@ signal back
 
 
 func _ready():
-	$PanelContainer/VBoxContainer/ButtonCancel.connect("pressed", self, "_on_cancel_pressed")
-	connect("calibration_done", self, "_on_calibration_done")
+	var _discard = $PanelContainer/VBoxContainer/ButtonCancel.connect("pressed", self, "_on_cancel_pressed")
+	_discard = connect("calibration_done", self, "_on_calibration_done")
 	
 	reset_calibration()
 

@@ -21,8 +21,8 @@ func _ready():
 	var shad = load("res://tracks/CheckpointShader.tres")
 	mat.shader = shad
 	
-	connect("body_entered", self, "_on_entered")
-	connect("body_exited", self, "_on_exited")
+	var _discard = connect("body_entered", self, "_on_entered")
+	_discard = connect("body_exited", self, "_on_exited")
 	
 	for col in get_children():
 		if col is CollisionShape:

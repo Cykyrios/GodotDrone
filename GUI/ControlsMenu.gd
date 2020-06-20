@@ -26,19 +26,19 @@ signal back
 
 
 func _ready():
-	connect("controller_detected", self, "_on_controller_autodetected")
-	Input.connect("joy_connection_changed", self, "_on_joypad_connection_changed")
+	var _discard = connect("controller_detected", self, "_on_controller_autodetected")
+	_discard = Input.connect("joy_connection_changed", self, "_on_joypad_connection_changed")
 	
-	$MenuPanel/MenuVBox/ButtonCalibrate.connect("pressed", self, "_on_calibrate_pressed")
-	$MenuPanel/MenuVBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
+	_discard = $MenuPanel/MenuVBox/ButtonCalibrate.connect("pressed", self, "_on_calibrate_pressed")
+	_discard = $MenuPanel/MenuVBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
 	
-	controller_list.connect("pressed", self, "_on_controller_list_pressed")
-	controller_list.get_popup().connect("id_pressed", self, "_on_controller_selected")
-	controller_list.get_popup().connect("modal_closed", self, "_on_controller_select_aborted")
+	_discard = controller_list.connect("pressed", self, "_on_controller_list_pressed")
+	_discard = controller_list.get_popup().connect("id_pressed", self, "_on_controller_selected")
+	_discard = controller_list.get_popup().connect("modal_closed", self, "_on_controller_select_aborted")
 	controller_list.get_popup().add_font_override("font", load("res://GUI/MenuFont.tres"))
 	controller_list.clip_text = true
 	
-	controller_checkbutton.connect("toggled", self, "_on_checkbutton_toggled")
+	_discard = controller_checkbutton.connect("toggled", self, "_on_checkbutton_toggled")
 	
 	# TODO: only allow calibration for active controller OR update controller list
 	
@@ -88,8 +88,8 @@ func _ready():
 		actions_list.add_child(binding)
 		binding.action = action.action_name
 		binding.label.text = action.action_label
-		binding.connect("clicked", self, "_on_binding_clicked", [binding])
-		binding.connect("binding_updated", self, "_on_binding_updated")
+		_discard = binding.connect("clicked", self, "_on_binding_clicked", [binding])
+		_discard = binding.connect("binding_updated", self, "_on_binding_updated")
 	
 	# TODO: add animated radio sticks display with customizable mode1, mode2, etc.
 	# TODO: add drone model that reacts to user input

@@ -8,9 +8,9 @@ signal back
 
 
 func _ready():
-	$PanelContainer/VBoxContainer/ButtonGame.connect("pressed", self, "_on_game_settings_pressed")
-	$PanelContainer/VBoxContainer/ButtonControls.connect("pressed", self, "_on_controls_pressed")
-	$PanelContainer/VBoxContainer/ButtonBack.connect("pressed", self, "_on_back_pressed")
+	var _discard = $PanelContainer/VBoxContainer/ButtonGame.connect("pressed", self, "_on_game_settings_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonControls.connect("pressed", self, "_on_controls_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonBack.connect("pressed", self, "_on_back_pressed")
 
 
 func _on_game_settings_pressed():

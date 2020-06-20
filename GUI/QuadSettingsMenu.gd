@@ -30,11 +30,11 @@ onready var rate_graph = $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/
 func _ready():
 	QuadSettings.load_quad_settings()
 	
-	angle_slider.connect("value_changed", self, "_on_angle_changed")
+	var _discard = angle_slider.connect("value_changed", self, "_on_angle_changed")
 	angle_slider.value = QuadSettings.angle
 	
-	dry_weight_slider.connect("value_changed", self, "_on_dry_weight_changed")
-	battery_weight_slider.connect("value_changed", self, "_on_battery_weight_changed")
+	_discard = dry_weight_slider.connect("value_changed", self, "_on_dry_weight_changed")
+	_discard = battery_weight_slider.connect("value_changed", self, "_on_battery_weight_changed")
 	dry_weight_slider.value = QuadSettings.dry_weight * 1000
 	battery_weight_slider.value = QuadSettings.battery_weight * 1000
 	
@@ -51,9 +51,9 @@ func _ready():
 	expo_roll_slider.value = QuadSettings.expo_roll
 	expo_yaw_slider.value = QuadSettings.expo_yaw
 	
-	$PanelContainer/VBoxContainer/ButtonsHBox/ButtonResetQuad.connect("pressed", self, "_on_reset_quad_pressed")
-	$PanelContainer/VBoxContainer/ButtonsHBox/ButtonResetRates.connect("pressed", self, "_on_reset_rates_pressed")
-	$PanelContainer/VBoxContainer/ButtonsHBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonsHBox/ButtonResetQuad.connect("pressed", self, "_on_reset_quad_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonsHBox/ButtonResetRates.connect("pressed", self, "_on_reset_rates_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonsHBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
 
 
 func _on_angle_changed(value: float):

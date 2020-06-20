@@ -34,8 +34,8 @@ func _ready():
 	label.mouse_filter = Control.MOUSE_FILTER_PASS
 	controller_button.mouse_filter = Control.MOUSE_FILTER_PASS
 	
-	connect("mouse_entered", self, "_on_mouse_entered")
-	connect("mouse_exited", self, "_on_mouse_exited")
+	var _discard = connect("mouse_entered", self, "_on_mouse_entered")
+	_discard = connect("mouse_exited", self, "_on_mouse_exited")
 
 
 func _process(delta):

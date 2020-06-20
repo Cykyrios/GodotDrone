@@ -37,9 +37,9 @@ func _ready():
 	flight_controller.set_hover_thrust(mass / 4 * 9.81)
 	
 	add_child(hud)
-	flight_controller.connect("armed", hud.status, "_on_armed")
-	flight_controller.connect("disarmed", hud.status, "_on_disarmed")
-	flight_controller.connect("flight_mode_changed", hud.status, "_on_mode_changed")
+	var _discard = flight_controller.connect("armed", hud.status, "_on_armed")
+	_discard = flight_controller.connect("disarmed", hud.status, "_on_disarmed")
+	_discard = flight_controller.connect("flight_mode_changed", hud.status, "_on_mode_changed")
 	
 	add_child(control_profile)
 	control_profile.set_rates(rate_pitch, rate_roll, rate_yaw)
@@ -47,11 +47,11 @@ func _ready():
 	flight_controller.set_control_profile(control_profile)
 	
 	QuadSettings.load_quad_settings()
-	QuadSettings.connect("settings_updated", self, "_on_quad_settings_updated")
+	_discard = QuadSettings.connect("settings_updated", self, "_on_quad_settings_updated")
 	_on_quad_settings_updated()
 	
 	GameSettings.load_hud_config()
-	GameSettings.connect("hud_config_updated", self, "_on_hud_config_updated")
+	_discard = GameSettings.connect("hud_config_updated", self, "_on_hud_config_updated")
 	_on_hud_config_updated()
 
 
