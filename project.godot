@@ -162,7 +162,7 @@ Global="*res://autoloads/Global.gd"
 Controls="*res://autoloads/Controls.gd"
 QuadSettings="*res://autoloads/QuadSettings.gd"
 GameSettings="*res://autoloads/GameSettings.gd"
-Graphics="*res://Graphics.gd"
+Graphics="*res://autoloads/Graphics.gd"
 
 [debug]
 

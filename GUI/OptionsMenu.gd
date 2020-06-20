@@ -14,7 +14,6 @@ onready var button_controls := $PanelContainer/VBoxContainer/ButtonControls
 
 
 func _ready():
-	$PanelContainer/VBoxContainer/ButtonControls.connect("pressed", self, "_on_controls_pressed")
 	button_game.connect("pressed", self, "_on_game_settings_pressed")
 	button_graphics.connect("pressed", self, "_on_graphics_pressed")
 	button_controls.connect("pressed", self, "_on_controls_pressed")
@@ -26,9 +25,20 @@ func _on_game_settings_pressed():
 		var game_settings_menu = packed_game_settings_menu.instance()
 		get_parent().add_child(game_settings_menu)
 		visible = false
+		yield(game_settings_menu, "back")
+		game_settings_menu.queue_free()
+		visible = true
+
+
+func _on_graphics_pressed():
+	if packed_graphics_menu.can_instance():
+		var graphics_menu = packed_graphics_menu.instance()
+		get_parent().add_child(graphics_menu)
+		visible = false
 		yield(graphics_menu, "back")
 		graphics_menu.queue_free()
 		visible = true
+
 
 func _on_controls_pressed():
 	if packed_controls_menu.can_instance():
