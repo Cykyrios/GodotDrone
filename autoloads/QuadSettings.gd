@@ -40,7 +40,8 @@ func load_quad_settings():
 			expo_roll = clamp(config.get_value("expos", "roll"), 0.0, 1.0)
 		if config.has_section_key("expos", "yaw"):
 			expo_yaw = clamp(config.get_value("expos", "yaw"), 0.0, 1.0)
-	return err
+	elif err != ERR_FILE_NOT_FOUND:
+		Global.log_error(err, "Error loading quad settings.")
 
 
 func save_quad_settings():
@@ -57,6 +58,8 @@ func save_quad_settings():
 		config.set_value("expos", "roll", expo_roll)
 		config.set_value("expos", "yaw", expo_yaw)
 		config.save(quad_settings_path)
+	else:
+		Global.log_error(err, "Error while saving quad settings.")
 	emit_signal("settings_updated")
 
 

@@ -27,7 +27,7 @@ func update_active_device(device: int):
 		config.set_value("controls", "active_controller_name", Input.get_joy_name(device))
 		err = config.save(input_map_path)
 	else:
-		print_debug("Error while updating active device in config file")
+		Global.log_error(err, "Error while updating active device in config file.")
 	return err
 
 
@@ -42,7 +42,7 @@ func update_default_device(device: int):
 		config.set_value("controls", "default_controller", default_controller_guid)
 		err = config.save(input_map_path)
 	else:
-		print_debug("Error while updating default device in config file")
+		Global.log_error(err, "Error while updating default device in config file.")
 	return err
 
 
@@ -131,9 +131,9 @@ func load_input_map(update_controller: bool = false):
 					Please check it is properly plugged in,
 					or head to the Controls settings to update your controller.""" % [active_name]
 			return error
-	else:
-		if err != ERR_FILE_NOT_FOUND:
-			return "Could not open config file.\nPlease check Controls settings."
+	elif err != ERR_FILE_NOT_FOUND:
+		Global.log_error(err, "Could not open controls configuration file.")
+		return "Could not open config file.\nPlease check Controls settings."
 
 
 func fill_dict_keys():

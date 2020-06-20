@@ -201,7 +201,7 @@ func _on_checkbutton_toggled(pressed: bool):
 		default_controller = -1
 	var err = Controls.update_default_device(default_controller)
 	if err != OK:
-		print_debug("Controller checkbox input map save error")
+		Global.log_error(err, "Error while saving default controller settings.")
 
 
 func update_axes_and_buttons(device: int):
@@ -263,6 +263,10 @@ func save_input_map():
 					config.set_value(section, action_name + "_min", action["min"])
 					config.set_value(section, action_name + "_max", action["max"])
 		err = config.save(Controls.input_map_path)
+		if err != OK:
+			Global.log_error(err, "Error while saving input map.")
+	else:
+		Global.log_error(err, "Error while saving input map.")
 
 
 func update_binding(binding: GUIControllerBinding, event: InputEvent):
