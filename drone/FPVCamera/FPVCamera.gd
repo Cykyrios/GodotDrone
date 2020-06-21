@@ -17,6 +17,9 @@ var mat: ShaderMaterial = load("res://drone/FPVCamera/FPVCamera.tres")
 
 
 func _ready():
+	Graphics.connect("fisheye_resolution_changed", self, "_on_fisheye_resolution_changed")
+	Graphics.connect("fisheye_msaa_changed", self, "_on_fisheye_msaa_changed")
+	
 	var fisheye_mode: int = Graphics.graphics_settings["fisheye_mode"]
 	if fisheye_mode == Graphics.FisheyeMode.OFF:
 		near = clip_near
@@ -46,7 +49,10 @@ func _ready():
 		add_child(viewport)
 		viewport.size = Graphics.fisheye_resolution * Vector2.ONE
 		viewport.shadow_atlas_size = root_viewport.shadow_atlas_size
-		viewport.msaa = root_viewport.msaa
+		if Graphics.graphics_settings["fisheye_msaa"] == Graphics.FisheyeMSAA.SAME_AS_GAME:
+			viewport.msaa = root_viewport.msaa
+		else:
+			viewport.msaa = Graphics.graphics_settings["fisheye_msaa"]
 		viewport.hdr = true
 		viewport.keep_3d_linear = true
 		viewports.append(viewport)
@@ -83,3 +89,16 @@ func set_fov(angle: float):
 
 func show_fisheye(show: bool):
 	render_quad.visible = show
+
+
+func _on_fisheye_resolution_changed():
+	for viewport in viewports:
+		viewport.size = Graphics.fisheye_resolution * Vector2.ONE
+
+
+func _on_fisheye_msaa_changed():
+	for viewport in viewports:
+		if Graphics.graphics_settings["fisheye_msaa"] == Graphics.FisheyeMSAA.SAME_AS_GAME:
+			viewport.msaa = Graphics.graphics_settings["msaa"]
+		else:
+			viewport.msaa = Graphics.graphics_settings["fisheye_msaa"]

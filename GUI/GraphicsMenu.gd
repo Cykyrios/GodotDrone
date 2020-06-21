@@ -123,6 +123,7 @@ func _on_fisheye_resolution_changed(idx: int):
 
 
 func _on_fisheye_msaa_changed(idx: int):
+	Graphics.graphics_settings["fisheye_msaa"] = idx
 	Graphics.save_graphics_settings()
 
 
