@@ -89,6 +89,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://HUD/HUDLadder.gd"
 }, {
+"base": "Node",
+"class": "LapTimer",
+"language": "GDScript",
+"path": "res://tracks/LapTimer.gd"
+}, {
 "base": "Area",
 "class": "LaunchArea",
 "language": "GDScript",
@@ -146,6 +151,7 @@ _global_script_class_icons={
 "Gate": "",
 "HUD": "",
 "HUDLadder": "",
+"LapTimer": "",
 "LaunchArea": "",
 "Launchpad": "",
 "Motor": "",

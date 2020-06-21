@@ -15,6 +15,7 @@ export (int, 1, 100) var laps = 3
 var current_lap = 1
 var lap_start = 0
 var lap_end = 0
+var timers := []
 
 
 func _ready():
@@ -30,6 +31,10 @@ func _ready():
 		cp.connect("passed", self, "_on_checkpoint_passed")
 	
 	update_course()
+	
+	for _i in range(laps):
+		timers.append(LapTimer.new())
+		add_child(timers[-1])
 
 
 func get_checkpoints():
@@ -115,8 +120,15 @@ func _on_checkpoint_passed(cp):
 		return
 	
 	current_checkpoint.set_active(false)
-	if current == course.size() - 1 and current_lap == laps:
-		print("Finished!")
+	if current == course.size() - 1:
+		timers[current_lap - 1].stop()
+		var time = timers[current_lap - 1].get_minute_second_decimal()
+		print("Lap %d/%d: %02d:%02d.%03d" % [current_lap, laps, time["minute"], time["second"], time["millisecond"]])
+		if current_lap == laps:
+			print("Finished!")
+		else:
+			activate_next_checkpoint()
+			timers[current_lap - 1].start()
 	else:
 		activate_next_checkpoint()
 
@@ -137,8 +149,24 @@ func activate_next_checkpoint():
 
 
 func reset_track():
+	stop_timers()
+	
 	if current_checkpoint != null:
 		current_checkpoint.set_active(false)
 	current_lap = 1
 	current = -1
 	activate_next_checkpoint()
+
+
+func start_race():
+	timers[0].start()
+
+
+func stop_race():
+	stop_timers()
+
+
+func stop_timers():
+	for timer in timers:
+		timer.stop()
+		timer.reset()
