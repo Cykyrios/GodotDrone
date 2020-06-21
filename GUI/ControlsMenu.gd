@@ -45,13 +45,13 @@ func _ready():
 	# Controller selector, axes and buttons
 	var axis = GUIControllerAxis.new()
 	axis.size_flags_horizontal = 0
-	for i in range(8):
+	for _i in range(8):
 		axes_list.add_child(axis.duplicate())
 	axis.queue_free()
 	
 	var button = GUIControllerButton.new()
 	button.size_flags_horizontal = SIZE_SHRINK_CENTER
-	for i in range(16):
+	for _i in range(16):
 		button_grid.add_child(button.duplicate())
 		button_grid.get_children()[-1].rect_min_size = Vector2(20, 20)
 	button.queue_free()

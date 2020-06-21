@@ -67,7 +67,7 @@ func _input(event):
 #			print("Horizon mode")
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	read_input()
 	
 	if target is Drone:

@@ -33,7 +33,7 @@ func update_rates(rates: Vector3, expos: Vector3):
 		pitch.clear()
 		roll.clear()
 		yaw.clear()
-		for i in range(num_points):
+		for _i in range(num_points):
 			pitch.append(Vector2(0, 0))
 			roll.append(Vector2(0, 0))
 			yaw.append(Vector2(0, 0))

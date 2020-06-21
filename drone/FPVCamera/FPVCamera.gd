@@ -52,7 +52,7 @@ func _ready():
 		cameras.append(camera)
 
 
-func _process(delta):
+func _process(_delta):
 	for camera in cameras:
 		camera.global_transform = global_transform
 	cameras[1].rotate_object_local(Vector3.UP, PI/2)

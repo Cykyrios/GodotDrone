@@ -27,7 +27,7 @@ func _ready():
 	reset_calibration()
 
 
-func _process(delta):
+func _process(_delta):
 	var next_step_ready = true
 	if calibration_step == 0 and axes.size() == 4:
 		for i in range(4):

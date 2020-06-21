@@ -48,7 +48,6 @@ func load_input_map(update_controller: bool = false):
 	var config = ConfigFile.new()
 	var err = config.load(input_map_path)
 	if err == OK:
-		var sections = config.get_sections() as Array
 		var controller_list = get_joypad_guid_list()
 		active_controller_guid = config.get_value("controls", "active_controller_guid")
 		var active_device = controller_list.find(active_controller_guid)

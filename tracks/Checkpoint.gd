@@ -44,7 +44,7 @@ func _ready():
 	set_area_visible(true)
 
 
-func _process(delta):
+func _process(_delta):
 	if Engine.editor_hint or active:
 		mat.set_shader_param("CheckpointPosition", global_transform.origin)
 		mat.set_shader_param("CheckpointForward", global_transform.basis.z)

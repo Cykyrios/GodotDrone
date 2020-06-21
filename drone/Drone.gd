@@ -90,7 +90,7 @@ func _process(delta):
 				Color(0, 0, 10))
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	drone_transform = global_transform
 	drone_pos = drone_transform.origin
 	drone_basis = drone_transform.basis
