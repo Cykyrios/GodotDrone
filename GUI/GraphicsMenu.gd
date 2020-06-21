@@ -53,6 +53,7 @@ func _ready():
 	shadows.get_popup().add_item("Ultra")
 	_discard = shadows.connect("item_selected", self, "_on_shadows_changed")
 	shadows.select(Graphics.graphics_settings["shadows"])
+	shadows.disabled = true
 	
 	fisheye_mode.get_popup().add_item("Off")
 	fisheye_mode.get_popup().add_item("Full")
