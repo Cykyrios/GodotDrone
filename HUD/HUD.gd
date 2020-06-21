@@ -32,7 +32,7 @@ func _ready():
 	update_data(hud_delta, hud_position, hud_angles, hud_velocity, hud_left_stick, hud_right_stick, hud_rpm)
 
 
-func _process(delta):
+func _process(_delta):
 	if hud_delta >= hud_timer:
 		hud_position /= hud_delta
 		hud_angles /= hud_delta

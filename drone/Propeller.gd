@@ -54,7 +54,7 @@ func _ready():
 	theta_tip = deg2rad(theta_tip)
 
 
-func _process(delta):
+func _process(_delta):
 	if Engine.editor_hint:
 		return
 	

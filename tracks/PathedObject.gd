@@ -11,7 +11,7 @@ export (float, 0, 10) var spacing = 1.0 setget set_spacing
 
 
 func _ready():
-	connect("curve_changed", self, "_on_curve_changed")
+	var _discard = connect("curve_changed", self, "_on_curve_changed")
 	
 	update_spline_points()
 	

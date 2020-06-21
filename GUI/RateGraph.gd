@@ -33,7 +33,7 @@ func update_rates(rates: Vector3, expos: Vector3):
 		pitch.clear()
 		roll.clear()
 		yaw.clear()
-		for i in range(num_points):
+		for _i in range(num_points):
 			pitch.append(Vector2(0, 0))
 			roll.append(Vector2(0, 0))
 			yaw.append(Vector2(0, 0))
@@ -67,8 +67,8 @@ func _draw():
 	# Background
 	draw_rect(Rect2(Vector2(0, 0), Vector2(graph_size, graph_size)), color_background)
 	# Center lines
-	draw_line(Vector2(0, graph_size / 2), Vector2(graph_size, graph_size / 2), color_lines, 1)
-	draw_line(Vector2(graph_size / 2, 0), Vector2(graph_size / 2, graph_size), color_lines, 1)
+	draw_line(Vector2(0, graph_size / 2.0), Vector2(graph_size, graph_size / 2.0), color_lines, 1)
+	draw_line(Vector2(graph_size / 2.0, 0), Vector2(graph_size / 2.0, graph_size), color_lines, 1)
 	# Rates
 	draw_polyline(PoolVector2Array(pitch), color_pitch, 1.5, true)
 	draw_polyline(PoolVector2Array(roll), color_roll, 1.5, true)

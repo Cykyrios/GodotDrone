@@ -19,26 +19,26 @@ var axis_bindings = []
 func _ready():
 	target = get_node(target_path)
 	
-	var dict_list = Controls.action_dict
-	for dict in dict_list:
-		if dict["type"] == "axis":
-			axis_bindings.append(dict)
+	var action_list = Controls.action_list
+	for controller_action in action_list:
+		if controller_action.type == ControllerAction.Type.AXIS:
+			axis_bindings.append(controller_action)
 	
-	connect("reset_requested", target, "_on_reset")
-	connect("mode_changed", target.flight_controller, "_on_cycle_flight_modes")
-	connect("arm_input", target.flight_controller, "_on_arm_input")
-	connect("disarm_input", target.flight_controller, "_on_disarm_input")
+	var _discard = connect("reset_requested", target, "_on_reset")
+	_discard = connect("mode_changed", target.flight_controller, "_on_cycle_flight_modes")
+	_discard = connect("arm_input", target.flight_controller, "_on_arm_input")
+	_discard = connect("disarm_input", target.flight_controller, "_on_disarm_input")
 
 
 func _input(event):
 	if event is InputEventJoypadMotion:
-		var dict = null
+		var controller_action = null
 		for i in range(axis_bindings.size()):
-			if event.axis == axis_bindings[i]["axis"]:
-				dict = axis_bindings[i]
-				var action = dict["action"]
-				var bound_low = dict["min"]
-				var bound_high = dict["max"]
+			if event.axis == axis_bindings[i].axis:
+				controller_action = axis_bindings[i]
+				var action = controller_action.action_name
+				var bound_low = controller_action.axis_min
+				var bound_high = controller_action.axis_max
 				var axis_value = event.axis_value
 				if !Input.is_action_pressed(action) and axis_value >= bound_low and axis_value <= bound_high:
 					Input.parse_input_event(simulate_action_event(action, true))
@@ -67,7 +67,7 @@ func _input(event):
 #			print("Horizon mode")
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	read_input()
 	
 	if target is Drone:

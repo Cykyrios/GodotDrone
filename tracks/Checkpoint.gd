@@ -21,8 +21,8 @@ func _ready():
 	var shad = load("res://tracks/CheckpointShader.tres")
 	mat.shader = shad
 	
-	connect("body_entered", self, "_on_entered")
-	connect("body_exited", self, "_on_exited")
+	var _discard = connect("body_entered", self, "_on_entered")
+	_discard = connect("body_exited", self, "_on_exited")
 	
 	for col in get_children():
 		if col is CollisionShape:
@@ -44,7 +44,7 @@ func _ready():
 	set_area_visible(true)
 
 
-func _process(delta):
+func _process(_delta):
 	if Engine.editor_hint or active:
 		mat.set_shader_param("CheckpointPosition", global_transform.origin)
 		mat.set_shader_param("CheckpointForward", global_transform.basis.z)

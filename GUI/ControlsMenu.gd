@@ -26,32 +26,32 @@ signal back
 
 
 func _ready():
-	connect("controller_detected", self, "_on_controller_autodetected")
-	Input.connect("joy_connection_changed", self, "_on_joypad_connection_changed")
+	var _discard = connect("controller_detected", self, "_on_controller_autodetected")
+	_discard = Input.connect("joy_connection_changed", self, "_on_joypad_connection_changed")
 	
-	$MenuPanel/MenuVBox/ButtonCalibrate.connect("pressed", self, "_on_calibrate_pressed")
-	$MenuPanel/MenuVBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
+	_discard = $MenuPanel/MenuVBox/ButtonCalibrate.connect("pressed", self, "_on_calibrate_pressed")
+	_discard = $MenuPanel/MenuVBox/ButtonBack.connect("pressed", self, "_on_back_pressed")
 	
-	controller_list.connect("pressed", self, "_on_controller_list_pressed")
-	controller_list.get_popup().connect("id_pressed", self, "_on_controller_selected")
-	controller_list.get_popup().connect("modal_closed", self, "_on_controller_select_aborted")
+	_discard = controller_list.connect("pressed", self, "_on_controller_list_pressed")
+	_discard = controller_list.get_popup().connect("id_pressed", self, "_on_controller_selected")
+	_discard = controller_list.get_popup().connect("modal_closed", self, "_on_controller_select_aborted")
 	controller_list.get_popup().add_font_override("font", load("res://GUI/MenuFont.tres"))
 	controller_list.clip_text = true
 	
-	controller_checkbutton.connect("toggled", self, "_on_checkbutton_toggled")
+	_discard = controller_checkbutton.connect("toggled", self, "_on_checkbutton_toggled")
 	
 	# TODO: only allow calibration for active controller OR update controller list
 	
 	# Controller selector, axes and buttons
 	var axis = GUIControllerAxis.new()
 	axis.size_flags_horizontal = 0
-	for i in range(8):
+	for _i in range(8):
 		axes_list.add_child(axis.duplicate())
 	axis.queue_free()
 	
 	var button = GUIControllerButton.new()
 	button.size_flags_horizontal = SIZE_SHRINK_CENTER
-	for i in range(16):
+	for _i in range(16):
 		button_grid.add_child(button.duplicate())
 		button_grid.get_children()[-1].rect_min_size = Vector2(20, 20)
 	button.queue_free()
@@ -83,13 +83,13 @@ func _ready():
 			(rect_size - $HBoxContainer/ControllerPanel/ControllerVBox.rect_size).y / 2
 	
 	# Actions bindings
-	for action in Controls.action_dict:
+	for action in Controls.action_list:
 		var binding = GUIControllerBinding.new()
 		actions_list.add_child(binding)
-		binding.action = action["action"]
-		binding.label.text = action["label"]
-		binding.connect("clicked", self, "_on_binding_clicked", [binding])
-		binding.connect("binding_updated", self, "_on_binding_updated")
+		binding.action = action.action_name
+		binding.label.text = action.action_label
+		_discard = binding.connect("clicked", self, "_on_binding_clicked", [binding])
+		_discard = binding.connect("binding_updated", self, "_on_binding_updated")
 	
 	# TODO: add animated radio sticks display with customizable mode1, mode2, etc.
 	# TODO: add drone model that reacts to user input
@@ -201,7 +201,7 @@ func _on_checkbutton_toggled(pressed: bool):
 		default_controller = -1
 	var err = Controls.update_default_device(default_controller)
 	if err != OK:
-		print_debug("Controller checkbox input map save error")
+		Global.log_error(err, "Error while saving default controller settings.")
 
 
 func update_axes_and_buttons(device: int):
@@ -225,19 +225,19 @@ func update_input_map():
 	for binding in actions_list.get_children():
 		binding.remove_binding()
 	Controls.load_input_map()
-	var dict_list = Controls.action_dict
-	for i in range(dict_list.size()):
-		var dict = dict_list[i]
+	var act_list = Controls.action_list
+	for i in range(act_list.size()):
+		var act = act_list[i]
 		var binding = actions_list.get_child(i)
-		if dict["bound"]:
-			if dict["type"] == "button":
+		if act.bound:
+			if act.type == ControllerAction.Type.BUTTON:
 				var event = InputEventJoypadButton.new()
-				event.button_index = dict["button"]
+				event.button_index = act.button
 				event.device = active_controller
 				call_deferred("update_binding", binding, event)
-			elif dict["type"] == "axis":
+			elif act.type == ControllerAction.Type.AXIS:
 				var event = InputEventJoypadMotion.new()
-				event.axis = dict["axis"]
+				event.axis = act.axis
 				event.device = active_controller
 				call_deferred("update_binding", binding, event)
 
@@ -246,28 +246,32 @@ func save_input_map():
 	var section = "controls_" + Controls.active_controller_guid
 	var config = ConfigFile.new()
 	var err = config.load(Controls.input_map_path)
-	if err == OK:
-		for action in Controls.action_dict:
-			var action_name = action["action"]
+	if err == OK or err == ERR_FILE_NOT_FOUND:
+		for action in Controls.action_list:
+			var action_name = action.action_name
 			if config.has_section_key(section, action_name):
 				config.erase_section_key(section, action_name)
 				for key in ["_button", "_axis", "_min", "_max"]:
 					if config.has_section_key(section, action_name + key):
 						config.erase_section_key(section, action_name + key)
-			if action.has("bound") and action["bound"]:
-				config.set_value(section, action_name, action["type"])
-				if action["type"] == "button":
-					config.set_value(section, action_name + "_button", Input.get_joy_button_string(action["button"]))
-				else:
-					config.set_value(section, action_name + "_axis", Input.get_joy_axis_string(action["axis"]))
-					config.set_value(section, action_name + "_min", action["min"])
-					config.set_value(section, action_name + "_max", action["max"])
+			if action.bound:
+				config.set_value(section, action_name, action.type)
+				if action.type == ControllerAction.Type.BUTTON:
+					config.set_value(section, action_name + "_button", Input.get_joy_button_string(action.button))
+				elif action.type == ControllerAction.Type.AXIS:
+					config.set_value(section, action_name + "_axis", Input.get_joy_axis_string(action.axis))
+					config.set_value(section, action_name + "_min", action.axis_min)
+					config.set_value(section, action_name + "_max", action.axis_max)
 		err = config.save(Controls.input_map_path)
+		if err != OK:
+			Global.log_error(err, "Error while saving input map.")
+	else:
+		Global.log_error(err, "Error while saving input map.")
 
 
 func update_binding(binding: GUIControllerBinding, event: InputEvent):
 	var action = binding.action
-	binding.dict_idx = actions_list.get_children().find(binding)
+	binding.action_idx = actions_list.get_children().find(binding)
 	if InputMap.has_action(action):
 		InputMap.action_erase_events(action)
 		binding.update_binding(event)

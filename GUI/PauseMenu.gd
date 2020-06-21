@@ -11,10 +11,10 @@ signal menu
 
 
 func _ready():
-	$PanelContainer/VBoxContainer/ButtonResume.connect("pressed", self, "_on_resume_pressed")
-	$PanelContainer/VBoxContainer/ButtonQuad.connect("pressed", self, "_on_quad_settings_pressed")
-	$PanelContainer/VBoxContainer/ButtonOptions.connect("pressed", self, "_on_options_pressed")
-	$PanelContainer/VBoxContainer/ButtonMainMenu.connect("pressed", self, "_on_menu_pressed")
+	var _discard = $PanelContainer/VBoxContainer/ButtonResume.connect("pressed", self, "_on_resume_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonQuad.connect("pressed", self, "_on_quad_settings_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonOptions.connect("pressed", self, "_on_options_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonMainMenu.connect("pressed", self, "_on_menu_pressed")
 
 
 func _on_resume_pressed():

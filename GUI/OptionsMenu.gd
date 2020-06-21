@@ -14,10 +14,10 @@ onready var button_controls := $PanelContainer/VBoxContainer/ButtonControls
 
 
 func _ready():
-	button_game.connect("pressed", self, "_on_game_settings_pressed")
-	button_graphics.connect("pressed", self, "_on_graphics_pressed")
-	button_controls.connect("pressed", self, "_on_controls_pressed")
-	$PanelContainer/VBoxContainer/ButtonBack.connect("pressed", self, "_on_back_pressed")
+	var _discard = button_game.connect("pressed", self, "_on_game_settings_pressed")
+	_discard = button_graphics.connect("pressed", self, "_on_graphics_pressed")
+	_discard = button_controls.connect("pressed", self, "_on_controls_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonBack.connect("pressed", self, "_on_back_pressed")
 
 
 func _on_game_settings_pressed():

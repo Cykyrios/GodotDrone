@@ -24,7 +24,7 @@ func load_hud_config():
 					elif value is bool:
 						hud_config[key] = value
 	elif err != ERR_FILE_NOT_FOUND:
-		push_error("Error while loading HUD config: %s" % err)
+		Global.log_error(err, "Error while loading HUD config.")
 
 
 func save_hud_config():
@@ -36,4 +36,4 @@ func save_hud_config():
 		config.save(game_settings_path)
 		emit_signal("hud_config_updated")
 	else:
-		push_error("Error while saving HUD config: %s" % err)
+		Global.log_error(err, "Error while saving HUD config.")

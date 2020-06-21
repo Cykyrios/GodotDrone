@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://drone/ControlProfile.gd"
 }, {
+"base": "Reference",
+"class": "ControllerAction",
+"language": "GDScript",
+"path": "res://drone/ControllerAction.gd"
+}, {
 "base": "ImmediateGeometry",
 "class": "DebugGeometry",
 "language": "GDScript",
@@ -128,6 +133,7 @@ _global_script_class_icons={
 "Battery": "",
 "Checkpoint": "",
 "ControlProfile": "",
+"ControllerAction": "",
 "DebugGeometry": "",
 "Drone": "",
 "FPVCamera": "",
@@ -163,12 +169,6 @@ Controls="*res://autoloads/Controls.gd"
 QuadSettings="*res://autoloads/QuadSettings.gd"
 GameSettings="*res://autoloads/GameSettings.gd"
 Graphics="*res://autoloads/Graphics.gd"
-
-[debug]
-
-gdscript/warnings/unused_variable=false
-gdscript/warnings/unused_argument=false
-gdscript/warnings/return_value_discarded=false
 
 [display]
 

@@ -9,10 +9,10 @@ var level = preload("res://sceneries/Level1.tscn")
 
 
 func _ready():
-	$PanelContainer/VBoxContainer/ButtonFly.connect("pressed", self, "_on_fly_pressed")
-	$PanelContainer/VBoxContainer/ButtonQuad.connect("pressed", self, "_on_quad_settings_pressed")
-	$PanelContainer/VBoxContainer/ButtonOptions.connect("pressed", self, "_on_options_pressed")
-	$PanelContainer/VBoxContainer/ButtonQuit.connect("pressed", self, "_on_quit_pressed")
+	var _discard = $PanelContainer/VBoxContainer/ButtonFly.connect("pressed", self, "_on_fly_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonQuad.connect("pressed", self, "_on_quad_settings_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonOptions.connect("pressed", self, "_on_options_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonQuit.connect("pressed", self, "_on_quit_pressed")
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
@@ -25,11 +25,11 @@ func _ready():
 			controller_dialog.set_text(error)
 			controller_dialog.set_buttons("OK")
 			controller_dialog.show_modal(true)
-			var dialog = yield(controller_dialog, "validated")
+			var _dialog = yield(controller_dialog, "validated")
 
 
 func _on_fly_pressed():
-	get_tree().change_scene_to(level)
+	var _discard = get_tree().change_scene_to(level)
 
 
 func _on_quad_settings_pressed():

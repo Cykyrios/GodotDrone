@@ -2,7 +2,7 @@ extends VBoxContainer
 class_name GUIControllerBinding
 
 
-var dict_idx = -1
+var action_idx = -1
 var action = ""
 var label = Label.new()
 var controller_button = GUIControllerButton.new()
@@ -34,8 +34,8 @@ func _ready():
 	label.mouse_filter = Control.MOUSE_FILTER_PASS
 	controller_button.mouse_filter = Control.MOUSE_FILTER_PASS
 	
-	connect("mouse_entered", self, "_on_mouse_entered")
-	connect("mouse_exited", self, "_on_mouse_exited")
+	var _discard = connect("mouse_entered", self, "_on_mouse_entered")
+	_discard = connect("mouse_exited", self, "_on_mouse_exited")
 
 
 func _process(delta):
@@ -87,29 +87,22 @@ func _gui_input(event):
 
 func update_binding(event: InputEvent):
 	if event:
-		var dict = Controls.action_dict[dict_idx]
-		dict["bound"] = true
+		var act = Controls.action_list[action_idx]
+		act.bound = true
 		if event is InputEventJoypadButton:
-			if dict.has("axis"):
-				remove_axis_range()
+			remove_axis_range()
 			InputMap.action_add_event(action, event)
 			device = event.device
 			button = event.button_index
-			dict["type"] = "button"
-			dict["button"] = event.button_index
+			act.type = ControllerAction.Type.BUTTON
+			act.button = event.button_index
 		elif event is InputEventJoypadMotion:
-			if dict.has("button"):
-				dict.erase("button")
-			if axis_range:
-				remove_axis_range()
+			act.button = -1
+			remove_axis_range()
 			add_axis_range(event)
-			dict["type"] = "axis"
-			dict["axis"] = axis
-			if dict.has("min") and dict.has("max"):
-				axis_range.call_deferred("set_bounds", dict["min"], dict["max"])
-			else:
-				dict["min"] = axis_range.bound_low
-				dict["max"] = axis_range.bound_high
+			act.type = ControllerAction.Type.AXIS
+			act.axis = axis
+			axis_range.call_deferred("set_bounds", act.axis_min, act.axis_max)
 	else:
 		remove_binding()
 	emit_signal("binding_updated")
@@ -121,10 +114,7 @@ func remove_binding():
 	button = -1
 	device = -1
 	Input.parse_input_event(simulate_action_event(action, false))
-	var dict = Controls.action_dict[dict_idx]
-	dict["bound"] = false
-	for key in ["type", "button", "axis", "min", "max"]:
-		dict.erase(key)
+	Controls.action_list[action_idx].unbind()
 
 
 func add_axis_range(event: InputEventJoypadMotion):
@@ -151,19 +141,19 @@ func _on_axis_range_updated():
 
 
 func _on_axis_range_released():
-	var dict = Controls.action_dict[dict_idx]
-	if dict["bound"] and dict["type"] == "axis":
-		dict["min"] = axis_range.bound_low
-		dict["max"] = axis_range.bound_high
+	var act = Controls.action_list[action_idx]
+	if act.bound and act.type == ControllerAction.Type.AXIS:
+		act.axis_min = axis_range.bound_low
+		act.axis_max = axis_range.bound_high
 		emit_signal("binding_updated")
 
 
 func check_action_state():
-	var dict = Controls.action_dict[dict_idx]
-	if dict.get("bound", false) == false:
+	var act = Controls.action_list[action_idx]
+	if act.bound == false:
 		Input.parse_input_event(simulate_action_event(action, false))
 	else:
-		if dict["type"] == "button":
+		if act.type == ControllerAction.Type.BUTTON:
 			Input.parse_input_event(simulate_action_event(action, Input.is_joy_button_pressed(device, button)))
 		else:
 			axis_range.axis_monitor.value = axis_value

@@ -10,10 +10,10 @@ signal validated
 
 
 func _ready():
-	button_yes.connect("pressed", self, "_on_button_pressed", [0])
-	button_no.connect("pressed", self, "_on_button_pressed", [1])
-	button_alt.connect("pressed", self, "_on_button_pressed", [2])
-	$PanelContainer.connect("resized", self, "_on_resized")
+	var _discard = button_yes.connect("pressed", self, "_on_button_pressed", [0])
+	_discard = button_no.connect("pressed", self, "_on_button_pressed", [1])
+	_discard = button_alt.connect("pressed", self, "_on_button_pressed", [2])
+	_discard = $PanelContainer.connect("resized", self, "_on_resized")
 
 
 func _on_resized():

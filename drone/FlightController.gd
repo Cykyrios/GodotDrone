@@ -68,7 +68,7 @@ func _ready():
 #	basis = global_transform.basis
 #	angles = basis.get_euler()
 	
-	for i in range(Controller.size()):
+	for _i in range(Controller.size()):
 		pid_controllers.append(PID.new())
 		add_child(pid_controllers[-1])
 	
@@ -105,7 +105,7 @@ func _ready():
 	pid_controllers[Controller.LAUNCH].set_coefficients(700 * pid_scale_p, 300 * pid_scale_i, 700 * pid_scale_d)
 	pid_controllers[Controller.LAUNCH].set_clamp_limits(-0.5, 0)
 	
-	connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
+	var _discard = connect("flight_mode_changed", get_parent(), "_on_flight_mode_changed")
 	change_flight_mode(FlightMode.RATE)
 	
 	if b_telemetry:
@@ -117,7 +117,7 @@ func _ready():
 #	pass
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if (flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED \
 			or flight_mode == FlightMode.TRACK) and not is_flight_safe():
 		change_flight_mode(FlightMode.AUTO)
@@ -563,7 +563,7 @@ func reset():
 	set_armed(false)
 	
 	# Update position twice to ensure pos_prev == pos
-	for i in range(2):
+	for _i in range(2):
 		update_position()
 	update_velocity()
 	
