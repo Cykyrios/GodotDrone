@@ -115,6 +115,12 @@ func _on_fisheye_mode_changed(idx: int):
 	Graphics.graphics_settings["fisheye_mode"] = idx
 	Graphics.update_fisheye_mode()
 	Graphics.save_graphics_settings()
+	
+	var fisheye_disabled := false
+	if idx == Graphics.FisheyeMode.OFF:
+		fisheye_disabled = true
+	fisheye_resolution.disabled = fisheye_disabled
+	fisheye_msaa.disabled = fisheye_disabled
 
 
 func _on_fisheye_resolution_changed(idx: int):
