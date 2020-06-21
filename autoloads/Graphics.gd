@@ -68,9 +68,9 @@ func load_graphics_settings():
 		update_fisheye_mode()
 		update_fisheye_resolution()
 		update_fisheye_msaa()
-	else:
-		if err != ERR_FILE_NOT_FOUND:
-			return "Could not open graphics config file: Error %s" % err
+	elif err != ERR_FILE_NOT_FOUND:
+		Global.log_error(err, "Could not open graphics config file.")
+		return "Could not open graphics config file: Error %s" % err
 
 
 func save_graphics_settings():
@@ -79,9 +79,9 @@ func save_graphics_settings():
 	if err == OK or err == ERR_FILE_NOT_FOUND:
 		for key in graphics_settings.keys():
 			config.set_value("graphics", key, graphics_settings[key])
-		config.save(graphics_settings_path)
-	else:
-		push_error("Error while saving graphics settings: %s" % err)
+		err = config.save(graphics_settings_path)
+	if err != OK and err != ERR_FILE_NOT_FOUND:
+		Global.log_error(err, "Error while saving graphics settings.")
 
 
 func update_window_mode():
