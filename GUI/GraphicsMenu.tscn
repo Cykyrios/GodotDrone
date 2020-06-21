@@ -163,7 +163,7 @@ margin_right = 532.0
 margin_bottom = 618.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-margin_left = 1441.0
+margin_left = 1594.0
 margin_top = 789.0
 margin_right = 1680.0
 margin_bottom = 840.0
@@ -172,13 +172,7 @@ size_flags_vertical = 10
 custom_constants/separation = 50
 alignment = 2
 
-[node name="ButtonApply" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_right = 103.0
-margin_bottom = 51.0
-text = "Apply"
-
 [node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 153.0
-margin_right = 239.0
+margin_right = 86.0
 margin_bottom = 51.0
 text = "Back"

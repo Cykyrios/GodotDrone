@@ -133,10 +133,6 @@ func _on_fisheye_msaa_changed(idx: int):
 	Graphics.save_graphics_settings()
 
 
-func _on_apply_pressed():
-	pass
-
-
 func _on_back_pressed():
 #	var confirm_dialog = packed_popup.instance()
 #	add_child(confirm_dialog)
