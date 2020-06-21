@@ -70,11 +70,11 @@ func _ready():
 	fisheye_resolution.select(Graphics.graphics_settings["fisheye_resolution"])
 	
 	fisheye_msaa.get_popup().add_item("Off")
-	fisheye_msaa.get_popup().add_item("Same as Game MSAA")
 	fisheye_msaa.get_popup().add_item("2x")
 	fisheye_msaa.get_popup().add_item("4x")
 	fisheye_msaa.get_popup().add_item("8x")
 	fisheye_msaa.get_popup().add_item("16x")
+	fisheye_msaa.get_popup().add_item("Same as Game MSAA")
 	fisheye_msaa.connect("item_selected", self, "_on_fisheye_msaa_changed")
 	fisheye_msaa.select(Graphics.graphics_settings["fisheye_msaa"])
 	

@@ -9,12 +9,12 @@ signal fisheye_msaa_changed
 
 enum WindowMode {FULLSCREEN, FULLSCREEN_WINDOW, WINDOW, BORDERLESS_WINDOW}
 enum GameMSAA {OFF, X2, X4, X8, X16}
-enum GameAF {OFF = 0, X2 = 2, X4 = 4, X8 = 8, X16 = 16}
+enum GameAF {OFF, X2, X4, X8, X16}
 enum Shadows {OFF, LOW, MEDIUM, HIGH, ULTRA}
 enum FisheyeMode {OFF, FULL, FAST}
-enum FisheyeResolution {FISHEYE_2160P, FISHEYE_1080P, FISHEYE_1440P,
+enum FisheyeResolution {FISHEYE_2160P, FISHEYE_1440P, FISHEYE_1080P,
 		FISHEYE_720P, FISHEYE_480P, FISHEYE_240P}
-enum FisheyeMSAA {OFF, SAME_AS_GAME, X2, X4, X8, X16}
+enum FisheyeMSAA {OFF, X2, X4, X8, X16, SAME_AS_GAME}
 
 
 var graphics_settings_path = "user://Graphics.cfg"
