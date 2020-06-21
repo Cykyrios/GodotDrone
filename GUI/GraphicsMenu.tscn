@@ -1,0 +1,178 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUI/ThemeMenu.tres" type="Theme" id=1]
+[ext_resource path="res://GUI/GraphicsMenu.gd" type="Script" id=2]
+
+[node name="GraphicsMenu" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+custom_constants/margin_right = 100
+custom_constants/margin_top = 100
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 100
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 1820.0
+margin_bottom = 980.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 5
+size_flags_vertical = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1700.0
+margin_bottom = 860.0
+custom_constants/separation = 50
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+margin_right = 1680.0
+margin_bottom = 45.0
+text = "Graphics"
+align = 1
+valign = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 95.0
+margin_right = 1680.0
+margin_bottom = 739.0
+size_flags_horizontal = 5
+size_flags_vertical = 7
+size_flags_stretch_ratio = 100.0
+
+[node name="WindowGrid" type="GridContainer" parent="PanelContainer/VBoxContainer/ScrollContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1670.0
+margin_bottom = 634.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 7
+size_flags_vertical = 7
+custom_constants/vseparation = 30
+custom_constants/hseparation = 50
+columns = 2
+
+[node name="WindowLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_top = 3.0
+margin_right = 283.0
+margin_bottom = 48.0
+text = "Window Mode"
+
+[node name="WindowOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_left = 333.0
+margin_right = 532.0
+margin_bottom = 51.0
+text = "Full Screen"
+
+[node name="ResolutionLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_top = 84.0
+margin_right = 283.0
+margin_bottom = 129.0
+text = "Resolution"
+
+[node name="ResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_left = 333.0
+margin_top = 81.0
+margin_right = 532.0
+margin_bottom = 132.0
+text = "1920x1080"
+
+[node name="GameMSAALabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_top = 165.0
+margin_right = 283.0
+margin_bottom = 210.0
+text = "MSAA"
+
+[node name="GameMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_left = 333.0
+margin_top = 162.0
+margin_right = 532.0
+margin_bottom = 213.0
+
+[node name="GameAFLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_top = 246.0
+margin_right = 283.0
+margin_bottom = 291.0
+text = "Anisotropic Filter"
+
+[node name="GameAFOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_left = 333.0
+margin_top = 243.0
+margin_right = 532.0
+margin_bottom = 294.0
+
+[node name="ShadowsLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_top = 327.0
+margin_right = 283.0
+margin_bottom = 372.0
+text = "Shadows Quality"
+
+[node name="ShadowsOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_left = 333.0
+margin_top = 324.0
+margin_right = 532.0
+margin_bottom = 375.0
+
+[node name="FPVFisheyeLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_top = 408.0
+margin_right = 283.0
+margin_bottom = 453.0
+text = "Fisheye Camera"
+
+[node name="FPVFisheyeOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_left = 333.0
+margin_top = 405.0
+margin_right = 532.0
+margin_bottom = 456.0
+
+[node name="FisheyeResolutionLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_top = 489.0
+margin_right = 283.0
+margin_bottom = 534.0
+text = "Fisheye Resolution"
+
+[node name="FisheyeResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_left = 333.0
+margin_top = 486.0
+margin_right = 532.0
+margin_bottom = 537.0
+
+[node name="FisheyeMSAALabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_top = 570.0
+margin_right = 283.0
+margin_bottom = 615.0
+text = "Fisheye MSAA"
+
+[node name="FisheyeMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+margin_left = 333.0
+margin_top = 567.0
+margin_right = 532.0
+margin_bottom = 618.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_left = 1594.0
+margin_top = 789.0
+margin_right = 1680.0
+margin_bottom = 840.0
+size_flags_horizontal = 8
+size_flags_vertical = 10
+custom_constants/separation = 50
+alignment = 2
+
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_right = 86.0
+margin_bottom = 51.0
+text = "Back"
