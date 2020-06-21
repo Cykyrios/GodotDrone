@@ -127,7 +127,9 @@ func update_msaa():
 func update_af():
 	ProjectSettings.set_setting("rendering/quality/filters/anisotropic_filter_level", \
 			int(pow(2, graphics_settings["af"])))
-	ProjectSettings.save()
+	var err = ProjectSettings.save()
+	if err != OK:
+		Global.log_error(err, "Failed to save AF settings.")
 
 
 func update_shadows(viewport: Viewport = null):
