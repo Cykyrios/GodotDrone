@@ -17,8 +17,8 @@ var mat: ShaderMaterial = load("res://drone/FPVCamera/FPVCamera.tres")
 
 
 func _ready():
-	Graphics.connect("fisheye_resolution_changed", self, "_on_fisheye_resolution_changed")
-	Graphics.connect("fisheye_msaa_changed", self, "_on_fisheye_msaa_changed")
+	var _discard = Graphics.connect("fisheye_resolution_changed", self, "_on_fisheye_resolution_changed")
+	_discard = Graphics.connect("fisheye_msaa_changed", self, "_on_fisheye_msaa_changed")
 	
 	var fisheye_mode: int = Graphics.graphics_settings["fisheye_mode"]
 	if fisheye_mode == Graphics.FisheyeMode.OFF:
@@ -29,14 +29,14 @@ func _ready():
 		num_cameras = 2
 		mat.shader = load("res://drone/FPVCamera/FPVCamera_fast.shader")
 	environment = fpv_environment
-	cull_mask = pow(2, camera_layer - 1)
+	cull_mask = int(pow(2, camera_layer - 1))
 	render_quad = MeshInstance.new()
 	add_child(render_quad)
 	render_quad.translate_object_local(Vector3.FORWARD * (near + 0.1 * (far - near)))
 	render_quad.rotate_object_local(Vector3.RIGHT, PI / 2)
 	render_quad.mesh = QuadMesh.new()
 	render_quad.mesh.size = Vector2(2, 2)
-	render_quad.layers = pow(2, camera_layer - 1)
+	render_quad.layers = int(pow(2, camera_layer - 1))
 	render_quad.cast_shadow = GeometryInstance.SHADOW_CASTING_SETTING_OFF
 	render_quad.mesh.surface_set_material(0, mat)
 	render_quad.visible = false
@@ -70,7 +70,7 @@ func _ready():
 		cameras.append(camera)
 
 
-func _process(delta):
+func _process(_delta):
 	var fisheye_mode: int = Graphics.graphics_settings["fisheye_mode"]
 	if fisheye_mode != Graphics.FisheyeMode.OFF:
 		for camera in cameras:
