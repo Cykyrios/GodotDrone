@@ -99,6 +99,12 @@ func _on_msaa_changed(idx: int):
 	Graphics.save_graphics_settings()
 
 
+func _on_af_changed(idx: int):
+	Graphics.graphics_settings["af"] = idx
+	Graphics.update_af()
+	Graphics.save_graphics_settings()
+
+
 func _on_shadows_changed(idx: int):
 	Graphics.graphics_settings["shadows"] = idx
 	Graphics.update_shadows()
