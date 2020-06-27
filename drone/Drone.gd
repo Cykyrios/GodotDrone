@@ -2,6 +2,10 @@ extends RigidBody
 
 class_name Drone
 
+
+signal respawned
+
+
 var motors = []
 onready var flight_controller = $FlightController
 var hud = preload("res://HUD/HUD.tscn").instance()
@@ -175,11 +179,17 @@ func update_hud_data(delta: float):
 	hud.update_data(delta, position, angles, velocity, left_stick, right_stick, rpm)
 
 
+func reset():
+	_on_reset()
+
+
 func _on_reset():
 	global_transform = Transform(Basis(), Vector3(0, 0.2, 0))
 	linear_velocity = Vector3.ZERO
 	angular_velocity = Vector3.ZERO
 	flight_controller.reset()
+	
+	emit_signal("respawned")
 
 
 func get_drag(lin_vel : Vector3, ang_vel, orientation : Basis):

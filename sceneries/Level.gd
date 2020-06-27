@@ -27,7 +27,7 @@ func _ready():
 		if c is Track:
 			tracks.append(c)
 	
-	radio_controller.connect("reset_requested", self, "_on_drone_reset")
+	var _discard = drone.connect("respawned", self, "_on_drone_reset")
 	
 	pause_menu = pause_menu.instance()
 	add_child(pause_menu)
