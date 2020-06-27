@@ -1,5 +1,4 @@
 extends RigidBody
-
 class_name Drone
 
 

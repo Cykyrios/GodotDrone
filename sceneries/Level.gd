@@ -33,8 +33,8 @@ func _ready():
 	pause_menu = pause_menu.instance()
 	add_child(pause_menu)
 	pause_menu.visible = false
-	pause_menu.connect("resumed", self, "_on_resume")
-	pause_menu.connect("menu", self, "_on_return_to_menu")
+	_discard = pause_menu.connect("resumed", self, "_on_resume")
+	_discard = pause_menu.connect("menu", self, "_on_return_to_menu")
 
 
 func _input(event):

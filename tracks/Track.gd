@@ -34,10 +34,10 @@ func _ready():
 	set_selected_checkpoint(-1)
 	set_edit_track(false)
 	
-	get_checkpoints()
+	update_checkpoints()
 	
 	for cp in checkpoints:
-		cp.connect("passed", self, "_on_checkpoint_passed")
+		var _discard = cp.connect("passed", self, "_on_checkpoint_passed")
 	
 	update_course()
 	
@@ -48,7 +48,7 @@ func _ready():
 	update_launch_areas()
 
 
-func get_checkpoints():
+func update_checkpoints():
 	checkpoints.clear()
 	for child in get_children():
 		if child is Gate:
@@ -107,7 +107,7 @@ func set_edit_track(edit : bool):
 		return
 	edit_track = edit
 	if edit_track:
-		get_checkpoints()
+		update_checkpoints()
 	for cp in checkpoints:
 		cp.set_area_visible(edit_track)
 		cp.mat.set_shader_param("Editor", edit_track)
