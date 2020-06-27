@@ -17,10 +17,19 @@ var lap_start = 0
 var lap_end = 0
 var timers := []
 
+var countdown_timer: Timer = null
+var countdown_label: Label = null
+var countdown_step := 0
+
+var has_launchpad := false
+var launch_areas := []
+
 
 func _ready():
 	if Engine.editor_hint:
 		return
+	
+	setup_countdown()
 	
 	set_selected_checkpoint(-1)
 	set_edit_track(false)
@@ -35,6 +44,8 @@ func _ready():
 	for _i in range(laps):
 		timers.append(LapTimer.new())
 		add_child(timers[-1])
+	
+	update_launch_areas()
 
 
 func get_checkpoints():
@@ -81,6 +92,14 @@ func update_course():
 		lap_end = course.size() - 1
 	
 	reset_track()
+
+
+func update_launch_areas():
+	for child in get_children():
+		if child is Launchpad:
+			for area in child.launch_areas:
+				launch_areas.append(area)
+	has_launchpad = not launch_areas.empty()
 
 
 func set_edit_track(edit : bool):
@@ -149,6 +168,7 @@ func activate_next_checkpoint():
 
 
 func reset_track():
+	stop_countdown()
 	stop_timers()
 	
 	if current_checkpoint != null:
@@ -156,6 +176,45 @@ func reset_track():
 	current_lap = 1
 	current = -1
 	activate_next_checkpoint()
+
+
+func setup_countdown():
+	countdown_timer = Timer.new()
+	add_child(countdown_timer)
+	countdown_timer.one_shot = true
+	var _discard = countdown_timer.connect("timeout", self, "_on_countdown_timer_timeout")
+	
+	countdown_label = Label.new()
+	add_child(countdown_label)
+	countdown_label.theme = load("res://GUI/ThemeCountdown.tres")
+	countdown_label.align = Label.ALIGN_CENTER
+	countdown_label.valign = Label.VALIGN_CENTER
+	countdown_label.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
+	countdown_label.visible = false
+
+
+func start_countdown():
+	countdown_step = 0
+	update_countdown(countdown_step)
+
+
+func update_countdown(step: int = 0):
+	if step <= 0:
+		countdown_timer.start(2)
+	elif step <= 4:
+		countdown_timer.start(1)
+		countdown_label.visible = true
+		if step <= 3:
+			countdown_label.text = "%d" % [3 - step + 1]
+		elif step == 4:
+			countdown_label.text = "GO!"
+			start_race()
+		countdown_label.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
+
+
+func stop_countdown():
+	countdown_timer.stop()
+	countdown_label.visible = false
 
 
 func start_race():
@@ -170,3 +229,16 @@ func stop_timers():
 	for timer in timers:
 		timer.stop()
 		timer.reset()
+
+
+func get_random_launch_area() -> LaunchArea:
+	if not launch_areas.empty():
+		return launch_areas[randi() % launch_areas.size()]
+	else:
+		return null
+
+
+func _on_countdown_timer_timeout():
+	countdown_label.visible = false
+	countdown_step += 1
+	update_countdown(countdown_step)
