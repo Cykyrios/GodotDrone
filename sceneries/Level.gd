@@ -92,7 +92,7 @@ func _on_return_to_menu():
 func _on_game_mode_changed(mode: int):
 	if mode == Global.GameMode.FREE or tracks.empty():
 		if Global.active_track:
-			Global.active_track.stop_countdown()
+			Global.active_track.stop_race()
 		Global.active_track = null
 	elif mode == Global.GameMode.RACE:
 		Global.active_track = get_closest_track()

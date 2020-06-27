@@ -3,6 +3,9 @@ extends Spatial
 class_name Track
 
 
+enum RaceState {START, RACE, END}
+
+
 export (bool) var edit_track = false setget set_edit_track
 export (int) var selected_checkpoint = -1 setget set_selected_checkpoint
 export (String, MULTILINE) var course
@@ -16,7 +19,9 @@ var current_lap = 1
 var lap_start = 0
 var lap_end = 0
 var timers := []
+var timer_label: Label = null
 
+var race_state: int = RaceState.START
 var countdown_timer: Timer = null
 var countdown_label: Label = null
 var countdown_step := 0
@@ -30,6 +35,7 @@ func _ready():
 		return
 	
 	setup_countdown()
+	setup_timer_label()
 	
 	set_selected_checkpoint(-1)
 	set_edit_track(false)
@@ -46,6 +52,11 @@ func _ready():
 		add_child(timers[-1])
 	
 	update_launch_areas()
+
+
+func _process(_delta: float):
+	if race_state == RaceState.RACE:
+		update_timer_label()
 
 
 func update_checkpoints():
@@ -142,8 +153,11 @@ func _on_checkpoint_passed(cp):
 	if current == course.size() - 1:
 		timers[current_lap - 1].stop()
 		var time = timers[current_lap - 1].get_minute_second_decimal()
-		print("Lap %d/%d: %02d:%02d.%03d" % [current_lap, laps, time["minute"], time["second"], time["millisecond"]])
+		print("Lap %d/%d: %02d:%02d.%02d" % [current_lap, laps, time["minute"], time["second"], time["decimal"]])
 		if current_lap == laps:
+			stop_timers()
+			race_state = RaceState.END
+			update_timer_label()
 			print("Finished!")
 		else:
 			activate_next_checkpoint()
@@ -170,6 +184,7 @@ func activate_next_checkpoint():
 func reset_track():
 	stop_countdown()
 	stop_timers()
+	reset_timers()
 	
 	if current_checkpoint != null:
 		current_checkpoint.set_active(false)
@@ -193,9 +208,22 @@ func setup_countdown():
 	countdown_label.visible = false
 
 
+func setup_timer_label():
+	timer_label = Label.new()
+	add_child(timer_label)
+	timer_label.theme = load("res://GUI/ThemeCountdown.tres")
+	timer_label.align = Label.ALIGN_LEFT
+	timer_label.valign = Label.VALIGN_TOP
+	timer_label.set_anchors_and_margins_preset(Control.PRESET_TOP_LEFT, Control.PRESET_MODE_MINSIZE)
+	timer_label.visible = false
+
+
 func start_countdown():
+	race_state = RaceState.START
 	countdown_step = 0
+	timer_label.visible = true
 	update_countdown(countdown_step)
+	update_timer_label()
 
 
 func update_countdown(step: int = 0):
@@ -217,17 +245,39 @@ func stop_countdown():
 	countdown_label.visible = false
 
 
+func update_timer_label():
+	if race_state == RaceState.START:
+		timer_label.text = "Prev. lap: 00:00.00 (0)\nCurr. lap: 00:00.00 (0)\nTotal: 00:00.00"
+	elif race_state == RaceState.RACE or race_state == RaceState.END:
+		var total_time := 0.0
+		for timer in timers:
+			total_time += timer.time
+		timer_label.text = "Prev. lap: %s (%d)\nCurr. lap: %s (%d)\nTotal: %s" \
+				% [timers[current_lap - 2].get_time_string(), current_lap - 1,
+				timers[current_lap - 1].get_time_string(), current_lap,
+				timers[0].get_time_string(total_time)]
+
+
 func start_race():
 	timers[0].start()
+	race_state = RaceState.RACE
+	timer_label.visible = true
 
 
 func stop_race():
 	stop_timers()
+	reset_timers()
+	stop_countdown()
+	timer_label.visible = false
 
 
 func stop_timers():
 	for timer in timers:
 		timer.stop()
+
+
+func reset_timers():
+	for timer in timers:
 		timer.reset()
 
 
