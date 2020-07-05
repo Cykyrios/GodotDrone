@@ -23,8 +23,8 @@ var powered = false
 onready var rotor = $Motor_Rotor
 
 var sounds := []
-var sound1: AudioStreamPlayer3D = null
-var sound2: AudioStreamPlayer3D = null
+var sound1: AudioStreamPlayer = null
+var sound2: AudioStreamPlayer = null
 var sound_selector := -1
 
 
@@ -38,13 +38,10 @@ func _ready():
 	max_rpm_change = MAX_TORQUE * RPM_ACCELERATION
 	
 	for _i in range(8):
-		sounds.append(AudioStreamPlayer3D.new())
+		sounds.append(AudioStreamPlayer.new())
 		add_child(sounds[-1])
 	sound1 = sounds[0]
 	sound2 = sounds[1]
-	for player in sounds:
-#		player.doppler_tracking = AudioStreamPlayer3D.DOPPLER_TRACKING_PHYSICS_STEP
-		player.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
 	sounds[0].stream = load("res://Assets/Audio/SFX/Propellers/idle.wav")
 	sounds[1].stream = load("res://Assets/Audio/SFX/Propellers/motor1.wav")
 	sounds[2].stream = load("res://Assets/Audio/SFX/Propellers/motor2.wav")
@@ -125,7 +122,7 @@ func _on_armed(_mode):
 	sound1 = sounds[0]
 	sound2 = sounds[1]
 	for player in sounds:
-		player.unit_db = -80
+		player.volume_db = -80
 		player.play()
 
 
@@ -180,8 +177,8 @@ func update_sound(abs_rpm: float = 0.0):
 	sound1.pitch_scale = lerp(pitch1_low, pitch1_high, 1 - (range_end - rpm_ratio) / (range_end - range_start))
 	sound2.pitch_scale = lerp(pitch2_low, pitch2_high, 1 - (range_end - rpm_ratio) / (range_end - range_start))
 	if sound_selector == 0:
-		sound1.unit_db = -80
-		sound2.unit_db = -80
+		sound1.volume_db = -80
+		sound2.volume_db = -80
 
 
 func update_sound_source(source: int = 0):
@@ -197,27 +194,27 @@ func update_sound_source(source: int = 0):
 			sound1 = sounds[sound_selector]
 			sound2 = sounds[sound_selector]
 		else:
-			sound1.unit_db = -80
-			sound2.unit_db = -80
+			sound1.volume_db = -80
+			sound2.volume_db = -80
 			sound1 = sounds[sound_selector - 1]
 			sound2 = sounds[sound_selector]
-		sound1.unit_db = -80
-		sound2.unit_db = -80
+		sound1.volume_db = -80
+		sound2.volume_db = -80
 
 
 func adjust_sound_level(b: float, e: float, v: float):
 	var v1 := 0.0
 	var v2 := -80.0
 	if v <= b:
-		sound1.unit_db = v1
-		sound2.unit_db = v2
+		sound1.volume_db = v1
+		sound2.volume_db = v2
 	elif v >= e:
-		sound1.unit_db = v2
-		sound2.unit_db = v1
+		sound1.volume_db = v2
+		sound2.volume_db = v1
 	else:
 		var v_interp: float = (v - b) / (e - b)
-		sound1.unit_db = get_interpolated_sound_level(v1, v2, v_interp, "expo")
-		sound2.unit_db = get_interpolated_sound_level(v1, v2, 1 - v_interp, "expo")
+		sound1.volume_db = get_interpolated_sound_level(v1, v2, v_interp, "expo")
+		sound2.volume_db = get_interpolated_sound_level(v1, v2, 1 - v_interp, "expo")
 
 
 func get_interpolated_sound_level(b: float, e: float, v: float, transition: String = "expo"):
