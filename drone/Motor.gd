@@ -147,7 +147,7 @@ func update_sound(abs_rpm: float = 0.0):
 		update_sound_source(3)
 		adjust_sound_level(0.35, 0.45, rpm_ratio)
 		ratio_range = get_rpm_ratio_range(0.3, 0.45)
-		pitch_range = get_pitch_range(1, 1.46, 0.8, 1)
+		pitch_range = get_pitch_range(1, 1.25, 0.8, 1)
 	elif rpm_ratio < 0.6:
 		update_sound_source(4)
 		adjust_sound_level(0.5, 0.55, rpm_ratio)
