@@ -184,9 +184,9 @@ func reset():
 
 func _on_reset():
 	if Global.game_mode == Global.GameMode.RACE and Global.active_track:
-		var launch_area: LaunchArea = Global.active_track.get_random_launch_area()
+		var launch_transform: Transform = Global.active_track.get_random_launch_area().global_transform
 		var offset: float = -motors[0].transform.origin.z + 0.02
-		global_transform = launch_area.global_transform.translated(Vector3(0, 0.1, offset))
+		global_transform = launch_transform.translated(Vector3(0, 0.1, offset))
 	else:
 		global_transform = Transform.IDENTITY.translated(Vector3(0, 0.1, 0))
 	linear_velocity = Vector3.ZERO
