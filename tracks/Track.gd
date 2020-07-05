@@ -52,6 +52,8 @@ func _ready():
 		add_child(timers[-1])
 	
 	update_launch_areas()
+	for area in launch_areas:
+		var _discard = area.connect("body_exited", self, "_on_body_exited_launchpad")
 
 
 func _process(_delta: float):
@@ -227,8 +229,13 @@ func start_countdown():
 
 
 func update_countdown(step: int = 0):
+	if step != countdown_step:
+		countdown_step = step
 	if step <= 0:
 		countdown_timer.start(2)
+		if step == -1:
+			countdown_label.visible = true
+			countdown_label.text = "False Start!"
 	elif step <= 4:
 		countdown_timer.start(1)
 		countdown_label.visible = true
@@ -237,7 +244,7 @@ func update_countdown(step: int = 0):
 		elif step == 4:
 			countdown_label.text = "GO!"
 			start_race()
-		countdown_label.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
+	countdown_label.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
 
 
 func stop_countdown():
@@ -290,5 +297,14 @@ func get_random_launch_area() -> LaunchArea:
 
 func _on_countdown_timer_timeout():
 	countdown_label.visible = false
-	countdown_step += 1
-	update_countdown(countdown_step)
+	if countdown_step >= 0:
+		countdown_step += 1
+		update_countdown(countdown_step)
+	else:
+		stop_countdown()
+
+
+func _on_body_exited_launchpad(body: Node):
+	if body is Drone and race_state == RaceState.START:
+		stop_countdown()
+		update_countdown(-1)
