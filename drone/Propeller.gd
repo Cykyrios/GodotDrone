@@ -8,7 +8,6 @@ onready var ccw = $CCW
 onready var prop_disk = $PropBlurDisk
 
 onready var ray = $RayCast
-var ray_length = 0.0
 var max_ray_length = 0.0
 
 export (float, 0.5, 15) var diameter = 5
@@ -38,6 +37,12 @@ var radius = diameter * 0.0254 / 2.0
 var theta_tip = 1.25 * pitch / (PI * diameter)
 var w = 0.0
 
+# Ground effect parameters
+var gnd_radius := 0.0
+var gnd_d := 0.0
+var gnd_b := 0.0
+var gnd_kb := 0.0
+
 var debug = 0
 
 
@@ -48,8 +53,17 @@ func _ready():
 	set_visibility(true)
 	prop_disk.visible = false
 	
-	ray.add_exception(get_parent())
-	max_ray_length = ray.cast_to.length()
+	var parent: Spatial = get_parent()
+	while not parent is Drone:
+		ray.add_exception(parent)
+		parent = parent.get_parent()
+		if parent is Drone:
+			ray.add_exception(parent)
+		elif not parent:
+			break
+	max_ray_length = min(diameter * 0.0254 * 2, ray.cast_to.length())
+	ray.cast_to = ray.cast_to.normalized() * max_ray_length
+	ray.enabled = true
 	
 	theta_tip = deg2rad(theta_tip)
 
@@ -206,19 +220,38 @@ func update_forces():
 	roll_moment *= drag_direction * direction
 	pitch_moment *= Vector3.UP.cross(drag_direction)
 	
+	thrust = thrust * get_ground_effect()
+	
 	forces = [thrust, drag, torque, roll_moment, pitch_moment]
 
 
-func get_forces():
-	return forces
+func set_ground_effect_parameters(rad: float, d: float, b: float, kb: float):
+	gnd_radius = rad
+	gnd_d = d
+	gnd_b = b
+	gnd_kb = kb
 
 
 func get_ground_effect():
-	var ground_effect = 0.0
+	# Ground effect calculated according to paper from Hindawi
+	# Characterization of the Aerodynamic Ground Effect and Its Influence in Multirotor Control
+	var ground_effect = 1.0
+	var ray_length: float = max_ray_length
 	if ray.is_colliding():
-		ray_length = -global_transform.xform_inv(ray.get_collision_point()).y
-		ground_effect = 1 / (1 + pow(ray_length / max_ray_length, 2)) - 0.5
-	else:
-		ray_length = max_ray_length
-#	print("ray: %8.3f gnd: %8.3f" % [ray_length, ground_effect])
+		ray_length = min(abs(global_transform.xform_inv(ray.get_collision_point()).y), max_ray_length)
+		var b_square: float = gnd_b * gnd_b
+		var d_square: float = gnd_d * gnd_d
+		var r_square: float = gnd_radius * gnd_radius
+		var z_square: float = ray_length * ray_length
+		var b1: float = gnd_radius / (4 * ray_length)
+		var a1: float = b1 * b1
+		var b2: float = d_square + 4 * z_square
+		var a2: float = r_square * ray_length / sqrt(b2 * b2 * b2)
+		var b3: float = 2 * d_square + 4 * z_square
+		var a3: float = 0.5 * r_square * ray_length / sqrt(b3 * b3 * b3)
+		var b4: float = b_square + 4 * z_square
+		var a4: float = 2 * r_square * ray_length / sqrt(b4 * b4 * b4) * gnd_kb
+		ground_effect = clamp(1.0 / (1 - a1 - a2 - a3 - a4), 1, 2)
+		if ground_effect < 1.01 and ray_length < 2 * gnd_radius:
+			ground_effect = 2
 	return ground_effect

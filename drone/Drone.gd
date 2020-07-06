@@ -36,6 +36,14 @@ func _ready():
 #	flight_controller.set_hover_rpm(hover_rpm)
 	flight_controller.set_hover_thrust(mass / 4 * 9.81)
 	
+	# Ground effect parameters
+	var rad: float = motors[0].propeller.diameter * 0.0254 * 0.5
+	var d: float = min((motors[0].transform.origin - motors[1].transform.origin).length(),
+			(motors[0].transform.origin - motors[3].transform.origin).length())
+	var b: float = (motors[0].transform.origin - motors[2].transform.origin).length()
+	for motor in motors:
+		motor.propeller.set_ground_effect_parameters(rad, d, b, 1)
+	
 	add_child(hud)
 	var _discard = flight_controller.connect("armed", hud.status, "_on_armed")
 	_discard = flight_controller.connect("disarmed", hud.status, "_on_disarmed")
@@ -126,7 +134,7 @@ func _integrate_forces(state):
 			var prop_local_pos = prop_xform.xform_inv(prop_pos)
 			prop.set_velocity(basis.xform_inv(lin_vel) + basis.xform_inv(ang_vel).cross(prop_local_pos))
 			prop.update_forces()
-			var prop_forces = prop.get_forces()
+			var prop_forces = prop.forces
 			var prop_thrust = basis.xform(prop_forces[0])
 			if motor.rpm < 0:
 				prop_thrust = -prop_thrust / 2
