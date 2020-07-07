@@ -3,6 +3,9 @@ extends Spatial
 class_name Track
 
 
+enum RaceState {START, RACE, END}
+
+
 export (bool) var edit_track = false setget set_edit_track
 export (int) var selected_checkpoint = -1 setget set_selected_checkpoint
 export (String, MULTILINE) var course
@@ -15,24 +18,50 @@ export (int, 1, 100) var laps = 3
 var current_lap = 1
 var lap_start = 0
 var lap_end = 0
+var timers := []
+var timer_label: Label = null
+
+var race_state: int = RaceState.START
+var countdown_timer: Timer = null
+var countdown_label: Label = null
+var countdown_step := 0
+
+var has_launchpad := false
+var launch_areas := []
 
 
 func _ready():
 	if Engine.editor_hint:
 		return
 	
+	setup_countdown()
+	setup_timer_label()
+	
 	set_selected_checkpoint(-1)
 	set_edit_track(false)
 	
-	get_checkpoints()
+	update_checkpoints()
 	
 	for cp in checkpoints:
-		cp.connect("passed", self, "_on_checkpoint_passed")
+		var _discard = cp.connect("passed", self, "_on_checkpoint_passed")
 	
 	update_course()
+	
+	for _i in range(laps):
+		timers.append(LapTimer.new())
+		add_child(timers[-1])
+	
+	update_launch_areas()
+	for area in launch_areas:
+		var _discard = area.connect("body_exited", self, "_on_body_exited_launchpad")
 
 
-func get_checkpoints():
+func _process(_delta: float):
+	if race_state == RaceState.RACE:
+		update_timer_label()
+
+
+func update_checkpoints():
 	checkpoints.clear()
 	for child in get_children():
 		if child is Gate:
@@ -78,12 +107,20 @@ func update_course():
 	reset_track()
 
 
+func update_launch_areas():
+	for child in get_children():
+		if child is Launchpad:
+			for area in child.launch_areas:
+				launch_areas.append(area)
+	has_launchpad = not launch_areas.empty()
+
+
 func set_edit_track(edit : bool):
 	if !Engine.editor_hint:
 		return
 	edit_track = edit
 	if edit_track:
-		get_checkpoints()
+		update_checkpoints()
 	for cp in checkpoints:
 		cp.set_area_visible(edit_track)
 		cp.mat.set_shader_param("Editor", edit_track)
@@ -115,8 +152,19 @@ func _on_checkpoint_passed(cp):
 		return
 	
 	current_checkpoint.set_active(false)
-	if current == course.size() - 1 and current_lap == laps:
-		print("Finished!")
+	if current == course.size() - 1:
+		timers[current_lap - 1].stop()
+		var time = timers[current_lap - 1].get_minute_second_decimal()
+		print("Lap %d/%d: %02d:%02d.%02d" % [current_lap, laps, time["minute"], time["second"], time["decimal"]])
+		if current_lap == laps:
+			stop_timers()
+			race_state = RaceState.END
+			update_timer_label()
+			print("Finished!")
+		else:
+			activate_next_checkpoint()
+			if race_state == RaceState.RACE:
+				timers[current_lap - 1].start()
 	else:
 		activate_next_checkpoint()
 
@@ -137,8 +185,127 @@ func activate_next_checkpoint():
 
 
 func reset_track():
+	stop_countdown()
+	stop_timers()
+	reset_timers()
+	
 	if current_checkpoint != null:
 		current_checkpoint.set_active(false)
 	current_lap = 1
 	current = -1
 	activate_next_checkpoint()
+
+
+func setup_countdown():
+	countdown_timer = Timer.new()
+	add_child(countdown_timer)
+	countdown_timer.one_shot = true
+	var _discard = countdown_timer.connect("timeout", self, "_on_countdown_timer_timeout")
+	
+	countdown_label = Label.new()
+	add_child(countdown_label)
+	countdown_label.theme = load("res://GUI/ThemeCountdown.tres")
+	countdown_label.align = Label.ALIGN_CENTER
+	countdown_label.valign = Label.VALIGN_CENTER
+	countdown_label.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
+	countdown_label.visible = false
+
+
+func setup_timer_label():
+	timer_label = Label.new()
+	add_child(timer_label)
+	timer_label.theme = load("res://GUI/ThemeTimer.tres")
+	timer_label.align = Label.ALIGN_LEFT
+	timer_label.valign = Label.VALIGN_TOP
+	timer_label.set_anchors_and_margins_preset(Control.PRESET_TOP_LEFT, Control.PRESET_MODE_MINSIZE)
+	timer_label.visible = false
+
+
+func start_countdown():
+	race_state = RaceState.START
+	countdown_step = 0
+	timer_label.visible = true
+	update_countdown(countdown_step)
+	update_timer_label()
+
+
+func update_countdown(step: int = 0):
+	if step != countdown_step:
+		countdown_step = step
+	if step <= 0:
+		countdown_timer.start(2)
+		if step == -1:
+			countdown_label.visible = true
+			countdown_label.text = "False Start!"
+	elif step <= 4:
+		countdown_timer.start(1)
+		countdown_label.visible = true
+		if step <= 3:
+			countdown_label.text = "%d" % [3 - step + 1]
+		elif step == 4:
+			countdown_label.text = "GO!"
+			start_race()
+	countdown_label.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
+
+
+func stop_countdown():
+	countdown_timer.stop()
+	countdown_label.visible = false
+
+
+func update_timer_label():
+	if race_state == RaceState.START:
+		timer_label.text = "Prev. lap: 00:00.00 (0)\nCurr. lap: 00:00.00 (0)\nTotal: 00:00.00"
+	elif race_state == RaceState.RACE or race_state == RaceState.END:
+		var total_time := 0.0
+		for timer in timers:
+			total_time += timer.time
+		timer_label.text = "Prev. lap: %s (%d)\nCurr. lap: %s (%d)\nTotal: %s" \
+				% [timers[current_lap - 2].get_time_string(), current_lap - 1,
+				timers[current_lap - 1].get_time_string(), current_lap,
+				timers[0].get_time_string(total_time)]
+
+
+func start_race():
+	timers[0].start()
+	race_state = RaceState.RACE
+	timer_label.visible = true
+
+
+func stop_race():
+	stop_timers()
+	reset_timers()
+	stop_countdown()
+	timer_label.visible = false
+
+
+func stop_timers():
+	for timer in timers:
+		timer.stop()
+
+
+func reset_timers():
+	for timer in timers:
+		timer.reset()
+
+
+func get_random_launch_area() -> LaunchArea:
+	if not launch_areas.empty():
+		return launch_areas[randi() % launch_areas.size()]
+	else:
+		return null
+
+
+func _on_countdown_timer_timeout():
+	countdown_label.visible = false
+	if countdown_step >= 0:
+		countdown_step += 1
+		update_countdown(countdown_step)
+	else:
+		stop_countdown()
+
+
+func _on_body_exited_launchpad(body: Node):
+	if body is Drone and race_state == RaceState.START:
+		stop_countdown()
+		update_countdown(-1)
