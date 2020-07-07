@@ -307,6 +307,8 @@ func is_flight_safe():
 
 func set_motors(motor_array):
 	motors = motor_array
+	for motor in motors:
+		var _discard = connect("armed", motor, "_on_armed")
 
 
 func set_hover_thrust(t : float):

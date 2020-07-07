@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/motor3.wav-89da245a7083d54fc2d4321ca0ed30fa.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/Propellers/motor3.wav"
+dest_files=[ "res://.import/motor3.wav-89da245a7083d54fc2d4321ca0ed30fa.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0
