@@ -214,7 +214,7 @@ func setup_countdown():
 func setup_timer_label():
 	timer_label = Label.new()
 	add_child(timer_label)
-	timer_label.theme = load("res://GUI/ThemeCountdown.tres")
+	timer_label.theme = load("res://GUI/ThemeTimer.tres")
 	timer_label.align = Label.ALIGN_LEFT
 	timer_label.valign = Label.VALIGN_TOP
 	timer_label.set_anchors_and_margins_preset(Control.PRESET_TOP_LEFT, Control.PRESET_MODE_MINSIZE)
