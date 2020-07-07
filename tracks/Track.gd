@@ -163,7 +163,8 @@ func _on_checkpoint_passed(cp):
 			print("Finished!")
 		else:
 			activate_next_checkpoint()
-			timers[current_lap - 1].start()
+			if race_state == RaceState.RACE:
+				timers[current_lap - 1].start()
 	else:
 		activate_next_checkpoint()
 
