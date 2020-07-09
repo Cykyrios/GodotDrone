@@ -1,21 +1,27 @@
 extends Spatial
 
-export var speed = 30
-export var speed_modifier = 4.0
-export var look_around_speed = 1
-export var look_around_sensitivity = 0.1
+export(float, 0.1, 100) var base_speed := 30.0
+export var speed_modifier := 1.5
+export var look_around_speed := 1.0
+export var look_around_sensitivity := 0.1
+
+var speed: float
+const MAX_SPEED: float = 300.0
+const MIN_SPEED: float = 0.1
 
 var rotation_helper
 var camera
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	rotation_helper = $RotationHelper
 	camera = $RotationHelper/Camera
+	
+	speed = base_speed
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
 	var dir = Vector3()
 	if Input.is_action_pressed("camera_forward"):
@@ -31,15 +37,16 @@ func _process(delta):
 	if Input.is_action_pressed("camera_down"):
 		dir.y -= 1
 	
-	var speed_multiplier = 1.0
 	if Input.is_action_pressed("camera_speed_up"):
-		speed_multiplier = speed_modifier
+		speed += speed * speed_modifier * delta
 	elif Input.is_action_pressed("camera_speed_down"):
-		speed_multiplier = 1.0 / speed_modifier
+		speed -= speed * speed_modifier * delta
+	speed = clamp(speed, MIN_SPEED, MAX_SPEED)
 	
 	# retrieve rotation_helper basis?
 	dir = dir.normalized()
-	self.translate_object_local(dir * speed * speed_multiplier * delta)
+	self.translate_object_local(dir * speed * delta)
+
 
 func _input(event):
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
