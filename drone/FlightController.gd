@@ -136,7 +136,7 @@ func set_control_profile(profile : ControlProfile):
 
 
 func _on_arm_input():
-	if input[0] <= 0.01:
+	if input[0] <= 0.01 and flight_mode != FlightMode.AUTO:
 		if Input.is_action_pressed("mode_turtle"):
 			change_flight_mode(FlightMode.TURTLE)
 		elif Input.is_action_pressed("mode_launch"):
