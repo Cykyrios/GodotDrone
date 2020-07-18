@@ -181,7 +181,8 @@ func integrate_loop(delta : float, drone_pos : Vector3, drone_basis : Basis):
 	
 	update_velocity()
 	
-	update_control(dt)
+	if armed:
+		update_control(dt)
 
 
 func update_position():
