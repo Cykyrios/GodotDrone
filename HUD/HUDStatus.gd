@@ -47,6 +47,8 @@ func clear_message():
 
 func _on_message_timer_timeout():
 	clear_message()
+	if status == Status.DISARMED:
+		set_status(Status.DISARMED)
 
 
 func _on_armed(mode: int):
@@ -61,6 +63,17 @@ func _on_armed(mode: int):
 
 func _on_disarmed():
 	self.status = Status.DISARMED
+
+
+func _on_arm_failed(reason: int):
+	var reason_msg := ""
+	match reason:
+		FlightController.ArmFail.THROTTLE_HIGH:
+			reason_msg = "THROTTLE HIGH"
+		FlightController.ArmFail.CRASH_RECOVERY_MODE:
+			reason_msg = "CRASH RECOVERY MODE"
+	set_message("*** %s ***" % reason_msg)
+	message_timer.start(1)
 
 
 func _on_mode_changed(mode: int):

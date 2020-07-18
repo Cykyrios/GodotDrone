@@ -9,9 +9,12 @@ enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
 
 enum FlightMode {RATE, LEVEL, SPEED, TRACK, LAUNCH, TURTLE, AUTO}
 
+enum ArmFail {THROTTLE_HIGH, CRASH_RECOVERY_MODE}
+
 
 signal armed(mode)
 signal disarmed
+signal arm_failed(reason)
 signal flight_mode_changed(mode)
 
 
@@ -142,6 +145,11 @@ func _on_arm_input():
 		elif Input.is_action_pressed("mode_launch"):
 			change_flight_mode(FlightMode.LAUNCH)
 		set_armed(true)
+	else:
+		if input[0] > 0.01:
+			emit_signal("arm_failed", ArmFail.THROTTLE_HIGH)
+		elif flight_mode == FlightMode.AUTO:
+			emit_signal("arm_failed", ArmFail.CRASH_RECOVERY_MODE)
 	for controller in pid_controllers:
 		controller.set_disabled(false)
 

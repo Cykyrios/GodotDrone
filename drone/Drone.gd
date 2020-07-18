@@ -51,6 +51,7 @@ func _ready():
 	var _discard = flight_controller.connect("armed", hud.status, "_on_armed")
 	_discard = flight_controller.connect("disarmed", hud.status, "_on_disarmed")
 	_discard = flight_controller.connect("flight_mode_changed", hud.status, "_on_mode_changed")
+	_discard = flight_controller.connect("arm_failed", hud.status, "_on_arm_failed")
 	
 	add_child(control_profile)
 	control_profile.set_rates(rate_pitch, rate_roll, rate_yaw)
