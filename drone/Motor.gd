@@ -1,26 +1,25 @@
 tool
 extends Spatial
-
 class_name Motor
 
 
-onready var propeller = get_children().back() as Propeller
+onready var propeller := get_children().back() as Propeller
 
-export (bool) var clockwise = true setget set_clockwise
-export (float, 0.0, 10000.0) var MAX_TORQUE = 1000.0
-export (float, 0.0, 30000.0) var MAX_RPM = 10000.0
-export (float, 0, 200000) var RPM_ACCELERATION = 16000.0
-export (int, 0, 100) var MIN_POWER = 1
-export (int, 100, 20000) var kv = 2000
-export (int, 101, 9999) var motor_size = 2207
+export (bool) var clockwise := true setget set_clockwise
+export (float, 0.0, 10000.0) var MAX_TORQUE := 1000.0
+export (float, 0.0, 30000.0) var MAX_RPM := 10000.0
+export (float, 0, 200000) var RPM_ACCELERATION := 16000.0
+export (int, 0, 100) var MIN_POWER := 1
+export (int, 100, 20000) var kv := 2000
+export (int, 101, 9999) var motor_size := 2207
 
-var torque = 0.0 setget set_torque, get_torque
-var rpm = 0.0 setget set_rpm, get_rpm
-var rpm_target = 0.0 setget set_rpm_target, get_rpm_target
-var max_rpm_change = 0.0
-var powered = false
+var torque := 0.0 setget set_torque, get_torque
+var rpm := 0.0 setget set_rpm, get_rpm
+var rpm_target := 0.0 setget set_rpm_target, get_rpm_target
+var max_rpm_change := 0.0
+var powered := false
 
-onready var rotor = $Motor_Rotor
+onready var rotor := $Motor_Rotor
 
 var sounds := []
 var sound1: AudioStreamPlayer = null
@@ -28,7 +27,7 @@ var sound2: AudioStreamPlayer = null
 var sound_selector := -1
 
 
-func _ready():
+func _ready() -> void:
 	set_clockwise(clockwise)
 	
 	if Engine.editor_hint:
@@ -52,11 +51,11 @@ func _ready():
 	sounds[7].stream = load("res://Assets/Audio/SFX/Propellers/motor7.wav")
 
 
-func _process(delta):
+func _process(delta: float) -> void:
 	if Engine.editor_hint:
 		return
 	
-	var rot = rpm * PI / 30.0
+	var rot := rpm * PI / 30.0
 	if clockwise:
 		rot = -rot
 	rotor.rotate_object_local(Vector3.UP, rot * delta)
@@ -66,12 +65,12 @@ func _process(delta):
 	propeller.transform = propeller.transform.orthonormalized()
 
 
-func _physics_process(_delta):
-	var abs_rpm = abs(rpm)
+func _physics_process(_delta: float) -> void:
+	var abs_rpm := abs(rpm)
 	update_sound(abs_rpm)
 
 
-func update_thrust(delta):
+func update_thrust(delta: float) -> void:
 	if powered:
 		set_rpm(clamp(rpm_target, rpm - max_rpm_change * delta, rpm + max_rpm_change * delta))
 		set_torque(rpm / (MAX_RPM as float) * MAX_TORQUE)
@@ -80,45 +79,45 @@ func update_thrust(delta):
 		set_torque(0.0)
 
 
-func set_clockwise(cw : bool):
+func set_clockwise(cw: bool) -> void:
 	clockwise = cw
 	if propeller:
 		propeller.set_clockwise(clockwise)
 
 
-func set_torque(x : float):
+func set_torque(x: float) -> void:
 	torque = x
 
 
-func get_torque():
+func get_torque() -> float:
 	if clockwise:
 		return torque
 	else:
 		return -torque
 
 
-func set_pwm(p: float):
+func set_pwm(p: float) -> void:
 	set_rpm_target(p * MAX_RPM)
 
 
-func set_rpm_target(x : float):
+func set_rpm_target(x: float) -> void:
 	rpm_target = x
 
 
-func get_rpm_target():
+func get_rpm_target() -> float:
 	return rpm_target
 
 
-func set_rpm(x : float):
+func set_rpm(x: float) -> void:
 	rpm = clamp(x, -MAX_RPM, MAX_RPM)
 	propeller.rpm = rpm
 
 
-func get_rpm():
+func get_rpm() -> float:
 	return rpm
 
 
-func _on_armed(_mode):
+func _on_armed(_mode) -> void:
 	sound1 = sounds[0]
 	sound2 = sounds[1]
 	for player in sounds:
@@ -126,7 +125,7 @@ func _on_armed(_mode):
 		player.play()
 
 
-func update_sound(abs_rpm: float = 0.0):
+func update_sound(abs_rpm: float = 0.0) -> void:
 	var rpm_ratio: float = abs_rpm / MAX_RPM
 	var ratio_range: Array = get_rpm_ratio_range()
 	var pitch_range: Array = get_pitch_range()
@@ -181,7 +180,7 @@ func update_sound(abs_rpm: float = 0.0):
 		sound2.volume_db = -80
 
 
-func update_sound_source(source: int = 0):
+func update_sound_source(source: int = 0) -> void:
 	if source != sound_selector:
 		if source == 0:
 			for player in sounds:
@@ -202,7 +201,7 @@ func update_sound_source(source: int = 0):
 		sound2.volume_db = -80
 
 
-func adjust_sound_level(b: float, e: float, v: float):
+func adjust_sound_level(b: float, e: float, v: float) -> void:
 	var v1 := 0.0
 	var v2 := -80.0
 	if v <= b:
@@ -212,13 +211,13 @@ func adjust_sound_level(b: float, e: float, v: float):
 		sound1.volume_db = v2
 		sound2.volume_db = v1
 	else:
-		var v_interp: float = (v - b) / (e - b)
+		var v_interp := (v - b) / (e - b)
 		sound1.volume_db = get_interpolated_sound_level(v1, v2, v_interp, "expo")
 		sound2.volume_db = get_interpolated_sound_level(v1, v2, 1 - v_interp, "expo")
 
 
-func get_interpolated_sound_level(b: float, e: float, v: float, transition: String = "expo"):
-	var result: float = 0.0
+func get_interpolated_sound_level(b: float, e: float, v: float, transition: String = "expo") -> float:
+	var result := 0.0
 	match transition:
 		"expo":
 			result = e * pow(2, 10 * (v - 1)) + b - e * 0.001
@@ -227,9 +226,9 @@ func get_interpolated_sound_level(b: float, e: float, v: float, transition: Stri
 	return result
 
 
-func get_rpm_ratio_range(start: float = 0, end: float = 1):
+func get_rpm_ratio_range(start: float = 0, end: float = 1) -> Array:
 	return [start, end]
 
 
-func get_pitch_range(start1: float = 1, end1: float = 1, start2: float = 1, end2: float = 1):
+func get_pitch_range(start1: float = 1, end1: float = 1, start2: float = 1, end2: float = 1) -> Array:
 	return [start1, end1, start2, end2]

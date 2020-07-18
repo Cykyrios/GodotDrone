@@ -4,19 +4,19 @@ extends Control
 signal back
 
 
-var packed_popup = preload("res://GUI/ConfirmationPopup.tscn")
+var packed_popup := preload("res://GUI/ConfirmationPopup.tscn")
 
-onready var window_mode = $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/WindowOptions
-onready var resolution = $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/ResolutionOptions
-onready var game_msaa = $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/GameMSAAOptions
-onready var game_af = $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/GameAFOptions
-onready var shadows = $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/ShadowsOptions
-onready var fisheye_mode = $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/FPVFisheyeOptions
-onready var fisheye_resolution = $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/FisheyeResolutionOptions
-onready var fisheye_msaa = $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/FisheyeMSAAOptions
+onready var window_mode := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/WindowOptions
+onready var resolution := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/ResolutionOptions
+onready var game_msaa := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/GameMSAAOptions
+onready var game_af := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/GameAFOptions
+onready var shadows := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/ShadowsOptions
+onready var fisheye_mode := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/FPVFisheyeOptions
+onready var fisheye_resolution := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/FisheyeResolutionOptions
+onready var fisheye_msaa := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/FisheyeMSAAOptions
 
 
-func _ready():
+func _ready() -> void:
 	window_mode.get_popup().add_item("Full Screen")
 	window_mode.get_popup().add_item("Full Screen Window")
 	window_mode.get_popup().add_item("Window")
@@ -35,7 +35,7 @@ func _ready():
 	game_msaa.get_popup().add_item("4x")
 	game_msaa.get_popup().add_item("8x")
 	game_msaa.get_popup().add_item("16x")
-	game_msaa.connect("item_selected", self, "_on_msaa_changed")
+	_discard = game_msaa.connect("item_selected", self, "_on_msaa_changed")
 	game_msaa.select(Graphics.graphics_settings["msaa"])
 	
 	game_af.get_popup().add_item("Off")
@@ -82,37 +82,37 @@ func _ready():
 	_discard = $PanelContainer/VBoxContainer/HBoxContainer/ButtonBack.connect("pressed", self, "_on_back_pressed")
 
 
-func _on_window_mode_changed(idx: int):
+func _on_window_mode_changed(idx: int) -> void:
 	Graphics.graphics_settings["window_mode"] = idx
 	Graphics.update_window_mode()
 	Graphics.save_graphics_settings()
 
 
-func _on_resolution_changed(_idx: int):
+func _on_resolution_changed(_idx: int) -> void:
 	Graphics.graphics_settings["resolution"] = resolution.text
 	Graphics.update_resolution()
 	Graphics.save_graphics_settings()
 
 
-func _on_msaa_changed(idx: int):
+func _on_msaa_changed(idx: int) -> void:
 	Graphics.graphics_settings["msaa"] = idx
 	Graphics.update_msaa()
 	Graphics.save_graphics_settings()
 
 
-func _on_af_changed(idx: int):
+func _on_af_changed(idx: int) -> void:
 	Graphics.graphics_settings["af"] = idx
 	Graphics.update_af()
 	Graphics.save_graphics_settings()
 
 
-func _on_shadows_changed(idx: int):
+func _on_shadows_changed(idx: int) -> void:
 	Graphics.graphics_settings["shadows"] = idx
 	Graphics.update_shadows()
 	Graphics.save_graphics_settings()
 
 
-func _on_fisheye_mode_changed(idx: int):
+func _on_fisheye_mode_changed(idx: int) -> void:
 	Graphics.graphics_settings["fisheye_mode"] = idx
 	Graphics.update_fisheye_mode()
 	Graphics.save_graphics_settings()
@@ -124,15 +124,15 @@ func _on_fisheye_mode_changed(idx: int):
 	fisheye_msaa.disabled = fisheye_disabled
 
 
-func _on_fisheye_resolution_changed(_idx: int):
+func _on_fisheye_resolution_changed(_idx: int) -> void:
 	Graphics.update_fisheye_resolution(fisheye_resolution.text)
 	Graphics.save_graphics_settings()
 
 
-func _on_fisheye_msaa_changed(idx: int):
+func _on_fisheye_msaa_changed(idx: int) -> void:
 	Graphics.graphics_settings["fisheye_msaa"] = idx
 	Graphics.save_graphics_settings()
 
 
-func _on_back_pressed():
+func _on_back_pressed() -> void:
 	emit_signal("back")

@@ -1,18 +1,19 @@
 extends Control
 
-export (bool) var horizontal = false
-export (int) var width = 100
-export (int) var height = 100
-export (float) var max_value = 1.0
 
-var value = 0.0
+export (bool) var horizontal := false
+export (int) var width := 100
+export (int) var height := 100
+export (float) var max_value := 1.0
 
-var container = null
-onready var pos = $TextureProgressPos
-onready var neg = $TextureProgressNeg
+var value := 0.0
+
+var container: BoxContainer = null
+onready var pos := $TextureProgressPos
+onready var neg := $TextureProgressNeg
 
 
-func _ready():
+func _ready() -> void:
 	self.remove_child(pos)
 	self.remove_child(neg)
 	if horizontal:
@@ -47,16 +48,16 @@ func _ready():
 	if horizontal:
 		pos.fill_mode = TextureProgress.FILL_LEFT_TO_RIGHT
 		neg.fill_mode = TextureProgress.FILL_RIGHT_TO_LEFT
-		pos.rect_min_size = Vector2(width / 2, height)
-		neg.rect_min_size = Vector2(width / 2, height)
+		pos.rect_min_size = Vector2(width / 2.0, height)
+		neg.rect_min_size = Vector2(width / 2.0, height)
 	else:
 		pos.fill_mode = TextureProgress.FILL_BOTTOM_TO_TOP
 		neg.fill_mode = TextureProgress.FILL_TOP_TO_BOTTOM
-		pos.rect_min_size = Vector2(width, height / 2)
-		neg.rect_min_size = Vector2(width, height / 2)
+		pos.rect_min_size = Vector2(width, height / 2.0)
+		neg.rect_min_size = Vector2(width, height / 2.0)
 
 
-func update_gauge(v : float):
+func update_gauge(v: float) -> void:
 	value = v
 	if value > 0:
 		pos.value = value

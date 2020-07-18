@@ -6,18 +6,18 @@ class_name Track
 enum RaceState {START, RACE, END}
 
 
-export (bool) var edit_track = false setget set_edit_track
-export (int) var selected_checkpoint = -1 setget set_selected_checkpoint
+export (bool) var edit_track := false setget set_edit_track
+export (int) var selected_checkpoint := -1 setget set_selected_checkpoint
 export (String, MULTILINE) var course
 
-var checkpoints = []
-var current_checkpoint = null
-var current = 0
+var checkpoints := []
+var current_checkpoint: Checkpoint = null
+var current := 0
 
-export (int, 1, 100) var laps = 3
-var current_lap = 1
-var lap_start = 0
-var lap_end = 0
+export (int, 1, 100) var laps := 3
+var current_lap := 1
+var lap_start := 0
+var lap_end := 0
 var timers := []
 var timer_label: Label = null
 
@@ -30,7 +30,7 @@ var has_launchpad := false
 var launch_areas := []
 
 
-func _ready():
+func _ready() -> void:
 	if Engine.editor_hint:
 		return
 	
@@ -56,12 +56,12 @@ func _ready():
 		var _discard = area.connect("body_exited", self, "_on_body_exited_launchpad")
 
 
-func _process(_delta: float):
+func _process(_delta: float) -> void:
 	if race_state == RaceState.RACE:
 		update_timer_label()
 
 
-func update_checkpoints():
+func update_checkpoints() -> void:
 	checkpoints.clear()
 	for child in get_children():
 		if child is Gate:
@@ -72,7 +72,7 @@ func update_checkpoints():
 			checkpoints.append(child)
 
 
-func update_course():
+func update_course() -> void:
 	if course == "":
 		course = []
 		for i in range(checkpoints.size()):
@@ -80,7 +80,7 @@ func update_course():
 	else:
 		course = course.replace("\n", ",")
 		course = course.replace(" ", "")
-		var temp_course = course.split(",")
+		var temp_course: Array = course.split(",")
 		course = []
 		for i in range(temp_course.size()):
 			course.append(temp_course[i])
@@ -107,7 +107,7 @@ func update_course():
 	reset_track()
 
 
-func update_launch_areas():
+func update_launch_areas() -> void:
 	for child in get_children():
 		if child is Launchpad:
 			for area in child.launch_areas:
@@ -115,7 +115,7 @@ func update_launch_areas():
 	has_launchpad = not launch_areas.empty()
 
 
-func set_edit_track(edit : bool):
+func set_edit_track(edit: bool) -> void:
 	if !Engine.editor_hint:
 		return
 	edit_track = edit
@@ -130,7 +130,7 @@ func set_edit_track(edit : bool):
 		selected_checkpoint = -1
 
 
-func set_selected_checkpoint(selected : int):
+func set_selected_checkpoint(selected: int) -> void:
 	if !Engine.editor_hint:
 		return
 	var size = checkpoints.size()
@@ -147,14 +147,14 @@ func set_selected_checkpoint(selected : int):
 	checkpoints[selected_checkpoint].set_selected(true)
 
 
-func _on_checkpoint_passed(cp):
+func _on_checkpoint_passed(cp: Checkpoint) -> void:
 	if cp != current_checkpoint:
 		return
 	
 	current_checkpoint.set_active(false)
 	if current == course.size() - 1:
 		timers[current_lap - 1].stop()
-		var time = timers[current_lap - 1].get_minute_second_decimal()
+		var time: Dictionary = timers[current_lap - 1].get_minute_second_decimal()
 		print("Lap %d/%d: %02d:%02d.%02d" % [current_lap, laps, time["minute"], time["second"], time["decimal"]])
 		if current_lap == laps:
 			stop_timers()
@@ -169,13 +169,13 @@ func _on_checkpoint_passed(cp):
 		activate_next_checkpoint()
 
 
-func activate_next_checkpoint():
+func activate_next_checkpoint() -> void:
 	if current >= lap_end and current_lap < laps:
 		current_lap += 1
 		current = lap_start
 	else:
 		current += 1
-	var new_cp = [course[current], false]
+	var new_cp := [course[current], false]
 	if new_cp[0].ends_with("b"):
 		new_cp[0] = new_cp[0].rstrip("b")
 		new_cp[1] = true
@@ -184,7 +184,7 @@ func activate_next_checkpoint():
 	current_checkpoint.set_active(true)
 
 
-func reset_track():
+func reset_track() -> void:
 	stop_countdown()
 	stop_timers()
 	reset_timers()
@@ -196,7 +196,7 @@ func reset_track():
 	activate_next_checkpoint()
 
 
-func setup_countdown():
+func setup_countdown() -> void:
 	countdown_timer = Timer.new()
 	add_child(countdown_timer)
 	countdown_timer.one_shot = true
@@ -211,7 +211,7 @@ func setup_countdown():
 	countdown_label.visible = false
 
 
-func setup_timer_label():
+func setup_timer_label() -> void:
 	timer_label = Label.new()
 	add_child(timer_label)
 	timer_label.theme = load("res://GUI/ThemeTimer.tres")
@@ -221,7 +221,7 @@ func setup_timer_label():
 	timer_label.visible = false
 
 
-func start_countdown():
+func start_countdown() -> void:
 	race_state = RaceState.START
 	countdown_step = 0
 	timer_label.visible = true
@@ -229,7 +229,7 @@ func start_countdown():
 	update_timer_label()
 
 
-func update_countdown(step: int = 0):
+func update_countdown(step: int = 0) -> void:
 	if step != countdown_step:
 		countdown_step = step
 	if step <= 0:
@@ -248,12 +248,12 @@ func update_countdown(step: int = 0):
 	countdown_label.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
 
 
-func stop_countdown():
+func stop_countdown() -> void:
 	countdown_timer.stop()
 	countdown_label.visible = false
 
 
-func update_timer_label():
+func update_timer_label() -> void:
 	if race_state == RaceState.START:
 		timer_label.text = "Prev. lap: 00:00.00 (0)\nCurr. lap: 00:00.00 (0)\nTotal: 00:00.00"
 	elif race_state == RaceState.RACE or race_state == RaceState.END:
@@ -266,25 +266,25 @@ func update_timer_label():
 				timers[0].get_time_string(total_time)]
 
 
-func start_race():
+func start_race() -> void:
 	timers[0].start()
 	race_state = RaceState.RACE
 	timer_label.visible = true
 
 
-func stop_race():
+func stop_race() -> void:
 	stop_timers()
 	reset_timers()
 	stop_countdown()
 	timer_label.visible = false
 
 
-func stop_timers():
+func stop_timers() -> void:
 	for timer in timers:
 		timer.stop()
 
 
-func reset_timers():
+func reset_timers() -> void:
 	for timer in timers:
 		timer.reset()
 
@@ -296,7 +296,7 @@ func get_random_launch_area() -> LaunchArea:
 		return null
 
 
-func _on_countdown_timer_timeout():
+func _on_countdown_timer_timeout() -> void:
 	countdown_label.visible = false
 	if countdown_step >= 0:
 		countdown_step += 1
@@ -305,7 +305,7 @@ func _on_countdown_timer_timeout():
 		stop_countdown()
 
 
-func _on_body_exited_launchpad(body: Node):
+func _on_body_exited_launchpad(body: Node) -> void:
 	if body is Drone and race_state == RaceState.START:
 		stop_countdown()
 		update_countdown(-1)

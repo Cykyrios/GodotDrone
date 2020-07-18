@@ -2,21 +2,21 @@ extends Camera
 class_name FPVCamera
 
 
-export (float, 90, 180) var fov_h = 150 setget set_fov
-export (float, 0.001, 1) var clip_near = 0.005
-export (float, 10, 10000) var clip_far = 1000
+export (float, 90, 180) var fov_h := 150.0 setget set_fov
+export (float, 0.001, 1) var clip_near := 0.005
+export (float, 10, 10000) var clip_far := 1000.0
 
-var viewports = []
-var cameras = []
-var camera_layer = 11
-var num_cameras = 5
+var viewports := []
+var cameras := []
+var camera_layer := 11
+var num_cameras := 5
 var fpv_environment: Environment = load("res://drone/FPVCamera/FPVCameraEnvironment.tres")
 
 onready var render_quad: MeshInstance = null
 var mat: ShaderMaterial = load("res://drone/FPVCamera/FPVCamera.tres")
 
 
-func _ready():
+func _ready() -> void:
 	var _discard = Graphics.connect("fisheye_resolution_changed", self, "_on_fisheye_resolution_changed")
 	_discard = Graphics.connect("fisheye_msaa_changed", self, "_on_fisheye_msaa_changed")
 	
@@ -45,7 +45,7 @@ func _ready():
 	
 	var root_viewport: Viewport = get_tree().root
 	for i in range(num_cameras):
-		var viewport = Viewport.new()
+		var viewport := Viewport.new()
 		add_child(viewport)
 		viewport.size = Graphics.fisheye_resolution * Vector2.ONE
 		viewport.shadow_atlas_size = root_viewport.shadow_atlas_size
@@ -58,19 +58,19 @@ func _ready():
 		viewports.append(viewport)
 		mat.set_shader_param("Texture%d" % [i], viewports[i].get_texture())
 		
-		var camera = Camera.new()
+		var camera := Camera.new()
 		viewport.add_child(camera)
 		camera.fov = 90
 		if fisheye_mode == Graphics.FisheyeMode.FAST and i == 1:
 			camera.fov = 160
 		camera.near = clip_near
 		camera.far = clip_far
-		camera.cull_mask -= pow(2, camera_layer - 1)
+		camera.cull_mask -= int(pow(2, camera_layer - 1))
 		camera.environment = fpv_environment
 		cameras.append(camera)
 
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	var fisheye_mode: int = Graphics.graphics_settings["fisheye_mode"]
 	if fisheye_mode != Graphics.FisheyeMode.OFF:
 		for camera in cameras:
@@ -82,21 +82,21 @@ func _process(_delta):
 			cameras[4].rotate_object_local(Vector3.RIGHT, PI/2)
 
 
-func set_fov(angle: float):
+func set_fov(angle: float) -> void:
 	fov_h = angle
 	mat.set_shader_param("hfov", fov_h)
 
 
-func show_fisheye(show: bool):
+func show_fisheye(show: bool) -> void:
 	render_quad.visible = show
 
 
-func _on_fisheye_resolution_changed():
+func _on_fisheye_resolution_changed() -> void:
 	for viewport in viewports:
 		viewport.size = Graphics.fisheye_resolution * Vector2.ONE
 
 
-func _on_fisheye_msaa_changed():
+func _on_fisheye_msaa_changed() -> void:
 	for viewport in viewports:
 		if Graphics.graphics_settings["fisheye_msaa"] == Graphics.FisheyeMSAA.SAME_AS_GAME:
 			viewport.msaa = Graphics.graphics_settings["msaa"]

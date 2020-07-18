@@ -17,9 +17,9 @@ enum FisheyeResolution {FISHEYE_2160P, FISHEYE_1440P, FISHEYE_1080P,
 enum FisheyeMSAA {OFF, X2, X4, X8, X16, SAME_AS_GAME}
 
 
-var graphics_settings_path = "user://Graphics.cfg"
+var graphics_settings_path := "user://Graphics.cfg"
 
-var graphics_settings = {"window_mode": WindowMode.FULLSCREEN,
+var graphics_settings := {"window_mode": WindowMode.FULLSCREEN,
 		"resolution": "1920x1080",
 		"msaa": GameMSAA.X4,
 		"af": GameAF.X4,
@@ -27,40 +27,19 @@ var graphics_settings = {"window_mode": WindowMode.FULLSCREEN,
 		"fisheye_mode": FisheyeMode.FULL,
 		"fisheye_resolution": FisheyeResolution.FISHEYE_720P,
 		"fisheye_msaa": FisheyeMSAA.SAME_AS_GAME}
-var fisheye_resolution: int = 720
+var fisheye_resolution := 720
 
-func _ready():
-	load_graphics_settings()
+func _ready() -> void:
+	var _discard = load_graphics_settings()
 
 
-func load_graphics_settings():
-	var config = ConfigFile.new()
-	var err = config.load(graphics_settings_path)
+func load_graphics_settings() -> String:
+	var config := ConfigFile.new()
+	var err := config.load(graphics_settings_path)
 	if err == OK:
 		for key in graphics_settings.keys():
 			if config.has_section_key("graphics", key):
 				graphics_settings[key] = config.get_value("graphics", key)
-#			else:
-#				# Load default value
-#				var value
-#				match key:
-#					"window_mode":
-#						value = WindowMode.FULLSCREEN
-#					"resolution":
-#						value = "Native"
-#					"msaa":
-#						value = GameMSAA.X4
-#					"af":
-#						value = GameAF.X8
-#					"shadows":
-#						value = Shadows.MEDIUM
-#					"fisheye_mode":
-#						value = FisheyeMode.FULL
-#					"fisheye_resolution":
-#						value = FisheyeResolution.FISHEYE_720P
-#					"fisheye_msaa":
-#						value = FisheyeMSAA.SAME_AS_GAME
-#				graphics_settings[key] = value
 		update_window_mode()
 		update_msaa()
 		update_af()
@@ -71,11 +50,12 @@ func load_graphics_settings():
 	elif err != ERR_FILE_NOT_FOUND:
 		Global.log_error(err, "Could not open graphics config file.")
 		return "Could not open graphics config file: Error %s" % err
+	return ""
 
 
-func save_graphics_settings():
-	var config = ConfigFile.new()
-	var err = config.load(graphics_settings_path)
+func save_graphics_settings() -> void:
+	var config := ConfigFile.new()
+	var err := config.load(graphics_settings_path)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
 		for key in graphics_settings.keys():
 			config.set_value("graphics", key, graphics_settings[key])
@@ -84,8 +64,8 @@ func save_graphics_settings():
 		Global.log_error(err, "Error while saving graphics settings.")
 
 
-func update_window_mode():
-	var mode = graphics_settings["window_mode"]
+func update_window_mode() -> void:
+	var mode: int = graphics_settings["window_mode"]
 	if mode == WindowMode.FULLSCREEN:
 		OS.window_fullscreen = true
 		OS.window_size = OS.get_screen_size()
@@ -106,10 +86,10 @@ func update_window_mode():
 				OS.window_borderless = false
 
 
-func update_resolution():
-	var resolution_string = graphics_settings["resolution"].split("x")
-	var resolution = Vector2(int(resolution_string[0]), int(resolution_string[1]))
-	var mode = graphics_settings["window_mode"]
+func update_resolution() -> void:
+	var resolution_string: String = graphics_settings["resolution"].split("x")
+	var resolution := Vector2(int(resolution_string[0]), int(resolution_string[1]))
+	var mode: int = graphics_settings["window_mode"]
 	if mode == WindowMode.FULLSCREEN or mode == WindowMode.FULLSCREEN_WINDOW:
 		OS.window_size = OS.get_screen_size()
 		get_viewport().size = resolution
@@ -118,21 +98,21 @@ func update_resolution():
 		get_viewport().size = OS.window_size
 
 
-func update_msaa():
+func update_msaa() -> void:
 	get_viewport().msaa = graphics_settings["msaa"]
 	if graphics_settings["fisheye_msaa"] == FisheyeMSAA.SAME_AS_GAME:
 		update_fisheye_msaa()
 
 
-func update_af():
+func update_af() -> void:
 	ProjectSettings.set_setting("rendering/quality/filters/anisotropic_filter_level", \
 			int(pow(2, graphics_settings["af"])))
-	var err = ProjectSettings.save()
+	var err := ProjectSettings.save()
 	if err != OK:
 		Global.log_error(err, "Failed to save AF settings.")
 
 
-func update_shadows(viewport: Viewport = null):
+func update_shadows(viewport: Viewport = null) -> void:
 	if not viewport:
 		viewport = get_viewport()
 	match graphics_settings["shadows"]:
@@ -169,11 +149,11 @@ func update_shadows(viewport: Viewport = null):
 	emit_signal("shadows_updated")
 
 
-func update_fisheye_mode():
+func update_fisheye_mode() -> void:
 	emit_signal("fisheye_mode_changed")
 
 
-func update_fisheye_resolution(resolution_string: String = ""):
+func update_fisheye_resolution(resolution_string: String = "") -> void:
 	var new_resolution: int
 	match resolution_string:
 		"2160p":
@@ -207,11 +187,11 @@ func update_fisheye_resolution(resolution_string: String = ""):
 	emit_signal("fisheye_resolution_changed")
 
 
-func update_fisheye_msaa():
+func update_fisheye_msaa() -> void:
 	emit_signal("fisheye_msaa_changed")
 
 
-func get_fisheye_resolution(resolution_setting: int):
+func get_fisheye_resolution(resolution_setting: int) -> int:
 	var resolution: int
 	match resolution_setting:
 		FisheyeResolution.FISHEYE_2160P:

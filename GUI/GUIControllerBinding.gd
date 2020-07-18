@@ -2,25 +2,25 @@ extends VBoxContainer
 class_name GUIControllerBinding
 
 
-var action_idx = -1
-var action = ""
-var label = Label.new()
-var controller_button = GUIControllerButton.new()
-var axis_range = null
-var device = -1
-var button = -1
-var axis = -1
-var axis_value = 0.0
+var action_idx := -1
+var action := ""
+var label := Label.new()
+var controller_button := GUIControllerButton.new()
+var axis_range: GUIControllerAxisRange = null
+var device := -1
+var button := -1
+var axis := -1
+var axis_value := 0.0
 
-var highlight = false
-var t = 0.0
-var pressed = false
+var highlight := false
+var t := 0.0
+var pressed := false
 
 signal clicked
 signal binding_updated
 
 
-func _ready():
+func _ready() -> void:
 	add_child(label)
 	add_child(controller_button)
 	label.add_font_override("font", load("res://GUI/BindingsFont.tres"))
@@ -38,7 +38,7 @@ func _ready():
 	_discard = connect("mouse_exited", self, "_on_mouse_exited")
 
 
-func _process(delta):
+func _process(delta: float) -> void:
 	if highlight:
 		t += delta
 		var col1 = cos(2 * PI * (t + 0.5)) * 0.2 + 0.2
@@ -46,17 +46,17 @@ func _process(delta):
 		modulate = Color(1.0, 1.0 - col1, 1.0 - col2, 1.0)
 
 
-func _on_mouse_entered():
+func _on_mouse_entered() -> void:
 	highlight = true
 	t = 0.0
 
 
-func _on_mouse_exited():
+func _on_mouse_exited() -> void:
 	highlight = false
 	modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if InputMap.has_action(action) and !event is InputEventJoypadMotion:
 		if event.is_action(action):
 			if event.pressed:
@@ -70,24 +70,24 @@ func _input(event):
 			check_action_state()
 
 
-func _gui_input(event):
+func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
 			if event.pressed:
 				pressed = true
 			elif pressed and !event.pressed:
 				pressed = false
-				var pos = event.position
-				var rmax = rect_size
+				var pos: Vector2 = event.position
+				var rmax := rect_size
 				if pos.x >= 0 and pos.x <= rmax.x and pos.y >= 0 and pos.y <= rmax.y:
 					emit_signal("clicked")
 				else:
 					emit_signal("mouse_exited")
 
 
-func update_binding(event: InputEvent):
+func update_binding(event: InputEvent) -> void:
 	if event:
-		var act = Controls.action_list[action_idx]
+		var act: ControllerAction = Controls.action_list[action_idx]
 		act.bound = true
 		if event is InputEventJoypadButton:
 			remove_axis_range()
@@ -109,7 +109,7 @@ func update_binding(event: InputEvent):
 	check_action_state()
 
 
-func remove_binding():
+func remove_binding() -> void:
 	remove_axis_range()
 	button = -1
 	device = -1
@@ -117,17 +117,17 @@ func remove_binding():
 	Controls.action_list[action_idx].unbind()
 
 
-func add_axis_range(event: InputEventJoypadMotion):
+func add_axis_range(event: InputEventJoypadMotion) -> void:
 	axis_range = GUIControllerAxisRange.new()
 	add_child(axis_range)
-	axis_range.connect("range_updated", self, "_on_axis_range_updated")
-	axis_range.connect("range_released", self, "_on_axis_range_released")
+	var _discard = axis_range.connect("range_updated", self, "_on_axis_range_updated")
+	_discard = axis_range.connect("range_released", self, "_on_axis_range_released")
 	device = event.device
 	axis = event.axis
 	axis_value = Input.get_joy_axis(device, axis)
 
 
-func remove_axis_range():
+func remove_axis_range() -> void:
 	if axis_range:
 		remove_child(axis_range)
 		axis_range.queue_free()
@@ -136,20 +136,20 @@ func remove_axis_range():
 		axis_value = 0.0
 
 
-func _on_axis_range_updated():
+func _on_axis_range_updated() -> void:
 	check_action_state()
 
 
-func _on_axis_range_released():
-	var act = Controls.action_list[action_idx]
+func _on_axis_range_released() -> void:
+	var act: ControllerAction = Controls.action_list[action_idx]
 	if act.bound and act.type == ControllerAction.Type.AXIS:
 		act.axis_min = axis_range.bound_low
 		act.axis_max = axis_range.bound_high
 		emit_signal("binding_updated")
 
 
-func check_action_state():
-	var act = Controls.action_list[action_idx]
+func check_action_state() -> void:
+	var act: ControllerAction = Controls.action_list[action_idx]
 	if act.bound == false:
 		Input.parse_input_event(simulate_action_event(action, false))
 	else:
@@ -157,8 +157,8 @@ func check_action_state():
 			Input.parse_input_event(simulate_action_event(action, Input.is_joy_button_pressed(device, button)))
 		else:
 			axis_range.axis_monitor.value = axis_value
-			var bound_low = axis_range.bound_low
-			var bound_high = axis_range.bound_high
+			var bound_low := axis_range.bound_low
+			var bound_high := axis_range.bound_high
 			if !Input.is_action_pressed(action) and axis_value >= bound_low and axis_value <= bound_high:
 				Input.parse_input_event(simulate_action_event(action, true))
 			elif Input.is_action_pressed(action) and (axis_value < bound_low or axis_value > bound_high):
@@ -166,7 +166,7 @@ func check_action_state():
 
 
 func simulate_action_event(action_name: String, action_pressed: bool) -> InputEventAction:
-	var event = InputEventAction.new()
+	var event := InputEventAction.new()
 	event.action = action_name
 	event.pressed = action_pressed
 	return event

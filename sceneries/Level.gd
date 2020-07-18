@@ -3,17 +3,17 @@ extends Spatial
 
 var pause_menu = preload("res://GUI/PauseMenu.tscn")
 
-var cameras = []
-var camera_index = 0
-var camera : Camera
+var cameras := []
+var camera_index := 0
+var camera: Camera = null
 
-onready var drone = $Drone
-onready var radio_controller = $RadioController
+onready var drone := $Drone
+onready var radio_controller := $RadioController
 
-var tracks = []
+var tracks := []
 
 
-func _ready():
+func _ready() -> void:
 	cameras.append($FollowCamera)
 	cameras.append($Drone/FPVCamera)
 	cameras.append($CameraFixed)
@@ -37,7 +37,7 @@ func _ready():
 	_discard = pause_menu.connect("menu", self, "_on_return_to_menu")
 
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("change_camera"):
 		camera_index += 1
 		if camera_index >= cameras.size():
@@ -53,7 +53,7 @@ func _input(event):
 			pause_menu.emit_signal("resumed")
 
 
-func change_camera():
+func change_camera() -> void:
 	camera.visible = false
 	camera.current = false
 	if camera is FPVCamera and Graphics.graphics_settings["fisheye_mode"] != Graphics.FisheyeMode.OFF:
@@ -70,26 +70,26 @@ func change_camera():
 		drone.hud.visible = false
 
 
-func _on_drone_reset():
+func _on_drone_reset() -> void:
 	for track in tracks:
 		track.reset_track()
 	if Global.game_mode == Global.GameMode.RACE and Global.active_track:
 		Global.active_track.start_countdown()
 
 
-func _on_resume():
+func _on_resume() -> void:
 	if pause_menu.can_resume:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		pause_menu.visible = false
 		get_tree().paused = false
 
 
-func _on_return_to_menu():
+func _on_return_to_menu() -> void:
 	var _discard = get_tree().change_scene("res://GUI/MainMenu.tscn")
 	queue_free()
 
 
-func _on_game_mode_changed(mode: int):
+func _on_game_mode_changed(mode: int) -> void:
 	if mode == Global.GameMode.FREE or tracks.empty():
 		if Global.active_track:
 			Global.active_track.stop_race()
@@ -99,7 +99,7 @@ func _on_game_mode_changed(mode: int):
 		drone.reset()
 
 
-func get_closest_track():
+func get_closest_track() -> Track:
 	var has_launchpad := false
 	var closest_idx := 0
 	var new_idx := -1
@@ -119,3 +119,4 @@ func get_closest_track():
 				closest_idx = new_idx
 	if has_launchpad:
 		return tracks[closest_idx]
+	return null

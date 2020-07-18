@@ -15,12 +15,12 @@ var axis_min := 0.0
 var axis_max := 1.0
 
 
-func init(a_name: String, a_label: String):
+func init(a_name: String, a_label: String) -> void:
 	action_name = a_name
 	action_label = a_label
 
 
-func unbind():
+func unbind() -> void:
 	bound = false
 	type = Type.NULL
 	button = -1

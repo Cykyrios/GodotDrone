@@ -10,9 +10,9 @@ var hud_config := {"fps": 10, "crosshair": true, "horizon": true, "ladder": fals
 		"speed": false, "altitude": false, "heading": false, "sticks": false, "rpm": false}
 
 
-func load_hud_config():
-	var config = ConfigFile.new()
-	var err = config.load(game_settings_path)
+func load_hud_config() -> void:
+	var config := ConfigFile.new()
+	var err := config.load(game_settings_path)
 	if err == OK:
 		var hud_section := "hud_config"
 		if config.has_section(hud_section):
@@ -27,13 +27,13 @@ func load_hud_config():
 		Global.log_error(err, "Error while loading HUD config.")
 
 
-func save_hud_config():
-	var config = ConfigFile.new()
-	var err = config.load(game_settings_path)
+func save_hud_config() -> void:
+	var config := ConfigFile.new()
+	var err := config.load(game_settings_path)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
 		for key in hud_config.keys():
 			config.set_value("hud_config", key, hud_config[key])
-		config.save(game_settings_path)
+		var _discard = config.save(game_settings_path)
 		emit_signal("hud_config_updated")
 	else:
 		Global.log_error(err, "Error while saving HUD config.")

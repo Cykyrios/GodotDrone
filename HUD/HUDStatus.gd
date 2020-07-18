@@ -5,10 +5,10 @@ enum Status {DISARMED, ARMED, LAUNCH, TURTLE, RECOVERY}
 
 
 var status: int = Status.DISARMED setget set_status
-var message_timer: Timer = Timer.new()
+var message_timer := Timer.new()
 
 
-func _ready():
+func _ready() -> void:
 	add_child(message_timer)
 	message_timer.one_shot = true
 	var _discard = message_timer.connect("timeout", self, "_on_message_timer_timeout")
@@ -16,10 +16,10 @@ func _ready():
 	set_message("DISARMED")
 
 
-func set_status(s: int):
+func set_status(s: int) -> void:
 	if s < Status.size():
 		status = s
-		var status_text: String = ""
+		var status_text := ""
 		match status:
 			Status.DISARMED:
 				status_text = "DISARMED"
@@ -37,21 +37,21 @@ func set_status(s: int):
 		set_message(status_text)
 
 
-func set_message(msg: String = ""):
+func set_message(msg: String = "") -> void:
 	text = "\n\n\n\n\n\n\n%s" % msg
 
 
-func clear_message():
+func clear_message() -> void:
 	set_message()
 
 
-func _on_message_timer_timeout():
+func _on_message_timer_timeout() -> void:
 	clear_message()
 	if status == Status.DISARMED:
 		set_status(Status.DISARMED)
 
 
-func _on_armed(mode: int):
+func _on_armed(mode: int) -> void:
 	match mode:
 		FlightController.FlightMode.TURTLE:
 			self.status = Status.TURTLE
@@ -61,11 +61,11 @@ func _on_armed(mode: int):
 			self.status = Status.ARMED
 
 
-func _on_disarmed():
+func _on_disarmed() -> void:
 	self.status = Status.DISARMED
 
 
-func _on_arm_failed(reason: int):
+func _on_arm_failed(reason: int) -> void:
 	var reason_msg := ""
 	match reason:
 		FlightController.ArmFail.THROTTLE_HIGH:
@@ -76,7 +76,7 @@ func _on_arm_failed(reason: int):
 	message_timer.start(1)
 
 
-func _on_mode_changed(mode: int):
+func _on_mode_changed(mode: int) -> void:
 	if status == Status.DISARMED:
 		return
 	if mode != FlightController.FlightMode.TURTLE and mode != FlightController.FlightMode.LAUNCH \

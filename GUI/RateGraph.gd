@@ -4,23 +4,23 @@ extends Control
 var pitch: Array = []
 var roll: Array = []
 var yaw: Array = []
-var rate_pitch: int = 667
-var rate_roll: int = 667
-var rate_yaw: int = 667
-var expo_pitch: float = 0.1
-var expo_roll: float = 0.1
-var expo_yaw: float = 0.1
+var rate_pitch := 667
+var rate_roll := 667
+var rate_yaw := 667
+var expo_pitch := 0.1
+var expo_roll := 0.1
+var expo_yaw := 0.1
 
-var num_points: int = 101
-var graph_size: int = 256
+var num_points := 101
+var graph_size := 256
 
 
-func _ready():
+func _ready() -> void:
 	update_rates(Vector3(rate_pitch, rate_roll, rate_yaw), Vector3(expo_pitch, expo_roll, expo_yaw))
 	update()
 
 
-func update_rates(rates: Vector3, expos: Vector3):
+func update_rates(rates: Vector3, expos: Vector3) -> void:
 	rate_pitch = int(rates.x)
 	rate_roll = int(rates.y)
 	rate_yaw = int(rates.z)
@@ -28,7 +28,7 @@ func update_rates(rates: Vector3, expos: Vector3):
 	expo_roll = expos.y
 	expo_yaw = expos.z
 	
-	var input: float = 0.0
+	var input := 0.0
 	if pitch.size() != num_points:
 		pitch.clear()
 		roll.clear()
@@ -46,7 +46,7 @@ func update_rates(rates: Vector3, expos: Vector3):
 		roll[i].y = ((1 - expo_roll) * input + expo_roll * pow(input, 3)) * rate_roll
 		yaw[i].y = ((1 - expo_yaw) * input + expo_yaw * pow(input, 3)) * rate_yaw
 	
-	var max_rate = max(max(rate_pitch, rate_roll), rate_yaw)
+	var max_rate := max(max(rate_pitch, rate_roll), rate_yaw)
 	for i in range(num_points):
 		pitch[i].x = (pitch[i].x + 1) * graph_size / 2
 		roll[i].x = (roll[i].x + 1) * graph_size / 2
@@ -57,7 +57,7 @@ func update_rates(rates: Vector3, expos: Vector3):
 	update()
 
 
-func _draw():
+func _draw() -> void:
 	var color_background := Color(0.2, 0.2, 0.2)
 	var color_frame := Color(0.8, 0.8, 0.8)
 	var color_lines := Color(0.5, 0.5, 0.5)

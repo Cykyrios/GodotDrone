@@ -2,7 +2,6 @@
 
 [ext_resource path="res://sceneries/FlyaroundCamera.gd" type="Script" id=1]
 
-
 [node name="FlyaroundCamera" type="Spatial"]
 script = ExtResource( 1 )
 

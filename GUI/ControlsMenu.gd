@@ -1,31 +1,31 @@
 extends Control
 
 
-var packed_calibration_menu = preload("res://GUI/CalibrationMenu.tscn")
-var packed_binding_popup = preload("res://GUI/ConfirmationPopup.tscn")
-var binding_popup = null
+var packed_calibration_menu := preload("res://GUI/CalibrationMenu.tscn")
+var packed_binding_popup := preload("res://GUI/ConfirmationPopup.tscn")
+var binding_popup: Control = null
 
-onready var controller_list = $HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox/OptionButton
-onready var controller_checkbutton = $HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox/ControllerCheckButton
-onready var axes_list = $HBoxContainer/ControllerPanel/ControllerVBox/AxesVBox/AxesList
-onready var button_grid = $HBoxContainer/ControllerPanel/ControllerVBox/ButtonsVBox/ButtonGrid
+onready var controller_list := $HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox/OptionButton
+onready var controller_checkbutton := $HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox/ControllerCheckButton
+onready var axes_list := $HBoxContainer/ControllerPanel/ControllerVBox/AxesVBox/AxesList
+onready var button_grid := $HBoxContainer/ControllerPanel/ControllerVBox/ButtonsVBox/ButtonGrid
 
-onready var actions_list = $HBoxContainer/BindingsPanel/BindingsVBox/ScrollContainer/ActionsVBox
-var show_binding_popup = false
-var binding_popup_text = ""
-var binding_popup_clear = false
-var binding_event = null
+onready var actions_list := $HBoxContainer/BindingsPanel/BindingsVBox/ScrollContainer/ActionsVBox
+var show_binding_popup := false
+var binding_popup_text := ""
+var binding_popup_clear := false
+var binding_event: InputEvent = null
 
-var connected_joypads = []
-var auto_detect_controller = false
-var active_controller = -1
-var default_controller = -1
+var connected_joypads := []
+var auto_detect_controller := false
+var active_controller := -1
+var default_controller := -1
 
 signal controller_detected
 signal back
 
 
-func _ready():
+func _ready() -> void:
 	var _discard = connect("controller_detected", self, "_on_controller_autodetected")
 	_discard = Input.connect("joy_connection_changed", self, "_on_joypad_connection_changed")
 	
@@ -43,21 +43,21 @@ func _ready():
 	# TODO: only allow calibration for active controller OR update controller list
 	
 	# Controller selector, axes and buttons
-	var axis = GUIControllerAxis.new()
+	var axis := GUIControllerAxis.new()
 	axis.size_flags_horizontal = 0
 	for _i in range(8):
 		axes_list.add_child(axis.duplicate())
 	axis.queue_free()
 	
-	var button = GUIControllerButton.new()
+	var button := GUIControllerButton.new()
 	button.size_flags_horizontal = SIZE_SHRINK_CENTER
 	for _i in range(16):
 		button_grid.add_child(button.duplicate())
 		button_grid.get_children()[-1].rect_min_size = Vector2(20, 20)
 	button.queue_free()
 	
-	var active_controller_found = false
-	var active_device = -1
+	var active_controller_found := false
+	var active_device := -1
 	connected_joypads = Input.get_connected_joypads()
 	for joypad in connected_joypads:
 		if Input.get_joy_guid(joypad) == Controls.active_controller_guid:
@@ -65,7 +65,7 @@ func _ready():
 			active_device = joypad
 			break
 	if !active_controller_found:
-		var default_controller_found = false
+		var default_controller_found := false
 		if default_controller >= 0:
 			for joypad in connected_joypads:
 				if Input.get_joy_guid(joypad) == Controls.default_controller_guid:
@@ -84,7 +84,7 @@ func _ready():
 	
 	# Actions bindings
 	for action in Controls.action_list:
-		var binding = GUIControllerBinding.new()
+		var binding := GUIControllerBinding.new()
 		actions_list.add_child(binding)
 		binding.action = action.action_name
 		binding.label.text = action.action_label
@@ -95,7 +95,7 @@ func _ready():
 	# TODO: add drone model that reacts to user input
 
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event is InputEventJoypadMotion or event is InputEventJoypadButton:
 		if auto_detect_controller:
 			if event is InputEventJoypadMotion and abs(event.axis_value) > 0.8 or event is InputEventJoypadButton:
@@ -106,14 +106,14 @@ func _input(event):
 			elif event is InputEventJoypadButton and event.button_index < 16:
 				update_button_value(event.button_index, event.is_pressed())
 			if show_binding_popup:
-				var binding_text = ""
-				var binding_valid = false
+				var binding_text := ""
+				var binding_valid := false
 				if event is InputEventJoypadMotion and abs(event.axis_value) > 0.8:
-					var axis = event.axis
+					var axis: int = event.axis
 					binding_text = "Axis %d (%s)" % [axis, Input.get_joy_axis_string(axis)]
 					binding_valid = true
 				elif event is InputEventJoypadButton and event.button_index < JOY_BUTTON_MAX:
-					var button = event.button_index
+					var button: int = event.button_index
 					binding_text = "Button %d (%s)" % [button, Input.get_joy_button_string(button)]
 					binding_valid = true
 				if binding_valid:
@@ -121,9 +121,9 @@ func _input(event):
 					binding_popup.set_text(binding_popup_text + "\n%s" % [binding_text])
 
 
-func _on_calibrate_pressed():
+func _on_calibrate_pressed() -> void:
 	if packed_calibration_menu.can_instance():
-		var calibration_menu = packed_calibration_menu.instance()
+		var calibration_menu := packed_calibration_menu.instance()
 		add_child(calibration_menu)
 		$MenuPanel.modulate = Color(1, 1, 1, 0)
 		yield(calibration_menu, "back")
@@ -131,12 +131,12 @@ func _on_calibrate_pressed():
 		$MenuPanel.modulate = Color(1, 1, 1, 1)
 
 
-func _on_back_pressed():
+func _on_back_pressed() -> void:
 	Controls.restore_keyboard_shortcuts()
 	emit_signal("back")
 
 
-func update_controller_list():
+func update_controller_list() -> void:
 	connected_joypads = Input.get_connected_joypads()
 	controller_list.get_popup().clear()
 	if connected_joypads.empty():
@@ -151,9 +151,9 @@ func update_controller_list():
 		controller_checkbutton.disabled = false
 
 
-func _on_joypad_connection_changed(device: int, connected: bool):
+func _on_joypad_connection_changed() -> void:
 	update_controller_list()
-	var active_controller_found = false
+	var active_controller_found := false
 	for joypad in connected_joypads:
 		if Input.get_joy_name(joypad) == controller_list.text:
 			active_controller_found = true
@@ -163,21 +163,21 @@ func _on_joypad_connection_changed(device: int, connected: bool):
 		controller_list.get_popup().emit_signal("id_pressed", active_controller)
 
 
-func _on_controller_list_pressed():
+func _on_controller_list_pressed() -> void:
 	update_controller_list()
 	auto_detect_controller = true
 
 
-func _on_controller_select_aborted():
+func _on_controller_select_aborted() -> void:
 	auto_detect_controller = false
 
 
-func _on_controller_autodetected(device: int):
+func _on_controller_autodetected(device: int) -> void:
 	active_controller = device
 	controller_list.get_popup().emit_signal("id_pressed", connected_joypads.find(device))
 
 
-func _on_controller_selected(id: int):
+func _on_controller_selected(id: int) -> void:
 	if controller_list.get_popup().visible:
 		controller_list.get_popup().hide()
 	auto_detect_controller = false
@@ -185,26 +185,26 @@ func _on_controller_selected(id: int):
 		return
 	if connected_joypads[id] != active_controller:
 		active_controller = connected_joypads[id]
-		var checkbutton_pressed = (Input.get_joy_guid(active_controller) == Controls.default_controller_guid)
+		var checkbutton_pressed: bool = (Input.get_joy_guid(active_controller) == Controls.default_controller_guid)
 		controller_checkbutton.pressed = checkbutton_pressed
-		Controls.update_active_device(active_controller)
+		var _discard = Controls.update_active_device(active_controller)
 		call_deferred("update_input_map")
 		call_deferred("update_axes_and_buttons", active_controller)
 
 
-func _on_checkbutton_toggled(pressed: bool):
+func _on_checkbutton_toggled(pressed: bool) -> void:
 	if (!pressed and active_controller != default_controller) or (pressed and active_controller == default_controller):
 		return
 	if pressed:
 		default_controller = active_controller
 	else:
 		default_controller = -1
-	var err = Controls.update_default_device(default_controller)
+	var err := Controls.update_default_device(default_controller)
 	if err != OK:
 		Global.log_error(err, "Error while saving default controller settings.")
 
 
-func update_axes_and_buttons(device: int):
+func update_axes_and_buttons(device: int) -> void:
 	controller_list.text = Input.get_joy_name(device)
 	for i in range(8):
 		update_axis_value(i, Input.get_joy_axis(device, i))
@@ -212,43 +212,43 @@ func update_axes_and_buttons(device: int):
 		update_button_value(i, Input.is_joy_button_pressed(device, i))
 
 
-func update_axis_value(id: int, value: float):
+func update_axis_value(id: int, value: float) -> void:
 	axes_list.get_children()[id].value = value
 
 
-func update_button_value(id: int, pressed: bool):
+func update_button_value(id: int, pressed: bool) -> void:
 	var button = button_grid.get_children()[id]
 	button.value = pressed as int
 
 
-func update_input_map():
+func update_input_map() -> void:
 	for binding in actions_list.get_children():
 		binding.remove_binding()
-	Controls.load_input_map()
-	var act_list = Controls.action_list
+	var _discard = Controls.load_input_map()
+	var act_list := Controls.action_list
 	for i in range(act_list.size()):
-		var act = act_list[i]
-		var binding = actions_list.get_child(i)
+		var act: ControllerAction = act_list[i]
+		var binding := actions_list.get_child(i)
 		if act.bound:
 			if act.type == ControllerAction.Type.BUTTON:
-				var event = InputEventJoypadButton.new()
+				var event := InputEventJoypadButton.new()
 				event.button_index = act.button
 				event.device = active_controller
 				call_deferred("update_binding", binding, event)
 			elif act.type == ControllerAction.Type.AXIS:
-				var event = InputEventJoypadMotion.new()
+				var event := InputEventJoypadMotion.new()
 				event.axis = act.axis
 				event.device = active_controller
 				call_deferred("update_binding", binding, event)
 
 
-func save_input_map():
-	var section = "controls_" + Controls.active_controller_guid
-	var config = ConfigFile.new()
-	var err = config.load(Controls.input_map_path)
+func save_input_map() -> void:
+	var section := "controls_" + Controls.active_controller_guid
+	var config := ConfigFile.new()
+	var err := config.load(Controls.input_map_path)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
 		for action in Controls.action_list:
-			var action_name = action.action_name
+			var action_name: String = action.action_name
 			if config.has_section_key(section, action_name):
 				config.erase_section_key(section, action_name)
 				for key in ["_button", "_axis", "_min", "_max"]:
@@ -269,7 +269,7 @@ func save_input_map():
 		Global.log_error(err, "Error while saving input map.")
 
 
-func update_binding(binding: GUIControllerBinding, event: InputEvent):
+func update_binding(binding: GUIControllerBinding, event: InputEvent) -> void:
 	var action = binding.action
 	binding.action_idx = actions_list.get_children().find(binding)
 	if InputMap.has_action(action):
@@ -277,27 +277,27 @@ func update_binding(binding: GUIControllerBinding, event: InputEvent):
 		binding.update_binding(event)
 
 
-func _on_binding_clicked(binding: GUIControllerBinding):
+func _on_binding_clicked(binding: GUIControllerBinding) -> void:
 	binding_popup = packed_binding_popup.instance()
 	add_child(binding_popup)
 	binding_popup_text = "Press a button or flip a switch\nfor action: %s" % [binding.label.text]
-	var current_binding_text = "..."
+	var current_binding_text := "..."
 	if !binding_popup_clear:
 		if binding.device >= 0 and binding.axis >= 0:
 			current_binding_text = Input.get_joy_axis_string(binding.axis)
-		var action_events = InputMap.get_action_list(binding.action)
+		var action_events := InputMap.get_action_list(binding.action)
 		if !action_events.empty():
 			if action_events[0] is InputEventJoypadMotion:
-				var axis = action_events[0].axis
+				var axis: int = action_events[0].axis
 				current_binding_text = "Axis %d (%s)" % [axis, Input.get_joy_axis_string(axis)]
 			elif action_events[0] is InputEventJoypadButton:
-				var button = action_events[0].button_index
+				var button: int = action_events[0].button_index
 				current_binding_text = "Button %d (%s)"  % [button, Input.get_joy_button_string(button)]
 	binding_popup.set_text(binding_popup_text + "\n" + current_binding_text)
 	binding_popup.set_buttons("Confirm", "Cancel", "Clear")
 	show_binding_popup = true
 	binding_popup.show_modal(true)
-	var popup = yield(binding_popup, "validated")
+	var popup: int = yield(binding_popup, "validated")
 	binding_popup.queue_free()
 	binding_popup = null
 	show_binding_popup = false
@@ -315,5 +315,5 @@ func _on_binding_clicked(binding: GUIControllerBinding):
 			binding.emit_signal("clicked")
 
 
-func _on_binding_updated():
+func _on_binding_updated() -> void:
 	save_input_map()

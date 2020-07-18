@@ -5,34 +5,34 @@ class_name HUD
 enum Component {CROSSHAIR, STATUS, HEADING, SPEED, ALTITUDE, LADDER, HORIZON, STICKS, RPM}
 
 # HUD components
-onready var ladder = $VBoxContainer/HBoxLadder/HUDLadder
-onready var speed_scale = $VBoxContainer/HBoxLadder/HUDSpeedScale
-onready var altitude_scale = $VBoxContainer/HBoxLadder/HUDAltitudeScale
-onready var heading_scale = $VBoxContainer/HUDHeadingScale
-onready var stick_left = $VBoxContainer/HBoxInput/HUDStickLeft
-onready var stick_right = $VBoxContainer/HBoxInput/HUDStickRight
-onready var rpm_table = $HUDRPM
-onready var status = $HUDStatus
+onready var ladder := $VBoxContainer/HBoxLadder/HUDLadder
+onready var speed_scale := $VBoxContainer/HBoxLadder/HUDSpeedScale
+onready var altitude_scale := $VBoxContainer/HBoxLadder/HUDAltitudeScale
+onready var heading_scale := $VBoxContainer/HUDHeadingScale
+onready var stick_left := $VBoxContainer/HBoxInput/HUDStickLeft
+onready var stick_right := $VBoxContainer/HBoxInput/HUDStickRight
+onready var rpm_table := $HUDRPM
+onready var status := $HUDStatus
 
 # Flight data
-var hud_timer = 0.1
-var hud_delta = 0.0
-var hud_position = Vector3.ZERO
-var hud_angles = Vector3.ZERO
-var hud_velocity = Vector3.ZERO
-var hud_left_stick = Vector2.ZERO
-var hud_right_stick = Vector2.ZERO
-var hud_rpm = [0, 0, 0, 0]
-var is_first = false
-var first_angles = Vector3.ZERO
+var hud_timer := 0.1
+var hud_delta := 0.0
+var hud_position := Vector3.ZERO
+var hud_angles := Vector3.ZERO
+var hud_velocity := Vector3.ZERO
+var hud_left_stick := Vector2.ZERO
+var hud_right_stick := Vector2.ZERO
+var hud_rpm := [0, 0, 0, 0]
+var is_first := false
+var first_angles := Vector3.ZERO
 
 
-func _ready():
+func _ready() -> void:
 	reset_data()
 	update_data(hud_delta, hud_position, hud_angles, hud_velocity, hud_left_stick, hud_right_stick, hud_rpm)
 
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	if hud_delta >= hud_timer:
 		hud_position /= hud_delta
 		hud_angles /= hud_delta
@@ -45,7 +45,7 @@ func _process(_delta):
 		reset_data()
 
 
-func show_component(component: int, show: bool = true):
+func show_component(component: int, show: bool = true) -> void:
 	var self_only := false
 	var mod := Color(1, 1, 1, 1)
 	if not show:
@@ -80,7 +80,7 @@ func show_component(component: int, show: bool = true):
 			comp.modulate = mod
 
 
-func update_display():
+func update_display() -> void:
 	ladder.update_ladder(hud_angles.x, hud_angles.z)
 	speed_scale.update_speed(hud_velocity.length(), hud_delta)
 	altitude_scale.update_altitude(hud_position.y, hud_delta)
@@ -90,8 +90,8 @@ func update_display():
 	rpm_table.update_rpm(hud_rpm[0], hud_rpm[1], hud_rpm[2], hud_rpm[3])
 
 
-func update_data(dt : float, position : Vector3, angles : Vector3, velocity : Vector3,
-		left_stick : Vector2, right_stick : Vector2, rpm):
+func update_data(dt: float, position: Vector3, angles: Vector3, velocity: Vector3,
+		left_stick: Vector2, right_stick: Vector2, rpm: Array) -> void:
 	hud_delta += dt
 	hud_position += dt * position
 	if is_first:
@@ -106,7 +106,7 @@ func update_data(dt : float, position : Vector3, angles : Vector3, velocity : Ve
 		hud_rpm[i] += dt * rpm[i]
 
 
-func reset_data():
+func reset_data() -> void:
 	is_first = true
 	first_angles = Vector3.ZERO
 	hud_delta = 0.0
@@ -118,7 +118,7 @@ func reset_data():
 	hud_rpm = [0, 0, 0, 0]
 
 
-func get_adjusted_angles(angles : Vector3):
+func get_adjusted_angles(angles: Vector3) -> Vector3:
 	var result = angles
 	var correction = 0
 	

@@ -6,7 +6,7 @@ var time := 0.0
 var paused := true
 
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	if not paused:
 		time += delta
 
@@ -21,19 +21,19 @@ func get_minute_second_decimal(t: float = -1.0) -> Dictionary:
 	return dict
 
 
-func get_time_string(t: float = -1.0):
+func get_time_string(t: float = -1.0) -> String:
 	var time_dict := get_minute_second_decimal(t)
 	var text := "%02d:%02d.%02d" % [time_dict["minute"], time_dict["second"], time_dict["decimal"]]
 	return text
 
 
-func reset():
+func reset() -> void:
 	time = 0.0
 
 
-func start():
+func start() -> void:
 	paused = false
 
 
-func stop():
+func stop() -> void:
 	paused = true

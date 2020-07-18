@@ -2,12 +2,12 @@ extends TextureProgress
 class_name GUIControllerAxis
 
 
-var texture_path = "res://Assets/GUI/ControlAxes.png"
+var texture_path := "res://Assets/GUI/ControlAxes.png"
 
-var color_on = Color(1.0, 0.6, 0.0, 1.0)
-var color_off = color_on * 0.25
+var color_on := Color(1.0, 0.6, 0.0, 1.0)
+var color_off := color_on * 0.25
 
-func _ready():
+func _ready() -> void:
 	rect_min_size = Vector2(200, 12)
 	set_range(-1.0, 1.0, 0.01)
 	value = 0.0
@@ -23,26 +23,26 @@ func _ready():
 	tint_under.a = 1.0
 
 
-func set_range(vmin: float, vmax: float, vstep: float):
+func set_range(vmin: float, vmax: float, vstep: float) -> void:
 	min_value = vmin
 	max_value = vmax
 	step = vstep
 	value = clamp(value, min_value, max_value)
 
 
-func set_color_on(color: Color, update_color_off: bool):
+func set_color_on(color: Color, update_color_off: bool) -> void:
 	color_on = color
 	tint_progress = color_on
 	if update_color_off:
 		reset_color_off()
 
 
-func set_color_off(color: Color):
+func set_color_off(color: Color) -> void:
 	color_off = color
 	tint_under = color_off
 
 
-func reset_color_off():
+func reset_color_off() -> void:
 	if color_on.r >= 0.5 or color_on.g >= 0.5 or color_on.b >= 0.5:
 		color_off = color_on * 0.25
 	else:

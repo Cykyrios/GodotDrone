@@ -1,34 +1,34 @@
 extends Control
 
 
-onready var title = $PanelContainer/VBoxContainer/Title
-onready var label_action = $PanelContainer/VBoxContainer/LabelAction
+onready var title := $PanelContainer/VBoxContainer/Title
+onready var label_action := $PanelContainer/VBoxContainer/LabelAction
 
-var calibration_step = -1
-var device = 0
-var axes = []
-var throttle = []
-var yaw = []
-var pitch = []
-var roll = []
+var calibration_step := -1
+var device := 0
+var axes := []
+var throttle := []
+var yaw := []
+var pitch := []
+var roll := []
 
-var calibration_done = false
-var packed_popup = load("res://GUI/ConfirmationPopup.tscn")
-var display_popup = false
+var calibration_done := false
+var packed_popup := load("res://GUI/ConfirmationPopup.tscn")
+var display_popup := false
 
 signal calibration_done
 signal back
 
 
-func _ready():
+func _ready() -> void:
 	var _discard = $PanelContainer/VBoxContainer/ButtonCancel.connect("pressed", self, "_on_cancel_pressed")
 	_discard = connect("calibration_done", self, "_on_calibration_done")
 	
 	reset_calibration()
 
 
-func _process(_delta):
-	var next_step_ready = true
+func _process(_delta: float) -> void:
+	var next_step_ready := true
 	if calibration_step == 0 and axes.size() == 4:
 		for i in range(4):
 			if abs(Input.get_joy_axis(device, i)) < 0.5:
@@ -45,7 +45,7 @@ func _process(_delta):
 		go_to_next_step()
 
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event is InputEventJoypadMotion:
 		if calibration_step == 0:
 			if abs(event.axis_value) > 0.9:
@@ -54,7 +54,7 @@ func _input(event):
 					title.text = "Calibrating %s..." % [Input.get_joy_name(device)]
 				elif event.device != device and !display_popup:
 					display_popup = true
-					var popup = packed_popup.instance()
+					var popup: Control = packed_popup.instance()
 					add_child(popup)
 					popup.set_text("Please input axes from %s." % [Input.get_joy_name(device)])
 					popup.set_buttons("OK")
@@ -122,7 +122,7 @@ func _input(event):
 				go_to_next_step()
 
 
-func go_to_next_step():
+func go_to_next_step() -> void:
 	calibration_step += 1
 	
 	match calibration_step:
@@ -159,7 +159,7 @@ func go_to_next_step():
 			emit_signal("calibration_done")
 
 
-func _on_calibration_done():
+func _on_calibration_done() -> void:
 	calibration_done = true
 	InputMap.action_erase_events("throttle_up")
 	InputMap.action_erase_events("throttle_down")
@@ -179,7 +179,7 @@ func _on_calibration_done():
 	InputMap.action_add_event("roll_right", roll[2])
 	var err = save_input_map()
 	if err != OK:
-		var popup = packed_popup.instance()
+		var popup: Control = packed_popup.instance()
 		add_child(popup)
 		popup.set_text("Write Error: Could not save calibration data to file.")
 		popup.set_buttons("OK")
@@ -191,16 +191,16 @@ func _on_calibration_done():
 	emit_signal("back")
 
 
-func save_input_map():
-	var config = ConfigFile.new()
+func save_input_map() -> int:
+	var config := ConfigFile.new()
 	var err = config.load(Controls.input_map_path)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
-		var guid = Input.get_joy_guid(device)
+		var guid := Input.get_joy_guid(device)
 		config.set_value("controls", "active_controller_guid", guid)
 		config.set_value("controls", "active_controller_name", Input.get_joy_name(device))
 		
 		config.set_value("controls_%s" % [guid], "throttle_up", Input.get_joy_axis_string(throttle[1].axis))
-		var inverted = false
+		var inverted := false
 		if sign(throttle[2].axis_value) < 0:
 			inverted = true
 		config.set_value("controls_%s" % [guid], "throttle_inverted", inverted)
@@ -227,7 +227,7 @@ func save_input_map():
 	return err
 
 
-func reset_calibration():
+func reset_calibration() -> void:
 	calibration_done = false
 	calibration_step = -1
 	axes.clear()
@@ -238,6 +238,6 @@ func reset_calibration():
 	go_to_next_step()
 
 
-func _on_cancel_pressed():
+func _on_cancel_pressed() -> void:
 	reset_calibration()
 	emit_signal("back")

@@ -1,6 +1,6 @@
 extends Node
-
 class_name RadioController
+
 
 signal reset_requested
 signal mode_changed
@@ -11,15 +11,15 @@ signal disarm_input
 export (NodePath) var target_path = null
 var target = null
 
-var input = [0.0, 0.0, 0.0, 0.0]
+var input := [0.0, 0.0, 0.0, 0.0]
 
-var axis_bindings = []
+var axis_bindings := []
 
 
-func _ready():
+func _ready() -> void:
 	target = get_node(target_path)
 	
-	var action_list = Controls.action_list
+	var action_list := Controls.action_list
 	for controller_action in action_list:
 		if controller_action.type == ControllerAction.Type.AXIS:
 			axis_bindings.append(controller_action)
@@ -30,16 +30,16 @@ func _ready():
 	_discard = connect("disarm_input", target.flight_controller, "_on_disarm_input")
 
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event is InputEventJoypadMotion:
 		var controller_action = null
 		for i in range(axis_bindings.size()):
 			if event.axis == axis_bindings[i].axis:
 				controller_action = axis_bindings[i]
-				var action = controller_action.action_name
-				var bound_low = controller_action.axis_min
-				var bound_high = controller_action.axis_max
-				var axis_value = event.axis_value
+				var action: String = controller_action.action_name
+				var bound_low: float = controller_action.axis_min
+				var bound_high: float = controller_action.axis_max
+				var axis_value: float = event.axis_value
 				if !Input.is_action_pressed(action) and axis_value >= bound_low and axis_value <= bound_high:
 					Input.parse_input_event(simulate_action_event(action, true))
 				elif Input.is_action_pressed(action) and (axis_value < bound_low or axis_value > bound_high):
@@ -67,14 +67,14 @@ func _input(event):
 #			print("Horizon mode")
 
 
-func _physics_process(_delta):
+func _physics_process(_delta: float) -> void:
 	read_input()
 	
 	if target is Drone:
 		target.flight_controller.input = input
 
 
-func read_input():
+func read_input() -> void:
 	var power = (Input.get_action_strength("throttle_up") - Input.get_action_strength("throttle_down") + 1) / 2
 	var pitch = Input.get_action_strength("pitch_up") - Input.get_action_strength("pitch_down")
 	var roll = Input.get_action_strength("roll_right") - Input.get_action_strength("roll_left")

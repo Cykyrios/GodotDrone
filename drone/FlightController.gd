@@ -1,14 +1,11 @@
 extends Spatial
-
 class_name FlightController
 
 
 enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
 		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED,
 		LAUNCH}
-
 enum FlightMode {RATE, LEVEL, SPEED, TRACK, LAUNCH, TURTLE, AUTO}
-
 enum ArmFail {THROTTLE_HIGH, CRASH_RECOVERY_MODE}
 
 
@@ -18,59 +15,51 @@ signal arm_failed(reason)
 signal flight_mode_changed(mode)
 
 
-var time = 0.0
-var dt = 0.0
-var pos = Vector3(0, 0, 0)
-var pos_prev = pos
-var angles = Vector3(0, 0, 0)
-var angles_prev = angles
-var lin_vel = Vector3(0, 0, 0)
-var local_vel = Vector3(0, 0, 0)
-var ang_vel = Vector3(0, 0, 0)
-var basis = Basis()
-var basis_prev = basis
-var basis_flat = basis
+var time := 0.0
+var dt := 0.0
+var pos := Vector3(0, 0, 0)
+var pos_prev := pos
+var angles := Vector3(0, 0, 0)
+var angles_prev := angles
+var lin_vel := Vector3(0, 0, 0)
+var local_vel := Vector3(0, 0, 0)
+var ang_vel := Vector3(0, 0, 0)
+var basis := Basis()
+var basis_prev := basis
+var basis_flat := basis
 
-var motors = []
-var hover_thrust = 0.0
-var input = [0, 0, 0, 0]
+var motors := []
+var hover_thrust := 0.0
+var input := [0, 0, 0, 0]
 
 var control_profile = null
 
+var armed := false setget set_armed
 
-var armed = false setget set_armed
+var pid_controllers := []
 
+var flight_mode: int = FlightMode.RATE
 
-var pid_controllers = []
+export (float, 0.0, 1000.0) var pid_roll_p := 50.0
+export (float, 0.0, 1000.0) var pid_roll_i := 30.0
+export (float, 0.0, 1000.0) var pid_roll_d := 30.0
+export (float, 0.0, 1000.0) var pid_pitch_p := 50.0
+export (float, 0.0, 1000.0) var pid_pitch_i := 30.0
+export (float, 0.0, 1000.0) var pid_pitch_d := 30.0
+export (float, 0.0, 1000.0) var pid_yaw_p := 70.0
+export (float, 0.0, 1000.0) var pid_yaw_i := 90.0
+export (float, 0.0, 1000.0) var pid_yaw_d := 40.0
+var pid_scale_p := 0.004
+var pid_scale_i := 0.002
+var pid_scale_d := 0.0002
 
-var flight_mode = FlightMode.RATE
+var telemetry_file := File.new()
+export (bool) var b_telemetry := false
 
-
-export (float, 0.0, 1000.0) var pid_roll_p = 50.0
-export (float, 0.0, 1000.0) var pid_roll_i = 30.0
-export (float, 0.0, 1000.0) var pid_roll_d = 30.0
-export (float, 0.0, 1000.0) var pid_pitch_p = 50.0
-export (float, 0.0, 1000.0) var pid_pitch_i = 30.0
-export (float, 0.0, 1000.0) var pid_pitch_d = 30.0
-export (float, 0.0, 1000.0) var pid_yaw_p = 70.0
-export (float, 0.0, 1000.0) var pid_yaw_i = 90.0
-export (float, 0.0, 1000.0) var pid_yaw_d = 40.0
-var pid_scale_p: float = 0.004
-var pid_scale_i: float = 0.002
-var pid_scale_d: float = 0.0002
-
-
-var telemetry_file = File.new()
-export (bool) var b_telemetry = false
-
-onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
+onready var debug_geom := get_tree().root.get_node("Level/DebugGeometry")
 
 
-func _ready():
-#	pos = global_transform.origin
-#	basis = global_transform.basis
-#	angles = basis.get_euler()
-	
+func _ready() -> void:
 	for _i in range(Controller.size()):
 		pid_controllers.append(PID.new())
 		add_child(pid_controllers[-1])
@@ -112,15 +101,11 @@ func _ready():
 	change_flight_mode(FlightMode.RATE)
 	
 	if b_telemetry:
-		var dir = Directory.new()
-		dir.remove("user://telemetry.csv")
+		var dir := Directory.new()
+		_discard = dir.remove("user://telemetry.csv")
 
 
-#func _process(delta):
-#	pass
-
-
-func _physics_process(_delta):
+func _physics_process(_delta: float) -> void:
 	if (flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED \
 			or flight_mode == FlightMode.TRACK) and not is_flight_safe():
 		change_flight_mode(FlightMode.AUTO)
@@ -134,11 +119,11 @@ func _physics_process(_delta):
 		write_telemetry()
 
 
-func set_control_profile(profile : ControlProfile):
+func set_control_profile(profile: ControlProfile) -> void:
 	control_profile = profile
 
 
-func _on_arm_input():
+func _on_arm_input() -> void:
 	if input[0] <= 0.01 and flight_mode != FlightMode.AUTO:
 		if Input.is_action_pressed("mode_turtle"):
 			change_flight_mode(FlightMode.TURTLE)
@@ -154,7 +139,7 @@ func _on_arm_input():
 		controller.set_disabled(false)
 
 
-func _on_disarm_input():
+func _on_disarm_input() -> void:
 	set_armed(false)
 	if flight_mode == FlightMode.TURTLE or flight_mode == FlightMode.LAUNCH:
 		change_flight_mode(FlightMode.RATE)
@@ -163,7 +148,7 @@ func _on_disarm_input():
 		controller.reset()
 
 
-func set_armed(arm : bool):
+func set_armed(arm: bool) -> void:
 	armed = arm
 	for motor in motors:
 		motor.powered = armed
@@ -173,7 +158,7 @@ func set_armed(arm : bool):
 		emit_signal("disarmed")
 
 
-func integrate_loop(delta : float, drone_pos : Vector3, drone_basis : Basis):
+func integrate_loop(delta: float, drone_pos: Vector3, drone_basis: Basis) -> void:
 	dt = delta
 	time += dt
 	
@@ -193,7 +178,7 @@ func integrate_loop(delta : float, drone_pos : Vector3, drone_basis : Basis):
 		update_control(dt)
 
 
-func update_position():
+func update_position() -> void:
 	pos_prev = pos
 	pos = global_transform.origin
 	
@@ -204,24 +189,24 @@ func update_position():
 	angles = basis.get_euler()
 
 
-func update_velocity():
+func update_velocity() -> void:
 	lin_vel = (pos - pos_prev) / dt
 	local_vel = basis.xform_inv(lin_vel)
 	
-	var ref1 = Vector3(1, 0, 0)
-	var orb1 = basis.xform_inv((pos + basis.xform(ref1) - (pos_prev + basis_prev.xform(ref1))) / dt - lin_vel)
-	var omegax = (ref1.cross(orb1) / ref1.length_squared()).cross(ref1)
-	var ref2 = Vector3(0, 1, 0)
-	var orb2 = basis.xform_inv((pos + basis.xform(ref2) - (pos_prev + basis_prev.xform(ref2))) / dt - lin_vel)
-	var omegay = (ref2.cross(orb2) / ref2.length_squared()).cross(ref2)
-	var ref3 = Vector3(0, 0, 1)
-	var orb3 = basis.xform_inv((pos + basis.xform(ref3) - (pos_prev + basis_prev.xform(ref3))) / dt - lin_vel)
-	var omegaz = (ref3.cross(orb3) / ref3.length_squared()).cross(ref3)
+	var ref1 := Vector3(1, 0, 0)
+	var orb1 := basis.xform_inv((pos + basis.xform(ref1) - (pos_prev + basis_prev.xform(ref1))) / dt - lin_vel)
+	var omegax := (ref1.cross(orb1) / ref1.length_squared()).cross(ref1)
+	var ref2 := Vector3(0, 1, 0)
+	var orb2 := basis.xform_inv((pos + basis.xform(ref2) - (pos_prev + basis_prev.xform(ref2))) / dt - lin_vel)
+	var omegay := (ref2.cross(orb2) / ref2.length_squared()).cross(ref2)
+	var ref3 := Vector3(0, 0, 1)
+	var orb3 := basis.xform_inv((pos + basis.xform(ref3) - (pos_prev + basis_prev.xform(ref3))) / dt - lin_vel)
+	var omegaz := (ref3.cross(orb3) / ref3.length_squared()).cross(ref3)
 	ang_vel = Vector3(omegay.z, omegaz.x, omegax.y)
 
 
-func init_telemetry():
-	telemetry_file.open("user://telemetry.csv", File.WRITE)
+func init_telemetry() -> void:
+	var _discard = telemetry_file.open("user://telemetry.csv", File.WRITE)
 	telemetry_file.store_csv_line(["t", "input.power", "input.yaw", "input.roll", "input.pitch",
 			"x", "y", "z", "vx", "vy", "vz", "vx_loc", "vy_loc", "vz_loc",
 			"yaw", "roll", "pitch", "yaw_speed", "roll_speed", "pitch_speed",
@@ -244,14 +229,14 @@ func init_telemetry():
 	telemetry_file.close()
 
 
-func write_telemetry():
+func write_telemetry() -> void:
 	if !telemetry_file.file_exists("user://telemetry.csv"):
 		init_telemetry()
 	
-	telemetry_file.open("user://telemetry.csv", File.READ_WRITE)
+	var _discard = telemetry_file.open("user://telemetry.csv", File.READ_WRITE)
 	telemetry_file.seek_end()
-	var delta_pos = (get_tracking_target() - pos).rotated(Vector3.UP, -angles.y)
-	var data = PoolStringArray([time, input[0], input[1], input[2], input[3],
+	var delta_pos := (get_tracking_target() - pos).rotated(Vector3.UP, -angles.y)
+	var data := PoolStringArray([time, input[0], input[1], input[2], input[3],
 			pos.x, pos.y, pos.z, lin_vel.x, lin_vel.y, lin_vel.z, local_vel.x, local_vel.y, local_vel.z,
 			angles.y, angles.z, angles.x, ang_vel.y, ang_vel.z, ang_vel.x,
 			delta_pos.x, delta_pos.y, delta_pos.z,
@@ -274,13 +259,13 @@ func write_telemetry():
 	telemetry_file.close()
 
 
-func change_flight_mode(mode : int):
+func change_flight_mode(mode: int) -> void:
 	flight_mode = mode
 	emit_signal("flight_mode_changed", flight_mode)
 	print("Mode: %s" % [flight_mode])
 
 
-func _on_cycle_flight_modes():
+func _on_cycle_flight_modes() -> void:
 	if flight_mode == FlightMode.TURTLE or flight_mode == FlightMode.LAUNCH:
 		return
 	flight_mode += 1
@@ -299,69 +284,66 @@ func _on_cycle_flight_modes():
 		pid_controllers[Controller.YAW].set_target(angles.y)
 
 
-func get_angles_from_basis():
-#	var heading = 0.0
-#	var pitch = 0.0
-#	var roll = 0.0
+func get_angles_from_basis() -> void:
 	angles = global_transform.basis.get_euler()
 
 
-func is_flight_safe():
-	var max_angle = deg2rad(50)
-	var safe = true
+func is_flight_safe() -> bool:
+	var max_angle := deg2rad(50)
+	var safe := true
 	if abs(angles.x) > max_angle or abs(angles.z) > max_angle:
 		safe = false
 	return safe
 
 
-func set_motors(motor_array):
+func set_motors(motor_array: Array) -> void:
 	motors = motor_array
 	for motor in motors:
 		var _discard = connect("armed", motor, "_on_armed")
 
 
-func set_hover_thrust(t : float):
+func set_hover_thrust(t: float) -> void:
 	hover_thrust = t
 
 
-func set_tracking_target(target : Vector3):
+func set_tracking_target(target: Vector3) -> void:
 	pid_controllers[Controller.POS_X].set_target(target.x)
 	pid_controllers[Controller.ALTITUDE].set_target(target.y)
 	pid_controllers[Controller.POS_Z].set_target(target.z)
 
 
-func get_tracking_target():
-	var target = Vector3(pid_controllers[Controller.POS_X].target, pid_controllers[Controller.ALTITUDE].target,
+func get_tracking_target() -> Vector3:
+	var target := Vector3(pid_controllers[Controller.POS_X].target, pid_controllers[Controller.ALTITUDE].target,
 			pid_controllers[Controller.POS_Z].target)
 	return target
 
 
-func update_control(delta):
+func update_control(delta: float) -> void:
 	dt = delta
-	var motor_control = update_command()
+	var motor_control := update_command()
 #	print("%8.3f %8.3f %8.3f %8.3f" % [power, yaw, roll, pitch])
 	
-	var power = motor_control[0]
-	var yaw = motor_control[1]
-	var roll = motor_control[2]
-	var pitch = motor_control[3]
-	var motor_pwm = [power + yaw + roll + pitch,
+	var power: float = motor_control[0]
+	var yaw: float = motor_control[1]
+	var roll: float = motor_control[2]
+	var pitch: float = motor_control[3]
+	var motor_pwm := [power + yaw + roll + pitch,
 			power - yaw - roll + pitch,
 			power + yaw - roll - pitch,
 			power - yaw + roll - pitch]
 	
 	# Air Mode
-	var pwm_min = motor_pwm.min()
-	var pwm_max = motor_pwm.max()
-	var idle_pwm = motors[0].MIN_POWER / 100.0
+	var pwm_min: float = motor_pwm.min()
+	var pwm_max: float = motor_pwm.max()
+	var idle_pwm: float = motors[0].MIN_POWER / 100.0
 	# Scale PWM to range [idle, 1] as needed
 	if pwm_max - pwm_min > 1 - idle_pwm:
-		var pwm_mid = (pwm_min + pwm_max) / 2.0
+		var pwm_mid := (pwm_min + pwm_max) / 2.0
 		for i in range(4):
 			motor_pwm[i] = pwm_mid + (motor_pwm[i] - pwm_mid) * (1 - idle_pwm) / (pwm_max - pwm_min)
 	pwm_min = motor_pwm.min()
 	pwm_max = motor_pwm.max()
-	var offset = 0.0
+	var offset := 0.0
 	if pwm_min < idle_pwm:
 		offset = idle_pwm - pwm_min
 	if pwm_max > 1:
@@ -402,38 +384,38 @@ func update_control(delta):
 	motors[3].set_pwm(motor_pwm[3])
 
 
-func update_command():
-	var motor_control = [0, 0, 0, 0]
+func update_command() -> Array:
+	var motor_control := [0, 0, 0, 0]
 	
-	var pwr = input[0]
-	var y = input[1]
-	var r = input[2]
-	var p = input[3]
+	var pwr: float = input[0]
+	var y: float = input[1]
+	var r: float = input[2]
+	var p: float = input[3]
 	
-	var expo_y = control_profile.expo_yaw
-	var rate_y = control_profile.rate_yaw
-	var expo_r = control_profile.expo_roll
-	var rate_r = control_profile.rate_roll
-	var expo_p = control_profile.expo_pitch
-	var rate_p = control_profile.rate_pitch
+	var expo_y: float = control_profile.expo_yaw
+	var rate_y: float = control_profile.rate_yaw
+	var expo_r: float = control_profile.expo_roll
+	var rate_r: float = control_profile.rate_roll
+	var expo_p: float = control_profile.expo_pitch
+	var rate_p: float = control_profile.rate_pitch
 	
 	if flight_mode == FlightMode.RATE:
 		motor_control[0] = pwr
 		
-		var yaw_input = -((1 - expo_y) * y + expo_y * pow(y, 3)) * deg2rad(rate_y)
+		var yaw_input := -((1 - expo_y) * y + expo_y * pow(y, 3)) * deg2rad(rate_y)
 		pid_controllers[Controller.YAW_SPEED].set_target(yaw_input)
 		motor_control[1] = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 		
-		var roll_input = ((1 - expo_r) * r + expo_r * pow(r, 3)) * deg2rad(rate_r)
+		var roll_input := ((1 - expo_r) * r + expo_r * pow(r, 3)) * deg2rad(rate_r)
 		pid_controllers[Controller.ROLL_SPEED].set_target(roll_input)
 		motor_control[2] = pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
 		
-		var pitch_input = ((1 - expo_p) * p + expo_p * pow(p, 3)) * deg2rad(rate_p)
+		var pitch_input := ((1 - expo_p) * p + expo_p * pow(p, 3)) * deg2rad(rate_p)
 		pid_controllers[Controller.PITCH_SPEED].set_target(pitch_input)
 		motor_control[3] = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
 	
 	elif flight_mode == FlightMode.LEVEL:
-		var bank_limit = deg2rad(35)
+		var bank_limit := deg2rad(35)
 		pid_controllers[Controller.VERTICAL_SPEED].set_target((pwr - 0.5) * 10.0)
 		motor_control[0] = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 		
@@ -447,8 +429,8 @@ func update_command():
 		motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
 	elif flight_mode == FlightMode.SPEED:
-		var bank_limit = deg2rad(35)
-		var flat_vel = basis_flat.xform_inv(lin_vel)
+		var bank_limit := deg2rad(35)
+		var flat_vel := basis_flat.xform_inv(lin_vel)
 		pid_controllers[Controller.VERTICAL_SPEED].set_target((pwr - 0.5) * 10.0)
 		motor_control[0] = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 		
@@ -456,18 +438,18 @@ func update_command():
 		motor_control[1] = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 		
 		pid_controllers[Controller.LATERAL_SPEED].set_target(((1 - expo_r) * r + expo_r * pow(r, 3)) * 10.0)
-		var roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(flat_vel.x, dt, false)
+		var roll_change: float = pid_controllers[Controller.LATERAL_SPEED].get_output(flat_vel.x, dt, false)
 		pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -bank_limit, bank_limit))
 		motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 		
 		pid_controllers[Controller.FORWARD_SPEED].set_target(((1 - expo_p) * p + expo_p * pow(p, 3)) * 10.0)
-		var pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(flat_vel.z, dt, false)
+		var pitch_change: float = pid_controllers[Controller.FORWARD_SPEED].get_output(flat_vel.z, dt, false)
 		pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -bank_limit, bank_limit))
 		motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 	
 	elif flight_mode == FlightMode.TRACK:
-		var target = get_tracking_target()
-		var target_prev = target
+		var target := get_tracking_target()
+		var target_prev := target
 		target.x = target.x + ((1 - expo_r) * r + expo_r * pow(r, 3)) * 5.0 * dt
 		target.y = target.y + (pwr - 0.5) * 5.0 * dt
 		target.z = target.z + ((1 - expo_p) * p + expo_p * pow(p, 3)) * 5.0 * dt
@@ -475,46 +457,47 @@ func update_command():
 		
 		motor_control[0] = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
 		
-		target = pid_controllers[Controller.YAW].target - ((1 - expo_y) * y + expo_y * pow(y, 3)) * PI / 2.0 * dt
-		while target > PI:
-			target -= 2 * PI
-		while target < -PI:
-			target += 2 * PI
-		pid_controllers[Controller.YAW].set_target(target)
-		var hdg_delta = 0
-		if abs(target - angles.y) > PI:
+		var target_angle: float = pid_controllers[Controller.YAW].target \
+				- ((1 - expo_y) * y + expo_y * pow(y, 3)) * PI / 2.0 * dt
+		while target_angle > PI:
+			target_angle -= 2 * PI
+		while target_angle < -PI:
+			target_angle += 2 * PI
+		pid_controllers[Controller.YAW].set_target(target_angle)
+		var hdg_delta := 0.0
+		if abs(target_angle - angles.y) > PI:
 			hdg_delta = 2 * PI
-			if target < 0:
+			if target_angle < 0:
 				hdg_delta = -hdg_delta
-		var measurement = angles.y + hdg_delta
+		var measurement := angles.y + hdg_delta
 		# Manually correct previous PID measurement to remove discontinuity
 		if abs(pid_controllers[Controller.YAW].mv_prev - measurement) > PI:
 			pid_controllers[Controller.YAW].mv_prev += hdg_delta
 		motor_control[1] = pid_controllers[Controller.YAW].get_output(measurement, dt, false)
 		
-		var xform = Transform(basis, pos)
+		var xform := Transform(basis, pos)
 		target = get_tracking_target()
-		var delta_pos = xform.xform_inv(target)
-		var target_vel = (target - target_prev) / dt
+		var delta_pos: Vector3 = xform.xform_inv(target)
+		var target_vel := (target - target_prev) / dt
 		
-		var bank_limit = deg2rad(35)
+		var bank_limit := deg2rad(35)
 		if lin_vel.length() > 2.8 or target_vel.length() > 2.8 or delta_pos.length() > 3.0:
 			pid_controllers[Controller.LATERAL_SPEED].set_target(basis.xform_inv(target_vel).x + 2 * delta_pos.x)
-			var roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
+			var roll_change: float = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
 			pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -bank_limit, bank_limit))
 			motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 			
 			pid_controllers[Controller.FORWARD_SPEED].set_target(basis.xform_inv(target_vel).z + 2 * delta_pos.z)
-			var pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
+			var pitch_change: float = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
 			pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -bank_limit, bank_limit))
 			motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 			
 		else:
-			var roll_target = pid_controllers[Controller.POS_X].get_output(target.x - delta_pos.x, dt)
+			var roll_target: float = pid_controllers[Controller.POS_X].get_output(target.x - delta_pos.x, dt)
 			pid_controllers[Controller.ROLL].set_target(clamp(roll_target,-bank_limit, bank_limit))
 			motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
 	
-			var pitch_target = pid_controllers[Controller.POS_Z].get_output(target.z - delta_pos.z, dt)
+			var pitch_target: float = pid_controllers[Controller.POS_Z].get_output(target.z - delta_pos.z, dt)
 			pid_controllers[Controller.PITCH].set_target(clamp(pitch_target,-bank_limit, bank_limit))
 			motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt)
 	
@@ -531,7 +514,7 @@ func update_command():
 	elif flight_mode == FlightMode.LAUNCH:
 		motor_control[0] = pwr
 		
-		var pitch_input = pid_controllers[Controller.LAUNCH].target + ((1 - expo_p) * p + expo_p * pow(p, 3)) * dt
+		var pitch_input: float = pid_controllers[Controller.LAUNCH].target + ((1 - expo_p) * p + expo_p * pow(p, 3)) * dt
 		pid_controllers[Controller.LAUNCH].set_target(pitch_input)
 		motor_control[3] = pid_controllers[Controller.LAUNCH].get_output(angles.x, dt, false)
 	
@@ -539,21 +522,21 @@ func update_command():
 		pid_controllers[Controller.YAW_SPEED].set_target(0)
 		motor_control[1] = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 		
-		var bank_limit = deg2rad(20)
+		var bank_limit := deg2rad(20)
 		if is_flight_safe():
-			var target_speed = -5
+			var target_speed := -5.0
 			if pos.y < 1:
 				_on_disarm_input()
 			pid_controllers[Controller.VERTICAL_SPEED].set_target(target_speed)
 			motor_control[0] = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 			
 			pid_controllers[Controller.LATERAL_SPEED].set_target(0)
-			var roll_change = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
+			var roll_change: float = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
 			pid_controllers[Controller.ROLL].set_target(clamp(roll_change, -bank_limit, bank_limit))
 			motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 			
 			pid_controllers[Controller.FORWARD_SPEED].set_target(0)
-			var pitch_change = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
+			var pitch_change: float = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
 			pid_controllers[Controller.PITCH].set_target(clamp(pitch_change, -bank_limit, bank_limit))
 			motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 		
@@ -572,7 +555,7 @@ func update_command():
 	return motor_control
 
 
-func reset():
+func reset() -> void:
 	set_armed(false)
 	
 	# Update position twice to ensure pos_prev == pos

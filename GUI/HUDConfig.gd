@@ -1,22 +1,22 @@
 extends HBoxContainer
 
 
-onready var fps = $ScrollContainer/VBoxContainer/HBoxContainer/SpinBoxRefreshRate
-onready var check_crosshair = $ScrollContainer/VBoxContainer/CheckCrosshair
-onready var check_horizon = $ScrollContainer/VBoxContainer/CheckHorizon
-onready var check_ladder = $ScrollContainer/VBoxContainer/CheckLadder
-onready var check_speed = $ScrollContainer/VBoxContainer/CheckSpeed
-onready var check_altitude = $ScrollContainer/VBoxContainer/CheckAltitude
-onready var check_heading = $ScrollContainer/VBoxContainer/CheckHeading
-onready var check_sticks = $ScrollContainer/VBoxContainer/CheckSticks
-onready var check_rpm = $ScrollContainer/VBoxContainer/CheckRPM
+onready var fps := $ScrollContainer/VBoxContainer/HBoxContainer/SpinBoxRefreshRate
+onready var check_crosshair := $ScrollContainer/VBoxContainer/CheckCrosshair
+onready var check_horizon := $ScrollContainer/VBoxContainer/CheckHorizon
+onready var check_ladder := $ScrollContainer/VBoxContainer/CheckLadder
+onready var check_speed := $ScrollContainer/VBoxContainer/CheckSpeed
+onready var check_altitude := $ScrollContainer/VBoxContainer/CheckAltitude
+onready var check_heading := $ScrollContainer/VBoxContainer/CheckHeading
+onready var check_sticks := $ScrollContainer/VBoxContainer/CheckSticks
+onready var check_rpm := $ScrollContainer/VBoxContainer/CheckRPM
 
-onready var hud = $HUD
+onready var hud := $HUD
 
 
-func _ready():
+func _ready() -> void:
 	GameSettings.load_hud_config()
-	fps.connect("value_changed", self, "_on_hud_fps_changed")
+	var _discard = fps.connect("value_changed", self, "_on_hud_fps_changed")
 	fps.value = GameSettings.hud_config["fps"]
 	var buttons := [check_crosshair, check_horizon, check_ladder, check_speed,
 			check_altitude, check_heading, check_sticks, check_rpm]
@@ -49,15 +49,15 @@ func _ready():
 				hud.show_component(HUD.Component.RPM, button.pressed)
 
 
-func _on_hud_fps_changed(value: float):
+func _on_hud_fps_changed(value: float) -> void:
 	GameSettings.hud_config["fps"] = int(value)
 	hud.hud_timer = 1.0 / value
 	GameSettings.save_hud_config()
 
 
-func _on_button_toggled(button_pressed: bool, button: CheckButton):
-	var component: int = -1
-	var key: String = ""
+func _on_button_toggled(button_pressed: bool, button: CheckButton) -> void:
+	var component := -1
+	var key := ""
 	match button:
 		check_crosshair:
 			component = HUD.Component.CROSSHAIR

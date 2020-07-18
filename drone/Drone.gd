@@ -5,30 +5,30 @@ class_name Drone
 signal respawned
 
 
-var motors = []
-onready var flight_controller = $FlightController
-var hud = preload("res://HUD/HUD.tscn").instance()
+var motors := []
+onready var flight_controller := $FlightController
+var hud := preload("res://HUD/HUD.tscn").instance()
 
-var control_profile = ControlProfile.new()
-export (float, 1.0, 1800.0) var rate_pitch = 667.0
-export (float, 1.0, 1800.0) var rate_roll = 667.0
-export (float, 1.0, 1800.0) var rate_yaw = 667.0
-export (float, 0.0, 1.0) var expo_pitch = 0.2
-export (float, 0.0, 1.0) var expo_roll = 0.2
-export (float, 0.0, 1.0) var expo_yaw = 0.2
+var control_profile := ControlProfile.new()
+export (float, 1.0, 1800.0) var rate_pitch := 667.0
+export (float, 1.0, 1800.0) var rate_roll := 667.0
+export (float, 1.0, 1800.0) var rate_yaw := 667.0
+export (float, 0.0, 1.0) var expo_pitch := 0.2
+export (float, 0.0, 1.0) var expo_roll := 0.2
+export (float, 0.0, 1.0) var expo_yaw := 0.2
 
-var drone_transform = Transform.IDENTITY
-var drone_pos = Vector3.ZERO
-var drone_basis = Basis.IDENTITY
+var drone_transform := Transform.IDENTITY
+var drone_pos := Vector3.ZERO
+var drone_basis := Basis.IDENTITY
 
-export (Vector3) var projected_area = Vector3(0.1, 0.1, 0.1)
-export (Vector3) var cd = Vector3(0.3, 1.3, 0.3)
+export (Vector3) var projected_area := Vector3(0.1, 0.1, 0.1)
+export (Vector3) var cd := Vector3(0.3, 1.3, 0.3)
 
-onready var debug_geom = get_tree().root.get_node("Level/DebugGeometry")
-var b_debug = false
+onready var debug_geom := get_tree().root.get_node("Level/DebugGeometry")
+var b_debug := false
 
 
-func _ready():
+func _ready() -> void:
 	for shape in $Frame.collision_shapes:
 		$Frame.remove_child(shape)
 		add_child(shape)
@@ -67,19 +67,19 @@ func _ready():
 	_on_hud_config_updated()
 
 
-func _process(delta):
+func _process(delta: float) -> void:
 	update_hud_data(delta)
 	
 	if b_debug:
 		for motor in motors:
 			var prop = motor.propeller
-			var vec_force = prop.global_transform.basis.y * prop.get_thrust()
-			var vec_pos = prop.global_transform.origin - global_transform.origin
+			var vec_force: Vector3 = prop.global_transform.basis.y * prop.get_thrust()
+			var vec_pos: Vector3 = prop.global_transform.origin - global_transform.origin
 			debug_geom.draw_debug_arrow(delta, global_transform.origin + vec_pos, vec_force, vec_force.length() / 50,
 					Color(5, 1, 0))
 		
-		var global_xform = global_transform
-		var global_basis = global_xform.basis
+		var global_xform := global_transform
+		var global_basis := global_xform.basis
 		debug_geom.draw_debug_grid(0.02, global_xform.xform(Vector3(0, 0, 0)), 1.5, 1.5, 1, 1,
 				Vector3.UP, global_basis.xform(Vector3.RIGHT))
 		debug_geom.draw_debug_arrow(0.02, global_xform.xform(Vector3.UP),
@@ -102,47 +102,47 @@ func _process(delta):
 				Color(0, 0, 10))
 
 
-func _physics_process(_delta):
+func _physics_process(_delta: float) -> void:
 	drone_transform = global_transform
 	drone_pos = drone_transform.origin
 	drone_basis = drone_transform.basis
 	
 	if b_debug:
-		var drag = get_drag(linear_velocity, angular_velocity, drone_basis)[0]
+		var drag: Vector3 = get_drag(linear_velocity, angular_velocity, drone_basis)[0]
 		debug_geom.draw_debug_arrow(0.01, drone_pos, drag.normalized(), drag.length() / 10)
 
 
-func _integrate_forces(state):
-	var steps = 10
+func _integrate_forces(state: PhysicsDirectBodyState) -> void:
+	var steps := 10
 	if !flight_controller.armed:
 		steps = 1
-	var dt = state.step / (steps as float)
+	var dt := state.step / (steps as float)
 	
-	var xform = drone_transform.orthonormalized()
+	var xform := drone_transform.orthonormalized()
 	var pos = xform.origin
-	var basis = xform.basis
-	var lin_vel = state.linear_velocity
-	var ang_vel = state.angular_velocity
+	var basis := xform.basis
+	var lin_vel := state.linear_velocity
+	var ang_vel := state.angular_velocity
 	
 	for i in range(steps):
 		flight_controller.integrate_loop(dt, pos, basis)
 		
-		var vec_force = Vector3()
-		var vec_torque = Vector3()
+		var vec_force := Vector3.ZERO
+		var vec_torque := Vector3.ZERO
 		
 		for motor in motors:
 			motor.update_thrust(dt)
 			var prop = motor.propeller
-			var prop_pos = prop.global_transform.origin - global_transform.origin
-			var prop_xform = motor.transform * prop.transform
-			var prop_local_pos = prop_xform.xform_inv(prop_pos)
+			var prop_pos: Vector3 = prop.global_transform.origin - global_transform.origin
+			var prop_xform: Transform = motor.transform * prop.transform
+			var prop_local_pos: Vector3 = prop_xform.xform_inv(prop_pos)
 			prop.set_velocity(basis.xform_inv(lin_vel) + basis.xform_inv(ang_vel).cross(prop_local_pos))
 			prop.update_forces()
-			var prop_forces = prop.forces
-			var prop_thrust = basis.xform(prop_forces[0])
+			var prop_forces: Array = prop.forces
+			var prop_thrust: Vector3 = basis.xform(prop_forces[0])
 			if motor.rpm < 0:
 				prop_thrust = -prop_thrust / 2
-			var prop_drag = basis.xform(prop_forces[1])
+			var prop_drag: Vector3 = basis.xform(prop_forces[1])
 			if b_debug and i == 0 and prop.name == "Propeller1":
 				print("V: %5.2f, T: %5.2f, D: %5.2f" % [prop.velocity.y, prop_forces[0].length(), prop_forces[1].length()])
 				# Draw debug arrows relative to FPV camera
@@ -154,18 +154,18 @@ func _integrate_forces(state):
 			vec_torque += motor.get_torque() * basis.y
 			vec_torque -= prop_thrust.cross(basis.xform(prop_xform.origin))
 
-		var drag = get_drag(lin_vel, ang_vel, basis)
+		var drag := get_drag(lin_vel, ang_vel, basis)
 		vec_force += drag[0]
 		vec_torque += drag[1]
 		
 		# Integrate forces and velocities
-		var a = vec_force * state.inverse_mass + state.total_gravity
+		var a := vec_force * state.inverse_mass + state.total_gravity
 		lin_vel += a * dt
 		pos += lin_vel * dt
 		
-		var ang_a = vec_torque * state.inverse_inertia
+		var ang_a := vec_torque * state.inverse_inertia
 		ang_vel += ang_a * dt
-		var delta_ang_vel = ang_vel * dt
+		var delta_ang_vel := ang_vel * dt
 		if delta_ang_vel != Vector3.ZERO:
 			basis = basis.rotated(delta_ang_vel.normalized(), delta_ang_vel.length())
 		
@@ -175,23 +175,23 @@ func _integrate_forces(state):
 	state.angular_velocity = ang_vel
 
 
-func update_hud_data(delta: float):
-	var angles = flight_controller.angles
-	var velocity = flight_controller.lin_vel
-	var position = flight_controller.pos
-	var input = flight_controller.input
-	var left_stick = Vector2(input[1], -2 * (input[0] - 0.5))
-	var right_stick = Vector2(input[2], input[3])
-	var mot = flight_controller.motors
-	var rpm = [mot[0].rpm, mot[1].rpm, mot[2].rpm, mot[3].rpm]
+func update_hud_data(delta: float) -> void:
+	var angles: Vector3 = flight_controller.angles
+	var velocity: Vector3 = flight_controller.lin_vel
+	var position: Vector3 = flight_controller.pos
+	var input: Array = flight_controller.input
+	var left_stick := Vector2(input[1], -2 * (input[0] - 0.5))
+	var right_stick := Vector2(input[2], input[3])
+	var mot: Array = flight_controller.motors
+	var rpm := [mot[0].rpm, mot[1].rpm, mot[2].rpm, mot[3].rpm]
 	hud.update_data(delta, position, angles, velocity, left_stick, right_stick, rpm)
 
 
-func reset():
+func reset() -> void:
 	_on_reset()
 
 
-func _on_reset():
+func _on_reset() -> void:
 	if Global.game_mode == Global.GameMode.RACE and Global.active_track:
 		var launch_transform: Transform = Global.active_track.get_random_launch_area().global_transform
 		var offset: float = -motors[0].transform.origin.z + 0.02
@@ -205,11 +205,11 @@ func _on_reset():
 	emit_signal("respawned")
 
 
-func get_drag(lin_vel : Vector3, ang_vel, orientation : Basis):
-	var drag = [Vector3(), Vector3()]
-	var local_vel = orientation.xform_inv(lin_vel)
-	var local_ang = orientation.xform_inv(ang_vel)
-	var local_drag = [Vector3(), Vector3()]
+func get_drag(lin_vel: Vector3, ang_vel: Vector3, orientation: Basis) -> Array:
+	var drag := [Vector3.ZERO, Vector3.ZERO]
+	var local_vel := orientation.xform_inv(lin_vel)
+	var local_ang := orientation.xform_inv(ang_vel)
+	var local_drag := [Vector3.ZERO, Vector3.ZERO]
 	local_drag[0] = -local_vel.length() * local_vel * projected_area * cd / 2.0 * 1.225
 	local_drag[1] = -local_ang.length() * local_ang * projected_area * cd / 200.0 * 1.225
 	drag[0] = orientation.xform(local_drag[0])
@@ -218,8 +218,8 @@ func get_drag(lin_vel : Vector3, ang_vel, orientation : Basis):
 	return drag
 
 
-func _on_flight_mode_changed(mode):
-	var led = $LEDMode
+func _on_flight_mode_changed(mode: int) -> void:
+	var led := $LEDMode
 	led.set_blink_pattern()
 	if mode == FlightController.FlightMode.RATE:
 		led.change_color(Color(1, 0, 0))
@@ -240,14 +240,14 @@ func _on_flight_mode_changed(mode):
 		led.set_blink_pattern([Vector2(0.15, 0.15), Vector2(0.55, 0.15)])
 
 
-func _on_quad_settings_updated():
+func _on_quad_settings_updated() -> void:
 	mass = QuadSettings.dry_weight + QuadSettings.battery_weight
 	$FPVCamera.transform.basis = Basis.IDENTITY.rotated(Vector3.RIGHT, deg2rad(QuadSettings.angle))
 	control_profile.set_rates(QuadSettings.rate_pitch, QuadSettings.rate_roll, QuadSettings.rate_yaw)
 	control_profile.set_expo(QuadSettings.expo_pitch, QuadSettings.expo_roll, QuadSettings.expo_yaw)
 
 
-func _on_hud_config_updated():
+func _on_hud_config_updated() -> void:
 	hud.hud_timer = 1.0 / GameSettings.hud_config["fps"]
 	hud.show_component(HUD.Component.CROSSHAIR, GameSettings.hud_config["crosshair"])
 	hud.show_component(HUD.Component.HORIZON, GameSettings.hud_config["horizon"])

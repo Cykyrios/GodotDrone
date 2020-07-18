@@ -1,29 +1,27 @@
 extends Spatial
 
+
 export(float, 0.1, 100) var base_speed := 30.0
 export var speed_modifier := 1.5
 export var look_around_speed := 1.0
 export var look_around_sensitivity := 0.1
 
-var speed: float
-const MAX_SPEED: float = 300.0
-const MIN_SPEED: float = 0.1
+var speed := 0.0
+const MAX_SPEED := 300.0
+const MIN_SPEED := 0.1
 
-var rotation_helper
-var camera
+onready var rotation_helper := $RotationHelper
+onready var camera := $RotationHelper/Camera
 
 
-func _ready():
+func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
-	rotation_helper = $RotationHelper
-	camera = $RotationHelper/Camera
 	
 	speed = base_speed
 
 
-func _process(delta):
-	var dir = Vector3()
+func _process(delta: float) -> void:
+	var dir = Vector3.ZERO
 	if Input.is_action_pressed("camera_forward"):
 		dir.z -= 1
 	if Input.is_action_pressed("camera_backward"):
@@ -48,13 +46,13 @@ func _process(delta):
 	self.translate_object_local(dir * speed * delta)
 
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		var mouse_rot = Vector2(event.relative.x, event.relative.y)
-		var rot_max = min(deg2rad(mouse_rot.y * look_around_sensitivity) * sign(mouse_rot.y), look_around_speed)
+		var mouse_rot := Vector2(event.relative.x, event.relative.y)
+		var rot_max := min(deg2rad(mouse_rot.y * look_around_sensitivity) * sign(mouse_rot.y), look_around_speed)
 		rotation_helper.rotate_x(rot_max * sign(mouse_rot.y) * -1)
 		rot_max = min(deg2rad(mouse_rot.x * look_around_sensitivity) * sign(mouse_rot.x), look_around_speed)
 		self.rotate_y(rot_max * sign(mouse_rot.x) * -1)
-		var camera_rot = rotation_helper.rotation_degrees
+		var camera_rot: Vector3 = rotation_helper.rotation_degrees
 		camera_rot.x = clamp(camera_rot.x, -89, 89)
 		rotation_helper.rotation_degrees = camera_rot

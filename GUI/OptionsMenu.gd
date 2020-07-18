@@ -1,9 +1,9 @@
 extends Control
 
 
-var packed_game_settings_menu = preload("res://GUI/GameSettingsMenu.tscn")
-var packed_graphics_menu = preload("res://GUI/GraphicsMenu.tscn")
-var packed_controls_menu = preload("res://GUI/ControlsMenu.tscn")
+var packed_game_settings_menu := preload("res://GUI/GameSettingsMenu.tscn")
+var packed_graphics_menu := preload("res://GUI/GraphicsMenu.tscn")
+var packed_controls_menu := preload("res://GUI/ControlsMenu.tscn")
 
 signal back
 
@@ -13,16 +13,16 @@ onready var button_graphics := $PanelContainer/VBoxContainer/ButtonGraphics
 onready var button_controls := $PanelContainer/VBoxContainer/ButtonControls
 
 
-func _ready():
+func _ready() -> void:
 	var _discard = button_game.connect("pressed", self, "_on_game_settings_pressed")
 	_discard = button_graphics.connect("pressed", self, "_on_graphics_pressed")
 	_discard = button_controls.connect("pressed", self, "_on_controls_pressed")
 	_discard = $PanelContainer/VBoxContainer/ButtonBack.connect("pressed", self, "_on_back_pressed")
 
 
-func _on_game_settings_pressed():
+func _on_game_settings_pressed() -> void:
 	if packed_game_settings_menu.can_instance():
-		var game_settings_menu = packed_game_settings_menu.instance()
+		var game_settings_menu := packed_game_settings_menu.instance()
 		get_parent().add_child(game_settings_menu)
 		visible = false
 		yield(game_settings_menu, "back")
@@ -30,9 +30,9 @@ func _on_game_settings_pressed():
 		visible = true
 
 
-func _on_graphics_pressed():
+func _on_graphics_pressed() -> void:
 	if packed_graphics_menu.can_instance():
-		var graphics_menu = packed_graphics_menu.instance()
+		var graphics_menu := packed_graphics_menu.instance()
 		get_parent().add_child(graphics_menu)
 		visible = false
 		yield(graphics_menu, "back")
@@ -40,9 +40,9 @@ func _on_graphics_pressed():
 		visible = true
 
 
-func _on_controls_pressed():
+func _on_controls_pressed() -> void:
 	if packed_controls_menu.can_instance():
-		var controls_menu = packed_controls_menu.instance()
+		var controls_menu := packed_controls_menu.instance()
 		get_parent().add_child(controls_menu)
 		visible = false
 		yield(controls_menu, "back")
@@ -50,5 +50,5 @@ func _on_controls_pressed():
 		visible = true
 
 
-func _on_back_pressed():
+func _on_back_pressed() -> void:
 	emit_signal("back")
