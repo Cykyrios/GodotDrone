@@ -119,6 +119,9 @@ func _input(event: InputEvent) -> void:
 				if binding_valid:
 					binding_event = event
 					binding_popup.set_text(binding_popup_text + "\n%s" % [binding_text])
+	elif event is InputEventKey and event.is_pressed() and event.scancode == KEY_ESCAPE:
+		accept_event()
+		emit_signal("back")
 
 
 func _on_calibrate_pressed() -> void:
