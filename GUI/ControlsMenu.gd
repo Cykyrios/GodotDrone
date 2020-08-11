@@ -21,6 +21,8 @@ var auto_detect_controller := false
 var active_controller := -1
 var default_controller := -1
 
+var calibrating_axes := false
+
 signal controller_detected
 signal back
 
@@ -129,7 +131,9 @@ func _on_calibrate_pressed() -> void:
 		var calibration_menu := packed_calibration_menu.instance()
 		add_child(calibration_menu)
 		$MenuPanel.modulate = Color(1, 1, 1, 0)
+		$ViewportContainer/Viewport/RadioTransmitter.accept_input = false
 		yield(calibration_menu, "back")
+		$ViewportContainer/Viewport/RadioTransmitter.accept_input = true
 		calibration_menu.queue_free()
 		$MenuPanel.modulate = Color(1, 1, 1, 1)
 
