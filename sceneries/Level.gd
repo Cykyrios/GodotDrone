@@ -19,6 +19,7 @@ func _ready() -> void:
 	cameras.append($CameraFixed)
 	cameras.append($FlyaroundCamera/RotationHelper/Camera)
 	
+	camera_index += 1
 	camera = cameras[camera_index]
 	
 	change_camera()
