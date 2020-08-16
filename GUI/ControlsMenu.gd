@@ -10,7 +10,7 @@ onready var controller_checkbutton := $HBoxContainer/ControllerPanel/ControllerV
 onready var axes_list := $HBoxContainer/ControllerPanel/ControllerVBox/AxesVBox/AxesList
 onready var button_grid := $HBoxContainer/ControllerPanel/ControllerVBox/ButtonsVBox/ButtonGrid
 
-onready var actions_list := $HBoxContainer/BindingsPanel/BindingsVBox/ScrollContainer/ActionsVBox
+onready var actions_list := $HBoxContainer/VBoxContainer/BindingsPanel/BindingsVBox/ScrollContainer/ActionsVBox
 var show_binding_popup := false
 var binding_popup_text := ""
 var binding_popup_clear := false
@@ -20,6 +20,8 @@ var connected_joypads := []
 var auto_detect_controller := false
 var active_controller := -1
 var default_controller := -1
+
+var calibrating_axes := false
 
 signal controller_detected
 signal back
@@ -128,8 +130,13 @@ func _on_calibrate_pressed() -> void:
 	if packed_calibration_menu.can_instance():
 		var calibration_menu := packed_calibration_menu.instance()
 		add_child(calibration_menu)
+		var _discard = calibration_menu.connect("calibration_step_changed",
+				$ViewportContainer/Viewport/RadioTransmitter, "_on_calibration_step_changed")
+		calibration_menu.emit_signal("calibration_step_changed", calibration_menu.calibration_step)
 		$MenuPanel.modulate = Color(1, 1, 1, 0)
+		$ViewportContainer/Viewport/RadioTransmitter.accept_input = false
 		yield(calibration_menu, "back")
+		$ViewportContainer/Viewport/RadioTransmitter.accept_input = true
 		calibration_menu.queue_free()
 		$MenuPanel.modulate = Color(1, 1, 1, 1)
 

@@ -16,6 +16,7 @@ var calibration_done := false
 var packed_popup := load("res://GUI/ConfirmationPopup.tscn")
 var display_popup := false
 
+signal calibration_step_changed
 signal calibration_done
 signal back
 
@@ -127,6 +128,7 @@ func _input(event: InputEvent) -> void:
 
 func go_to_next_step() -> void:
 	calibration_step += 1
+	emit_signal("calibration_step_changed", calibration_step)
 	
 	match calibration_step:
 		0:
