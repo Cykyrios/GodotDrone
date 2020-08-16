@@ -10,7 +10,7 @@ onready var controller_checkbutton := $HBoxContainer/ControllerPanel/ControllerV
 onready var axes_list := $HBoxContainer/ControllerPanel/ControllerVBox/AxesVBox/AxesList
 onready var button_grid := $HBoxContainer/ControllerPanel/ControllerVBox/ButtonsVBox/ButtonGrid
 
-onready var actions_list := $HBoxContainer/BindingsPanel/BindingsVBox/ScrollContainer/ActionsVBox
+onready var actions_list := $HBoxContainer/VBoxContainer/BindingsPanel/BindingsVBox/ScrollContainer/ActionsVBox
 var show_binding_popup := false
 var binding_popup_text := ""
 var binding_popup_clear := false
