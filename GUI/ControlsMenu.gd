@@ -130,6 +130,9 @@ func _on_calibrate_pressed() -> void:
 	if packed_calibration_menu.can_instance():
 		var calibration_menu := packed_calibration_menu.instance()
 		add_child(calibration_menu)
+		var _discard = calibration_menu.connect("calibration_step_changed",
+				$ViewportContainer/Viewport/RadioTransmitter, "_on_calibration_step_changed")
+		calibration_menu.emit_signal("calibration_step_changed", calibration_menu.calibration_step)
 		$MenuPanel.modulate = Color(1, 1, 1, 0)
 		$ViewportContainer/Viewport/RadioTransmitter.accept_input = false
 		yield(calibration_menu, "back")

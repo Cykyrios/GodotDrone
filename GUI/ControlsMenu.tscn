@@ -174,7 +174,7 @@ custom_constants/separation = 10
 margin_left = 640.0
 margin_top = 100.0
 margin_right = 1280.0
-margin_bottom = 340.0
+margin_bottom = 980.0
 size_flags_horizontal = 4
 
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]

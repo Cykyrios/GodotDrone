@@ -1,14 +1,21 @@
 extends WorldEnvironment
 
 
+enum Stick {RIGHT_VERTICAL = 1, RIGHT_HORIZONTAL, LEFT_VERTICAL, LEFT_HORIZONTAL}
 enum Axis {THROTTLE, YAW, PITCH, ROLL}
 enum Mode {MODE_1, MODE_2, MODE_3, MODE_4}
+
+
+const MAX_ANGLE := 27.0
 
 
 var mode: int = Mode.MODE_2
 
 onready var skeleton := $RadioTransmitter/Armature/Skeleton
 var accept_input := true
+
+onready var tween := $Tween
+var tween_loop := 0
 
 
 func _input(event) -> void:
@@ -33,8 +40,12 @@ func _input(event) -> void:
 			axis = Vector3.FORWARD
 			value = event.get_action_strength("roll_right") - event.get_action_strength("roll_left")
 		if stick > -1:
-			var angle := deg2rad(27 * value)
+			var angle := get_stick_angle(value)
 			skeleton.set_bone_pose(stick, Transform.IDENTITY.rotated(axis, angle))
+
+
+func get_stick_angle(value: float) -> float:
+	return deg2rad(MAX_ANGLE * value)
 
 
 func get_stick(axis: int) -> int:
@@ -42,41 +53,190 @@ func get_stick(axis: int) -> int:
 		Mode.MODE_1:
 			match axis:
 				Axis.THROTTLE:
-					return 1
+					return Stick.RIGHT_VERTICAL
 				Axis.YAW:
-					return 4
+					return Stick.LEFT_HORIZONTAL
 				Axis.PITCH:
-					return 3
+					return Stick.LEFT_VERTICAL
 				Axis.ROLL:
-					return 2
+					return Stick.RIGHT_HORIZONTAL
 		Mode.MODE_2:
 			match axis:
 				Axis.THROTTLE:
-					return 3
+					return Stick.LEFT_VERTICAL
 				Axis.YAW:
-					return 4
+					return Stick.LEFT_HORIZONTAL
 				Axis.PITCH:
-					return 1
+					return Stick.RIGHT_VERTICAL
 				Axis.ROLL:
-					return 2
+					return Stick.RIGHT_HORIZONTAL
 		Mode.MODE_3:
 			match axis:
 				Axis.THROTTLE:
-					return 1
+					return Stick.RIGHT_VERTICAL
 				Axis.YAW:
-					return 2
+					return Stick.RIGHT_HORIZONTAL
 				Axis.PITCH:
-					return 3
+					return Stick.LEFT_VERTICAL
 				Axis.ROLL:
-					return 4
+					return Stick.LEFT_HORIZONTAL
 		Mode.MODE_4:
 			match axis:
 				Axis.THROTTLE:
-					return 3
+					return Stick.LEFT_VERTICAL
 				Axis.YAW:
-					return 2
+					return Stick.RIGHT_HORIZONTAL
 				Axis.PITCH:
-					return 1
+					return Stick.RIGHT_VERTICAL
 				Axis.ROLL:
-					return 4
+					return Stick.LEFT_HORIZONTAL
 	return -1
+
+
+func set_left_stick_horizontal(value: float) -> void:
+	var angle := get_stick_angle(value)
+	skeleton.set_bone_pose(Stick.LEFT_HORIZONTAL, Transform.IDENTITY.rotated(Vector3.FORWARD, angle))
+
+
+func set_left_stick_vertical(value: float) -> void:
+	var angle := get_stick_angle(value)
+	skeleton.set_bone_pose(Stick.LEFT_VERTICAL, Transform.IDENTITY.rotated(Vector3.RIGHT, angle))
+
+
+func set_right_stick_horizontal(value: float) -> void:
+	var angle := get_stick_angle(value)
+	skeleton.set_bone_pose(Stick.RIGHT_HORIZONTAL, Transform.IDENTITY.rotated(Vector3.FORWARD, angle))
+
+
+func set_right_stick_vertical(value: float) -> void:
+	var angle := get_stick_angle(value)
+	skeleton.set_bone_pose(Stick.RIGHT_VERTICAL, Transform.IDENTITY.rotated(Vector3.RIGHT, angle))
+
+
+func set_throttle_stick(value: float) -> void:
+	if mode == Mode.MODE_1 or mode == Mode.MODE_3:
+		set_right_stick_vertical(value)
+	else:
+		set_left_stick_vertical(value)
+
+
+func set_yaw_stick(value: float) -> void:
+	if mode == Mode.MODE_1 or mode == Mode.MODE_2:
+		set_left_stick_horizontal(value)
+	else:
+		set_right_stick_horizontal(value)
+
+
+func set_pitch_stick(value: float) -> void:
+	if mode == Mode.MODE_1 or mode == Mode.MODE_3:
+		set_left_stick_vertical(value)
+	else:
+		set_right_stick_vertical(value)
+
+
+func set_roll_stick(value: float) -> void:
+	if mode == Mode.MODE_1 or mode == Mode.MODE_2:
+		set_right_stick_horizontal(value)
+	else:
+		set_left_stick_horizontal(value)
+
+
+func play_animation(calibration_step: int) -> void:
+	tween.remove_all()
+	tween.repeat = true
+	match calibration_step:
+		0:
+			tween.repeat = false
+			tween.interpolate_method(self, "set_left_stick_horizontal", 0, -1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			tween.interpolate_method(self, "set_left_stick_vertical", 0, -1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			tween.interpolate_method(self, "set_right_stick_horizontal", 0, 1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			tween.interpolate_method(self, "set_right_stick_vertical", 0, -1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			var _discard = tween.connect("tween_all_completed", self, "loop_stick_animation")
+		1:
+			tween.interpolate_method(self, "set_left_stick_horizontal", 0, 0,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			tween.interpolate_method(self, "set_left_stick_vertical", 0, 0,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			tween.interpolate_method(self, "set_right_stick_horizontal", 0, 0,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			tween.interpolate_method(self, "set_right_stick_vertical", 0, 0,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		2:
+			tween.interpolate_method(self, "set_throttle_stick", 0, -1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		3:
+			tween.interpolate_method(self, "set_throttle_stick", -1, 1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		4:
+			tween.interpolate_method(self, "set_throttle_stick", 1, 0,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		5:
+			set_throttle_stick(0)
+			tween.interpolate_method(self, "set_yaw_stick", 0, -1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		6:
+			tween.interpolate_method(self, "set_yaw_stick", -1, 1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		7:
+			tween.interpolate_method(self, "set_yaw_stick", 1, 0,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		8:
+			set_yaw_stick(0)
+			tween.interpolate_method(self, "set_pitch_stick", 0, -1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		9:
+			tween.interpolate_method(self, "set_pitch_stick", -1, 1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		10:
+			tween.interpolate_method(self, "set_pitch_stick", 1, 0,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		11:
+			set_pitch_stick(0)
+			tween.interpolate_method(self, "set_roll_stick", 0, -1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		12:
+			tween.interpolate_method(self, "set_roll_stick", -1, 1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		13:
+			tween.interpolate_method(self, "set_roll_stick", 1, 0,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		_:
+			set_roll_stick(0)
+	tween.start()
+
+
+func loop_stick_animation() -> void:
+	tween_loop += 1
+	match tween_loop:
+		1:
+			tween.interpolate_method(self, "set_left_stick_horizontal", -1, 1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			tween.interpolate_method(self, "set_right_stick_horizontal", 1, -1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		2:
+			tween.interpolate_method(self, "set_left_stick_vertical", -1, 1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			tween.interpolate_method(self, "set_right_stick_vertical", -1, 1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		3:
+			tween.interpolate_method(self, "set_left_stick_horizontal", 1, -1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			tween.interpolate_method(self, "set_right_stick_horizontal", -1, 1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+		4:
+			tween.interpolate_method(self, "set_left_stick_vertical", 1, -1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			tween.interpolate_method(self, "set_right_stick_vertical", 1, -1,
+					0.5, Tween.TRANS_CUBIC,Tween.EASE_IN_OUT)
+			tween_loop = 0
+	tween.start()
+
+
+func _on_calibration_step_changed(step: int) -> void:
+	if step == 1:
+		tween.disconnect("tween_all_completed", self, "loop_stick_animation")
+	play_animation(step)

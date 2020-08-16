@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Assets/GUI/RadioTransmitter/RadioTransmitter.glb" type="PackedScene" id=1]
+[ext_resource path="res://GUI/RadioTransmitter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GUI/ControlsMenuRadioTransmitter.gd" type="Script" id=2]
 
 [sub_resource type="Environment" id=1]
@@ -24,3 +24,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 light_energy = 2.0
 shadow_bias = 0.01
 shadow_contact = 0.01
+
+[node name="Tween" type="Tween" parent="."]
