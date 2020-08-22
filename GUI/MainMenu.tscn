@@ -12,12 +12,15 @@ custom_constants/margin_top = 100
 custom_constants/margin_left = 100
 custom_constants/margin_bottom = 100
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 margin_left = 765.0
-margin_top = 355.0
+margin_top = 320.0
 margin_right = 1154.0
-margin_bottom = 724.0
+margin_bottom = 760.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -27,7 +30,7 @@ size_flags_vertical = 4
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 369.0
-margin_bottom = 349.0
+margin_bottom = 420.0
 custom_constants/separation = 20
 __meta__ = {
 "_edit_use_anchors_": false
@@ -52,14 +55,20 @@ margin_right = 349.0
 margin_bottom = 187.0
 text = "Quad Settings"
 
-[node name="ButtonOptions" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonHelp" type="Button" parent="PanelContainer/VBoxContainer"]
 margin_top = 207.0
 margin_right = 349.0
 margin_bottom = 258.0
-text = "Options"
+text = "Help"
 
-[node name="ButtonQuit" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonOptions" type="Button" parent="PanelContainer/VBoxContainer"]
 margin_top = 278.0
 margin_right = 349.0
 margin_bottom = 329.0
+text = "Options"
+
+[node name="ButtonQuit" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 349.0
+margin_right = 349.0
+margin_bottom = 400.0
 text = "Quit"

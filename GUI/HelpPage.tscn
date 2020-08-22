@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUI/ThemeMenu.tres" type="Theme" id=1]
+[ext_resource path="res://GUI/HelpPage.gd" type="Script" id=2]
+
+[node name="HelpPage" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+custom_constants/margin_right = 100
+custom_constants/margin_top = 100
+custom_constants/margin_left = 100
+custom_constants/margin_bottom = 100
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 1820.0
+margin_bottom = 980.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 5
+size_flags_vertical = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1700.0
+margin_bottom = 860.0
+custom_constants/separation = 75
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+margin_right = 1680.0
+margin_bottom = 45.0
+text = "Help"
+align = 1
+valign = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer"]
+margin_top = 120.0
+margin_right = 1680.0
+margin_bottom = 714.0
+size_flags_horizontal = 7
+size_flags_vertical = 7
+theme = ExtResource( 1 )
+
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_left = 1545.0
+margin_top = 789.0
+margin_right = 1680.0
+margin_bottom = 840.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = ExtResource( 1 )
+text = "Go Back"

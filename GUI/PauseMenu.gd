@@ -2,6 +2,7 @@ extends Control
 
 
 var packed_quad_settings_menu := preload("res://GUI/QuadSettingsMenu.tscn")
+var packed_help_page := preload("res://GUI/HelpPage.tscn")
 var packed_options_menu := preload("res://GUI/OptionsMenu.tscn")
 
 var can_resume := true
@@ -13,6 +14,7 @@ signal menu
 func _ready() -> void:
 	var _discard = $PanelContainer/VBoxContainer/ButtonResume.connect("pressed", self, "_on_resume_pressed")
 	_discard = $PanelContainer/VBoxContainer/ButtonQuad.connect("pressed", self, "_on_quad_settings_pressed")
+	_discard = $PanelContainer/VBoxContainer/ButtonHelp.connect("pressed", self, "_on_help_pressed")
 	_discard = $PanelContainer/VBoxContainer/ButtonOptions.connect("pressed", self, "_on_options_pressed")
 	_discard = $PanelContainer/VBoxContainer/ButtonMainMenu.connect("pressed", self, "_on_menu_pressed")
 
@@ -28,6 +30,16 @@ func _on_quad_settings_pressed() -> void:
 		visible = false
 		yield(quad_settings_menu, "back")
 		quad_settings_menu.queue_free()
+		visible = true
+
+
+func _on_help_pressed() -> void:
+	if packed_help_page.can_instance():
+		var help_page := packed_help_page.instance()
+		get_parent().add_child(help_page)
+		visible = false
+		yield(help_page, "back")
+		help_page.queue_free()
 		visible = true
 
 
