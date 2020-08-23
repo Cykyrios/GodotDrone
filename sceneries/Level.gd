@@ -45,7 +45,7 @@ func _input(event: InputEvent) -> void:
 			camera_index = 0
 		change_camera()
 	
-	if Input.is_action_just_pressed("pause_menu"):
+	if event.is_action("pause_menu") and event.is_pressed() and not event.is_echo():
 		if !get_tree().paused:
 			get_tree().paused = true
 			pause_menu.visible = true
