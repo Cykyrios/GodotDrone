@@ -6,6 +6,7 @@ var packed_help_page := preload("res://GUI/HelpPage.tscn")
 var packed_options_menu := preload("res://GUI/OptionsMenu.tscn")
 
 var can_resume := true
+var show_menu := true
 
 signal resumed
 signal menu
@@ -19,7 +20,30 @@ func _ready() -> void:
 	_discard = $PanelContainer/VBoxContainer/ButtonMainMenu.connect("pressed", self, "_on_menu_pressed")
 
 
+func _input(event: InputEvent) -> void:
+	if event.is_action("pause_menu") and event.is_pressed() and not event.is_echo():
+		if get_tree().paused:
+			set_menu_visibility(true)
+	elif event is InputEventKey and event.is_pressed() and event.scancode == KEY_F2:
+		if get_tree().paused:
+			toggle_menu_visibility()
+
+
+func set_menu_visibility(show: bool) -> void:
+	show_menu = show
+	visible = show_menu
+	if show_menu:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+func toggle_menu_visibility() -> void:
+	set_menu_visibility(not show_menu)
+
+
 func _on_resume_pressed() -> void:
+	set_menu_visibility(true)
 	emit_signal("resumed")
 
 
