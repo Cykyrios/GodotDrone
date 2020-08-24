@@ -52,6 +52,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Gameplay"]
+modulate = Color( 1, 1, 1, 0.470588 )
+margin_left = 293.0
+margin_top = 323.0
+margin_right = 1379.0
+margin_bottom = 368.0
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "Nothing here at the moment, head to the HUD tab to customize the HUD."
+
 [node name="HUD" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
 visible = false
 anchor_right = 1.0
