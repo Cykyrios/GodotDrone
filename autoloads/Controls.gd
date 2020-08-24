@@ -135,7 +135,7 @@ func load_input_map(update_controller: bool = false) -> String:
 
 
 func create_action_list() -> void:
-	var actions := [["arm", "Arm"],
+	var actions := [["arm", "Arm (hold)"],
 			["toggle_arm", "Arm (toggle)"],
 			["respawn", "Reset drone"],
 			["cycle_flight_modes", "Cycle modes"],
