@@ -25,6 +25,7 @@ var race_state: int = RaceState.START
 var countdown_timer: Timer = null
 var countdown_label: Label = null
 var countdown_step := 0
+var end_label: Label = null
 
 var has_launchpad := false
 var launch_areas := []
@@ -36,6 +37,7 @@ func _ready() -> void:
 	
 	setup_countdown()
 	setup_timer_label()
+	setup_end_label()
 	
 	set_selected_checkpoint(-1)
 	set_edit_track(false)
@@ -161,6 +163,7 @@ func _on_checkpoint_passed(cp: Checkpoint) -> void:
 			race_state = RaceState.END
 			update_timer_label()
 			print("Finished!")
+			display_end_label()
 		else:
 			activate_next_checkpoint()
 			if race_state == RaceState.RACE:
@@ -209,6 +212,16 @@ func setup_countdown() -> void:
 	countdown_label.valign = Label.VALIGN_CENTER
 	countdown_label.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
 	countdown_label.visible = false
+
+
+func setup_end_label() -> void:
+	end_label = Label.new()
+	add_child(end_label)
+	end_label.theme = load("res://GUI/ThemeCountdown.tres")
+	end_label.align = Label.ALIGN_CENTER
+	end_label.valign = Label.VALIGN_CENTER
+	end_label.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
+	end_label.visible = false
 
 
 func setup_timer_label() -> void:
@@ -309,3 +322,16 @@ func _on_body_exited_launchpad(body: Node) -> void:
 	if body is Drone and race_state == RaceState.START:
 		stop_countdown()
 		update_countdown(-1)
+
+
+func display_end_label() -> void:
+	end_label.text = "Finished!"
+	end_label.set_anchors_and_margins_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
+	end_label.visible = true
+	var timer := Timer.new()
+	add_child(timer)
+	timer.start(2)
+	yield(timer, "timeout")
+	end_label.visible = false
+	remove_child(timer)
+	timer.queue_free()
