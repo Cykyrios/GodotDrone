@@ -3,6 +3,11 @@ extends Area
 class_name Checkpoint
 
 
+signal entered
+signal exited
+signal passed
+
+
 var bodies := []
 var areas_per_body := []
 
@@ -12,9 +17,7 @@ var selected := false setget set_selected
 var area_visible := false setget set_area_visible
 var mat := ShaderMaterial.new()
 
-signal entered
-signal exited
-signal passed
+var drone_raycasts := []
 
 
 func _ready() -> void:
@@ -48,6 +51,26 @@ func _process(_delta: float) -> void:
 	if Engine.editor_hint or active:
 		mat.set_shader_param("CheckpointPosition", global_transform.origin)
 		mat.set_shader_param("CheckpointForward", global_transform.basis.z)
+
+
+func _physics_process(_delta: float) -> void:
+	if not drone_raycasts.empty():
+		var entry_direction := global_transform.basis.z
+		if backward:
+			entry_direction = -entry_direction
+		for drone in drone_raycasts:
+			var pos_dot: float = (drone.global_transform.origin -
+					global_transform.origin).dot(entry_direction)
+			var vel_dot: float = drone.linear_velocity.dot(entry_direction)
+			if vel_dot < 0:
+				if pos_dot < 0 or backward and pos_dot > 0:
+					drone_raycasts.erase(drone)
+					if active:
+						emit_signal("passed", self)
+					else:
+						emit_signal("exited")
+			else:
+				drone_raycasts.erase(drone)
 
 
 func set_backward(back: bool) -> void:
@@ -102,3 +125,10 @@ func _on_exited(body: Node) -> void:
 				emit_signal("passed", self)
 			else:
 				emit_signal("exited")
+
+
+func _on_drone_raycast_hit(drone: Drone) -> void:
+	var dot_product := (drone.global_transform.origin - global_transform.origin).dot(global_transform.basis.z)
+	if dot_product > 0 or backward and dot_product < 0:
+		if not drone_raycasts.has(drone):
+			drone_raycasts.append(drone)

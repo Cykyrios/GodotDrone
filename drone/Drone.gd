@@ -24,6 +24,8 @@ var drone_basis := Basis.IDENTITY
 export (Vector3) var projected_area := Vector3(0.1, 0.1, 0.1)
 export (Vector3) var cd := Vector3(0.3, 1.3, 0.3)
 
+var ray : RayCast
+
 onready var debug_geom := get_tree().root.get_node("Level/DebugGeometry")
 var b_debug := false
 
@@ -65,6 +67,22 @@ func _ready() -> void:
 	GameSettings.load_hud_config()
 	_discard = GameSettings.connect("hud_config_updated", self, "_on_hud_config_updated")
 	_on_hud_config_updated()
+	
+	# Add anti-checkpoint ghosting raycast
+	ray = RayCast.new()
+	ray.collide_with_areas = true
+	ray.collide_with_bodies = false
+	for motor in motors:
+		for child in motor.get_children():
+			if child is Area:
+				ray.add_exception(child)
+			else:
+				for great_child in child.get_children():
+					if great_child is Area:
+						ray.add_exception(great_child)
+	add_child(ray)
+	ray.enabled = true
+	
 
 
 func _process(delta: float) -> void:
@@ -106,6 +124,18 @@ func _physics_process(_delta: float) -> void:
 	drone_transform = global_transform
 	drone_pos = drone_transform.origin
 	drone_basis = drone_transform.basis
+	
+	# Cast a ray 1 meter in the direction of the drone's velocity vector
+	# This is used as a backup check for checkpoints at high speeds
+	var cast_vector := drone_transform.basis.xform_inv(linear_velocity)
+	if cast_vector.length_squared() > 1:
+		cast_vector = cast_vector.normalized()
+	ray.cast_to = cast_vector
+	ray.force_raycast_update()
+	if ray.is_colliding():
+		var collider := ray.get_collider()
+		if collider is Area and collider.has_method("_on_drone_raycast_hit"):
+			collider.call("_on_drone_raycast_hit", self)
 	
 	if b_debug:
 		var drag: Vector3 = get_drag(linear_velocity, angular_velocity, drone_basis)[0]
