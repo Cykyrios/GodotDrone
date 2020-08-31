@@ -16,7 +16,7 @@ func get_minute_second_decimal(t: float = -1.0) -> Dictionary:
 		t = time
 	var minute := int(t / 60)
 	var second := int(t - minute * 60)
-	var decimal := int((t - minute * 60 - second) * 100)
+	var decimal := int(round((t - minute * 60 - second) * 100))
 	var dict := {"minute": minute, "second": second, "decimal": decimal}
 	return dict
 
