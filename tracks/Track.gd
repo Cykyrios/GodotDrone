@@ -3,9 +3,6 @@ extends Spatial
 class_name Track
 
 
-enum RaceState {START, RACE, END}
-
-
 export (bool) var edit_track := false setget set_edit_track
 export (int) var selected_checkpoint := -1 setget set_selected_checkpoint
 export (String, MULTILINE) var course
@@ -21,7 +18,7 @@ var lap_end := 0
 var timers := []
 var timer_label: Label = null
 
-var race_state: int = RaceState.START
+var race_state: int = Global.RaceState.START
 var countdown_timer: Timer = null
 var countdown_label: Label = null
 var countdown_step := 0
@@ -59,7 +56,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if race_state == RaceState.RACE:
+	if race_state == Global.RaceState.RACE:
 		update_timer_label()
 
 
@@ -160,13 +157,13 @@ func _on_checkpoint_passed(cp: Checkpoint) -> void:
 		print("Lap %d/%d: %02d:%02d.%02d" % [current_lap, laps, time["minute"], time["second"], time["decimal"]])
 		if current_lap == laps:
 			stop_timers()
-			race_state = RaceState.END
+			race_state = Global.RaceState.END
 			update_timer_label()
 			print("Finished!")
 			display_end_label()
 		else:
 			activate_next_checkpoint()
-			if race_state == RaceState.RACE:
+			if race_state == Global.RaceState.RACE:
 				timers[current_lap - 1].start()
 	else:
 		activate_next_checkpoint()
@@ -235,7 +232,7 @@ func setup_timer_label() -> void:
 
 
 func start_countdown() -> void:
-	race_state = RaceState.START
+	race_state = Global.RaceState.START
 	countdown_step = 0
 	timer_label.visible = true
 	update_countdown(countdown_step)
@@ -267,9 +264,9 @@ func stop_countdown() -> void:
 
 
 func update_timer_label() -> void:
-	if race_state == RaceState.START:
+	if race_state == Global.RaceState.START:
 		timer_label.text = "Prev. lap: 00:00.00 (0)\nCurr. lap: 00:00.00 (0)\nTotal: 00:00.00"
-	elif race_state == RaceState.RACE or race_state == RaceState.END:
+	elif race_state == Global.RaceState.RACE or race_state == Global.RaceState.END:
 		var total_time := 0.0
 		for timer in timers:
 			total_time += timer.time
@@ -281,7 +278,7 @@ func update_timer_label() -> void:
 
 func start_race() -> void:
 	timers[0].start()
-	race_state = RaceState.RACE
+	race_state = Global.RaceState.RACE
 	timer_label.visible = true
 
 
@@ -319,7 +316,7 @@ func _on_countdown_timer_timeout() -> void:
 
 
 func _on_body_exited_launchpad(body: Node) -> void:
-	if body is Drone and race_state == RaceState.START:
+	if body is Drone and race_state == Global.RaceState.START:
 		stop_countdown()
 		update_countdown(-1)
 

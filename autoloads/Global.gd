@@ -5,6 +5,7 @@ signal game_mode_changed
 
 
 enum GameMode {FREE, RACE}
+enum RaceState {START, RACE, END}
 
 
 var log_path := "user://output.log"
