@@ -3,6 +3,9 @@ extends Spatial
 class_name Track
 
 
+signal race_state_changed(state)
+
+
 export (bool) var edit_track := false setget set_edit_track
 export (int) var selected_checkpoint := -1 setget set_selected_checkpoint
 export (String, MULTILINE) var course
@@ -18,7 +21,7 @@ var lap_end := 0
 var timers := []
 var timer_label: Label = null
 
-var race_state: int = Global.RaceState.START
+var race_state: int = Global.RaceState.START setget set_race_state
 var countdown_timer: Timer = null
 var countdown_label: Label = null
 var countdown_step := 0
@@ -146,6 +149,11 @@ func set_selected_checkpoint(selected: int) -> void:
 	checkpoints[selected_checkpoint].set_selected(true)
 
 
+func set_race_state(state: int) -> void:
+	race_state = state
+	emit_signal("race_state_changed", race_state)
+
+
 func _on_checkpoint_passed(cp: Checkpoint) -> void:
 	if cp != current_checkpoint:
 		return
@@ -157,7 +165,7 @@ func _on_checkpoint_passed(cp: Checkpoint) -> void:
 		print("Lap %d/%d: %02d:%02d.%02d" % [current_lap, laps, time["minute"], time["second"], time["decimal"]])
 		if current_lap == laps:
 			stop_timers()
-			race_state = Global.RaceState.END
+			self.race_state = Global.RaceState.END
 			update_timer_label()
 			print("Finished!")
 			display_end_label()
@@ -232,7 +240,7 @@ func setup_timer_label() -> void:
 
 
 func start_countdown() -> void:
-	race_state = Global.RaceState.START
+	self.race_state = Global.RaceState.START
 	countdown_step = 0
 	timer_label.visible = true
 	update_countdown(countdown_step)
@@ -278,7 +286,7 @@ func update_timer_label() -> void:
 
 func start_race() -> void:
 	timers[0].start()
-	race_state = Global.RaceState.RACE
+	self.race_state = Global.RaceState.RACE
 	timer_label.visible = true
 
 
@@ -332,3 +340,17 @@ func display_end_label() -> void:
 	end_label.visible = false
 	remove_child(timer)
 	timer.queue_free()
+	
+	timer_label.visible = false
+	display_time_table()
+
+
+func display_time_table() -> void:
+	var total_time := 0.0
+	var time_table := TimeTable.new()
+	add_child(time_table)
+	var _discard = connect("race_state_changed", time_table, "_on_race_state_changed")
+	for i in timers.size():
+		time_table.add_lap(timers[i])
+		total_time += timers[i].time
+	time_table.add_total_time(timers[0].get_time_string(total_time))

@@ -129,6 +129,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://drone/RadioController.gd"
 }, {
+"base": "PanelContainer",
+"class": "TimeTable",
+"language": "GDScript",
+"path": "res://tracks/TimeTable.gd"
+}, {
 "base": "Spatial",
 "class": "Track",
 "language": "GDScript",
@@ -159,6 +164,7 @@ _global_script_class_icons={
 "PathedObject": "",
 "Propeller": "",
 "RadioController": "",
+"TimeTable": "",
 "Track": ""
 }
 
