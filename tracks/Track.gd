@@ -324,7 +324,8 @@ func _on_countdown_timer_timeout() -> void:
 
 
 func _on_body_exited_launchpad(body: Node) -> void:
-	if body is Drone and race_state == Global.RaceState.START:
+	if body is Drone and Global.game_mode == Global.GameMode.RACE \
+			and race_state == Global.RaceState.START:
 		stop_countdown()
 		update_countdown(-1)
 
