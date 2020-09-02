@@ -342,8 +342,9 @@ func display_end_label() -> void:
 	remove_child(timer)
 	timer.queue_free()
 	
-	timer_label.visible = false
-	display_time_table()
+	if Global.game_mode == Global.GameMode.RACE and timers[0].time >= 1:
+		timer_label.visible = false
+		display_time_table()
 
 
 func display_time_table() -> void:
