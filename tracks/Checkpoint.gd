@@ -27,24 +27,7 @@ func _ready() -> void:
 	var _discard = connect("body_entered", self, "_on_entered")
 	_discard = connect("body_exited", self, "_on_exited")
 	
-	for col in get_children():
-		if col is CollisionShape:
-			var m := MeshInstance.new()
-			m.transform = col.transform
-			if col.shape is BoxShape:
-					m.mesh = CubeMesh.new()
-					m.mesh.size = (col.shape as BoxShape).extents * 2
-			elif col.shape is CylinderShape:
-					m.mesh = CylinderMesh.new()
-					var s := col.shape as CylinderShape
-					m.mesh.top_radius = s.radius
-					m.mesh.bottom_radius = s.radius
-					m.mesh.height = s.height
-			m.mesh.surface_set_material(0, mat)
-			m.visible = false
-			add_child(m)
-			m.set_owner(self)
-	set_area_visible(true)
+	call_deferred("setup_checkpoint_mesh")
 
 
 func _process(_delta: float) -> void:
@@ -71,6 +54,27 @@ func _physics_process(_delta: float) -> void:
 						emit_signal("exited")
 			else:
 				drone_raycasts.erase(drone)
+
+
+func setup_checkpoint_mesh() -> void:
+	for col in get_children():
+		if col is CollisionShape:
+			var m := MeshInstance.new()
+			m.transform = col.transform
+			if col.shape is BoxShape:
+					m.mesh = CubeMesh.new()
+					m.mesh.size = (col.shape as BoxShape).extents * 2
+			elif col.shape is CylinderShape:
+					m.mesh = CylinderMesh.new()
+					var s := col.shape as CylinderShape
+					m.mesh.top_radius = s.radius
+					m.mesh.bottom_radius = s.radius
+					m.mesh.height = s.height
+			m.mesh.surface_set_material(0, mat)
+			m.visible = false
+			add_child(m)
+			m.set_owner(self)
+	set_area_visible(true)
 
 
 func set_backward(back: bool) -> void:
