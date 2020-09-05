@@ -1,5 +1,6 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=24 format=2]
 
+[ext_resource path="res://tracks/tracks/Track_TorusTunnel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://DebugGeometry.gd" type="Script" id=2]
 [ext_resource path="res://sceneries/Level.gd" type="Script" id=3]
 [ext_resource path="res://Assets/GridShader.tres" type="Shader" id=4]
@@ -15,8 +16,6 @@
 [ext_resource path="res://drone/FPVCamera/FPVCamera.gd" type="Script" id=14]
 [ext_resource path="res://tracks/tracks/Track_MultiGP_2019_Global_Qualifier.tscn" type="PackedScene" id=15]
 
-
-
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 20, 0.5, 20 )
 
@@ -30,18 +29,6 @@ shader_param/Color2 = Color( 0, 0, 0, 1 )
 [sub_resource type="CubeMesh" id=3]
 material = SubResource( 2 )
 size = Vector3( 200, 1, 200 )
-
-[sub_resource type="BoxShape" id=4]
-extents = Vector3( 1, 2.5, 1 )
-
-[sub_resource type="CubeMesh" id=5]
-size = Vector3( 2, 5, 2 )
-
-[sub_resource type="BoxShape" id=6]
-extents = Vector3( 1, 5, 1 )
-
-[sub_resource type="CubeMesh" id=7]
-size = Vector3( 2, 10, 2 )
 
 [sub_resource type="BoxShape" id=8]
 extents = Vector3( 2, 0.5, 2 )
@@ -217,30 +204,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
 mesh = SubResource( 3 )
 material/0 = null
 
-[node name="Pillar" type="StaticBody" parent="Objects"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Objects/Pillar"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
-shape = SubResource( 4 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Objects/Pillar"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
-mesh = SubResource( 5 )
-material/0 = null
-
-[node name="Pillar2" type="StaticBody" parent="Objects"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 5 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Objects/Pillar2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
-shape = SubResource( 6 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Objects/Pillar2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
-mesh = SubResource( 7 )
-material/0 = null
-
 [node name="Pillar3" type="StaticBody" parent="Objects"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10 )
 
@@ -252,134 +215,6 @@ shape = SubResource( 8 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 mesh = SubResource( 10 )
 material/0 = null
-
-[node name="TorusTunnel" type="Spatial" parent="Objects"]
-
-[node name="CSGTorus" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 5, -15 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus2" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 7, -15 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus3" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, -9, 10, -15 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus4" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0, 1, -7, 12, -15 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus5" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -4, 13, -15 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus6" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 13, -15 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus7" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 4, 13, -15 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus8" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( -3.78552e-08, 0.866025, 0.5, -1, -4.37114e-08, 0, 2.18557e-08, -0.5, 0.866025, 7, 13, -16 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus9" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( -2.18557e-08, 0.5, 0.866025, -1, -4.37114e-08, 0, 3.78552e-08, -0.866025, 0.5, 9, 13, -18 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus10" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 10, 13, -21 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus11" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 10, 14, -24 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus12" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 10, 16, -26 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus13" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 19, -27 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus14" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 10, 22, -26 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus15" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 1, 0, 0, 0, 0.5, -0.866025, 0, 0.866025, 0.5, 10, 24, -24 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus16" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 10, 25, -21 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus17" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 10, 25, -17 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
-
-[node name="CSGTorus18" type="CSGTorus" parent="Objects/TorusTunnel"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 10, 25, -13 )
-use_collision = true
-inner_radius = 2.5
-sides = 64
-ring_sides = 16
 
 [node name="MockPilot" type="StaticBody" parent="Objects"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5 )
@@ -401,25 +236,27 @@ pause_mode = 1
 script = ExtResource( 5 )
 target_path = NodePath("../Drone")
 
-[node name="Track" parent="." instance=ExtResource( 10 )]
+[node name="Track_DoubleGateTraining" parent="." instance=ExtResource( 10 )]
 pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 0 )
 
-[node name="Track2" parent="." instance=ExtResource( 11 )]
+[node name="Track_FigureEight" parent="." instance=ExtResource( 11 )]
 pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 0 )
 
-[node name="Track3" parent="." instance=ExtResource( 7 )]
+[node name="Track_MultiGP_2018_Regional_Qualifier" parent="." instance=ExtResource( 7 )]
 pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 80 )
 
-[node name="Track4" parent="." instance=ExtResource( 12 )]
+[node name="Track_MultiGP_2020_Global_Qualifier" parent="." instance=ExtResource( 12 )]
 pause_mode = 1
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -80, 0, 50 )
 
-[node name="Track5" parent="." instance=ExtResource( 13 )]
+[node name="Track_MultiGP_2018_Regional_Final" parent="." instance=ExtResource( 13 )]
 pause_mode = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -70, 0, -50 )
 
-[node name="Track6" parent="." instance=ExtResource( 15 )]
+[node name="Track_MultiGP_2019_Global_Qualifier" parent="." instance=ExtResource( 15 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -80 )
+
+[node name="TorusTunnel" parent="." instance=ExtResource( 1 )]
