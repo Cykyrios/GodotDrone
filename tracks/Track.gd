@@ -159,30 +159,36 @@ func _on_checkpoint_passed(cp: Checkpoint) -> void:
 		return
 	
 	current_checkpoint.set_active(false)
-	if current == course.size() - 1:
-		timers[current_lap - 1].stop()
-		var time: Dictionary = timers[current_lap - 1].get_minute_second_decimal()
-		print("Lap %d/%d: %02d:%02d.%02d" % [current_lap, laps, time["minute"], time["second"], time["decimal"]])
-		if current_lap == laps:
-			stop_timers()
-			self.race_state = Global.RaceState.END
-			update_timer_label()
-			print("Finished!")
-			display_end_label()
+	if current >= lap_end:
+		if current_lap < laps:
+			end_current_lap()
+			start_next_lap()
+		elif current == course.size() - 1:
+			end_current_lap()
+			end_race()
 		else:
 			activate_next_checkpoint()
-			if race_state == Global.RaceState.RACE:
-				timers[current_lap - 1].start()
 	else:
 		activate_next_checkpoint()
 
 
-func activate_next_checkpoint() -> void:
+func end_current_lap() -> void:
+	timers[current_lap - 1].stop()
+	var time: Dictionary = timers[current_lap - 1].get_minute_second_decimal()
+	print("Lap %d/%d: %02d:%02d.%02d" % [current_lap, laps, time["minute"], time["second"], time["decimal"]])
+
+
+func start_next_lap() -> void:
 	if current >= lap_end and current_lap < laps:
 		current_lap += 1
-		current = lap_start
-	else:
-		current += 1
+		current = lap_start - 1
+	activate_next_checkpoint()
+	if race_state == Global.RaceState.RACE:
+		timers[current_lap - 1].start()
+
+
+func activate_next_checkpoint() -> void:
+	current += 1
 	var new_cp := [course[current], false]
 	if new_cp[0].ends_with("b"):
 		new_cp[0] = new_cp[0].rstrip("b")
@@ -190,6 +196,14 @@ func activate_next_checkpoint() -> void:
 	current_checkpoint = checkpoints[new_cp[0].to_int()]
 	current_checkpoint.set_backward(new_cp[1])
 	current_checkpoint.set_active(true)
+
+
+func end_race() -> void:
+	stop_timers()
+	self.race_state = Global.RaceState.END
+	update_timer_label()
+	print("Finished!")
+	display_end_label()
 
 
 func reset_track() -> void:
