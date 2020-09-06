@@ -20,14 +20,13 @@ func _ready() -> void:
 	
 	if Global.startup:
 		Global.startup = false
-		var error := Controls.load_input_map(true)
+		var error := Graphics.load_graphics_settings()
 		if error:
-			var controller_dialog := packed_popup.instance()
-			add_child(controller_dialog)
-			controller_dialog.set_text(error)
-			controller_dialog.set_buttons("OK")
-			controller_dialog.show_modal(true)
-			var _dialog = yield(controller_dialog, "validated")
+			Global.show_error_popup(self, error)
+		
+		error = Controls.load_input_map(true)
+		if error:
+			Global.show_error_popup(self, error)
 
 
 func _on_fly_pressed() -> void:

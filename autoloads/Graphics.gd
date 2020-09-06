@@ -29,9 +29,6 @@ var graphics_settings := {"window_mode": WindowMode.FULLSCREEN,
 		"fisheye_msaa": FisheyeMSAA.SAME_AS_GAME}
 var fisheye_resolution := 720
 
-func _ready() -> void:
-	var _discard = load_graphics_settings()
-
 
 func load_graphics_settings() -> String:
 	var config := ConfigFile.new()
