@@ -32,6 +32,7 @@ var fisheye_resolution := 720
 
 func load_graphics_settings() -> String:
 	var config := ConfigFile.new()
+	var text := ""
 	var err := config.load(graphics_settings_path)
 	if err == OK:
 		for key in graphics_settings.keys():
@@ -45,16 +46,21 @@ func load_graphics_settings() -> String:
 		update_fisheye_mode()
 		update_fisheye_resolution()
 		update_fisheye_msaa()
+	elif err == ERR_PARSE_ERROR:
+		Global.log_error(err, "Parse error while loading graphics configuration file.")
+		text = "Failed to read graphics configuration file."
+		text = "%s\nThe default settings will be loaded." % text
 	elif err != ERR_FILE_NOT_FOUND:
 		Global.log_error(err, "Could not open graphics config file.")
-		return "Could not open graphics config file: Error %s" % err
-	return ""
+		text = "Could not open graphics configuration file."
+		text = "%s\nThe defaut settings will be loaded." % err
+	return text
 
 
 func save_graphics_settings() -> void:
 	var config := ConfigFile.new()
 	var err := config.load(graphics_settings_path)
-	if err == OK or err == ERR_FILE_NOT_FOUND:
+	if err == OK or err == ERR_FILE_NOT_FOUND or err == ERR_PARSE_ERROR:
 		for key in graphics_settings.keys():
 			config.set_value("graphics", key, graphics_settings[key])
 		err = config.save(graphics_settings_path)

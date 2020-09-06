@@ -20,6 +20,7 @@ var expo_yaw := 0.2
 
 func load_quad_settings() -> void:
 	var config := ConfigFile.new()
+	var text := ""
 	var err := config.load(quad_settings_path)
 	if err == OK:
 		if config.has_section_key("quad", "angle"):
@@ -40,14 +41,20 @@ func load_quad_settings() -> void:
 			expo_roll = clamp(config.get_value("expos", "roll"), 0.0, 1.0)
 		if config.has_section_key("expos", "yaw"):
 			expo_yaw = clamp(config.get_value("expos", "yaw"), 0.0, 1.0)
+		return
+	elif err == ERR_PARSE_ERROR:
+		Global.log_error(err, "Parse error while loading quad settings.")
+		text = "Parse error while loading settings. Default settings will be loaded."
 	elif err != ERR_FILE_NOT_FOUND:
 		Global.log_error(err, "Error loading quad settings.")
+		text = "Error loading settings. Default settings will be loaded."
+	Global.show_error_popup(get_tree().root.get_children()[-1], text)
 
 
 func save_quad_settings() -> void:
 	var config := ConfigFile.new()
 	var err := config.load(quad_settings_path)
-	if err == OK or err == ERR_FILE_NOT_FOUND:
+	if err == OK or err == ERR_FILE_NOT_FOUND or err == ERR_PARSE_ERROR:
 		config.set_value("quad", "angle", angle)
 		config.set_value("quad", "dry_weight", dry_weight)
 		config.set_value("quad", "battery_weight", battery_weight)
