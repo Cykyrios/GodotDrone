@@ -106,6 +106,18 @@ func update_data(dt: float, position: Vector3, angles: Vector3, velocity: Vector
 		hud_rpm[i] += dt * rpm[i]
 
 
+func update_flight_mode(mode: int) -> void:
+	var text := ""
+	match mode:
+		FlightController.FlightMode.LEVEL:
+			text = "HORIZON"
+		FlightController.FlightMode.SPEED:
+			text = "SPEED"
+		FlightController.FlightMode.TRACK:
+			text = "POSITION"
+	$MarginContainer/FlightMode.text = text
+
+
 func reset_data() -> void:
 	is_first = true
 	first_angles = Vector3.ZERO

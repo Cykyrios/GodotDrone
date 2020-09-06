@@ -269,6 +269,8 @@ func _on_flight_mode_changed(flight_mode: int) -> void:
 	elif flight_mode == FlightController.FlightMode.LAUNCH:
 		led.change_color(Color(1, 0, 0))
 		led.set_blink_pattern([Vector2(0.15, 0.15), Vector2(0.55, 0.15)])
+	
+	hud.update_flight_mode(flight_mode)
 
 
 func _on_quad_settings_updated() -> void:
