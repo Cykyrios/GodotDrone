@@ -28,14 +28,14 @@ func _ready() -> void:
 	resolution.get_popup().add_item("75%")
 	resolution.get_popup().add_item("50%")
 	_discard = resolution.connect("item_selected", self, "_on_resolution_changed")
-	var res: String = Graphics.graphics_settings["resolution"]
+	var res: int = Graphics.graphics_settings["resolution"]
 	var option := 0
 	match res:
-		"100":
+		100:
 			option = 0
-		"75":
+		75:
 			option = 1
-		"50":
+		50:
 			option = 2
 	resolution.select(option)
 	
@@ -104,7 +104,7 @@ func _on_window_mode_changed(idx: int) -> void:
 
 
 func _on_resolution_changed(_idx: int) -> void:
-	Graphics.graphics_settings["resolution"] = (resolution.text as String).rstrip("%")
+	Graphics.graphics_settings["resolution"] = int((resolution.text as String).rstrip("%"))
 	Graphics.update_resolution()
 	Graphics.save_graphics_settings()
 
