@@ -249,24 +249,24 @@ func get_drag(lin_vel: Vector3, ang_vel: Vector3, orientation: Basis) -> Array:
 	return drag
 
 
-func _on_flight_mode_changed(mode: int) -> void:
+func _on_flight_mode_changed(flight_mode: int) -> void:
 	var led := $LEDMode
 	led.set_blink_pattern()
-	if mode == FlightController.FlightMode.RATE:
+	if flight_mode == FlightController.FlightMode.RATE:
 		led.change_color(Color(1, 0, 0))
-	elif mode == FlightController.FlightMode.LEVEL:
+	elif flight_mode == FlightController.FlightMode.LEVEL:
 		led.change_color(Color(0.2, 0.2, 1))
-	elif mode == FlightController.FlightMode.SPEED:
+	elif flight_mode == FlightController.FlightMode.SPEED:
 		led.change_color(Color(1, 1, 0))
-	elif mode == FlightController.FlightMode.TRACK:
+	elif flight_mode == FlightController.FlightMode.TRACK:
 		led.change_color(Color(0, 1, 0))
-	elif mode == FlightController.FlightMode.AUTO:
+	elif flight_mode == FlightController.FlightMode.AUTO:
 		led.change_color(Color(1, 0, 0))
 		led.set_blink_pattern([Vector2(0.25, 0.25)])
-	elif mode == FlightController.FlightMode.TURTLE:
+	elif flight_mode == FlightController.FlightMode.TURTLE:
 		led.change_color(Color(1, 0, 0))
 		led.set_blink_pattern([Vector2(0.1, 0.1), Vector2(0.1, 0.7)])
-	elif mode == FlightController.FlightMode.LAUNCH:
+	elif flight_mode == FlightController.FlightMode.LAUNCH:
 		led.change_color(Color(1, 0, 0))
 		led.set_blink_pattern([Vector2(0.15, 0.15), Vector2(0.55, 0.15)])
 
