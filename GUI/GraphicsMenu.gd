@@ -24,11 +24,20 @@ func _ready() -> void:
 	var _discard = window_mode.connect("item_selected", self, "_on_window_mode_changed")
 	window_mode.select(Graphics.graphics_settings["window_mode"])
 	
-	resolution.get_popup().add_item("Monitor Resolution")
-	resolution.get_popup().add_item("1920x1080")
-	resolution.get_popup().add_item("1280x720")
+	resolution.get_popup().add_item("100%")
+	resolution.get_popup().add_item("75%")
+	resolution.get_popup().add_item("50%")
 	_discard = resolution.connect("item_selected", self, "_on_resolution_changed")
-#	resolution.select(Graphics.graphics_settings["resolution"])
+	var res: String = Graphics.graphics_settings["resolution"]
+	var option := 0
+	match res:
+		"100":
+			option = 0
+		"75":
+			option = 1
+		"50":
+			option = 2
+	resolution.select(option)
 	
 	game_msaa.get_popup().add_item("Off")
 	game_msaa.get_popup().add_item("2x")
@@ -95,7 +104,7 @@ func _on_window_mode_changed(idx: int) -> void:
 
 
 func _on_resolution_changed(_idx: int) -> void:
-	Graphics.graphics_settings["resolution"] = resolution.text
+	Graphics.graphics_settings["resolution"] = (resolution.text as String).rstrip("%")
 	Graphics.update_resolution()
 	Graphics.save_graphics_settings()
 

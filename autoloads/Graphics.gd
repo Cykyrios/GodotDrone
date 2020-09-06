@@ -20,7 +20,7 @@ enum FisheyeMSAA {OFF, X2, X4, X8, X16, SAME_AS_GAME}
 var graphics_settings_path := "user://Graphics.cfg"
 
 var graphics_settings := {"window_mode": WindowMode.FULLSCREEN,
-		"resolution": "1920x1080",
+		"resolution": "100",
 		"msaa": GameMSAA.X4,
 		"af": GameAF.X4,
 		"shadows": Shadows.MEDIUM,
@@ -41,6 +41,7 @@ func load_graphics_settings() -> String:
 			if config.has_section_key("graphics", key):
 				graphics_settings[key] = config.get_value("graphics", key)
 		update_window_mode()
+		update_resolution()
 		update_msaa()
 		update_af()
 		update_shadows()
@@ -87,15 +88,15 @@ func update_window_mode() -> void:
 
 
 func update_resolution() -> void:
-	var resolution_string: String = graphics_settings["resolution"].split("x")
-	var resolution := Vector2(int(resolution_string[0]), int(resolution_string[1]))
+	var resolution_multiplier := float(graphics_settings["resolution"]) / 100.0
+	var screen_resolution := OS.get_screen_size()
 	var mode: int = graphics_settings["window_mode"]
 	if mode == WindowMode.FULLSCREEN or mode == WindowMode.FULLSCREEN_WINDOW:
 		OS.window_size = OS.get_screen_size()
-		get_viewport().size = resolution
 	else:
-		OS.window_size = resolution
-		get_viewport().size = OS.window_size
+		OS.window_size = screen_resolution * resolution_multiplier
+		OS.center_window()
+	get_viewport().size = screen_resolution * resolution_multiplier
 
 
 func update_msaa() -> void:

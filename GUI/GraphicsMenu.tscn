@@ -88,7 +88,7 @@ margin_left = 333.0
 margin_top = 81.0
 margin_right = 532.0
 margin_bottom = 132.0
-text = "1920x1080"
+text = "100%"
 
 [node name="GameMSAALabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 margin_top = 165.0
