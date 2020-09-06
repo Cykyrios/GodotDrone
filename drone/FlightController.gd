@@ -269,7 +269,7 @@ func _on_cycle_flight_modes() -> void:
 	if flight_mode == FlightMode.TURTLE or flight_mode == FlightMode.LAUNCH:
 		return
 	flight_mode += 1
-	while flight_mode == FlightMode.AUTO or flight_mode == FlightMode.TURTLE:
+	while flight_mode == FlightMode.AUTO or flight_mode == FlightMode.TURTLE or flight_mode == FlightMode.LAUNCH:
 		flight_mode += 1
 	if flight_mode >= FlightMode.size():
 		flight_mode = 0
