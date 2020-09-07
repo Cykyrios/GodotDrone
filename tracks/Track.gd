@@ -35,6 +35,8 @@ func _ready() -> void:
 	if Engine.editor_hint:
 		return
 	
+	pause_mode = Node.PAUSE_MODE_STOP
+	
 	setup_countdown()
 	setup_timer_label()
 	setup_end_label()
