@@ -79,6 +79,7 @@ func update_thrust(delta: float) -> void:
 		set_rpm(clamp(rpm_target, rpm - rpm_clamp, rpm + rpm_clamp))
 		set_torque(rpm / (MAX_RPM as float) * MAX_TORQUE)
 	else:
+		rpm_clamp = abs(sign(rpm) * max_rpm_change * abs(rpm) / 10000 * delta)
 		set_rpm(clamp(0, rpm - rpm_clamp, rpm + rpm_clamp))
 		set_torque(0.0)
 
