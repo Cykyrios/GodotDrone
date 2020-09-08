@@ -74,11 +74,12 @@ func _physics_process(_delta: float) -> void:
 
 
 func update_thrust(delta: float) -> void:
+	var rpm_clamp := max_rpm_change * delta
 	if powered:
-		set_rpm(clamp(rpm_target, rpm - max_rpm_change * delta, rpm + max_rpm_change * delta))
+		set_rpm(clamp(rpm_target, rpm - rpm_clamp, rpm + rpm_clamp))
 		set_torque(rpm / (MAX_RPM as float) * MAX_TORQUE)
 	else:
-		set_rpm(clamp(0, rpm - max_rpm_change * delta, rpm + max_rpm_change * delta))
+		set_rpm(clamp(0, rpm - rpm_clamp, rpm + rpm_clamp))
 		set_torque(0.0)
 
 
