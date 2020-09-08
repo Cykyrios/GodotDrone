@@ -182,6 +182,10 @@ func update_sound(abs_rpm: float = 0.0) -> void:
 	if sound_selector == 0:
 		sound1.volume_db = -80
 		sound2.volume_db = -80
+	var idle_rpm := MIN_POWER / 100.0 * MAX_RPM
+	if abs(rpm) < idle_rpm:
+		sound1.volume_db -= 80 * (1 - abs(rpm) / idle_rpm)
+		sound2.volume_db -= 80 * (1 - abs(rpm) / idle_rpm)
 
 
 func update_sound_source(source: int = 0) -> void:
