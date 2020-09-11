@@ -342,8 +342,11 @@ func _on_countdown_timer_timeout() -> void:
 func _on_body_exited_launchpad(body: Node) -> void:
 	if body is Drone and Global.game_mode == Global.GameMode.RACE \
 			and race_state == Global.RaceState.START:
-		stop_countdown()
-		update_countdown(-1)
+		# False start check
+		if not countdown_timer.is_stopped() and (countdown_step > 0 \
+				or countdown_step == 0 and countdown_timer.time_left < countdown_timer.wait_time - 0.05):
+			stop_countdown()
+			update_countdown(-1)
 
 
 func display_end_label() -> void:
