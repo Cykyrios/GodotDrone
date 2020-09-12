@@ -222,15 +222,19 @@ func reset() -> void:
 
 
 func _on_reset() -> void:
+	var respawn_point: Spatial = get_tree().root.get_children()[-1].get_node("Respawn")
+	var respawn_transform := respawn_point.global_transform.translated(Vector3(0, 0.1, 0))
+	
+	if Global.game_mode == Global.GameMode.RACE and Global.active_track:
+		var launch_area: LaunchArea = Global.active_track.get_random_launch_area()
+		var launch_transform: Transform = launch_area.global_transform
+		var offset: float = -motors[0].transform.origin.z + 0.02
+		respawn_transform = launch_transform.translated(Vector3(0, 0.1, offset))
+	
 	yield(get_tree(), "physics_frame")
 	linear_velocity = Vector3.ZERO
 	angular_velocity = Vector3.ZERO
-	if Global.game_mode == Global.GameMode.RACE and Global.active_track:
-		var launch_transform: Transform = Global.active_track.get_random_launch_area().global_transform
-		var offset: float = -motors[0].transform.origin.z + 0.02
-		global_transform = launch_transform.translated(Vector3(0, 0.1, offset))
-	else:
-		global_transform = Transform.IDENTITY.translated(Vector3(0, 0.1, 0))
+	global_transform = respawn_transform
 	flight_controller.reset()
 	
 	emit_signal("respawned")
