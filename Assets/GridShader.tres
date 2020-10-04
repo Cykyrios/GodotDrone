@@ -49,6 +49,8 @@ operator = 1
 
 [resource]
 code = "shader_type spatial;
+render_mode specular_schlick_ggx;
+
 uniform float TileX;
 uniform float TileY;
 uniform sampler2D tex_frg_81 : hint_albedo;
