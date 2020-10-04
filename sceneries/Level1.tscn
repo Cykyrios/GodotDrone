@@ -7,14 +7,15 @@
 [ext_resource path="res://drone/RadioController.gd" type="Script" id=5]
 [ext_resource path="res://drone/drones/Drone1.tscn" type="PackedScene" id=6]
 [ext_resource path="res://tracks/tracks/Track_MultiGP_2018_Regional_Qualifier.tscn" type="PackedScene" id=7]
-[ext_resource path="res://sceneries/FlyaroundCamera.tscn" type="PackedScene" id=8]
-[ext_resource path="res://sceneries/FollowCamera.tscn" type="PackedScene" id=9]
+[ext_resource path="res://sceneries/cameras/FlyaroundCamera.tscn" type="PackedScene" id=8]
+[ext_resource path="res://sceneries/cameras/FollowCamera.tscn" type="PackedScene" id=9]
 [ext_resource path="res://tracks/tracks/Track_DoubleGateTraining.tscn" type="PackedScene" id=10]
 [ext_resource path="res://tracks/tracks/Track_FigureEight.tscn" type="PackedScene" id=11]
 [ext_resource path="res://tracks/tracks/Track_MultiGP_2020_Global_Qualifier.tscn" type="PackedScene" id=12]
 [ext_resource path="res://tracks/tracks/Track_MultiGP_2018_Regional_Final.tscn" type="PackedScene" id=13]
 [ext_resource path="res://drone/FPVCamera/FPVCamera.gd" type="Script" id=14]
 [ext_resource path="res://tracks/tracks/Track_MultiGP_2019_Global_Qualifier.tscn" type="PackedScene" id=15]
+
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 20, 0.5, 20 )
