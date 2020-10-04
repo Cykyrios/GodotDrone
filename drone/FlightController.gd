@@ -56,7 +56,7 @@ var pid_scale_d := 0.0002
 var telemetry_file := File.new()
 export (bool) var b_telemetry := false
 
-onready var debug_geom := get_tree().root.get_node("Level/DebugGeometry")
+onready var debug_geom := get_tree().root.get_node_or_null("Level/DebugGeometry")
 
 
 func _ready() -> void:
@@ -113,7 +113,8 @@ func _physics_process(_delta: float) -> void:
 		_on_disarm_input()
 
 	if flight_mode == FlightMode.TRACK:
-		debug_geom.draw_debug_cube(0.02, get_tracking_target(), Vector3(0.2, 0.2, 0.2))
+		if debug_geom:
+			debug_geom.draw_debug_cube(0.02, get_tracking_target(), Vector3(0.2, 0.2, 0.2))
 
 	if b_telemetry:
 		write_telemetry()

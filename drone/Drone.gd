@@ -26,7 +26,7 @@ export (Vector3) var cd := Vector3(0.3, 1.3, 0.3)
 
 var ray : RayCast
 
-onready var debug_geom := get_tree().root.get_node("Level/DebugGeometry")
+onready var debug_geom := get_tree().root.get_node_or_null("Level/DebugGeometry")
 var b_debug := false
 
 
@@ -88,7 +88,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	update_hud_data(delta)
 	
-	if b_debug:
+	if b_debug and debug_geom:
 		for motor in motors:
 			var prop = motor.propeller
 			var vec_force: Vector3 = prop.global_transform.basis.y * prop.get_thrust()
@@ -137,7 +137,7 @@ func _physics_process(_delta: float) -> void:
 		if collider is Area and collider.has_method("_on_drone_raycast_hit"):
 			collider.call("_on_drone_raycast_hit", self)
 	
-	if b_debug:
+	if b_debug and debug_geom:
 		var drag: Vector3 = get_drag(linear_velocity, angular_velocity, drone_basis)[0]
 		debug_geom.draw_debug_arrow(0.01, drone_pos, drag.normalized(), drag.length() / 10)
 
@@ -173,7 +173,7 @@ func _integrate_forces(state: PhysicsDirectBodyState) -> void:
 			if motor.rpm < 0:
 				prop_thrust = -prop_thrust / 2
 			var prop_drag: Vector3 = basis.xform(prop_forces[1])
-			if b_debug and i == 0 and prop.name == "Propeller1":
+			if b_debug and debug_geom and i == 0 and prop.name == "Propeller1":
 				print("V: %5.2f, T: %5.2f, D: %5.2f" % [prop.velocity.y, prop_forces[0].length(), prop_forces[1].length()])
 				# Draw debug arrows relative to FPV camera
 				debug_geom.draw_debug_arrow(0.016, xform.xform(Vector3(0, 1, -2)),
