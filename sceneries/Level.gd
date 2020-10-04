@@ -14,14 +14,11 @@ var tracks := []
 
 
 func _ready() -> void:
-	cameras.append($FollowCamera)
-	cameras.append($Drone/FPVCamera)
-	cameras.append($CameraFixed)
-	cameras.append($FlyaroundCamera/RotationHelper/Camera)
-	
-	camera_index += 1
+	cameras = get_cameras(self)
+	for c in cameras:
+		if c.name == "FPVCamera":
+			camera_index = cameras.find(c)
 	camera = cameras[camera_index]
-	
 	change_camera()
 	
 	for c in get_children():
@@ -54,6 +51,16 @@ func _input(event: InputEvent) -> void:
 			pause_menu.emit_signal("resumed")
 
 
+func get_cameras(node: Node) -> Array:
+	var cams := []
+	for child in node.get_children():
+		if child is Camera:
+			cams.append(child)
+		if not child is FPVCamera:
+			cams += get_cameras(child)
+	return cams
+
+
 func change_camera() -> void:
 	camera.visible = false
 	camera.current = false
@@ -65,7 +72,7 @@ func change_camera() -> void:
 		camera.render_quad.visible = true
 	camera.visible = true
 	
-	if camera_index == 1:
+	if camera is FPVCamera:
 		drone.hud.visible = true
 	else:
 		drone.hud.visible = false
