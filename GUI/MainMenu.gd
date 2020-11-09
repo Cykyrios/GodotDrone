@@ -23,7 +23,9 @@ func _ready() -> void:
 		var error := Graphics.load_graphics_settings()
 		if error:
 			Global.show_error_popup(self, error)
-		
+		error = Audio.load_audio_settings()
+		if error:
+			Global.show_error_popup(self, error)
 		error = Controls.load_input_map(true)
 		if error:
 			Global.show_error_popup(self, error)

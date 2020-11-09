@@ -199,6 +199,7 @@ Controls="*res://autoloads/Controls.gd"
 QuadSettings="*res://autoloads/QuadSettings.gd"
 GameSettings="*res://autoloads/GameSettings.gd"
 Graphics="*res://autoloads/Graphics.gd"
+Audio="*res://autoloads/Audio.gd"
 
 [display]
 
