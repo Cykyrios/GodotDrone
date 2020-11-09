@@ -121,7 +121,7 @@ func _input(event: InputEvent) -> void:
 		elif calibration_step == 13:
 			if event.axis == roll[0] and abs(event.axis_value) < 0.2:
 				go_to_next_step()
-	elif event is InputEventKey and event.is_pressed() and event.scancode == KEY_ESCAPE:
+	elif event.is_action("ui_cancel") and event.is_pressed() and not event.is_echo():
 		accept_event()
 		emit_signal("back")
 

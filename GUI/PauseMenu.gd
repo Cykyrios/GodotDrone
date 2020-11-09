@@ -21,10 +21,7 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action("pause_menu") and event.is_pressed() and not event.is_echo():
-		if get_tree().paused:
-			set_menu_visibility(true)
-	elif event is InputEventKey and event.is_pressed() and event.scancode == KEY_F2:
+	if event is InputEventKey and event.is_pressed() and event.scancode == KEY_F2:
 		if get_tree().paused:
 			toggle_menu_visibility()
 

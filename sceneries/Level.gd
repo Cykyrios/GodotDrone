@@ -47,7 +47,7 @@ func _input(event: InputEvent) -> void:
 			get_tree().paused = true
 			pause_menu.visible = true
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		elif pause_menu.visible:
+		elif pause_menu.visible and pause_menu.can_resume:
 			pause_menu.emit_signal("resumed")
 
 

@@ -92,7 +92,7 @@ func _ready() -> void:
 
 
 func _input(event):
-	if event is InputEventKey and event.is_pressed() and event.scancode == KEY_ESCAPE:
+	if event.is_action("ui_cancel") and event.is_pressed() and not event.is_echo():
 		accept_event()
 		emit_signal("back")
 

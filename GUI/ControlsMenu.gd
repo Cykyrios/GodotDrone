@@ -121,7 +121,7 @@ func _input(event: InputEvent) -> void:
 				if binding_valid:
 					binding_event = event
 					binding_popup.set_text(binding_popup_text + "\n%s" % [binding_text])
-	elif event is InputEventKey and event.is_pressed() and event.scancode == KEY_ESCAPE:
+	elif event.is_action("ui_cancel") and event.is_pressed() and not event.is_echo():
 		accept_event()
 		emit_signal("back")
 

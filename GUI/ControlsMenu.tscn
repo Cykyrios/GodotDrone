@@ -148,7 +148,6 @@ render_target_update_mode = 3
 [node name="WorldEnvironment" parent="HBoxContainer/VBoxContainer/ViewportContainer/Viewport" instance=ExtResource( 4 )]
 
 [node name="BindingsPanel" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
-margin_left = -3.05176e-05
 margin_top = 280.0
 margin_right = 410.0
 margin_bottom = 880.0
