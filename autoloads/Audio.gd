@@ -1,7 +1,7 @@
 extends Node
 
 
-var audio_settings_path := "user://Audio.cfg"
+var audio_settings_path := "%s/Audio.cfg" % Global.config_dir
 
 var audio_settings := {"master_volume": 1.0}
 

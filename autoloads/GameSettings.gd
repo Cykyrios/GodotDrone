@@ -4,7 +4,7 @@ extends Node
 signal hud_config_updated
 
 
-var game_settings_path := "user://GameSettings.cfg"
+var game_settings_path := "%s/GameSettings.cfg" % Global.config_dir
 
 var hud_config := {"fps": 10, "crosshair": true, "horizon": true, "ladder": false,
 		"speed": false, "altitude": false, "heading": false, "sticks": false, "rpm": false}

@@ -4,7 +4,7 @@ extends Node
 signal settings_updated
 
 
-var quad_settings_path := "user://Quad.cfg"
+var quad_settings_path := "%s/Quad.cfg" % Global.config_dir
 
 var angle := 30
 var dry_weight := 0.55

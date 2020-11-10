@@ -19,7 +19,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	if Global.startup:
-		Global.startup = false
+		Global.initialize()
 		var error := Graphics.load_graphics_settings()
 		if error:
 			Global.show_error_popup(self, error)

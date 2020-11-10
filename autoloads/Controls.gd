@@ -1,7 +1,7 @@
 extends Node
 
 
-var input_map_path := "user://InputMap.cfg"
+var input_map_path := "%s/InputMap.cfg" % Global.config_dir
 var active_controller_guid := ""
 var default_controller_guid := ""
 

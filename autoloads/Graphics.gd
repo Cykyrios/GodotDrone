@@ -17,7 +17,7 @@ enum FisheyeResolution {FISHEYE_2160P, FISHEYE_1440P, FISHEYE_1080P,
 enum FisheyeMSAA {OFF, X2, X4, X8, X16, SAME_AS_GAME}
 
 
-var graphics_settings_path := "user://Graphics.cfg"
+var graphics_settings_path := "%s/Graphics.cfg" % Global.config_dir
 
 var graphics_settings := {"window_mode": WindowMode.FULLSCREEN,
 		"resolution": "100",
