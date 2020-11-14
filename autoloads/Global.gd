@@ -14,6 +14,8 @@ var log_path := "user://output.log"
 
 var startup := true
 
+var highscore_path := "user://highscores.sav"
+
 var config_dir := "user://config"
 var replay_dir := "user://replays"
 
