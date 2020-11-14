@@ -3,6 +3,7 @@ class_name Drone
 
 
 signal respawned
+signal transform_updated(transform)
 
 
 var motors := []
@@ -124,6 +125,10 @@ func _physics_process(_delta: float) -> void:
 	drone_transform = global_transform
 	drone_pos = drone_transform.origin
 	drone_basis = drone_transform.basis
+	
+	var replay_transform := "%s, %s, %s, %s" % [drone_basis.x, drone_basis.y, drone_basis.z, drone_pos]
+	replay_transform = replay_transform.replace("(", "").replace(")", "").replace(" ", "")
+	emit_signal("transform_updated", replay_transform)
 	
 	# Cast a ray 1 meter in the direction of the drone's velocity vector
 	# This is used as a backup check for checkpoints at high speeds

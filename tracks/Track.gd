@@ -30,6 +30,11 @@ var end_label: Label = null
 var has_launchpad := false
 var launch_areas := []
 
+var replay_path := ""
+var ghosts := []
+var replay_recorder := []
+var record_replay := false
+
 
 func _ready() -> void:
 	if Engine.editor_hint:
@@ -58,6 +63,11 @@ func _ready() -> void:
 	update_launch_areas()
 	for area in launch_areas:
 		var _discard = area.connect("body_exited", self, "_on_body_exited_launchpad")
+	
+	replay_path = "%s/%s" % [Global.replay_dir, filename.replace(".tscn", ".rpl").split("/")[-1]]
+	ghosts.clear()
+	for _i in range(3):
+		ghosts.append(Ghost.new())
 
 
 func _process(_delta: float) -> void:
@@ -206,6 +216,8 @@ func end_race() -> void:
 	update_timer_label()
 	print("Finished!")
 	display_end_label()
+	stop_recording_replay(true)
+	check_best_time()
 
 
 func reset_track() -> void:
@@ -261,6 +273,8 @@ func start_countdown() -> void:
 	timer_label.visible = true
 	update_countdown(countdown_step)
 	update_timer_label()
+	for ghost in ghosts:
+		ghost.start_replay()
 
 
 func update_countdown(step: int = 0) -> void:
@@ -311,6 +325,8 @@ func stop_race() -> void:
 	reset_timers()
 	stop_countdown()
 	timer_label.visible = false
+	for ghost in ghosts:
+		ghost.stop_replay()
 
 
 func stop_timers() -> void:
@@ -375,3 +391,126 @@ func display_time_table() -> void:
 		time_table.add_lap(timers[i])
 		total_time += timers[i].time
 	time_table.add_total_time(timers[0].get_time_string(total_time))
+
+
+func load_replays() -> void:
+	var file := File.new()
+	for i in range(3):
+		if file.open(replay_path, File.READ) == OK:
+			if ghosts[i]:
+				ghosts[i].queue_free()
+			ghosts[i] = Ghost.new()
+			match i:
+				0:
+					ghosts[i].type = Ghost.Type.PREVIOUS
+				1:
+					ghosts[i].type = Ghost.Type.RACE
+				2:
+					ghosts[i].type = Ghost.Type.LAP
+			ghosts[i].replay_path = replay_path
+			ghosts[i].read_replay()
+			add_child(ghosts[i])
+
+
+func initialize_replay(drone: Drone) -> void:
+	if not drone.is_connected("transform_updated", self, "_on_drone_transform_updated"):
+		var _discard = drone.connect("transform_updated", self, "_on_drone_transform_updated")
+	delete_previous_replay()
+	record_replay = true
+	# Write drone scene path at the beginning of the replay file
+	_on_drone_transform_updated(drone.filename, true)
+
+
+func delete_previous_replay() -> void:
+	replay_recorder.clear()
+	var dir := Directory.new()
+	if dir.file_exists(replay_path):
+		var _discard = dir.remove(replay_path)
+
+
+func _on_drone_transform_updated(xform_string: String, init: bool = false) -> void:
+	if record_replay:
+		if init:
+			var file := File.new()
+			var err = file.open(replay_path, File.WRITE)
+			if err == OK:
+				file.store_line(xform_string)
+				file.close()
+		else:
+			replay_recorder.append(xform_string)
+			if replay_recorder.size() >= 1000:
+				write_replay(1000)
+
+
+func write_replay(lines: int) -> void:
+	var file := File.new()
+	var err = file.open(replay_path, File.READ_WRITE)
+	if err == OK:
+		file.seek_end()
+		for i in range(lines):
+			file.store_line(replay_recorder[i])
+		file.close()
+		replay_recorder.clear()
+
+
+func stop_recording_replay(save: bool = false) -> void:
+	if record_replay:
+		record_replay = false
+		if replay_recorder.size() > 0:
+			write_replay(replay_recorder.size())
+			replay_recorder.clear()
+		var dir := Directory.new()
+		if save:
+			var _discard = dir.rename(replay_path, replay_path.replace(".rpl", "_prev.rpl"))
+		else:
+			var _discard = dir.remove(replay_path)
+
+
+func check_best_time() -> void:
+	var total_time := 0.0
+	for timer in timers:
+		total_time += timer.time
+	var file := File.new()
+	var track_name := replay_path.replace(".rpl", "").split("/")[-1]
+	var record_exists := false
+	var new_record := false
+	if file.open(Global.highscore_path, File.READ) == OK:
+		while not file.eof_reached():
+			if file.get_line() == track_name:
+				record_exists = true
+				if total_time < float(file.get_line()):
+					new_record = true
+				break
+		file.close()
+		if new_record or not record_exists:
+			write_new_record(total_time)
+			var dir := Directory.new()
+			var _discard = dir.rename(replay_path.replace(".rpl", "_prev.rpl"),
+					replay_path.replace(".rpl", "_race.rpl"))
+
+
+func write_new_record(time: float) -> void:
+	var track_name := replay_path.replace(".rpl", "").split("/")[-1]
+	var array := []
+	var file := File.new()
+	if file.open(Global.highscore_path, File.READ) == OK:
+		while not file.eof_reached():
+			array.append(file.get_line())
+		file.close()
+		var _discard = file.open(Global.highscore_path, File.WRITE)
+		var idx := array.find(track_name)
+		if idx == -1:
+			for element in array:
+				if element != "":
+					file.store_line(element)
+			file.store_line(track_name)
+			file.store_line(String(time))
+		else:
+			for i in range(idx + 1):
+				if array[i] != "":
+					file.store_line(array[i])
+			file.store_line(String(time))
+			for i in range(idx + 2, array.size()):
+				if array[i] != "":
+					file.store_line(array[i])
+		file.close()

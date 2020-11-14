@@ -82,6 +82,8 @@ func _on_drone_reset() -> void:
 	for track in tracks:
 		track.reset_track()
 	if Global.game_mode == Global.GameMode.RACE and Global.active_track:
+		Global.active_track.initialize_replay(drone)
+		Global.active_track.load_replays()
 		Global.active_track.start_countdown()
 
 
@@ -101,6 +103,7 @@ func _on_game_mode_changed(mode: int) -> void:
 	if mode == Global.GameMode.FREE or tracks.empty():
 		if Global.active_track:
 			Global.active_track.stop_race()
+			Global.active_track.stop_recording_replay()
 		Global.active_track = null
 	elif mode == Global.GameMode.RACE:
 		Global.active_track = get_closest_track()

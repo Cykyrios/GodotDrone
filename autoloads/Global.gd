@@ -14,6 +14,11 @@ var log_path := "user://output.log"
 
 var startup := true
 
+var highscore_path := "user://highscores.sav"
+
+var config_dir := "user://config"
+var replay_dir := "user://replays"
+
 var game_mode: int = GameMode.FREE setget set_game_mode
 var active_track: Track = null
 
@@ -24,6 +29,20 @@ func _input(event: InputEvent) -> void:
 			self.game_mode = GameMode.RACE
 		elif game_mode == GameMode.RACE:
 			self.game_mode = GameMode.FREE
+
+
+func initialize() -> void:
+	var dir := Directory.new()
+	if not dir.dir_exists(config_dir):
+		dir.make_dir(config_dir)
+	if not dir.dir_exists(replay_dir):
+		dir.make_dir(replay_dir)
+	if not dir.file_exists(highscore_path):
+		var file := File.new()
+		var _discard = file.open(highscore_path, File.WRITE)
+		file.close()
+	
+	startup = false
 
 
 func get_formatted_date_time() -> String:
