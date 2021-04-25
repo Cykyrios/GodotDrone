@@ -71,8 +71,9 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if race_state == Global.RaceState.RACE:
-		update_timer_label()
+	if not Engine.editor_hint:
+		if race_state == Global.RaceState.RACE:
+			update_timer_label()
 
 
 func update_checkpoints() -> void:
