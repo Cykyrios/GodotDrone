@@ -66,7 +66,7 @@ func _ready() -> void:
 	
 	replay_path = "%s/%s" % [Global.replay_dir, filename.replace(".tscn", ".rpl").split("/")[-1]]
 	ghosts.clear()
-	for _i in range(3):
+	for _i in range(5):
 		ghosts.append(Ghost.new())
 
 
@@ -224,6 +224,7 @@ func end_race() -> void:
 func reset_track() -> void:
 	stop_countdown()
 	stop_timers()
+	stop_recording_replay(true, false)
 	reset_timers()
 	
 	if current_checkpoint != null:
@@ -326,6 +327,8 @@ func stop_race() -> void:
 	reset_timers()
 	stop_countdown()
 	timer_label.visible = false
+	if record_replay:
+		stop_recording_replay(true, false)
 	for ghost in ghosts:
 		ghost.stop_replay()
 
@@ -396,7 +399,7 @@ func display_time_table() -> void:
 
 func load_replays() -> void:
 	var file := File.new()
-	for i in range(3):
+	for i in range(5):
 		if file.open(replay_path, File.READ) == OK:
 			if ghosts[i]:
 				ghosts[i].queue_free()
@@ -405,9 +408,13 @@ func load_replays() -> void:
 				0:
 					ghosts[i].type = Ghost.Type.PREVIOUS
 				1:
-					ghosts[i].type = Ghost.Type.RACE
+					ghosts[i].type = Ghost.Type.GOLD
 				2:
-					ghosts[i].type = Ghost.Type.LAP
+					ghosts[i].type = Ghost.Type.SILVER
+				3:
+					ghosts[i].type = Ghost.Type.BRONZE
+				4:
+					ghosts[i].type = Ghost.Type.ABORTED
 			ghosts[i].replay_path = replay_path
 			ghosts[i].read_replay()
 			add_child(ghosts[i])
@@ -454,7 +461,7 @@ func write_replay(lines: int) -> void:
 		replay_recorder.clear()
 
 
-func stop_recording_replay(save: bool = false) -> void:
+func stop_recording_replay(save: bool = false, race_completed: bool = true) -> void:
 	if record_replay:
 		record_replay = false
 		if replay_recorder.size() > 0:
@@ -462,7 +469,10 @@ func stop_recording_replay(save: bool = false) -> void:
 			replay_recorder.clear()
 		var dir := Directory.new()
 		if save:
-			var _discard = dir.rename(replay_path, replay_path.replace(".rpl", "_prev.rpl"))
+			var replace := "prev"
+			if race_completed == false:
+				replace = "aborted"
+			var _discard = dir.rename(replay_path, replay_path.replace(".rpl", "_%s.rpl" % [replace]))
 		else:
 			var _discard = dir.remove(replay_path)
 
@@ -474,23 +484,35 @@ func check_best_time() -> void:
 	var file := File.new()
 	var track_name := replay_path.replace(".rpl", "").split("/")[-1]
 	var record_exists := false
-	var new_record := false
+	var new_record := 0
 	if file.open(Global.highscore_path, File.READ) == OK:
 		while not file.eof_reached():
-			if file.get_line() == track_name:
+			var line := file.get_line()
+			if line == track_name:
 				record_exists = true
-				if total_time < float(file.get_line()):
-					new_record = true
+				while new_record < 3:
+					line = file.get_line()
+					if line.begins_with("Track") or line == "":
+						new_record = 3
+						break
+					if float(line) < 0.1 or total_time < float(line):
+						break
+					else:
+						new_record += 1
 				break
 		file.close()
-		if new_record or not record_exists:
-			write_new_record(total_time)
+		if new_record < 3 or not record_exists:
+			write_new_record(new_record, total_time)
 			var dir := Directory.new()
+			var replace := ["gold", "silver", "bronze"]
+			for i in range(2 - new_record):
+				var _discard = dir.rename(replay_path.replace(".rpl", "_%s.rpl" % [replace[-2 - i]]),
+						replay_path.replace(".rpl", "_%s.rpl" % [replace[-1 - i]]))
 			var _discard = dir.rename(replay_path.replace(".rpl", "_prev.rpl"),
-					replay_path.replace(".rpl", "_race.rpl"))
+					replay_path.replace(".rpl", "_%s.rpl" % [replace[new_record]]))
 
 
-func write_new_record(time: float) -> void:
+func write_new_record(position: int, time: float) -> void:
 	var track_name := replay_path.replace(".rpl", "").split("/")[-1]
 	var array := []
 	var file := File.new()
@@ -507,11 +529,11 @@ func write_new_record(time: float) -> void:
 			file.store_line(track_name)
 			file.store_line(String(time))
 		else:
-			for i in range(idx + 1):
+			for i in range(idx + 1 + position):
 				if array[i] != "":
 					file.store_line(array[i])
 			file.store_line(String(time))
-			for i in range(idx + 2, array.size()):
+			for i in range(idx + 2 + position, array.size()):
 				if array[i] != "":
 					file.store_line(array[i])
 		file.close()

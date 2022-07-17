@@ -3,7 +3,7 @@ class_name Ghost
 
 
 enum State {STANDBY, PLAYING}
-enum Type {PREVIOUS, RACE, LAP}
+enum Type {GOLD, SILVER, BRONZE, PREVIOUS, ABORTED}
 
 
 var replay_path := ""
@@ -54,12 +54,16 @@ func update_drone_model(path: String) -> void:
 		mat.distance_fade_max_distance = 1.0
 		mat.distance_fade_min_distance = 0.2
 		match type:
-			Type.PREVIOUS:
-				mat.emission = Color(0.6, 0.7, 0.8)
-			Type.RACE:
+			Type.GOLD:
 				mat.emission = Color(0.8, 0.6, 0.1)
-			Type.LAP:
+			Type.SILVER:
+				mat.emission = Color(0.65, 0.7, 0.8)
+			Type.BRONZE:
+				mat.emission = Color(0.4, 0.2, 0.05)
+			Type.PREVIOUS:
 				mat.emission = Color(0.1, 0.1, 0.8)
+			Type.ABORTED:
+				mat.emission = Color(0.8, 0.1, 0.1)
 		mat.emission_enabled = true
 		
 		for child in get_children():
@@ -81,10 +85,14 @@ func read_replay():
 	match type:
 		Type.PREVIOUS:
 			replay_path = replay_path.replace(".rpl", "_prev.rpl")
-		Type.RACE:
-			replay_path = replay_path.replace(".rpl", "_race.rpl")
-		Type.LAP:
-			replay_path = replay_path.replace(".rpl", "_lap.rpl")
+		Type.GOLD:
+			replay_path = replay_path.replace(".rpl", "_gold.rpl")
+		Type.SILVER:
+			replay_path = replay_path.replace(".rpl", "_silver.rpl")
+		Type.BRONZE:
+			replay_path = replay_path.replace(".rpl", "_bronze.rpl")
+		Type.ABORTED:
+			replay_path = replay_path.replace(".rpl", "_aborted.rpl")
 	var file := File.new()
 	var err := file.open(replay_path, File.READ)
 	if err == OK:
