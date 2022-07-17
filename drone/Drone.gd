@@ -194,7 +194,7 @@ func _integrate_forces(state: PhysicsDirectBodyState) -> void:
 		vec_torque += drag[1]
 		
 		# Integrate forces and velocities
-		var a := vec_force * state.inverse_mass + state.total_gravity
+		var a := vec_force * state.inverse_mass + Vector3(0, -9.81, 0)
 		lin_vel += a * dt
 		pos += lin_vel * dt
 		
