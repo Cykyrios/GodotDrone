@@ -397,14 +397,15 @@ common/physics_fps=100
 [rendering]
 
 threads/thread_model=2
-quality/filters/anisotropic_filter_level=8
 quality/directional_shadow/size=8192
 quality/shadow_atlas/size=8192
+quality/shadow_atlas/cubemap_size=2048
 quality/shadow_atlas/quadrant_0_subdiv=2
 quality/shadow_atlas/quadrant_1_subdiv=3
 quality/shadow_atlas/quadrant_2_subdiv=4
 quality/shadow_atlas/quadrant_3_subdiv=5
 quality/shadows/filter_mode=2
+quality/filters/anisotropic_filter_level=16
 quality/reflections/atlas_size=8192
 quality/filters/msaa=2
 environment/default_environment="res://default_env.tres"
