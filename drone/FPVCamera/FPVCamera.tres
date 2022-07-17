@@ -2,8 +2,6 @@
 
 [ext_resource path="res://drone/FPVCamera/FPVCamera.shader" type="Shader" id=1]
 
-
-
 [sub_resource type="ViewportTexture" id=1]
 
 [sub_resource type="ViewportTexture" id=2]
@@ -16,8 +14,6 @@
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/resolution = Vector2( 1372, 683 )
-shader_param/camera_resolution = null
 shader_param/hfov = 150.0
 shader_param/Texture0 = SubResource( 1 )
 shader_param/Texture1 = SubResource( 2 )

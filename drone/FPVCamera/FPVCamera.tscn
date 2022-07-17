@@ -3,8 +3,6 @@
 [ext_resource path="res://drone/FPVCamera/FPVCamera.gd" type="Script" id=1]
 [ext_resource path="res://drone/FPVCamera/FPVCamera.tres" type="Material" id=2]
 
-
-
 [sub_resource type="QuadMesh" id=1]
 material = ExtResource( 2 )
 size = Vector2( 2, 2 )
