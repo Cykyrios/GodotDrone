@@ -98,7 +98,7 @@ uniform_name = "CheckpointForward"
 
 [resource]
 code = "shader_type spatial;
-render_mode specular_schlick_ggx;
+render_mode specular_schlick_ggx, async_visible;
 
 uniform bool Editor;
 uniform bool Selected;
