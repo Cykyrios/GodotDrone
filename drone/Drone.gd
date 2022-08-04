@@ -149,7 +149,7 @@ func _physics_process(_delta: float) -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState) -> void:
 	var steps := 10
-	if !flight_controller.armed:
+	if !flight_controller.state_armed:
 		steps = 1
 	var dt := state.step / (steps as float)
 	

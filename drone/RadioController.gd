@@ -49,7 +49,7 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("cycle_flight_modes"):
 		emit_signal("mode_changed")
 	elif event.is_action_pressed("toggle_arm"):
-		if target.flight_controller.armed == false:
+		if target.flight_controller.state_armed == false:
 			emit_signal("arm_input")
 		else:
 			emit_signal("disarm_input")

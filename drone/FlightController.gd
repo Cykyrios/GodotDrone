@@ -34,7 +34,7 @@ var input := [0, 0, 0, 0]
 
 var control_profile = null
 
-var armed := false setget set_armed
+var state_armed := false setget set_armed
 
 var pid_controllers := []
 
@@ -150,10 +150,10 @@ func _on_disarm_input() -> void:
 
 
 func set_armed(arm: bool) -> void:
-	armed = arm
+	state_armed = arm
 	for motor in motors:
-		motor.powered = armed
-	if armed:
+		motor.powered = state_armed
+	if state_armed:
 		emit_signal("armed", flight_mode)
 	else:
 		emit_signal("disarmed")
@@ -175,7 +175,7 @@ func integrate_loop(delta: float, drone_pos: Vector3, drone_basis: Basis) -> voi
 	
 	update_velocity()
 	
-	if armed:
+	if state_armed:
 		update_control(dt)
 
 
