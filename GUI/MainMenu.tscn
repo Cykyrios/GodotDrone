@@ -1,12 +1,48 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://GUI/ThemeMenu.tres" type="Theme" id=1]
 [ext_resource path="res://GUI/MainMenu.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 20.0
+content_margin_right = 20.0
+content_margin_top = 20.0
+content_margin_bottom = 20.0
+bg_color = Color( 0.231373, 0.223529, 0.262745, 0.960784 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id=2]
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="DynamicFontData" id=3]
+font_path = "res://GUI/NotoSerif-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = SubResource( 3 )
+
+[sub_resource type="Theme" id=5]
+default_font = SubResource( 4 )
+PanelContainer/styles/panel = SubResource( 1 )
+ScrollContainer/styles/bg = SubResource( 2 )
 
 [node name="MainMenu" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 1 )
+theme = SubResource( 5 )
 custom_constants/margin_right = 100
 custom_constants/margin_top = 100
 custom_constants/margin_left = 100
