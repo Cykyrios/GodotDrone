@@ -3,16 +3,17 @@ class_name HUD
 
 
 enum Component {CROSSHAIR, STATUS, HEADING, SPEED, ALTITUDE, LADDER, HORIZON, STICKS, RPM}
+enum FlightMode {LEVEL, SPEED, TRACK}
 
 # HUD components
-onready var ladder := $VBoxContainer/HBoxLadder/HUDLadder
-onready var speed_scale := $VBoxContainer/HBoxLadder/HUDSpeedScale
-onready var altitude_scale := $VBoxContainer/HBoxLadder/HUDAltitudeScale
-onready var heading_scale := $VBoxContainer/HUDHeadingScale
-onready var stick_left := $VBoxContainer/HBoxInput/HUDStickLeft
-onready var stick_right := $VBoxContainer/HBoxInput/HUDStickRight
-onready var rpm_table := $HUDRPM
-onready var status := $HUDStatus
+@onready var ladder := $VBoxContainer/HBoxLadder/HUDLadder
+@onready var speed_scale := $VBoxContainer/HBoxLadder/HUDSpeedScale
+@onready var altitude_scale := $VBoxContainer/HBoxLadder/HUDAltitudeScale
+@onready var heading_scale := $VBoxContainer/HUDHeadingScale
+@onready var stick_left := $VBoxContainer/HBoxInput/HUDStickLeft
+@onready var stick_right := $VBoxContainer/HBoxInput/HUDStickRight
+@onready var rpm_table := $HUDRPM
+@onready var status := $HUDStatus
 
 # Flight data
 var hud_timer := 0.1
@@ -22,7 +23,7 @@ var hud_angles := Vector3.ZERO
 var hud_velocity := Vector3.ZERO
 var hud_left_stick := Vector2.ZERO
 var hud_right_stick := Vector2.ZERO
-var hud_rpm := [0, 0, 0, 0]
+var hud_rpm := [0.0, 0.0, 0.0, 0.0]
 var is_first := false
 var first_angles := Vector3.ZERO
 
@@ -90,10 +91,10 @@ func update_display() -> void:
 	rpm_table.update_rpm(hud_rpm[0], hud_rpm[1], hud_rpm[2], hud_rpm[3])
 
 
-func update_data(dt: float, position: Vector3, angles: Vector3, velocity: Vector3,
+func update_data(dt: float, pos: Vector3, angles: Vector3, velocity: Vector3,
 		left_stick: Vector2, right_stick: Vector2, rpm: Array) -> void:
 	hud_delta += dt
-	hud_position += dt * position
+	hud_position += dt * pos
 	if is_first:
 		first_angles = angles
 		is_first = false
@@ -109,11 +110,11 @@ func update_data(dt: float, position: Vector3, angles: Vector3, velocity: Vector
 func update_flight_mode(mode: int) -> void:
 	var text := ""
 	match mode:
-		FlightController.FlightMode.LEVEL:
+		FlightMode.LEVEL:
 			text = "HORIZON"
-		FlightController.FlightMode.SPEED:
+		FlightMode.SPEED:
 			text = "SPEED"
-		FlightController.FlightMode.TRACK:
+		FlightMode.TRACK:
 			text = "POSITION"
 	$MarginContainer/FlightMode.text = text
 
@@ -127,13 +128,13 @@ func reset_data() -> void:
 	hud_velocity = Vector3.ZERO
 	hud_left_stick = Vector2.ZERO
 	hud_right_stick = Vector2.ZERO
-	hud_rpm = [0, 0, 0, 0]
+	hud_rpm = [0.0, 0.0, 0.0, 0.0]
 
 
 func get_adjusted_angles(angles: Vector3) -> Vector3:
 	var result = angles
 	var correction = 0
-	
+
 	for i in range(3):
 		# Check sign changes by difference with PI as arbitrary threshold
 		if abs(angles[i] - first_angles[i]) > PI:
@@ -142,5 +143,5 @@ func get_adjusted_angles(angles: Vector3) -> Vector3:
 			else:
 				correction = -1
 			result[i] = angles[i] + 2 * PI * correction
-	
+
 	return result

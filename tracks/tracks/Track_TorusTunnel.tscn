@@ -5,22 +5,22 @@
 [ext_resource path="res://tracks/objects/Launchpad.tscn" type="PackedScene" id=3]
 [ext_resource path="res://tracks/Checkpoint.gd" type="Script" id=4]
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="BoxShape3D" id=1]
 extents = Vector3( 1, 5, 1 )
 
-[sub_resource type="CubeMesh" id=2]
+[sub_resource type="BoxMesh" id=2]
 size = Vector3( 2, 10, 2 )
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape3D" id=3]
 extents = Vector3( 1, 5, 1 )
 
-[sub_resource type="CubeMesh" id=4]
+[sub_resource type="BoxMesh" id=4]
 size = Vector3( 2, 10, 2 )
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape3D" id=5]
 extents = Vector3( 10, 5, 0.05 )
 
-[node name="TorusTunnel" type="Spatial"]
+[node name="TorusTunnel" type="Node3D"]
 script = ExtResource( 1 )
 course = "18b,19b,lap_start
 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,20,21,22
@@ -29,194 +29,194 @@ lap_end
 22"
 
 [node name="Launchpad" parent="." instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -20, 0, -10 )
+transform = Transform3D( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -20, 0, -10 )
 
-[node name="ProceduralGateTorus1" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 25, -13 )
+[node name="ProceduralGateTorus1" type="Node3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 25, -13 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus2" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 25, -17 )
+[node name="ProceduralGateTorus2" type="Node3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 25, -17 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus3" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 25, -21 )
+[node name="ProceduralGateTorus3" type="Node3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 25, -21 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus4" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 10, 24, -24 )
+[node name="ProceduralGateTorus4" type="Node3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 10, 24, -24 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus5" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 10, 22, -26 )
+[node name="ProceduralGateTorus5" type="Node3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 10, 22, -26 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus6" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 10, 19, -27 )
+[node name="ProceduralGateTorus6" type="Node3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 10, 19, -27 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus7" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 10, 16, -26 )
+[node name="ProceduralGateTorus7" type="Node3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 10, 16, -26 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus8" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, -0.866026, 0.5, 0, -0.5, -0.866026, 10, 14, -24 )
+[node name="ProceduralGateTorus8" type="Node3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, -0.866026, 0.5, 0, -0.5, -0.866026, 10, 14, -24 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus9" type="Spatial" parent="."]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 10, 13, -21 )
+[node name="ProceduralGateTorus9" type="Node3D" parent="."]
+transform = Transform3D( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 10, 13, -21 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus10" type="Spatial" parent="."]
-transform = Transform( -0.866026, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866026, 9, 13, -18 )
+[node name="ProceduralGateTorus10" type="Node3D" parent="."]
+transform = Transform3D( -0.866026, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866026, 9, 13, -18 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus11" type="Spatial" parent="."]
-transform = Transform( -0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 7, 13, -16 )
+[node name="ProceduralGateTorus11" type="Node3D" parent="."]
+transform = Transform3D( -0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 7, 13, -16 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus12" type="Spatial" parent="."]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 4, 13, -15 )
+[node name="ProceduralGateTorus12" type="Node3D" parent="."]
+transform = Transform3D( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 4, 13, -15 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus13" type="Spatial" parent="."]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 13, -15 )
+[node name="ProceduralGateTorus13" type="Node3D" parent="."]
+transform = Transform3D( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 13, -15 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus14" type="Spatial" parent="."]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -4, 13, -15 )
+[node name="ProceduralGateTorus14" type="Node3D" parent="."]
+transform = Transform3D( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -4, 13, -15 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus15" type="Spatial" parent="."]
-transform = Transform( -1.62921e-07, -0.5, 0.866025, 0, 0.866025, 0.5, -1, 8.14603e-08, -1.41093e-07, -7, 12, -15 )
+[node name="ProceduralGateTorus15" type="Node3D" parent="."]
+transform = Transform3D( -1.62921e-07, -0.5, 0.866025, 0, 0.866025, 0.5, -1, 8.14603e-08, -1.41093e-07, -7, 12, -15 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus16" type="Spatial" parent="."]
-transform = Transform( -1.62921e-07, -0.866025, 0.5, 0, 0.5, 0.866025, -1, 1.41093e-07, -8.14603e-08, -9, 10, -15 )
+[node name="ProceduralGateTorus16" type="Node3D" parent="."]
+transform = Transform3D( -1.62921e-07, -0.866025, 0.5, 0, 0.5, 0.866025, -1, 1.41093e-07, -8.14603e-08, -9, 10, -15 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus17" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, -10, 7, -15 )
+[node name="ProceduralGateTorus17" type="Node3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, -10, 7, -15 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="ProceduralGateTorus18" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, -10, 5, -15 )
+[node name="ProceduralGateTorus18" type="Node3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, -10, 5, -15 )
 script = ExtResource( 2 )
 inner_radius = 2.5
 outer_radius = 3.0
 sides = 64
 
-[node name="Pillar" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3 )
+[node name="Pillar" type="StaticBody3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -3 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Pillar"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pillar"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Pillar"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pillar"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="Pillar2" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 5 )
+[node name="Pillar2" type="StaticBody3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 5 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Pillar2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pillar2"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
 shape = SubResource( 3 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Pillar2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pillar2"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
 mesh = SubResource( 4 )
 material/0 = null
 
-[node name="Checkpoint1" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 3, 5 )
+[node name="Checkpoint1" type="Area3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 3, 5 )
 script = ExtResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint1"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
 shape = SubResource( 5 )
 
-[node name="Checkpoint2" type="Area" parent="."]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -13, 3, 12 )
+[node name="Checkpoint2" type="Area3D" parent="."]
+transform = Transform3D( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -13, 3, 12 )
 script = ExtResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint2"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
 shape = SubResource( 5 )
 
-[node name="Checkpoint3" type="Area" parent="."]
-transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 5, 3, -10 )
+[node name="Checkpoint3" type="Area3D" parent="."]
+transform = Transform3D( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 5, 3, -10 )
 script = ExtResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint3"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
 shape = SubResource( 5 )
 
-[node name="Checkpoint4" type="Area" parent="."]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 12, 3, -3 )
+[node name="Checkpoint4" type="Area3D" parent="."]
+transform = Transform3D( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 12, 3, -3 )
 script = ExtResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint4"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 0 )
 shape = SubResource( 5 )
 
-[node name="Checkpoint5" type="Area" parent="."]
-transform = Transform( 0.927184, 0, 0.374607, 0, 1, 0, -0.374607, 0, 0.927184, -4, 3, 1 )
+[node name="Checkpoint5" type="Area3D" parent="."]
+transform = Transform3D( 0.927184, 0, 0.374607, 0, 1, 0, -0.374607, 0, 0.927184, -4, 3, 1 )
 script = ExtResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint5"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint5"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 shape = SubResource( 5 )

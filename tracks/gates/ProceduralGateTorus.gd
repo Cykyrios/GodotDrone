@@ -2,15 +2,15 @@ extends ProceduralGate
 class_name ProceduralGateTorus
 
 
-export(float) var inner_radius := 1.5
-export(float) var outer_radius := 2.0
-export(int) var sides := 32
-export(int) var ring_sides := 16
-export(int) var collision_shape_count := 16
+@export var inner_radius := 1.5
+@export var outer_radius := 2.0
+@export var sides := 32
+@export var ring_sides := 16
+@export var collision_shape_count := 16
 
 
 func _add_geometry() -> void:
-	geometry = CSGTorus.new()
+	geometry = CSGTorus3D.new()
 	geometry.inner_radius = inner_radius
 	geometry.outer_radius = outer_radius
 	geometry.sides = sides
@@ -25,13 +25,13 @@ func _add_collision() -> void:
 			remove_child(child)
 			child.queue_free()
 	# Add capsule collision shapes
-	var shape := CapsuleShape.new()
+	var shape := CapsuleShape3D.new()
 	shape.radius = (outer_radius - inner_radius) / 2.0
 	var offset := inner_radius + shape.radius
 	var length := 2 * PI * offset / collision_shape_count
 	shape.height = length
 	for i in range(collision_shape_count):
-		var collision_shape := CollisionShape.new()
+		var collision_shape := CollisionShape3D.new()
 		collision_shape.shape = shape
 		static_body.add_child(collision_shape)
 		collision_shape.rotate_y(2 * PI * i / collision_shape_count)
@@ -40,10 +40,10 @@ func _add_collision() -> void:
 
 
 func _add_checkpoint() -> void:
-	var shape := CylinderShape.new()
+	var shape := CylinderShape3D.new()
 	shape.height = 0.05
 	shape.radius = inner_radius
-	var collision := CollisionShape.new()
+	var collision := CollisionShape3D.new()
 	collision.shape = shape
 	checkpoint.add_child(collision)
 	collision.rotate(Vector3.RIGHT, PI / 2.0)

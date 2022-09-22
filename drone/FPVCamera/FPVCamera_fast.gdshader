@@ -1,12 +1,10 @@
 shader_type spatial;
 render_mode unshaded;
 
-const float PI = 3.14159265358979323846;
-
 uniform float hfov;
 
-uniform sampler2D Texture0 : hint_black;
-uniform sampler2D Texture1 : hint_black;
+uniform sampler2D Texture0 : hint_default_black;
+uniform sampler2D Texture1 : hint_default_black;
 
 
 vec3 latlon_to_ray(vec2 latlon) {

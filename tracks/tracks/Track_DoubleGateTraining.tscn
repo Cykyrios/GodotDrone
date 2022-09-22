@@ -4,16 +4,16 @@
 [ext_resource path="res://tracks/gates/Gate_Double_1.tscn" type="PackedScene" id=2]
 [ext_resource path="res://tracks/objects/Launchpad.tscn" type="PackedScene" id=3]
 
-[node name="Track" type="Spatial"]
+[node name="Track" type="Node3D"]
 script = ExtResource( 1 )
 
 [node name="Launchpad" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10 )
 
 [node name="Gate" parent="." instance=ExtResource( 2 )]
 
 [node name="Gate2" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
 
 [node name="Gate3" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )

@@ -1,93 +1,74 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://hqseyrqeif7i"]
 
-[ext_resource path="res://GUI/ThemeMenu.tres" type="Theme" id=1]
-[ext_resource path="res://GUI/ConfirmationPopup.gd" type="Script" id=2]
+[ext_resource type="Script" path="res://GUI/ConfirmationPopup.gd" id="2"]
 
 [node name="ConfirmationPopup" type="Popup"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -200.0
-margin_top = -80.0
-margin_right = 200.0
-margin_bottom = 80.0
-grow_horizontal = 2
-grow_vertical = 2
-rect_min_size = Vector2( 200, 100 )
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme = ExtResource( 1 )
-popup_exclusive = true
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+process_mode = 3
+size = Vector2i(235, 105)
+exclusive = true
+script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 4.0
-margin_right = -8.0
-margin_bottom = -4.0
+offset_top = 4.0
+offset_right = -8.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 392.0
-margin_bottom = 153.0
+layout_mode = 2
+offset_left = 857.0
+offset_top = 505.0
+offset_right = 1054.0
+offset_bottom = 566.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-custom_constants/separation = 50
 alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
-margin_right = 385.0
-margin_bottom = 45.0
+layout_mode = 2
+offset_right = 197.0
+offset_bottom = 26.0
 text = "Do you want to continue?"
-align = 1
-valign = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-margin_top = 95.0
-margin_right = 385.0
-margin_bottom = 146.0
+layout_mode = 2
+offset_top = 30.0
+offset_right = 197.0
+offset_bottom = 61.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-custom_constants/separation = 50
 
 [node name="ButtonYes" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_right = 95.0
-margin_bottom = 51.0
+layout_mode = 2
+offset_right = 63.0
+offset_bottom = 31.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 text = "Yes"
 
 [node name="ButtonNo" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 145.0
-margin_right = 240.0
-margin_bottom = 51.0
+layout_mode = 2
+offset_left = 67.0
+offset_right = 130.0
+offset_bottom = 31.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 text = "No"
 
 [node name="ButtonAlt" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 290.0
-margin_right = 385.0
-margin_bottom = 51.0
+layout_mode = 2
+offset_left = 134.0
+offset_right = 197.0
+offset_bottom = 31.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Assets/HUD/BidirectionalGauge.png" type="Texture" id=1]
+[ext_resource path="res://Assets/HUD/BidirectionalGauge.png" type="Texture2D" id=1]
 [ext_resource path="res://HUD/HUDBidirectionalGauge.gd" type="Script" id=2]
 
 [node name="HUDBidirectionalGauge" type="Control"]
@@ -8,24 +8,24 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -8.0
-margin_top = -50.0
-margin_bottom = 50.0
+offset_left = -8.0
+offset_top = -50.0
+offset_bottom = 50.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureProgressPos" type="TextureProgress" parent="."]
+[node name="TextureProgressPos" type="TextureProgressBar" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -6.0
-margin_top = -48.0
-margin_right = 2.0
-margin_bottom = 2.0
-rect_min_size = Vector2( 8, 50 )
+offset_left = -6.0
+offset_top = -48.0
+offset_right = 2.0
+offset_bottom = 2.0
+minimum_size = Vector2( 8, 50 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 value = 100.0
@@ -40,16 +40,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureProgressNeg" type="TextureProgress" parent="."]
+[node name="TextureProgressNeg" type="TextureProgressBar" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -6.0
-margin_top = -2.0
-margin_right = 2.0
-margin_bottom = 48.0
-rect_min_size = Vector2( 8, 50 )
+offset_left = -6.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 48.0
+minimum_size = Vector2( 8, 50 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 value = 100.0

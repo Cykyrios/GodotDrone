@@ -1,95 +1,92 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://cdihf8jlkmulq"]
 
-[ext_resource path="res://GUI/ThemeMenu.tres" type="Theme" id=1]
-[ext_resource path="res://GUI/GameSettingsMenu.gd" type="Script" id=2]
-[ext_resource path="res://GUI/HUDConfig.tscn" type="PackedScene" id=3]
+[ext_resource type="Script" path="res://GUI/GameSettingsMenu.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://be6l02nphlj5e" path="res://GUI/HUDConfig.tscn" id="3"]
 
 [node name="GameSettingsMenu" type="MarginContainer"]
+process_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 1 )
-custom_constants/margin_right = 100
-custom_constants/margin_top = 100
-custom_constants/margin_left = 100
-custom_constants/margin_bottom = 100
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-margin_left = 100.0
-margin_top = 100.0
-margin_right = 1820.0
-margin_bottom = 980.0
+layout_mode = 2
+offset_right = 1920.0
+offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 7
 size_flags_vertical = 7
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 1700.0
-margin_bottom = 860.0
-custom_constants/separation = 30
+layout_mode = 2
+offset_right = 1920.0
+offset_bottom = 1080.0
 
 [node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer"]
-margin_right = 1680.0
-margin_bottom = 759.0
+layout_mode = 2
+offset_right = 1920.0
+offset_bottom = 1045.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Gameplay" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 63.0
-margin_right = -4.0
-margin_bottom = -4.0
-custom_constants/separation = 20
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_top = 31.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Gameplay"]
-modulate = Color( 1, 1, 1, 0.470588 )
-margin_left = 293.0
-margin_top = 323.0
-margin_right = 1379.0
-margin_bottom = 368.0
+modulate = Color(1, 1, 1, 0.470588)
+layout_mode = 2
+offset_left = 677.0
+offset_top = 494.0
+offset_right = 1243.0
+offset_bottom = 520.0
 size_flags_horizontal = 4
 size_flags_vertical = 6
 text = "Nothing here at the moment, head to the HUD tab to customize the HUD."
 
 [node name="HUD" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
 visible = false
+layout_mode = 2
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 63.0
-margin_right = -4.0
-margin_bottom = -4.0
-custom_constants/separation = 20
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_left = 4.0
+offset_top = 63.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="HUDConfig" parent="PanelContainer/VBoxContainer/TabContainer/HUD" instance=ExtResource( 3 )]
+[node name="HUDConfig" parent="PanelContainer/VBoxContainer/TabContainer/HUD" instance=ExtResource("3")]
+layout_mode = 2
+anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 1672.0
-margin_bottom = 692.0
+offset_right = 1672.0
+offset_bottom = 692.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-margin_top = 789.0
-margin_right = 1680.0
-margin_bottom = 840.0
+layout_mode = 2
+offset_top = 1049.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 size_flags_vertical = 9
 alignment = 2
 
 [node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 1461.0
-margin_right = 1680.0
-margin_bottom = 51.0
+layout_mode = 2
+offset_left = 1806.0
+offset_right = 1920.0
+offset_bottom = 31.0
 text = "Back to Menu"

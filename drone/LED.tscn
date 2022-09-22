@@ -3,7 +3,7 @@
 [ext_resource path="res://drone/LED.gd" type="Script" id=1]
 
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="StandardMaterial3D" id=3]
 albedo_color = Color( 0.0392157, 0.0392157, 0.0392157, 1 )
 
 [sub_resource type="CylinderMesh" id=1]
@@ -18,14 +18,14 @@ height = 0.02
 radial_segments = 16
 rings = 8
 
-[node name="LED" type="Spatial"]
+[node name="LED" type="Node3D"]
 script = ExtResource( 1 )
 
-[node name="LightFixture" type="MeshInstance" parent="."]
+[node name="LightFixture" type="MeshInstance3D" parent="."]
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="LightMesh" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.005, 0 )
+[node name="LightMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.005, 0 )
 mesh = SubResource( 2 )
 material/0 = null

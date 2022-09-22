@@ -4,37 +4,35 @@ extends Label
 enum Status {DISARMED, ARMED, LAUNCH, TURTLE, RECOVERY}
 
 
-var status: int = Status.DISARMED setget set_status
+var status: int = Status.DISARMED :
+	set(s):
+		if s < Status.size():
+			status = s
+			var status_text := ""
+			match status:
+				Status.DISARMED:
+					status_text = "DISARMED"
+				Status.ARMED:
+					status_text = "ARMED"
+					message_timer.start(1.0)
+				Status.LAUNCH:
+					status_text = "LAUNCH CONTROL"
+				Status.TURTLE:
+					status_text = "TURTLE MODE"
+				Status.RECOVERY:
+					status_text = "CRASH RECOVERY"
+			if status != Status.ARMED and not message_timer.is_stopped():
+				message_timer.stop()
+			set_message(status_text)
 var message_timer := Timer.new()
 
 
 func _ready() -> void:
 	add_child(message_timer)
 	message_timer.one_shot = true
-	var _discard = message_timer.connect("timeout", self, "_on_message_timer_timeout")
-	
+	var _discard = message_timer.timeout.connect(_on_message_timer_timeout)
+
 	set_message("DISARMED")
-
-
-func set_status(s: int) -> void:
-	if s < Status.size():
-		status = s
-		var status_text := ""
-		match status:
-			Status.DISARMED:
-				status_text = "DISARMED"
-			Status.ARMED:
-				status_text = "ARMED"
-				message_timer.start(1.0)
-			Status.LAUNCH:
-				status_text = "LAUNCH CONTROL"
-			Status.TURTLE:
-				status_text = "TURTLE MODE"
-			Status.RECOVERY:
-				status_text = "CRASH RECOVERY"
-		if status != Status.ARMED and not message_timer.is_stopped():
-			message_timer.stop()
-		set_message(status_text)
 
 
 func set_message(msg: String = "") -> void:
@@ -48,7 +46,7 @@ func clear_message() -> void:
 func _on_message_timer_timeout() -> void:
 	clear_message()
 	if status == Status.DISARMED:
-		set_status(Status.DISARMED)
+		status = Status.DISARMED
 
 
 func _on_armed(mode: int) -> void:

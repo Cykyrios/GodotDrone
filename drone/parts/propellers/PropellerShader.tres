@@ -3,7 +3,7 @@
 [resource]
 code = "shader_type spatial;
 
-uniform vec4 propeller_color : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform vec4 propeller_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 
 
 void fragment() {

@@ -7,8 +7,8 @@
 [ext_resource path="res://HUD/HUDAltitudeScale.tscn" type="PackedScene" id=5]
 [ext_resource path="res://HUD/HUDStickInput.tscn" type="PackedScene" id=6]
 [ext_resource path="res://HUD/HUDRPM.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Assets/HUD/Crosshair.png" type="Texture" id=8]
-[ext_resource path="res://HUD/HUD_dynamic_font_32.tres" type="DynamicFont" id=9]
+[ext_resource path="res://Assets/HUD/Crosshair.png" type="Texture2D" id=8]
+[ext_resource path="res://HUD/HUD_dynamic_font_32.tres" type="FontFile" id=9]
 [ext_resource path="res://HUD/HUDStatus.gd" type="Script" id=10]
 
 [node name="HUD" type="Control"]
@@ -35,20 +35,20 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 1920.0
-margin_bottom = 153.0
+offset_right = 1920.0
+offset_bottom = 153.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 5
 size_flags_vertical = 3
 
 [node name="HBoxLadder" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 157.0
-margin_right = 1920.0
-margin_bottom = 922.0
+offset_top = 157.0
+offset_right = 1920.0
+offset_bottom = 922.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 500, 500 )
+minimum_size = Vector2( 500, 500 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 size_flags_stretch_ratio = 5.0
@@ -63,24 +63,24 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 530.0
-margin_right = 680.0
-margin_bottom = 765.0
+offset_left = 530.0
+offset_right = 680.0
+offset_bottom = 765.0
 grow_horizontal = 0
 grow_vertical = 0
-rect_min_size = Vector2( 150, 0 )
+minimum_size = Vector2( 150, 0 )
 
 [node name="HUDLadder" parent="VBoxContainer/HBoxLadder" instance=ExtResource( 2 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 710.0
-margin_top = 0.0
-margin_right = 1210.0
-margin_bottom = 765.0
-rect_min_size = Vector2( 500, 500 )
-rect_clip_content = true
+offset_left = 710.0
+offset_top = 0.0
+offset_right = 1210.0
+offset_bottom = 765.0
+minimum_size = Vector2( 500, 500 )
+clip_contents = true
 size_flags_horizontal = 5
 size_flags_vertical = 5
 
@@ -89,15 +89,15 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 1240.0
-margin_right = 1390.0
-margin_bottom = 765.0
-rect_min_size = Vector2( 150, 0 )
+offset_left = 1240.0
+offset_right = 1390.0
+offset_bottom = 765.0
+minimum_size = Vector2( 150, 0 )
 
 [node name="HBoxInput" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 926.0
-margin_right = 1920.0
-margin_bottom = 1080.0
+offset_top = 926.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 size_flags_horizontal = 5
 size_flags_vertical = 3
 custom_constants/separation = 50
@@ -108,41 +108,41 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 807.0
-margin_top = 13.0
-margin_right = 935.0
-margin_bottom = 141.0
+offset_left = 807.0
+offset_top = 13.0
+offset_right = 935.0
+offset_bottom = 141.0
 
 [node name="HUDStickRight" parent="VBoxContainer/HBoxInput" instance=ExtResource( 6 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 985.0
-margin_top = 13.0
-margin_right = 1113.0
-margin_bottom = 141.0
+offset_left = 985.0
+offset_top = 13.0
+offset_right = 1113.0
+offset_bottom = 141.0
 
 [node name="HUDRPM" parent="." instance=ExtResource( 7 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 1328.77
-margin_top = 930.63
-margin_right = 1328.77
-margin_bottom = 1084.63
+offset_left = 1328.77
+offset_top = 930.63
+offset_right = 1328.77
+offset_bottom = 1084.63
 
 [node name="Crosshair" type="TextureRect" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -24.0
-margin_top = -24.0
-margin_right = 24.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 48, 48 )
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+minimum_size = Vector2( 48, 48 )
 texture = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -153,10 +153,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -84.0
-margin_top = -61.5
-margin_right = 84.0
-margin_bottom = 61.5
+offset_left = -84.0
+offset_top = -61.5
+offset_right = 84.0
+offset_bottom = 61.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -177,24 +177,24 @@ __meta__ = {
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -124.0
-margin_bottom = 79.0
+offset_left = -124.0
+offset_bottom = 79.0
 grow_horizontal = 0
 size_flags_horizontal = 10
 size_flags_vertical = 2
-custom_constants/margin_right = 20
-custom_constants/margin_top = 20
-custom_constants/margin_left = 20
-custom_constants/margin_bottom = 20
+custom_constants/offset_right = 20
+custom_constants/offset_top = 20
+custom_constants/offset_left = 20
+custom_constants/offset_bottom = 20
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="FlightMode" type="Label" parent="MarginContainer"]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 104.0
-margin_bottom = 59.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 104.0
+offset_bottom = 59.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 10

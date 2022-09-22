@@ -6,41 +6,41 @@
 [sub_resource type="PhysicsMaterial" id=1]
 rough = true
 
-[sub_resource type="CubeMesh" id=2]
+[sub_resource type="BoxMesh" id=2]
 size = Vector3( 2, 0.1, 0.5 )
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape3D" id=3]
 extents = Vector3( 1, 0.05, 0.25 )
 
-[node name="Launchpad" type="StaticBody"]
+[node name="Launchpad" type="StaticBody3D"]
 physics_material_override = SubResource( 1 )
 script = ExtResource( 2 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.25 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.25 )
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.25 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.25 )
 shape = SubResource( 3 )
 
-[node name="LaunchArea1" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0.1, 0 )
+[node name="LaunchArea1" type="Area3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0.1, 0 )
 script = ExtResource( 1 )
 area_extents = Vector3( 0.12, 0.02, 0.15 )
 
-[node name="LaunchArea2" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.1, 0 )
+[node name="LaunchArea2" type="Area3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.1, 0 )
 script = ExtResource( 1 )
 area_extents = Vector3( 0.12, 0.02, 0.15 )
 
-[node name="LaunchArea3" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.1, 0 )
+[node name="LaunchArea3" type="Area3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.1, 0 )
 script = ExtResource( 1 )
 area_extents = Vector3( 0.12, 0.02, 0.15 )
 
-[node name="LaunchArea4" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.1, 0 )
+[node name="LaunchArea4" type="Area3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.1, 0 )
 script = ExtResource( 1 )
 area_extents = Vector3( 0.12, 0.02, 0.15 )

@@ -17,7 +17,7 @@ enum FisheyeResolution {FISHEYE_2160P, FISHEYE_1440P, FISHEYE_1080P,
 enum FisheyeMSAA {OFF, X2, X4, X8, X16, SAME_AS_GAME}
 
 
-var graphics_settings_path := "%s/Graphics.cfg" % Global.config_dir
+var graphics_settings_path := "%s/Graphics.cfg" % [Global.config_dir]
 
 var graphics_settings := {"window_mode": WindowMode.FULLSCREEN,
 		"resolution": "100",
@@ -70,91 +70,89 @@ func save_graphics_settings() -> void:
 
 func update_window_mode() -> void:
 	var mode: int = graphics_settings["window_mode"]
+	var window := get_tree().root as Window
 	if mode == WindowMode.FULLSCREEN:
-		OS.window_fullscreen = true
-		OS.window_size = OS.get_screen_size()
-		OS.window_resizable = false
+		ProjectSettings.set_setting("display/window/size/fullscreen", true)
+		window.size = DisplayServer.screen_get_size()
+		window.unresizable = true
 	else:
-		OS.window_fullscreen = false
+		ProjectSettings.set_setting("display/window/size/fullscreen", false)
 		if mode == WindowMode.FULLSCREEN_WINDOW:
-			OS.window_borderless = true
-			OS.window_size = OS.get_screen_size()
-			OS.window_resizable = false
+			window.borderless = true
+			window.size = DisplayServer.screen_get_size()
+			window.unresizable = true
 		else:
-			OS.window_resizable = true
-			if OS.window_size > OS.get_screen_size():
-				OS.window_size = OS.get_screen_size()
+			window.unresizable = false
+			if window.size > DisplayServer.screen_get_size():
+				window.size = DisplayServer.screen_get_size()
 			if mode == WindowMode.BORDERLESS_WINDOW:
-				OS.window_borderless = true
+				window.borderless = true
 			else:
-				OS.window_borderless = false
+				window.borderless = false
 
 
 func update_resolution() -> void:
 	var resolution_multiplier := float(graphics_settings["resolution"]) / 100.0
-	var screen_resolution := OS.get_screen_size()
+	var screen_resolution := DisplayServer.screen_get_size()
 	var mode: int = graphics_settings["window_mode"]
 	if mode == WindowMode.FULLSCREEN or mode == WindowMode.FULLSCREEN_WINDOW:
-		OS.window_size = OS.get_screen_size()
+		DisplayServer.window_set_size(DisplayServer.screen_get_size())
 	else:
-		OS.window_size = screen_resolution * resolution_multiplier
-		OS.center_window()
+		DisplayServer.window_set_size(screen_resolution * resolution_multiplier)
+		DisplayServer.window_set_position((DisplayServer.screen_get_size() - DisplayServer.window_get_size()) / 2)
 	get_viewport().size = screen_resolution * resolution_multiplier
 
 
 func update_msaa() -> void:
-	get_viewport().msaa = graphics_settings["msaa"]
+	get_viewport().msaa_3d = graphics_settings["msaa"]
 	if graphics_settings["fisheye_msaa"] == FisheyeMSAA.SAME_AS_GAME:
 		update_fisheye_msaa()
 
 
 func update_af() -> void:
-	ProjectSettings.set_setting("rendering/quality/filters/anisotropic_filter_level", \
-			int(pow(2, graphics_settings["af"])))
-	var err := ProjectSettings.save()
-	if err != OK:
-		Global.log_error(err, "Failed to save AF settings.")
+	pass
+	#TODO: implement the Godot 4 way of AF, by looping through all materials?
 
 
 func update_shadows(viewport: Viewport = null) -> void:
 	if not viewport:
-		viewport = get_viewport()
+		viewport = get_viewport() as Viewport
 	match graphics_settings["shadows"]:
 		Shadows.OFF:
-			viewport.shadow_atlas_size = 4096
-			viewport.shadow_atlas_quad_0 = 0
-			viewport.shadow_atlas_quad_1 = 0
-			viewport.shadow_atlas_quad_2 = 0
-			viewport.shadow_atlas_quad_3 = 0
+			viewport.positional_shadow_atlas_size = 4096
+			viewport.positional_shadow_atlas_quad_0 = 0
+			viewport.positional_shadow_atlas_quad_1 = 0
+			viewport.positional_shadow_atlas_quad_2 = 0
+			viewport.positional_shadow_atlas_quad_3 = 0
 		Shadows.LOW:
-			viewport.shadow_atlas_size = 4096
-			viewport.shadow_atlas_quad_0 = 1
-			viewport.shadow_atlas_quad_1 = 2
-			viewport.shadow_atlas_quad_2 = 3
-			viewport.shadow_atlas_quad_3 = 4
+			viewport.positional_shadow_atlas_size = 4096
+			viewport.positional_shadow_atlas_quad_0 = 1
+			viewport.positional_shadow_atlas_quad_1 = 2
+			viewport.positional_shadow_atlas_quad_2 = 3
+			viewport.positional_shadow_atlas_quad_3 = 4
 		Shadows.MEDIUM:
-			viewport.shadow_atlas_size = 4096
-			viewport.shadow_atlas_quad_0 = 2
-			viewport.shadow_atlas_quad_1 = 3
-			viewport.shadow_atlas_quad_2 = 4
-			viewport.shadow_atlas_quad_3 = 5
+			viewport.positional_shadow_atlas_size = 4096
+			viewport.positional_shadow_atlas_quad_0 = 2
+			viewport.positional_shadow_atlas_quad_1 = 3
+			viewport.positional_shadow_atlas_quad_2 = 4
+			viewport.positional_shadow_atlas_quad_3 = 5
 		Shadows.HIGH:
-			viewport.shadow_atlas_size = 4096
-			viewport.shadow_atlas_quad_0 = 3
-			viewport.shadow_atlas_quad_1 = 4
-			viewport.shadow_atlas_quad_2 = 5
-			viewport.shadow_atlas_quad_3 = 6
+			viewport.positional_shadow_atlas_size = 4096
+			viewport.positional_shadow_atlas_quad_0 = 3
+			viewport.positional_shadow_atlas_quad_1 = 4
+			viewport.positional_shadow_atlas_quad_2 = 5
+			viewport.positional_shadow_atlas_quad_3 = 6
 		Shadows.ULTRA:
-			viewport.shadow_atlas_size = 8192
-			viewport.shadow_atlas_quad_0 = 3
-			viewport.shadow_atlas_quad_1 = 4
-			viewport.shadow_atlas_quad_2 = 5
-			viewport.shadow_atlas_quad_3 = 6
-	emit_signal("shadows_updated")
+			viewport.positional_shadow_atlas_size = 8192
+			viewport.positional_shadow_atlas_quad_0 = 3
+			viewport.positional_shadow_atlas_quad_1 = 4
+			viewport.positional_shadow_atlas_quad_2 = 5
+			viewport.positional_shadow_atlas_quad_3 = 6
+	shadows_updated.emit()
 
 
 func update_fisheye_mode() -> void:
-	emit_signal("fisheye_mode_changed")
+	fisheye_mode_changed.emit()
 
 
 func update_fisheye_resolution(resolution_string: String = "") -> void:
@@ -188,11 +186,11 @@ func update_fisheye_resolution(resolution_string: String = "") -> void:
 			fisheye_resolution = 480
 		FisheyeResolution.FISHEYE_240P:
 			fisheye_resolution = 240
-	emit_signal("fisheye_resolution_changed")
+	fisheye_resolution_changed.emit()
 
 
 func update_fisheye_msaa() -> void:
-	emit_signal("fisheye_msaa_changed")
+	fisheye_msaa_changed.emit()
 
 
 func get_fisheye_resolution(resolution_setting: int) -> int:

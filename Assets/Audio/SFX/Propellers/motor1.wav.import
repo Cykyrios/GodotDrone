@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/motor1.wav-70df452ff69f4805c430726f275a87d8.sample"
+type="AudioStreamWAV"
+uid="uid://r5yrjhkls6b7"
+path="res://.godot/imported/motor1.wav-70df452ff69f4805c430726f275a87d8.sample"
 
 [deps]
 
 source_file="res://Assets/Audio/SFX/Propellers/motor1.wav"
-dest_files=[ "res://.import/motor1.wav-70df452ff69f4805c430726f275a87d8.sample" ]
+dest_files=["res://.godot/imported/motor1.wav-70df452ff69f4805c430726f275a87d8.sample"]
 
 [params]
 
@@ -17,5 +18,7 @@ force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false
 edit/normalize=false
-edit/loop=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
 compress/mode=0

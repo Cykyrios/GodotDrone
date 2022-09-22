@@ -1,8 +1,8 @@
 extends Control
 
 
-onready var speed_label := $HBoxContainer/Label
-onready var speed_gauge := $HBoxContainer/SpeedGauge
+@onready var speed_label := $HBoxContainer/Label
+@onready var speed_gauge := $HBoxContainer/SpeedGauge
 
 var speed := 0.0
 var speed_prev := 0.0

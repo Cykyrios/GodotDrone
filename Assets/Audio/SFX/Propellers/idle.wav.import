@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/idle.wav-2ccb22f30e03131b159b48f1e01c9f41.sample"
+type="AudioStreamWAV"
+uid="uid://bruivyu1rq6ui"
+path="res://.godot/imported/idle.wav-2ccb22f30e03131b159b48f1e01c9f41.sample"
 
 [deps]
 
 source_file="res://Assets/Audio/SFX/Propellers/idle.wav"
-dest_files=[ "res://.import/idle.wav-2ccb22f30e03131b159b48f1e01c9f41.sample" ]
+dest_files=["res://.godot/imported/idle.wav-2ccb22f30e03131b159b48f1e01c9f41.sample"]
 
 [params]
 
@@ -17,5 +18,7 @@ force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false
 edit/normalize=false
-edit/loop=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
 compress/mode=0

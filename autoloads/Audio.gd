@@ -1,7 +1,7 @@
 extends Node
 
 
-var audio_settings_path := "%s/Audio.cfg" % Global.config_dir
+var audio_settings_path := "%s/Audio.cfg" % [Global.config_dir]
 
 var audio_settings := {"master_volume": 1.0}
 
@@ -39,4 +39,4 @@ func save_audio_settings() -> void:
 
 func update_master_volume() -> void:
 	var volume: float = audio_settings["master_volume"]
-	AudioServer.set_bus_volume_db(0, linear2db(volume))
+	AudioServer.set_bus_volume_db(0, linear_to_db(volume))

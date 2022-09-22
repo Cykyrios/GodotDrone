@@ -1,14 +1,14 @@
-extends Spatial
+extends Node3D
 
 
 var pause_menu = preload("res://GUI/PauseMenu.tscn")
 
 var cameras := []
 var camera_index := 0
-var camera: Camera = null
+var camera: Camera3D = null
 
-onready var drone := $Drone
-onready var radio_controller := $RadioController
+@onready var drone := $Drone
+@onready var radio_controller := $RadioController
 
 var tracks := []
 
@@ -18,43 +18,42 @@ func _ready() -> void:
 	for c in cameras:
 		if c.name == "FPVCamera":
 			camera_index = cameras.find(c)
-	camera = cameras[camera_index]
+#	camera = cameras[camera_index]
+	camera = cameras[0]
 	change_camera()
-	
+
 	for c in get_children():
 		if c is Track:
 			tracks.append(c)
-	var _discard = Global.connect("game_mode_changed", self, "_on_game_mode_changed")
-	
-	_discard = drone.connect("respawned", self, "_on_drone_reset")
-	
-	pause_menu = pause_menu.instance()
+	var _discard = Global.game_mode_changed.connect(_on_game_mode_changed)
+
+	_discard = drone.respawned.connect(_on_drone_reset)
+
+	pause_menu = pause_menu.instantiate()
 	add_child(pause_menu)
 	pause_menu.visible = false
-	_discard = pause_menu.connect("resumed", self, "_on_resume")
-	_discard = pause_menu.connect("menu", self, "_on_return_to_menu")
+	_discard = pause_menu.resumed.connect(_on_resume)
+	_discard = pause_menu.menu.connect(_on_return_to_menu)
 
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("change_camera"):
 		camera_index += 1
 		if camera_index >= cameras.size():
 			camera_index = 0
 		change_camera()
-	
+
 	if event.is_action("pause_menu") and event.is_pressed() and not event.is_echo():
-		if !get_tree().paused:
+		if not get_tree().paused:
 			get_tree().paused = true
 			pause_menu.visible = true
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		elif pause_menu.visible and pause_menu.can_resume:
-			pause_menu.emit_signal("resumed")
 
 
 func get_cameras(node: Node) -> Array:
 	var cams := []
 	for child in node.get_children():
-		if child is Camera:
+		if child is Camera3D:
 			cams.append(child)
 		if not child is FPVCamera:
 			cams += get_cameras(child)
@@ -71,7 +70,7 @@ func change_camera() -> void:
 	if camera is FPVCamera and Graphics.graphics_settings["fisheye_mode"] != Graphics.FisheyeMode.OFF:
 		camera.render_quad.visible = true
 	camera.visible = true
-	
+
 	if camera is FPVCamera:
 		drone.hud.visible = true
 	else:
@@ -91,16 +90,17 @@ func _on_resume() -> void:
 	if pause_menu.can_resume:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		pause_menu.visible = false
+		await get_tree().process_frame
 		get_tree().paused = false
 
 
 func _on_return_to_menu() -> void:
-	var _discard = get_tree().change_scene("res://GUI/MainMenu.tscn")
+	var _discard = get_tree().change_scene_to_file("res://GUI/MainMenu.tscn")
 	queue_free()
 
 
 func _on_game_mode_changed(mode: int) -> void:
-	if mode == Global.GameMode.FREE or tracks.empty():
+	if mode == Global.GameMode.FREE or tracks.is_empty():
 		if Global.active_track:
 			Global.active_track.stop_race()
 			Global.active_track.stop_recording_replay()
@@ -116,7 +116,7 @@ func get_closest_track() -> Track:
 	var new_idx := -1
 	var closest_distance := 9999.9
 	var new_distance := 0.0
-	if tracks.empty():
+	if tracks.is_empty():
 		return null
 	for track in tracks:
 		new_idx += 1

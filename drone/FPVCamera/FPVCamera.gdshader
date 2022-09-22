@@ -1,8 +1,6 @@
 shader_type spatial;
 render_mode unshaded;
 
-const float PI = 3.14159265358979323846;
-
 uniform sampler2D Texture0;
 uniform sampler2D Texture1;
 uniform sampler2D Texture2;

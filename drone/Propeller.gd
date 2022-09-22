@@ -1,36 +1,61 @@
-tool
-extends Spatial
+@tool
 class_name Propeller
+extends Node3D
 
 
-onready var cw := $CW
-onready var ccw := $CCW
-onready var prop_disk := $PropBlurDisk
+@onready var cw := $CW
+@onready var ccw := $CCW
+@onready var prop_disk := $PropBlurDisk
 
-onready var ray := $RayCast
+@onready var ray := $RayCast3D as RayCast3D
 var max_ray_length := 0.0
 
-export (float, 0.5, 15) var diameter := 5.0
-export (float, 0.5, 15) var pitch := 5.0
-export (int, 2, 6) var num_blades := 2
-export (float, 0.0, 0.1) var c_tip := 0.01
-export (float, 0.0, 10.0) var cl0 := 0.1
-export (float, 0.0, 10.0) var cla := 0.1
-export (float, 0.0, 10.0) var cd0 := 0.1
-export (float, 0.0, 10.0) var cda := 0.1
-export (float, 0.0, 10.0) var cm0 := 0.1
-export (float, 0.0, 10.0) var cma := 0.1
-export (float, 0.0, 10.0) var disk_delta := 0.2
+@export_range (0.5, 15) var diameter := 5.0
+@export_range (0.5, 15) var pitch := 5.0
+@export_range (2, 6) var num_blades := 2
+@export_range (0.0, 0.1) var c_tip := 0.01
+@export_range (0.0, 10.0) var cl0 := 0.1
+@export_range (0.0, 10.0) var cla := 0.1
+@export_range (0.0, 10.0) var cd0 := 0.1
+@export_range (0.0, 10.0) var cda := 0.1
+@export_range (0.0, 10.0) var cm0 := 0.1
+@export_range (0.0, 10.0) var cma := 0.1
+@export_range (0.0, 10.0) var disk_delta := 0.2
 
-var clockwise := false setget set_clockwise
+var clockwise := false :
+	set(is_cw):
+		clockwise = is_cw
+		set_visibility(true)
 var rpm := 0.0
 var use_blur := false
-export (Color) var color := Color(1.0, 1.0, 1.0, 1.0) setget set_color
-export (float, 1, 3) var prop_disk_alpha := 1.0 setget set_prop_disk_alpha
-export (float, 0, 2) var prop_disk_emission := 0.0 setget set_prop_disk_emission
-export (int, 1, 20) var prop_disk_falloff := 10 setget set_prop_disk_falloff
+@export var color := Color(1.0, 1.0, 1.0, 1.0) :
+	set(col):
+		if !is_inside_tree():
+			await self.ready
+		color = col
+		cw.mesh.surface_get_material(0).set_shader_parameter("propeller_color", color)
+		ccw.mesh.surface_get_material(0).set_shader_parameter("propeller_color", color)
+		prop_disk.mesh.surface_get_material(0).set_shader_parameter("propeller_color", color)
+@export_range (1, 3) var prop_disk_alpha := 1.0 :
+	set(alpha):
+		if !is_inside_tree():
+			await self.ready
+		prop_disk_alpha = alpha
+		prop_disk.mesh.surface_get_material(0).set_shader_parameter("alpha_boost", prop_disk_alpha)
+@export_range (0, 2) var prop_disk_emission := 0.0 :
+	set(emission):
+		if !is_inside_tree():
+			await self.ready
+		prop_disk_emission = emission
+		prop_disk.mesh.surface_get_material(0).set_shader_parameter("emission_power", prop_disk_emission)
+@export_range (1, 20) var prop_disk_falloff := 10 :
+	set(falloff):
+		if !is_inside_tree():
+			await self.ready
+		prop_disk_falloff = falloff
+		prop_disk.mesh.surface_get_material(0).set_shader_parameter("emission_falloff", prop_disk_falloff)
 
-var velocity := Vector3.ZERO setget set_velocity
+var velocity := Vector3.ZERO
 var forces := [Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO]
 
 var radius := diameter * 0.0254 / 2.0
@@ -47,31 +72,32 @@ var debug := 0
 
 
 func _ready() -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		return
-	
+
 	set_visibility(true)
 	prop_disk.visible = false
-	
-	var parent: Spatial = get_parent()
+
+	var parent: Node3D = get_parent()
 	while not parent is Drone:
-		ray.add_exception(parent)
+		if parent is CollisionObject3D:
+			ray.add_exception(parent)
 		parent = parent.get_parent()
 		if parent is Drone:
 			ray.add_exception(parent)
 		elif not parent:
 			break
-	max_ray_length = min(diameter * 0.0254 * 2, ray.cast_to.length())
-	ray.cast_to = ray.cast_to.normalized() * max_ray_length
+	max_ray_length = min(diameter * 0.0254 * 2, ray.target_position.length())
+	ray.target_position = ray.target_position.normalized() * max_ray_length
 	ray.enabled = true
-	
-	theta_tip = deg2rad(theta_tip)
+
+	theta_tip = deg_to_rad(theta_tip)
 
 
 func _process(_delta: float) -> void:
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		return
-	
+
 	if abs(rpm) > 500:
 		if !use_blur:
 			use_blur = true
@@ -84,11 +110,6 @@ func _process(_delta: float) -> void:
 			set_visibility(true)
 
 
-func set_clockwise(is_cw: bool) -> void:
-	clockwise = is_cw
-	set_visibility(true)
-
-
 func set_visibility(show_prop: bool) -> void:
 	if show_prop:
 		cw.visible = clockwise
@@ -96,40 +117,6 @@ func set_visibility(show_prop: bool) -> void:
 	else:
 		cw.visible = false
 		ccw.visible = false
-
-
-func set_color(col: Color) -> void:
-	if !is_inside_tree():
-		yield(self, "ready")
-	color = col
-	cw.mesh.surface_get_material(0).set_shader_param("propeller_color", color)
-	ccw.mesh.surface_get_material(0).set_shader_param("propeller_color", color)
-	prop_disk.mesh.surface_get_material(0).set_shader_param("propeller_color", color)
-
-
-func set_prop_disk_alpha(alpha: float) -> void:
-	if !is_inside_tree():
-		yield(self, "ready")
-	prop_disk_alpha = alpha
-	prop_disk.mesh.surface_get_material(0).set_shader_param("alpha_boost", prop_disk_alpha)
-
-
-func set_prop_disk_emission(emission: float) -> void:
-	if !is_inside_tree():
-		yield(self, "ready")
-	prop_disk_emission = emission
-	prop_disk.mesh.surface_get_material(0).set_shader_param("emission_power", prop_disk_emission)
-
-
-func set_prop_disk_falloff(falloff: int) -> void:
-	if !is_inside_tree():
-		yield(self, "ready")
-	prop_disk_falloff = falloff
-	prop_disk.mesh.surface_get_material(0).set_shader_param("emission_falloff", prop_disk_falloff)
-
-
-func set_velocity(vel: Vector3) -> void:
-	velocity = vel
 
 
 func update_forces() -> void:
@@ -146,7 +133,7 @@ func update_forces() -> void:
 		lambda_c = v_len * cos(beta) / (w * radius)
 		mu = v_len * sin(beta) / (w * radius)
 	var sigma := num_blades * c_tip / (PI * radius)
-	
+
 	# Induced inflow
 	var a1 := -4 * lambda_c + cla * sigma * (disk_delta - 1)
 	var a2 := 16 * lambda_c * lambda_c + 8 * cla * (disk_delta - 1) * lambda_c * sigma
@@ -156,9 +143,9 @@ func update_forces() -> void:
 	var a6 := 8 * (2 * disk_delta + mu * mu * theta_tip)
 	var a7 := 8 * cl0 * mu * mu * sigma * log(disk_delta)
 	var lambda_i := (a1 + sqrt(a2 + a3 * (a4 + cla * (a5 - a6)) - a7)) / 8.0
-	
+
 	var lambda := lambda_c + lambda_i
-	
+
 	# Thrust
 	a1 = sigma / (2 * disk_delta)
 	a2 = cl0 * disk_delta * (1 + disk_delta)
@@ -167,7 +154,7 @@ func update_forces() -> void:
 	a5 = cl0 * disk_delta * mu * mu * log(disk_delta)
 	var cft := a1 * ((1 - disk_delta) * (a2 - a3 + a4) - a5)
 	var thrust := 0.5 * rho * PI * radius * radius * w * w * radius * radius * cft
-	
+
 	# Drag
 	a1 = mu * sigma / (2 * disk_delta)
 	a2 = 2 * cd0 * disk_delta
@@ -176,7 +163,7 @@ func update_forces() -> void:
 	a5 = cl0 * disk_delta * lambda * log(disk_delta)
 	var cfh := a1 * ((1 - disk_delta) * (a2 + theta_tip * (a3 + a4)) - a5)
 	var drag := 0.5 * rho * PI * radius * radius * w * w * radius * radius * cfh
-	
+
 	# Torque
 	a1 = (1 - disk_delta) * sigma / 6.0
 	a2 = 2 * cd0 * (1 + disk_delta + disk_delta * disk_delta)
@@ -185,21 +172,21 @@ func update_forces() -> void:
 	a5 = (3 * mu * mu * (cd0 * disk_delta + cda * theta_tip * theta_tip)) / disk_delta
 	var cmq := a1 * (a2 + a3 + a4 + a5)
 	var torque := 0.5 * rho * PI * radius * radius * w * w * radius * radius * radius * cmq
-	
+
 	# Rolling moment
 	a1 = (1 - disk_delta) * sigma * mu / 2.0
 	a2 = cl0 * (disk_delta + 1)
 	a3 = cla * (lambda - 2 * theta_tip)
 	var cmr := a1 * (a2 - a3)
 	var roll_moment := 0.5 * rho * PI * radius * radius * w * w * radius * radius * radius * cmr
-	
+
 	# Pitching moment
 	a1 = c_tip / (2 * disk_delta * radius) * sigma * mu
 	a2 = cma * (disk_delta - 1) * (lambda - 2 * theta_tip)
 	a3 = 2 * cm0 * disk_delta * log(disk_delta)
 	var cmp := a1 * (a2 - a3)
 	var pitch_moment := 0.5 * rho * PI * radius * radius * w * w * radius * radius * radius * cmp
-	
+
 	# Vector form
 	var direction := 1
 	if clockwise:
@@ -219,9 +206,9 @@ func update_forces() -> void:
 	var torque_vec := torque * Vector3.UP * direction
 	var roll_moment_vec := roll_moment * drag_direction * direction
 	var pitch_moment_vec := pitch_moment * Vector3.UP.cross(drag_direction)
-	
+
 	thrust_vec = thrust_vec * get_ground_effect()
-	
+
 	forces = [thrust_vec, drag_vec, torque_vec, roll_moment_vec, pitch_moment_vec]
 
 
@@ -238,7 +225,8 @@ func get_ground_effect() -> float:
 	var ground_effect := 1.0
 	var ray_length := max_ray_length
 	if ray.is_colliding():
-		ray_length = min(abs(global_transform.xform_inv(ray.get_collision_point()).y), max_ray_length)
+#		ray_length = minf((ray.get_collision_point() - global_transform.origin).length(), max_ray_length)
+		ray_length = minf(absf((ray.get_collision_point() * global_transform).y), max_ray_length)
 		var b_square := gnd_b * gnd_b
 		var d_square := gnd_d * gnd_d
 		var r_square := gnd_radius * gnd_radius

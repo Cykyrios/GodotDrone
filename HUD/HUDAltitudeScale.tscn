@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://HUD/HUD_dynamic_font_32.tres" type="DynamicFont" id=1]
+[ext_resource path="res://HUD/HUD_dynamic_font_32.tres" type="FontFile" id=1]
 [ext_resource path="res://HUD/HUDAltitudeScale.gd" type="Script" id=2]
 [ext_resource path="res://HUD/HUDBidirectionalGauge.tscn" type="PackedScene" id=3]
-[ext_resource path="res://HUD/HUD_dynamic_font_26.tres" type="DynamicFont" id=4]
+[ext_resource path="res://HUD/HUD_dynamic_font_26.tres" type="FontFile" id=4]
 
 [node name="HUDAltitudeScale" type="Control"]
 anchor_left = 0.5
@@ -18,9 +18,9 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_top = -59.5
-margin_right = 157.0
-margin_bottom = 59.5
+offset_top = -59.5
+offset_right = 157.0
+offset_bottom = 59.5
 custom_constants/separation = 10
 __meta__ = {
 "_edit_use_anchors_": false
@@ -31,22 +31,22 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 59.0
-margin_bottom = 59.0
+offset_left = 0.0
+offset_top = 59.0
+offset_bottom = 59.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 width = 4
 max_value = 10.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-margin_left = 10.0
-margin_right = 157.0
-margin_bottom = 119.0
+offset_left = 10.0
+offset_right = 157.0
+offset_bottom = 119.0
 
 [node name="LabelRadioAltitude" type="Label" parent="HBoxContainer/VBoxContainer"]
-margin_right = 147.0
-margin_bottom = 39.0
+offset_right = 147.0
+offset_bottom = 39.0
 size_flags_vertical = 5
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -58,9 +58,9 @@ __meta__ = {
 }
 
 [node name="LabelAltitude" type="Label" parent="HBoxContainer/VBoxContainer"]
-margin_top = 43.0
-margin_right = 147.0
-margin_bottom = 82.0
+offset_top = 43.0
+offset_right = 147.0
+offset_bottom = 82.0
 size_flags_vertical = 5
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -71,9 +71,9 @@ __meta__ = {
 }
 
 [node name="LabelVerticalSpeed" type="Label" parent="HBoxContainer/VBoxContainer"]
-margin_top = 86.0
-margin_right = 147.0
-margin_bottom = 119.0
+offset_top = 86.0
+offset_right = 147.0
+offset_bottom = 119.0
 size_flags_vertical = 5
 custom_fonts/font = ExtResource( 4 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )

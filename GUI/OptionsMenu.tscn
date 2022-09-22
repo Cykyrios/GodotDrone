@@ -1,74 +1,74 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://hwv8he00j43l"]
 
-[ext_resource path="res://GUI/ThemeMenu.tres" type="Theme" id=1]
-[ext_resource path="res://GUI/OptionsMenu.gd" type="Script" id=2]
+[ext_resource type="Script" path="res://GUI/OptionsMenu.gd" id="2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_abjtp"]
+font_size = 24
 
 [node name="OptionsMenu" type="MarginContainer"]
+process_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = ExtResource( 1 )
-custom_constants/margin_right = 100
-custom_constants/margin_top = 100
-custom_constants/margin_left = 100
-custom_constants/margin_bottom = 100
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-margin_left = 803.0
-margin_top = 320.0
-margin_right = 1117.0
-margin_bottom = 760.0
+layout_mode = 2
+offset_left = 888.0
+offset_top = 434.0
+offset_right = 1031.0
+offset_bottom = 646.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 294.0
-margin_bottom = 420.0
-custom_constants/separation = 20
-__meta__ = {
-"_edit_use_anchors_": false
-}
+layout_mode = 2
+offset_right = 143.0
+offset_bottom = 212.0
 
 [node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
-margin_right = 274.0
-margin_bottom = 45.0
+layout_mode = 2
+offset_right = 143.0
+offset_bottom = 37.0
 text = "Options"
-align = 1
-valign = 1
+label_settings = SubResource("LabelSettings_abjtp")
+horizontal_alignment = 1
 
 [node name="ButtonGame" type="Button" parent="PanelContainer/VBoxContainer"]
-margin_top = 65.0
-margin_right = 274.0
-margin_bottom = 116.0
+layout_mode = 2
+offset_top = 41.0
+offset_right = 143.0
+offset_bottom = 72.0
 text = "Game Settings"
 
 [node name="ButtonGraphics" type="Button" parent="PanelContainer/VBoxContainer"]
-margin_top = 136.0
-margin_right = 274.0
-margin_bottom = 187.0
+layout_mode = 2
+offset_top = 76.0
+offset_right = 143.0
+offset_bottom = 107.0
 text = "Graphics Settings"
 
 [node name="ButtonAudio" type="Button" parent="PanelContainer/VBoxContainer"]
-margin_top = 207.0
-margin_right = 274.0
-margin_bottom = 258.0
+layout_mode = 2
+offset_top = 111.0
+offset_right = 143.0
+offset_bottom = 142.0
 text = "Audio Settings"
 
 [node name="ButtonControls" type="Button" parent="PanelContainer/VBoxContainer"]
-margin_top = 278.0
-margin_right = 274.0
-margin_bottom = 329.0
+layout_mode = 2
+offset_top = 146.0
+offset_right = 143.0
+offset_bottom = 177.0
 text = "Controls"
 
 [node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer"]
-margin_top = 349.0
-margin_right = 274.0
-margin_bottom = 400.0
+layout_mode = 2
+offset_top = 181.0
+offset_right = 143.0
+offset_bottom = 212.0
 text = "Back to Menu"

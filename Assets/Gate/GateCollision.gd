@@ -1,7 +1,7 @@
-extends StaticBody
+extends StaticBody3D
 
 
-onready var shape = $CollisionShape1
+@onready var shape = $CollisionShape1
 
 
 func _ready():

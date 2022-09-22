@@ -12,8 +12,8 @@ tonemap_mode = 2
 [node name="WorldEnvironment" type="WorldEnvironment"]
 environment = SubResource( 1 )
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( -0.707107, 0.241845, -0.664463, 0, 0.939693, 0.34202, 0.707107, 0.241845, -0.664463, -1, 0.5, -1 )
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D( -0.707107, 0.241845, -0.664463, 0, 0.939693, 0.34202, 0.707107, 0.241845, -0.664463, -1, 0.5, -1 )
 fov = 10.0
 near = 0.01
 far = 10.0
@@ -22,41 +22,41 @@ far = 10.0
 script = ExtResource( 4 )
 
 [node name="Motor1" parent="Drone" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, -0.08 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, -0.08 )
 script = null
 
 [node name="Propeller1" parent="Drone/Motor1" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
 script = null
 
 [node name="Motor2" parent="Drone" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, -0.08 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, -0.08 )
 script = null
 
 [node name="Propeller2" parent="Drone/Motor2" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
 script = null
 
 [node name="Motor3" parent="Drone" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, 0.08 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, 0.08 )
 script = null
 
 [node name="Propeller3" parent="Drone/Motor3" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
 script = null
 
 [node name="Motor4" parent="Drone" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, 0.08 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, 0.08 )
 script = null
 
 [node name="Propeller4" parent="Drone/Motor4" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0 )
 script = null
 
-[node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.269702, 0.18924, -0.296588 )
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.269702, 0.18924, -0.296588 )
 light_energy = 2.0
 
-[node name="OmniLight2" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.564057, 0.18924, -0.0484453 )
+[node name="OmniLight2" type="OmniLight3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.564057, 0.18924, -0.0484453 )
 light_energy = 2.0

@@ -1,16 +1,16 @@
-tool
+@tool
 extends EditorScenePostImport
 
 
-func post_import(scene):
+func _post_import(scene):
 	if scene == null:
 		print("Scene is empty.")
 		return
-	var path = get_source_folder()
+	var path = get_source_file().get_base_dir()
 	for node in scene.get_children():
-		var node_name = node.name
-		node.name += "_Mesh"
-		var sb = StaticBody.new()
+		var node_name = node.name as String
+		node.name = node_name + "_Mesh"
+		var sb = StaticBody3D.new()
 		scene.add_child(sb)
 		sb.set_owner(scene)
 		sb.name = node_name
@@ -18,9 +18,9 @@ func post_import(scene):
 		scene.remove_child(node)
 		sb.add_child(node)
 		node.set_owner(scene)
-		node.transform = Transform()
+		node.transform = Transform3D()
 		for child in node.get_children():
-			var child_name = child.name
+			var child_name = child.name as String
 			var col
 			if child_name.find("-colbox") != -1:
 				child_name = child_name.replace("-colbox", "-col")
@@ -42,32 +42,32 @@ func post_import(scene):
 		sb.transform.origin = Vector3(0, transform.origin.y, 0)
 		var packed_scene = PackedScene.new()
 		if packed_scene.pack(sb) == OK:
-			ResourceSaver.save(path + "/" + sb.name + ".tscn", packed_scene)
+			ResourceSaver.save(packed_scene, path + "/" + (sb.name as String) + ".tscn")
 		sb.transform = transform
 		reset_owner(sb, scene)
-	
+
 	return scene
 
 
-func collision_shape(node : MeshInstance, shape : String):
-	var collision = CollisionShape.new()
+func collision_shape(node : MeshInstance3D, shape : String):
+	var collision = CollisionShape3D.new()
 	match shape:
 		"box":
-			var collision_shape = BoxShape.new()
-			collision_shape.extents = node.scale
-			collision.shape = collision_shape
+			var coll_shape = BoxShape3D.new()
+			coll_shape.extents = node.scale
+			collision.shape = coll_shape
 		"cylinder":
-			var collision_shape = CylinderShape.new()
-			collision_shape.radius = node.scale.x
-			collision_shape.height = node.scale.y * 2.0
-			collision.shape = collision_shape
+			var coll_shape = CylinderShape3D.new()
+			coll_shape.radius = node.scale.x
+			coll_shape.height = node.scale.y * 2.0
+			collision.shape = coll_shape
 		"mesh":
-			var collision_shape = ConvexPolygonShape.new()
-			collision_shape.points = node.mesh.get_faces()
-			collision.shape = collision_shape
+			var coll_shape = ConvexPolygonShape3D.new()
+			coll_shape.points = node.mesh.get_faces()
+			collision.shape = coll_shape
 		_:
 			return
-	
+
 	collision.transform = node.transform
 	collision.scale = Vector3.ONE
 	return collision

@@ -17,7 +17,7 @@ var graph_size := 256
 
 func _ready() -> void:
 	update_rates(Vector3(rate_pitch, rate_roll, rate_yaw), Vector3(expo_pitch, expo_roll, expo_yaw))
-	update()
+	queue_redraw()
 
 
 func update_rates(rates: Vector3, expos: Vector3) -> void:
@@ -27,7 +27,7 @@ func update_rates(rates: Vector3, expos: Vector3) -> void:
 	expo_pitch = expos.x
 	expo_roll = expos.y
 	expo_yaw = expos.z
-	
+
 	var input := 0.0
 	if pitch.size() != num_points:
 		pitch.clear()
@@ -45,8 +45,8 @@ func update_rates(rates: Vector3, expos: Vector3) -> void:
 		pitch[i].y = ((1 - expo_pitch) * input + expo_pitch * pow(input, 3)) * rate_pitch
 		roll[i].y = ((1 - expo_roll) * input + expo_roll * pow(input, 3)) * rate_roll
 		yaw[i].y = ((1 - expo_yaw) * input + expo_yaw * pow(input, 3)) * rate_yaw
-	
-	var max_rate := max(max(rate_pitch, rate_roll), rate_yaw)
+
+	var max_rate := maxf(maxf(rate_pitch, rate_roll), rate_yaw)
 	for i in range(num_points):
 		pitch[i].x = (pitch[i].x + 1) * graph_size / 2
 		roll[i].x = (roll[i].x + 1) * graph_size / 2
@@ -54,7 +54,7 @@ func update_rates(rates: Vector3, expos: Vector3) -> void:
 		pitch[i].y = (2 - (pitch[i].y / max_rate + 1)) * graph_size / 2
 		roll[i].y = (2 - (roll[i].y / max_rate + 1)) * graph_size / 2
 		yaw[i].y = (2 - (yaw[i].y / max_rate + 1)) * graph_size / 2
-	update()
+	queue_redraw()
 
 
 func _draw() -> void:
@@ -70,9 +70,9 @@ func _draw() -> void:
 	draw_line(Vector2(0, graph_size / 2.0), Vector2(graph_size, graph_size / 2.0), color_lines, 1)
 	draw_line(Vector2(graph_size / 2.0, 0), Vector2(graph_size / 2.0, graph_size), color_lines, 1)
 	# Rates
-	draw_polyline(PoolVector2Array(pitch), color_pitch, 1.5, true)
-	draw_polyline(PoolVector2Array(roll), color_roll, 1.5, true)
-	draw_polyline(PoolVector2Array(yaw), color_yaw, 1.5, true)
+	draw_polyline(PackedVector2Array(pitch), color_pitch, 1.5, true)
+	draw_polyline(PackedVector2Array(roll), color_roll, 1.5, true)
+	draw_polyline(PackedVector2Array(yaw), color_yaw, 1.5, true)
 	# Frame
 	draw_line(Vector2(0, 0), Vector2(graph_size, 0), Color(0.8, 0.8, 0.8), 2)
 	draw_line(Vector2(graph_size, 0), Vector2(graph_size, graph_size), Color(0.8, 0.8, 0.8), 2)

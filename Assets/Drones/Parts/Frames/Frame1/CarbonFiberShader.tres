@@ -1,49 +1,49 @@
 [gd_resource type="VisualShader" load_steps=40 format=2]
 
-[sub_resource type="VisualShaderNodeScalarConstant" id=1]
+[sub_resource type="VisualShaderNodeFloatConstant" id=1]
 constant = 1.0
 
-[sub_resource type="VisualShaderNodeScalarOp" id=2]
+[sub_resource type="VisualShaderNodeFloatOp" id=2]
 operator = 2
 
-[sub_resource type="VisualShaderNodeScalarOp" id=3]
+[sub_resource type="VisualShaderNodeFloatOp" id=3]
 operator = 2
 
-[sub_resource type="VisualShaderNodeScalarConstant" id=4]
+[sub_resource type="VisualShaderNodeFloatConstant" id=4]
 constant = 3.14159
 
-[sub_resource type="VisualShaderNodeScalarFunc" id=5]
+[sub_resource type="VisualShaderNodeFloatFunc" id=5]
 function = 0
 
-[sub_resource type="VisualShaderNodeScalarFunc" id=6]
+[sub_resource type="VisualShaderNodeFloatFunc" id=6]
 function = 16
 
 [sub_resource type="VisualShaderNodeIf" id=7]
 output_port_for_preview = 0
 
-[sub_resource type="VisualShaderNodeScalarOp" id=8]
+[sub_resource type="VisualShaderNodeFloatOp" id=8]
 operator = 2
 
-[sub_resource type="VisualShaderNodeScalarOp" id=9]
+[sub_resource type="VisualShaderNodeFloatOp" id=9]
 operator = 3
 
-[sub_resource type="VisualShaderNodeScalarFunc" id=10]
+[sub_resource type="VisualShaderNodeFloatFunc" id=10]
 function = 14
 
 [sub_resource type="VisualShaderNodeInput" id=11]
 output_port_for_preview = 0
 input_name = "uv"
 
-[sub_resource type="VisualShaderNodeScalarOp" id=12]
+[sub_resource type="VisualShaderNodeFloatOp" id=12]
 operator = 2
 
-[sub_resource type="VisualShaderNodeScalarOp" id=13]
+[sub_resource type="VisualShaderNodeFloatOp" id=13]
 operator = 2
 
-[sub_resource type="VisualShaderNodeScalarFunc" id=14]
+[sub_resource type="VisualShaderNodeFloatFunc" id=14]
 function = 0
 
-[sub_resource type="VisualShaderNodeScalarFunc" id=15]
+[sub_resource type="VisualShaderNodeFloatFunc" id=15]
 function = 16
 
 [sub_resource type="VisualShaderNodeVectorOp" id=16]
@@ -64,34 +64,34 @@ operator = 4
 
 [sub_resource type="VisualShaderNodeVectorDecompose" id=22]
 
-[sub_resource type="VisualShaderNodeScalarOp" id=23]
+[sub_resource type="VisualShaderNodeFloatOp" id=23]
 default_input_values = [ 0, 0.0, 1, 2.0 ]
 operator = 2
 
-[sub_resource type="VisualShaderNodeScalarOp" id=24]
+[sub_resource type="VisualShaderNodeFloatOp" id=24]
 default_input_values = [ 0, 0.0, 1, 1.0 ]
 operator = 1
 
-[sub_resource type="VisualShaderNodeScalarOp" id=25]
+[sub_resource type="VisualShaderNodeFloatOp" id=25]
 default_input_values = [ 0, 0.0, 1, 2.0 ]
 operator = 5
 
-[sub_resource type="VisualShaderNodeScalarFunc" id=26]
+[sub_resource type="VisualShaderNodeFloatFunc" id=26]
 function = 31
 
-[sub_resource type="VisualShaderNodeScalarOp" id=27]
+[sub_resource type="VisualShaderNodeFloatOp" id=27]
 default_input_values = [ 0, 0.0, 1, 2.0 ]
 operator = 2
 
-[sub_resource type="VisualShaderNodeScalarOp" id=28]
+[sub_resource type="VisualShaderNodeFloatOp" id=28]
 default_input_values = [ 0, 0.0, 1, 1.0 ]
 operator = 1
 
-[sub_resource type="VisualShaderNodeScalarOp" id=29]
+[sub_resource type="VisualShaderNodeFloatOp" id=29]
 default_input_values = [ 0, 0.0, 1, 2.0 ]
 operator = 5
 
-[sub_resource type="VisualShaderNodeScalarFunc" id=30]
+[sub_resource type="VisualShaderNodeFloatFunc" id=30]
 function = 31
 
 [sub_resource type="VisualShaderNodeIf" id=31]
@@ -102,22 +102,22 @@ output_port_for_preview = 0
 
 [sub_resource type="VisualShaderNodeVectorCompose" id=33]
 
-[sub_resource type="VisualShaderNodeScalarOp" id=34]
+[sub_resource type="VisualShaderNodeFloatOp" id=34]
 output_port_for_preview = 0
 operator = 2
 
 [sub_resource type="VisualShaderNodeVectorCompose" id=35]
 
-[sub_resource type="VisualShaderNodeScalarOp" id=36]
+[sub_resource type="VisualShaderNodeFloatOp" id=36]
 operator = 2
 
-[sub_resource type="VisualShaderNodeScalarOp" id=37]
+[sub_resource type="VisualShaderNodeFloatOp" id=37]
 operator = 3
 
-[sub_resource type="VisualShaderNodeScalarFunc" id=38]
+[sub_resource type="VisualShaderNodeFloatFunc" id=38]
 function = 14
 
-[sub_resource type="VisualShaderNodeScalarConstant" id=39]
+[sub_resource type="VisualShaderNodeFloatConstant" id=39]
 constant = 4.0
 
 [resource]
@@ -317,7 +317,7 @@ void fragment() {
 
 // Output:0
 	ALBEDO = n_out16p0;
-	NORMALMAP = n_out38p0;
+	NORMAL_MAP = n_out38p0;
 
 }
 
@@ -405,4 +405,4 @@ nodes/fragment/39/node = SubResource( 32 )
 nodes/fragment/39/position = Vector2( -400, 400 )
 nodes/fragment/40/node = SubResource( 34 )
 nodes/fragment/40/position = Vector2( -146, 545 )
-nodes/fragment/connections = PoolIntArray( 2, 0, 3, 0, 3, 0, 4, 0, 3, 1, 4, 1, 3, 0, 5, 1, 3, 1, 5, 0, 3, 0, 6, 0, 9, 0, 6, 1, 6, 0, 8, 0, 8, 0, 7, 0, 9, 0, 7, 1, 7, 0, 11, 0, 9, 0, 12, 0, 13, 0, 12, 1, 12, 0, 11, 1, 11, 0, 14, 0, 17, 0, 19, 0, 19, 0, 18, 0, 18, 0, 20, 0, 21, 0, 20, 1, 20, 0, 22, 0, 22, 0, 23, 0, 3, 1, 17, 0, 13, 0, 21, 1, 23, 0, 16, 1, 2, 0, 24, 0, 24, 0, 25, 0, 9, 0, 24, 1, 25, 0, 26, 0, 26, 0, 27, 0, 26, 0, 28, 1, 26, 1, 27, 1, 26, 1, 28, 0, 27, 0, 16, 3, 28, 0, 16, 4, 28, 0, 16, 5, 9, 0, 17, 1, 9, 0, 18, 1, 9, 0, 21, 0, 10, 0, 25, 1, 15, 0, 16, 0, 14, 0, 15, 0, 2, 0, 29, 0, 29, 0, 30, 0, 30, 0, 31, 0, 31, 0, 32, 0, 32, 0, 33, 0, 34, 0, 35, 0, 35, 0, 36, 0, 36, 0, 37, 0, 29, 1, 34, 0, 15, 0, 38, 0, 23, 0, 38, 1, 33, 0, 38, 3, 37, 0, 38, 4, 37, 0, 38, 5, 38, 0, 0, 8, 16, 0, 0, 0, 16, 0, 39, 0, 33, 0, 40, 1, 39, 0, 40, 0 )
+nodes/fragment/connections = PackedInt32Array( 2, 0, 3, 0, 3, 0, 4, 0, 3, 1, 4, 1, 3, 0, 5, 1, 3, 1, 5, 0, 3, 0, 6, 0, 9, 0, 6, 1, 6, 0, 8, 0, 8, 0, 7, 0, 9, 0, 7, 1, 7, 0, 11, 0, 9, 0, 12, 0, 13, 0, 12, 1, 12, 0, 11, 1, 11, 0, 14, 0, 17, 0, 19, 0, 19, 0, 18, 0, 18, 0, 20, 0, 21, 0, 20, 1, 20, 0, 22, 0, 22, 0, 23, 0, 3, 1, 17, 0, 13, 0, 21, 1, 23, 0, 16, 1, 2, 0, 24, 0, 24, 0, 25, 0, 9, 0, 24, 1, 25, 0, 26, 0, 26, 0, 27, 0, 26, 0, 28, 1, 26, 1, 27, 1, 26, 1, 28, 0, 27, 0, 16, 3, 28, 0, 16, 4, 28, 0, 16, 5, 9, 0, 17, 1, 9, 0, 18, 1, 9, 0, 21, 0, 10, 0, 25, 1, 15, 0, 16, 0, 14, 0, 15, 0, 2, 0, 29, 0, 29, 0, 30, 0, 30, 0, 31, 0, 31, 0, 32, 0, 32, 0, 33, 0, 34, 0, 35, 0, 35, 0, 36, 0, 36, 0, 37, 0, 29, 1, 34, 0, 15, 0, 38, 0, 23, 0, 38, 1, 33, 0, 38, 3, 37, 0, 38, 4, 37, 0, 38, 5, 38, 0, 0, 8, 16, 0, 0, 0, 16, 0, 39, 0, 33, 0, 40, 1, 39, 0, 40, 0 )

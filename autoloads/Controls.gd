@@ -1,7 +1,7 @@
 extends Node
 
 
-var input_map_path := "%s/InputMap.cfg" % Global.config_dir
+var input_map_path := "%s/InputMap.cfg" % [Global.config_dir]
 var active_controller_guid := ""
 var default_controller_guid := ""
 
@@ -60,7 +60,7 @@ func load_input_map(update_controller: bool = false) -> String:
 				active_device = default_device
 				active_controller_guid = default_controller_guid
 				var _discard = update_active_device(active_device)
-			if default_device < 0 and !Input.get_connected_joypads().empty():
+			if default_device < 0 and !Input.get_connected_joypads().is_empty():
 				active_device = Input.get_connected_joypads()[0]
 				var _discard = update_active_device(active_device)
 		if active_device >= 0:
@@ -75,7 +75,7 @@ func load_input_map(update_controller: bool = false) -> String:
 						or action.begins_with("pitch") or action.begins_with("roll"):
 					if ["throttle_up", "yaw_left", "pitch_up", "roll_left"].has(action):
 						event = InputEventJoypadMotion.new()
-						event.axis = Input.get_joy_axis_index_from_string(config.get_value(section, action))
+						event.axis = config.get_value(section, action)
 						event.axis_value = -1.0
 						current_action = action
 						continue
@@ -109,14 +109,14 @@ func load_input_map(update_controller: bool = false) -> String:
 						continue
 					if binding_type == ControllerAction.Type.BUTTON:
 						if action == current_action + "_button":
-							action_list[action_idx].button = Input.get_joy_button_index_from_string(config.get_value(section, action))
+							action_list[action_idx].button = config.get_value(section, action)
 							event = InputEventJoypadButton.new()
 							event.device = active_device
 							event.button_index = action_list[action_idx].button
 							InputMap.action_add_event(current_action, event)
 					elif binding_type == ControllerAction.Type.AXIS:
 						if action == current_action + "_axis":
-							action_list[action_idx].axis = Input.get_joy_axis_index_from_string(config.get_value(section, action))
+							action_list[action_idx].axis = config.get_value(section, action)
 						elif action == current_action + "_min":
 							action_list[action_idx].axis_min = config.get_value(section, action)
 						elif action == current_action + "_max":
@@ -151,22 +151,23 @@ func create_action_list() -> void:
 		action_list[-1].init(action[0], action[1])
 
 
-func get_joypad_guid_list() -> Array:
-	var controller_list := Input.get_connected_joypads()
-	for i in range(controller_list.size()):
-		controller_list[i] = Input.get_joy_guid(controller_list[i])
-	
-	return controller_list
+func get_joypad_guid_list() -> Array[String]:
+	var controller_guids: Array[String] = []
+	var controller_ids := Input.get_connected_joypads()
+	for i in range(controller_ids.size()):
+		controller_guids.append(Input.get_joy_guid(controller_ids[i]))
+
+	return controller_guids
 
 
 func restore_keyboard_shortcuts() -> void:
 	var e = InputEventKey.new()
-	e.scancode = KEY_M
+	e.keycode = KEY_M
 	if not InputMap.action_has_event("cycle_flight_modes", e):
 		InputMap.action_add_event("cycle_flight_modes", e)
-	e.scancode = KEY_SPACE
+	e.keycode = KEY_SPACE
 	if not InputMap.action_has_event("toggle_arm", e):
 		InputMap.action_add_event("toggle_arm", e)
-	e.scancode = KEY_BACKSPACE
+	e.keycode = KEY_BACKSPACE
 	if not InputMap.action_has_event("respawn", e):
 		InputMap.action_add_event("respawn", e)

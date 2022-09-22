@@ -5,121 +5,121 @@
 [ext_resource path="res://tracks/gates/Gate.tscn" type="PackedScene" id=3]
 [ext_resource path="res://tracks/Checkpoint.gd" type="Script" id=4]
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="BoxShape3D" id=1]
 extents = Vector3( 8, 5, 0.05 )
 
-[node name="Track" type="Spatial"]
+[node name="Track" type="Node3D"]
 script = ExtResource( 1 )
 edit_track = true
 course = "lap_start,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0b,24b,23b,22b,21b,20b,19b,18b,17b,16b,15b,14b,13b,12b,11b,10b,9b,8b,7b,6b,5b,4b,3b,2b,1b,0b,26b,24,lap_end"
 
 [node name="Launchpad" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40 )
 
 [node name="Gate1" parent="." instance=ExtResource( 3 )]
 
 [node name="Gate2" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10 )
 
 [node name="Gate3" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20 )
 
 [node name="Gate4" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30 )
 
 [node name="Gate5" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -2, 3, -38 )
+transform = Transform3D( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -2, 3, -38 )
 
 [node name="Gate6" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.5, 0.224144, 0.836516, 0, 0.965926, -0.258819, -0.866025, 0.12941, 0.482963, -12, 8, -45 )
+transform = Transform3D( 0.5, 0.224144, 0.836516, 0, 0.965926, -0.258819, -0.866025, 0.12941, 0.482963, -12, 8, -45 )
 
 [node name="Gate7" parent="." instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, 0.5, 0.866025, 0, 0.866025, -0.5, -1, -2.18557e-08, -3.78552e-08, -22, 15, -50 )
+transform = Transform3D( -4.37114e-08, 0.5, 0.866025, 0, 0.866025, -0.5, -1, -2.18557e-08, -3.78552e-08, -22, 15, -50 )
 
 [node name="Gate8" parent="." instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, 0.5, 0.866025, 0, 0.866025, -0.5, -1, -2.18557e-08, -3.78552e-08, -32, 25, -50 )
+transform = Transform3D( -4.37114e-08, 0.5, 0.866025, 0, 0.866025, -0.5, -1, -2.18557e-08, -3.78552e-08, -32, 25, -50 )
 
 [node name="Gate9" parent="." instance=ExtResource( 3 )]
-transform = Transform( -0.707107, 0.353553, 0.612373, 0, 0.866026, -0.499999, -0.707107, -0.353553, -0.612373, -47, 35, -40 )
+transform = Transform3D( -0.707107, 0.353553, 0.612373, 0, 0.866026, -0.499999, -0.707107, -0.353553, -0.612373, -47, 35, -40 )
 
 [node name="Gate10" parent="." instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -57, 45, -20 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -57, 45, -20 )
 
 [node name="Gate11" parent="." instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -57, 45, 0 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -57, 45, 0 )
 
 [node name="Gate12" parent="." instance=ExtResource( 3 )]
-transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -52, 45, 10 )
+transform = Transform3D( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -52, 45, 10 )
 
 [node name="Gate13" parent="." instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -42, 45, 15 )
+transform = Transform3D( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -42, 45, 15 )
 
 [node name="Gate14" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -32, 45, 10 )
+transform = Transform3D( 0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -32, 45, 10 )
 
 [node name="Gate15" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, -17, 35, -5 )
+transform = Transform3D( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, -17, 35, -5 )
 
 [node name="Gate16" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, -2, 20, -20 )
+transform = Transform3D( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, -2, 20, -20 )
 
 [node name="Gate17" parent="." instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 13, 10, -30 )
+transform = Transform3D( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 13, 10, -30 )
 
 [node name="Gate18" parent="." instance=ExtResource( 3 )]
-transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 28, 5, -20 )
+transform = Transform3D( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 28, 5, -20 )
 
 [node name="Gate19" parent="." instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 48, 5, 20 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 48, 5, 20 )
 
 [node name="Gate20" parent="." instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 48, 5, 40 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 48, 5, 40 )
 
 [node name="Gate21" parent="." instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 48, 5, 60 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 48, 5, 60 )
 
 [node name="Gate22" parent="." instance=ExtResource( 3 )]
-transform = Transform( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 38, 5, 80 )
+transform = Transform3D( -0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 38, 5, 80 )
 
 [node name="Gate23" parent="." instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 23, 5, 85 )
+transform = Transform3D( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 23, 5, 85 )
 
 [node name="Gate24" parent="." instance=ExtResource( 3 )]
-transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 8, 5, 80 )
+transform = Transform3D( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 8, 5, 80 )
 
 [node name="Gate25" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 60 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 60 )
 
-[node name="Checkpoint" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
+[node name="Checkpoint" type="Area3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
 script = ExtResource( 4 )
 backward = false
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 1 )
 
-[node name="CollisionShape2" type="CollisionShape" parent="Checkpoint"]
-transform = Transform( 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 7.5, -1.5, 0 )
+[node name="CollisionShape2" type="CollisionShape3D" parent="Checkpoint"]
+transform = Transform3D( 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 7.5, -1.5, 0 )
 shape = SubResource( 1 )
 
-[node name="CollisionShape3" type="CollisionShape" parent="Checkpoint"]
-transform = Transform( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -7.5, -1.5, 0 )
+[node name="CollisionShape3" type="CollisionShape3D" parent="Checkpoint"]
+transform = Transform3D( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -7.5, -1.5, 0 )
 shape = SubResource( 1 )
 
-[node name="Checkpoint2" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 60 )
+[node name="Checkpoint2" type="Area3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 60 )
 script = ExtResource( 4 )
 backward = false
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint2"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 1 )
 
-[node name="CollisionShape2" type="CollisionShape" parent="Checkpoint2"]
-transform = Transform( 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 7.5, -1.5, 0 )
+[node name="CollisionShape2" type="CollisionShape3D" parent="Checkpoint2"]
+transform = Transform3D( 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 7.5, -1.5, 0 )
 shape = SubResource( 1 )
 
-[node name="CollisionShape3" type="CollisionShape" parent="Checkpoint2"]
-transform = Transform( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -7.5, -1.5, 0 )
+[node name="CollisionShape3" type="CollisionShape3D" parent="Checkpoint2"]
+transform = Transform3D( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -7.5, -1.5, 0 )
 shape = SubResource( 1 )

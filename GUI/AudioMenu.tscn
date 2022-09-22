@@ -1,84 +1,78 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://bsa5oyivvnqp0"]
 
-[ext_resource path="res://GUI/ThemeMenu.tres" type="Theme" id=1]
-[ext_resource path="res://GUI/AudioMenu.gd" type="Script" id=2]
+[ext_resource type="Script" path="res://GUI/AudioMenu.gd" id="2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_m6mta"]
+font_size = 24
 
 [node name="AudioMenu" type="MarginContainer"]
+process_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -1.0
-margin_right = -1.0
-theme = ExtResource( 1 )
-custom_constants/margin_right = 100
-custom_constants/margin_top = 100
-custom_constants/margin_left = 100
-custom_constants/margin_bottom = 100
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_left = -1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-margin_left = 100.0
-margin_top = 100.0
-margin_right = 1820.0
-margin_bottom = 980.0
+layout_mode = 2
+offset_right = 1920.0
+offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 5
 size_flags_vertical = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 1700.0
-margin_bottom = 860.0
-custom_constants/separation = 50
+layout_mode = 2
+offset_right = 1920.0
+offset_bottom = 1080.0
 alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
-margin_right = 1680.0
-margin_bottom = 45.0
+layout_mode = 2
+offset_right = 1920.0
+offset_bottom = 37.0
 text = "Audio"
-align = 1
-valign = 1
+label_settings = SubResource("LabelSettings_m6mta")
+horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
-margin_top = 95.0
-margin_right = 1680.0
-margin_bottom = 739.0
+layout_mode = 2
+offset_top = 41.0
+offset_right = 1920.0
+offset_bottom = 1045.0
 size_flags_horizontal = 5
 size_flags_vertical = 7
 size_flags_stretch_ratio = 100.0
 
 [node name="Grid" type="GridContainer" parent="PanelContainer/VBoxContainer/ScrollContainer"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 1670.0
-margin_bottom = 634.0
+layout_mode = 2
+offset_right = 1920.0
+offset_bottom = 1004.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 7
 size_flags_vertical = 7
-custom_constants/vseparation = 30
-custom_constants/hseparation = 50
+theme_override_constants/h_separation = 20
 columns = 3
 
 [node name="MasterLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/Grid"]
-margin_right = 230.0
-margin_bottom = 45.0
+layout_mode = 2
+offset_right = 118.0
+offset_bottom = 26.0
 text = "Master Volume"
 
 [node name="MasterSlider" type="HSlider" parent="PanelContainer/VBoxContainer/ScrollContainer/Grid"]
-margin_left = 280.0
-margin_top = 14.0
-margin_right = 480.0
-margin_bottom = 30.0
+custom_minimum_size = Vector2i(200, 0)
+layout_mode = 2
+offset_left = 138.0
+offset_top = 5.0
+offset_right = 338.0
+offset_bottom = 21.0
 grow_vertical = 2
-rect_min_size = Vector2( 200, 0 )
 size_flags_vertical = 4
 value = 100.0
 rounded = true
@@ -86,23 +80,25 @@ tick_count = 5
 ticks_on_borders = true
 
 [node name="MasterValue" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/Grid"]
-margin_left = 530.0
-margin_right = 613.0
-margin_bottom = 45.0
+layout_mode = 2
+offset_left = 358.0
+offset_right = 400.0
+offset_bottom = 26.0
 grow_vertical = 2
 text = "100%"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-margin_left = 1594.0
-margin_top = 789.0
-margin_right = 1680.0
-margin_bottom = 840.0
+layout_mode = 2
+offset_left = 1875.0
+offset_top = 1049.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 size_flags_horizontal = 8
 size_flags_vertical = 10
-custom_constants/separation = 50
 alignment = 2
 
 [node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_right = 86.0
-margin_bottom = 51.0
+layout_mode = 2
+offset_right = 45.0
+offset_bottom = 31.0
 text = "Back"

@@ -67,7 +67,7 @@ func save_quad_settings() -> void:
 		var _discard = config.save(quad_settings_path)
 	else:
 		Global.log_error(err, "Error while saving quad settings.")
-	emit_signal("settings_updated")
+	settings_updated.emit()
 
 
 func reset_quad() -> void:

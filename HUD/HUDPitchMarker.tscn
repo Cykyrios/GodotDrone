@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://HUD/HUDPitchMarker.gd" type="Script" id=1]
-[ext_resource path="res://HUD/HUD_dynamic_font_20.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Assets/HUD/PitchMarkerPositive.png" type="Texture" id=3]
+[ext_resource path="res://HUD/HUD_dynamic_font_20.tres" type="FontFile" id=2]
+[ext_resource path="res://Assets/HUD/PitchMarkerPositive.png" type="Texture2D" id=3]
 
 [node name="HUDPitchMarker" type="Control"]
 anchor_left = 0.5
@@ -23,7 +23,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 200, 20 )
+minimum_size = Vector2( 200, 20 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
 custom_constants/separation = 50
@@ -32,8 +32,8 @@ __meta__ = {
 }
 
 [node name="LeftHalf" type="HBoxContainer" parent="HBoxContainer"]
-margin_right = 94.0
-margin_bottom = 25.0
+offset_right = 94.0
+offset_bottom = 25.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 6
@@ -43,20 +43,20 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="HBoxContainer/LeftHalf"]
-margin_right = 26.0
-margin_bottom = 25.0
+offset_right = 26.0
+offset_bottom = 25.0
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "05"
 
 [node name="Line" type="NinePatchRect" parent="HBoxContainer/LeftHalf"]
-margin_left = 30.0
-margin_top = 9.0
-margin_right = 94.0
-margin_bottom = 15.0
+offset_left = 30.0
+offset_top = 9.0
+offset_right = 94.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 64, 6 )
+minimum_size = Vector2( 64, 6 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource( 3 )
@@ -66,9 +66,9 @@ patch_margin_right = 3
 patch_margin_bottom = 3
 
 [node name="RightHalf" type="HBoxContainer" parent="HBoxContainer"]
-margin_left = 144.0
-margin_right = 238.0
-margin_bottom = 25.0
+offset_left = 144.0
+offset_right = 238.0
+offset_bottom = 25.0
 size_flags_horizontal = 6
 size_flags_vertical = 4
 __meta__ = {
@@ -76,20 +76,20 @@ __meta__ = {
 }
 
 [node name="Line" type="NinePatchRect" parent="HBoxContainer/RightHalf"]
-margin_top = 9.0
-margin_right = 64.0
-margin_bottom = 15.0
+offset_top = 9.0
+offset_right = 64.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 64, 6 )
+minimum_size = Vector2( 64, 6 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="HBoxContainer/RightHalf"]
-margin_left = 68.0
-margin_right = 94.0
-margin_bottom = 25.0
+offset_left = 68.0
+offset_right = 94.0
+offset_bottom = 25.0
 custom_fonts/font = ExtResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "05"

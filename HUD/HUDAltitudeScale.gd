@@ -1,10 +1,10 @@
 extends Control
 
 
-onready var altitude_label := $HBoxContainer/VBoxContainer/LabelAltitude
-onready var radioaltitude_label := $HBoxContainer/VBoxContainer/LabelRadioAltitude
-onready var vertical_speed_label := $HBoxContainer/VBoxContainer/LabelVerticalSpeed
-onready var altitude_gauge := $HBoxContainer/AltitudeGauge
+@onready var altitude_label := $HBoxContainer/VBoxContainer/LabelAltitude
+@onready var radioaltitude_label := $HBoxContainer/VBoxContainer/LabelRadioAltitude
+@onready var vertical_speed_label := $HBoxContainer/VBoxContainer/LabelVerticalSpeed
+@onready var altitude_gauge := $HBoxContainer/AltitudeGauge
 
 var altitude := 0.0
 var altitude_prev := 0.0

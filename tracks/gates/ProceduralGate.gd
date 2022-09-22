@@ -2,15 +2,15 @@ extends Gate
 class_name ProceduralGate
 
 
-var geometry: GeometryInstance
-var static_body: StaticBody
+var geometry: GeometryInstance3D
+var static_body: StaticBody3D
 var checkpoint: Checkpoint
 
 
 func _ready() -> void:
 	_add_geometry()
 	
-	static_body = StaticBody.new()
+	static_body = StaticBody3D.new()
 	add_child(static_body)
 	_add_collision()
 	

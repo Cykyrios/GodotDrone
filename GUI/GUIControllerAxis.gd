@@ -1,5 +1,5 @@
-extends TextureProgress
 class_name GUIControllerAxis
+extends TextureProgressBar
 
 
 var texture_path := "res://Assets/GUI/ControlAxes.png"
@@ -8,7 +8,7 @@ var color_on := Color(1.0, 0.6, 0.0, 1.0)
 var color_off := color_on * 0.25
 
 func _ready() -> void:
-	rect_min_size = Vector2(200, 12)
+	custom_minimum_size = Vector2i(200, 12)
 	set_range(-1.0, 1.0, 0.01)
 	value = 0.0
 	nine_patch_stretch = true
@@ -27,7 +27,7 @@ func set_range(vmin: float, vmax: float, vstep: float) -> void:
 	min_value = vmin
 	max_value = vmax
 	step = vstep
-	value = clamp(value, min_value, max_value)
+	value = clampf(value, min_value, max_value)
 
 
 func set_color_on(color: Color, update_color_off: bool) -> void:

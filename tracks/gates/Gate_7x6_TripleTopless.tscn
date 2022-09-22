@@ -6,38 +6,38 @@
 
 
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="BoxShape3D" id=1]
 extents = Vector3( 1.05, 0.9, 0.01 )
 
-[sub_resource type="BoxShape" id=2]
+[sub_resource type="BoxShape3D" id=2]
 extents = Vector3( 1.05, 1.9, 0.01 )
 
-[node name="Gate" type="Spatial"]
+[node name="Gate" type="Node3D"]
 script = ExtResource( 3 )
 
 [node name="Gate_7x6_TripleTopless" parent="." instance=ExtResource( 2 )]
 
-[node name="Checkpoint" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0 )
+[node name="Checkpoint" type="Area3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0 )
 script = ExtResource( 1 )
 backward = false
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint"]
 shape = SubResource( 1 )
 
-[node name="Checkpoint2" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3, 0 )
+[node name="Checkpoint2" type="Area3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3, 0 )
 script = ExtResource( 1 )
 backward = false
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint2"]
 shape = SubResource( 1 )
 
-[node name="Checkpoint3" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.7, 0 )
+[node name="Checkpoint3" type="Area3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.7, 0 )
 script = ExtResource( 1 )
 backward = false
 
-[node name="CollisionShape" type="CollisionShape" parent="Checkpoint3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint3"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 2 )

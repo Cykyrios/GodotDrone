@@ -7,7 +7,7 @@
 
 
 
-[node name="Motor" type="Spatial"]
+[node name="Motor" type="Node3D"]
 script = ExtResource( 1 )
 kv = 2400
 

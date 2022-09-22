@@ -1,33 +1,33 @@
-extends Control
+extends Popup
 
 
-onready var title := $PanelContainer/VBoxContainer/Label
-onready var button_yes := $PanelContainer/VBoxContainer/HBoxContainer/ButtonYes
-onready var button_no := $PanelContainer/VBoxContainer/HBoxContainer/ButtonNo
-onready var button_alt := $PanelContainer/VBoxContainer/HBoxContainer/ButtonAlt
+@onready var popup_title := $PanelContainer/VBoxContainer/Label
+@onready var button_yes := $PanelContainer/VBoxContainer/HBoxContainer/ButtonYes
+@onready var button_no := $PanelContainer/VBoxContainer/HBoxContainer/ButtonNo
+@onready var button_alt := $PanelContainer/VBoxContainer/HBoxContainer/ButtonAlt
 
 signal validated
 
 
 func _ready() -> void:
-	var _discard = button_yes.connect("pressed", self, "_on_button_pressed", [0])
-	_discard = button_no.connect("pressed", self, "_on_button_pressed", [1])
-	_discard = button_alt.connect("pressed", self, "_on_button_pressed", [2])
-	_discard = $PanelContainer.connect("resized", self, "_on_resized")
+	var _discard = button_yes.pressed.connect(_on_button_pressed.bind(0))
+	_discard = button_no.pressed.connect(_on_button_pressed.bind(1))
+	_discard = button_alt.pressed.connect(_on_button_pressed.bind(2))
+	_discard = $PanelContainer.resized.connect(_on_resized)
 
 
 func _on_resized() -> void:
-	rect_size = $PanelContainer.rect_size
-	rect_position = (get_parent().rect_size - rect_size) / 2
+	size = $PanelContainer.size
+	position = (get_parent().size - (size as Vector2)) / 2
 
 
 func _on_button_pressed(choice: int) -> void:
-	emit_signal("validated", choice)
+	validated.emit(choice)
 	queue_free()
 
 
 func set_text(text: String) -> void:
-	title.text = text
+	popup_title.text = text
 
 
 func set_yes_button(text: String) -> void:
@@ -55,10 +55,10 @@ func set_buttons(yes: String = "OK", no: String = "", alt: String = "") -> void:
 
 
 func remove_no_button() -> void:
-	button_no.disconnect("pressed", self, "_on_button_pressed")
+	button_no.pressed.disconnect(_on_button_pressed)
 	button_no.queue_free()
 
 
 func remove_alt_button() -> void:
-	button_alt.disconnect("pressed", self, "_on_button_pressed")
+	button_alt.pressed.disconnect(_on_button_pressed)
 	button_alt.queue_free()

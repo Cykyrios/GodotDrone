@@ -15,79 +15,79 @@
 
 [sub_resource type="Curve3D" id=1]
 _data = {
-"points": PoolVector3Array( 0, 0, 0, 7, 0, 0, 0, 0, 0, -7, 0, 0, 7, 0, 0, 15, 0, 5, -7, 0, 0, 8, 0, 0, 30, 0, 0, 0, 0, -5, 0, 0, 0, 44, 0, 7 ),
-"tilts": PoolRealArray( 0, 0, 0, 0 )
+"points": PackedVector3Array( 0, 0, 0, 7, 0, 0, 0, 0, 0, -7, 0, 0, 7, 0, 0, 15, 0, 5, -7, 0, 0, 8, 0, 0, 30, 0, 0, 0, 0, -5, 0, 0, 0, 44, 0, 7 ),
+"tilts": PackedFloat32Array( 0, 0, 0, 0 )
 }
 
 [sub_resource type="Curve3D" id=2]
 _data = {
-"points": PoolVector3Array( 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, -5, 0, 0, 2, -11, 0, 5, -6, 0, -2, 0, 0, 0, -4, 0, 9.5 ),
-"tilts": PoolRealArray( 0, 0, 0 )
+"points": PackedVector3Array( 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, -5, 0, 0, 2, -11, 0, 5, -6, 0, -2, 0, 0, 0, -4, 0, 9.5 ),
+"tilts": PackedFloat32Array( 0, 0, 0 )
 }
 
 [sub_resource type="Curve3D" id=3]
 _data = {
-"points": PoolVector3Array( 0, 0, 0, -5, 0, 0, 0, 0, 0, 5, 0, 0, -3, 0, 0, -10, 0, 0, 2, 0, 2, -2, 0, -2, -16, 0, -6, 0, 0, -5, 0, 0, 0, -23, 0, -6 ),
-"tilts": PoolRealArray( 0, 0, 0, 0 )
+"points": PackedVector3Array( 0, 0, 0, -5, 0, 0, 0, 0, 0, 5, 0, 0, -3, 0, 0, -10, 0, 0, 2, 0, 2, -2, 0, -2, -16, 0, -6, 0, 0, -5, 0, 0, 0, -23, 0, -6 ),
+"tilts": PackedFloat32Array( 0, 0, 0, 0 )
 }
 
 [sub_resource type="Curve3D" id=4]
 _data = {
-"points": PoolVector3Array( 0, 0, 0, 0, 0, 4, -0.2, 0, 0, 3, 0, 1, -3, 0, -1, -12, 0, 4, 2, 0, 1.5, -2, 0, -1.5, -21, 0, -1, 0, 0, 3, 0, 0, -3, -28, 0, -10, -8, 0, 0, 0, 0, 0, -17, 0, -14 ),
-"tilts": PoolRealArray( 0, 0, 0, 0, 0 )
+"points": PackedVector3Array( 0, 0, 0, 0, 0, 4, -0.2, 0, 0, 3, 0, 1, -3, 0, -1, -12, 0, 4, 2, 0, 1.5, -2, 0, -1.5, -21, 0, -1, 0, 0, 3, 0, 0, -3, -28, 0, -10, -8, 0, 0, 0, 0, 0, -17, 0, -14 ),
+"tilts": PackedFloat32Array( 0, 0, 0, 0, 0 )
 }
 
-[node name="Track" type="Spatial"]
+[node name="Track" type="Node3D"]
 script = ExtResource( 1 )
 course = "14b,0,lap_start,1,2,4,3,5,7,6b,8b,9,10,11,12,13,14b,0,lap_end"
 
 [node name="Launchpad" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 9.5 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 9.5 )
 
 [node name="Gate1" parent="." instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10, 0, -11 )
+transform = Transform3D( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10, 0, -11 )
 
 [node name="Flag1" parent="." instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, -7 )
+transform = Transform3D( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, -7 )
 
 [node name="Gate2" parent="." instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 20, 0, -11 )
+transform = Transform3D( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 20, 0, -11 )
 
 [node name="DoubleGate1" parent="." instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 34, 0, -2 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 34, 0, -2 )
 
 [node name="Flag2" parent="." instance=ExtResource( 4 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24, 0, 3 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 24, 0, 3 )
 
 [node name="DoubleGate2" parent="." instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 34, 0, 9 )
+transform = Transform3D( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 34, 0, 9 )
 
 [node name="Flag3" parent="." instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24, 0, 8 )
+transform = Transform3D( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24, 0, 8 )
 
 [node name="Gate3" parent="." instance=ExtResource( 5 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11.05, 0, 3 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11.05, 0, 3 )
 
 [node name="Gate4" parent="." instance=ExtResource( 5 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8.95, 0, 3 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8.95, 0, 3 )
 
 [node name="Gate5" parent="." instance=ExtResource( 5 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6.85, 0, 3 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6.85, 0, 3 )
 
 [node name="Gate6" parent="." instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, 7 )
+transform = Transform3D( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, 7 )
 
 [node name="Flag4" parent="." instance=ExtResource( 4 )]
-transform = Transform( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -15, 0, 3 )
+transform = Transform3D( 0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -15, 0, 3 )
 
 [node name="Flag5" parent="." instance=ExtResource( 4 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -20, 0, -7 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -20, 0, -7 )
 
 [node name="ConePattern_Arrow2_1" parent="." instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 2 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24, 0, 2 )
 
-[node name="ConePath1" type="Path" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -11 )
+[node name="ConePath1" type="Path3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -11 )
 curve = SubResource( 1 )
 script = ExtResource( 6 )
 mesh = ExtResource( 7 )
@@ -99,10 +99,10 @@ spline_points = "[(0, 0, 0), (0, 0, 0), (7, 0, 0)]
 spacing = 1.0
 
 [node name="ConePattern_Up2_1" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -4 )
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -4 )
 
-[node name="ConePath2" type="Path" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -2 )
+[node name="ConePath2" type="Path3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -2 )
 curve = SubResource( 2 )
 script = ExtResource( 6 )
 mesh = ExtResource( 7 )
@@ -113,13 +113,13 @@ spline_points = "[(0, 0, 0), (0, 0, 0), (0, 0, 4)]
 spacing = 1.0
 
 [node name="ConePattern_Up2_2" parent="." instance=ExtResource( 8 )]
-transform = Transform( 0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, 0.34202, 29.5, 0, 7.35 )
+transform = Transform3D( 0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, 0.34202, 29.5, 0, 7.35 )
 
 [node name="ConePattern_Arrow2_2" parent="." instance=ExtResource( 9 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 37, 0, 9 )
+transform = Transform3D( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 37, 0, 9 )
 
-[node name="ConePath3" type="Path" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 9 )
+[node name="ConePath3" type="Path3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 9 )
 curve = SubResource( 3 )
 script = ExtResource( 6 )
 mesh = ExtResource( 7 )
@@ -131,13 +131,13 @@ spline_points = "[(0, 0, 0), (0, 0, 0), (-5, 0, 0)]
 spacing = 1.0
 
 [node name="ConePattern_Arrow2_3" parent="." instance=ExtResource( 9 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 9, 0, 1 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 9, 0, 1 )
 
 [node name="ConePattern_Arrow2_4" parent="." instance=ExtResource( 9 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6.8, 0, 1 )
+transform = Transform3D( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6.8, 0, 1 )
 
-[node name="ConePath4" type="Path" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 3 )
+[node name="ConePath4" type="Path3D" parent="."]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 3 )
 curve = SubResource( 4 )
 script = ExtResource( 6 )
 mesh = ExtResource( 7 )

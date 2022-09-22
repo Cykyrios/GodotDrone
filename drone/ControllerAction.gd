@@ -1,5 +1,5 @@
-extends Reference
 class_name ControllerAction
+extends RefCounted
 
 
 enum Type {NULL, BUTTON, AXIS}

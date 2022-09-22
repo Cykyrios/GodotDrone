@@ -1,8 +1,8 @@
 extends Control
 
 
-onready var heading_label := $VBoxContainer/Label
-onready var heading_gauge := $VBoxContainer/HeadingGauge
+@onready var heading_label := $VBoxContainer/Label
+@onready var heading_gauge := $VBoxContainer/HeadingGauge
 
 var heading := 0.0
 var heading_prev := 0.0

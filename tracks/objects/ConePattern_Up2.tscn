@@ -9,39 +9,39 @@
 transform_format = 1
 mesh = ExtResource( 1 )
 
-[node name="ObjectPattern" type="Spatial"]
+[node name="ObjectPattern" type="Node3D"]
 script = ExtResource( 2 )
 mesh = ExtResource( 1 )
 
-[node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
 multimesh = SubResource( 1 )
 
-[node name="MeshInstance1" type="MeshInstance" parent="MultiMeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0, 0 )
+[node name="MeshInstance1" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0, 0 )
 mesh = ExtResource( 1 )
 material/0 = null
 
-[node name="MeshInstance2" type="MeshInstance" parent="MultiMeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0, 0 )
+[node name="MeshInstance2" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0, 0 )
 mesh = ExtResource( 1 )
 material/0 = null
 
-[node name="MeshInstance3" type="MeshInstance" parent="MultiMeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, 0 )
+[node name="MeshInstance3" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, 0 )
 mesh = ExtResource( 1 )
 material/0 = null
 
-[node name="MeshInstance4" type="MeshInstance" parent="MultiMeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, 0 )
+[node name="MeshInstance4" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, 0 )
 mesh = ExtResource( 1 )
 material/0 = null
 
-[node name="MeshInstance5" type="MeshInstance" parent="MultiMeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0, 0 )
+[node name="MeshInstance5" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0, 0 )
 mesh = ExtResource( 1 )
 material/0 = null
 
-[node name="MeshInstance6" type="MeshInstance" parent="MultiMeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 0 )
+[node name="MeshInstance6" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 0 )
 mesh = ExtResource( 1 )
 material/0 = null
