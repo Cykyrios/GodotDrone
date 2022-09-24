@@ -68,11 +68,11 @@ size = Vector3(4, 1, 4)
 
 [sub_resource type="CapsuleMesh" id="7"]
 radius = 0.3
-height = 1.2
+height = 1.8
 
 [sub_resource type="CapsuleShape3D" id="8"]
 radius = 0.3
-height = 1.2
+height = 1.8
 
 [node name="Level" type="Node3D"]
 process_mode = 1
@@ -243,11 +243,11 @@ mesh = SubResource("6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/MockPilot"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.9, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 mesh = SubResource("7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/MockPilot"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.9, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("8")
 
 [node name="RadioController" type="Node" parent="."]
