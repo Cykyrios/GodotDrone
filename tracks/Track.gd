@@ -14,7 +14,7 @@ signal race_state_changed(state)
 		if edit_track:
 			update_checkpoints()
 		for cp in checkpoints:
-			cp.set_area_visible(edit_track)
+			cp.area_visible = edit_track
 			cp.mat.set_shader_parameter("Editor", edit_track)
 			cp.mat.set_shader_parameter("Selected", false)
 		if !edit_track:
@@ -31,11 +31,11 @@ signal race_state_changed(state)
 		elif selected >= size:
 			return
 		elif selected < -1:
-			checkpoints[selected_checkpoint].set_selected(false)
+			checkpoints[selected_checkpoint].selected = false
 			return
-		checkpoints[selected_checkpoint].set_selected(false)
+		checkpoints[selected_checkpoint].selected = false
 		selected_checkpoint = selected
-		checkpoints[selected_checkpoint].set_selected(true)
+		checkpoints[selected_checkpoint].selected = true
 @export_multiline var course := ""
 var course_array: Array[String] = []
 
