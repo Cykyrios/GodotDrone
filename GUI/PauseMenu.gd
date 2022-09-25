@@ -81,23 +81,18 @@ func _on_options_pressed() -> void:
 
 
 func _on_menu_pressed() -> void:
-	var confirm_dialog: Popup = load("res://GUI/ConfirmationPopup.tscn").instantiate()
 	can_resume = false
+	var confirm_dialog := ConfirmationDialog.new()
 	add_child(confirm_dialog)
-	confirm_dialog.set_text("Return to Main Menu?")
-	confirm_dialog.set_yes_button("Confirm")
-	confirm_dialog.set_no_button("Cancel")
-	confirm_dialog.remove_alt_button()
-	confirm_dialog.visible = true
-	var dialog: int = await confirm_dialog.validated
-	if dialog == 0:
+	confirm_dialog.dialog_text = "Return to Main Menu?"
+	confirm_dialog.ok_button_text = "Confirm"
+	confirm_dialog.cancel_button_text = "Cancel"
+	confirm_dialog.confirmed.connect(func():
 		can_resume = true
 		resumed.emit()
-		menu.emit()
-		return
-	else:
-		confirm_dialog.queue_free()
-	can_resume = true
+		menu.emit())
+	confirm_dialog.cancelled.connect(func(): can_resume = true)
+	confirm_dialog.popup_centered()
 
 
 func unpause_game() -> void:

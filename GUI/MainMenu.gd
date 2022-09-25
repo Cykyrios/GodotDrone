@@ -4,7 +4,6 @@ extends Control
 var packed_quad_settings_menu := preload("res://GUI/QuadSettingsMenu.tscn")
 var packed_options_menu := preload("res://GUI/OptionsMenu.tscn")
 var packed_help_page := preload("res://GUI/HelpPage.tscn")
-var packed_popup := preload("res://GUI/ConfirmationPopup.tscn")
 
 
 func _ready() -> void:
@@ -64,12 +63,10 @@ func _on_options_pressed() -> void:
 
 
 func _on_quit_pressed() -> void:
-	var confirm_dialog := packed_popup.instantiate()
+	var confirm_dialog := ConfirmationDialog.new()
 	add_child(confirm_dialog)
-	confirm_dialog.set_text("Do you really want to quit?")
-	confirm_dialog.set_buttons("Quit", "Cancel")
-#	confirm_dialog.show_modal(true)
-	confirm_dialog.visible = true
-	var dialog: int = await confirm_dialog.validated
-	if dialog == 0:
-		get_tree().quit()
+	confirm_dialog.dialog_text = "Do you really want to quit?"
+	confirm_dialog.ok_button_text = "Quit"
+	confirm_dialog.cancel_button_text = "Cancel"
+	confirm_dialog.confirmed.connect(func(): get_tree().quit())
+	confirm_dialog.popup_centered()
