@@ -16,8 +16,10 @@ var startup := true
 
 var highscore_path := "user://highscores.sav"
 
-var config_dir := "user://config"
-var replay_dir := "user://replays"
+var config_dir_old := "user://config"
+var config_dir := "user://config_G3"
+var replay_dir_old := "user://replays"
+var replay_dir := "user://replays_G3"
 
 var game_mode: int = GameMode.FREE setget set_game_mode
 var active_track: Track = null
@@ -34,9 +36,15 @@ func _input(event: InputEvent) -> void:
 func initialize() -> void:
 	var dir := Directory.new()
 	if not dir.dir_exists(config_dir):
-		var _discard = dir.make_dir(config_dir)
+		if dir.dir_exists(config_dir_old):
+			var _discard = dir.rename(config_dir_old, config_dir)
+		else:
+			var _discard = dir.make_dir(config_dir)
 	if not dir.dir_exists(replay_dir):
-		var _discard = dir.make_dir(replay_dir)
+		if dir.dir_exists(replay_dir_old):
+			var _discard = dir.rename(replay_dir_old, replay_dir)
+		else:
+			var _discard = dir.make_dir(replay_dir)
 	if not dir.file_exists(highscore_path):
 		var file := File.new()
 		var _discard = file.open(highscore_path, File.WRITE)
