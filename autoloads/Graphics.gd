@@ -49,11 +49,11 @@ func load_graphics_settings() -> String:
 	elif err == ERR_PARSE_ERROR:
 		Global.log_error(err, "Parse error while loading graphics configuration file.")
 		text = "Failed to read graphics configuration file."
-		text = "%s\nThe default settings will be loaded." % text
+		text = "%s\nThe default settings will be loaded." % [text]
 	elif err != ERR_FILE_NOT_FOUND:
 		Global.log_error(err, "Could not open graphics config file.")
 		text = "Could not open graphics configuration file."
-		text = "%s\nThe defaut settings will be loaded." % err
+		text = "%s\nThe defaut settings will be loaded." % [err]
 	return text
 
 

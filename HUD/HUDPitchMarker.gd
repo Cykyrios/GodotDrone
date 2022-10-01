@@ -19,6 +19,6 @@ func update_marker(a: int) -> void:
 		left_half.get_node("Line").texture = texture_neg
 		right_half.get_node("Line").texture = texture_neg
 
-	var text := "%02d" % angle
+	var text := "%02d" % [angle]
 	left_half.get_node("Label").text = text
 	right_half.get_node("Label").text = text

@@ -36,7 +36,7 @@ func _ready() -> void:
 
 
 func set_message(msg: String = "") -> void:
-	text = "\n\n\n\n\n\n\n%s" % msg
+	text = "\n\n\n\n\n\n\n%s" % [msg]
 
 
 func clear_message() -> void:
@@ -70,7 +70,7 @@ func _on_arm_failed(reason: int) -> void:
 			reason_msg = "THROTTLE HIGH"
 		FlightController.ArmFail.CRASH_RECOVERY_MODE:
 			reason_msg = "CRASH RECOVERY MODE"
-	set_message("*** %s ***" % reason_msg)
+	set_message("*** %s ***" % [reason_msg])
 	message_timer.start(1)
 
 

@@ -63,22 +63,22 @@ func _input(event):
 
 
 func _on_angle_changed(value: float) -> void:
-	angle_label.text = "%d deg" % int(value)
+	angle_label.text = "%d deg" % [int(value)]
 	QuadSettings.angle = int(value)
 
 
 func _on_dry_weight_changed(value: float) -> void:
-	dry_weight_label.text = "%d g" % int(value)
+	dry_weight_label.text = "%d g" % [int(value)]
 	QuadSettings.dry_weight = value / 1000
 
 
 func _on_battery_weight_changed(value: float) -> void:
-	battery_weight_label.text = "%d g" % int(value)
+	battery_weight_label.text = "%d g" % [int(value)]
 	QuadSettings.battery_weight = value / 1000
 
 
 func _on_rate_changed(value: float, slider: HSlider) -> void:
-	var text := "%d deg/s" % int(value)
+	var text := "%d deg/s" % [int(value)]
 	if slider == rate_pitch_slider:
 		rate_pitch_label.text = text
 		QuadSettings.rate_pitch = int(value)
@@ -92,7 +92,7 @@ func _on_rate_changed(value: float, slider: HSlider) -> void:
 
 
 func _on_expo_changed(value: float, slider: HSlider) -> void:
-	var text := "Expo %1.2f" % value
+	var text := "Expo %1.2f" % [value]
 	if slider == expo_pitch_slider:
 		expo_pitch_label.text = text
 		QuadSettings.expo_pitch = value
