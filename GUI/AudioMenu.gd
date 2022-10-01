@@ -4,8 +4,6 @@ extends Control
 signal back
 
 
-var packed_popup := preload("res://GUI/ConfirmationPopup.tscn")
-
 @onready var master_volume := $PanelContainer/VBoxContainer/ScrollContainer/Grid/MasterSlider
 @onready var master_volume_label := $PanelContainer/VBoxContainer/ScrollContainer/Grid/MasterValue
 

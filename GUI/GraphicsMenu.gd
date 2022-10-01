@@ -4,8 +4,6 @@ extends Control
 signal back
 
 
-var packed_popup := preload("res://GUI/ConfirmationPopup.tscn")
-
 @onready var window_mode := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/WindowOptions
 @onready var resolution := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/ResolutionOptions
 @onready var game_msaa := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/GameMSAAOptions

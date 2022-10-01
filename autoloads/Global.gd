@@ -8,8 +8,6 @@ enum GameMode {FREE, RACE}
 enum RaceState {START, RACE, END}
 
 
-var packed_popup := preload("res://GUI/ConfirmationPopup.tscn")
-
 var log_path := "user://output.log"
 
 var startup := true
@@ -58,12 +56,10 @@ func get_formatted_date_time() -> String:
 
 
 func show_error_popup(control: Control, error: String) -> void:
-	var controller_dialog := packed_popup.instantiate()
+	var controller_dialog := AcceptDialog.new()
 	control.add_child(controller_dialog)
-	controller_dialog.set_text(error)
-	controller_dialog.set_buttons("OK")
-	controller_dialog.show_modal(true)
-	var _dialog = await controller_dialog.validated
+	controller_dialog.dialog_text = error
+	controller_dialog.popup_centered()
 
 
 func log_error(err_code: int, message: String = "") -> void:
