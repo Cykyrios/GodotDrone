@@ -1,12 +1,12 @@
 extends Popup
 
 
+signal validated
+
 @onready var popup_title := $PanelContainer/VBoxContainer/Label
 @onready var button_yes := $PanelContainer/VBoxContainer/HBoxContainer/ButtonYes
 @onready var button_no := $PanelContainer/VBoxContainer/HBoxContainer/ButtonNo
 @onready var button_alt := $PanelContainer/VBoxContainer/HBoxContainer/ButtonAlt
-
-signal validated
 
 
 func _ready() -> void:

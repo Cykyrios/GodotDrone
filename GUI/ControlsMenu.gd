@@ -1,6 +1,9 @@
 extends Control
 
 
+signal controller_detected
+signal back
+
 var packed_calibration_menu := preload("res://GUI/CalibrationMenu.tscn")
 var packed_binding_popup := preload("res://GUI/ConfirmationPopup.tscn")
 var binding_popup: Popup = null
@@ -22,9 +25,6 @@ var active_controller := -1
 var default_controller := -1
 
 var calibrating_axes := false
-
-signal controller_detected
-signal back
 
 
 func _ready() -> void:

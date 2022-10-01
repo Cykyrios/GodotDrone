@@ -1,12 +1,12 @@
 extends Control
 
 
+signal back
+
 var packed_game_settings_menu := preload("res://GUI/GameSettingsMenu.tscn")
 var packed_graphics_menu := preload("res://GUI/GraphicsMenu.tscn")
 var packed_audio_menu := preload("res://GUI/AudioMenu.tscn")
 var packed_controls_menu := preload("res://GUI/ControlsMenu.tscn")
-
-signal back
 
 
 @onready var button_game := $PanelContainer/VBoxContainer/ButtonGame

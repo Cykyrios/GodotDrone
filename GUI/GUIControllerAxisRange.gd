@@ -1,6 +1,9 @@
-extends Container
 class_name GUIControllerAxisRange
+extends Container
 
+
+signal range_updated
+signal range_released
 
 var axis_monitor := GUIControllerAxis.new()
 var axis_range := TextureProgressBar.new()
@@ -10,10 +13,6 @@ var bound_low := 0.0
 var bound_high := 1.0
 
 var dragging := 0
-var mouse_pos_prev := Vector2.ZERO
-
-signal range_updated
-signal range_released
 
 
 func _ready() -> void:

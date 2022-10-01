@@ -2,6 +2,10 @@ class_name GUIControllerBinding
 extends VBoxContainer
 
 
+signal clicked
+signal binding_updated
+
+
 var action_idx := -1
 var action := ""
 var label := Label.new()
@@ -15,9 +19,6 @@ var axis_value := 0.0
 var highlight := false
 var t := 0.0
 var pressed := false
-
-signal clicked
-signal binding_updated
 
 
 func _ready() -> void:
