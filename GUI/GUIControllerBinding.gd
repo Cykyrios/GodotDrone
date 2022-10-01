@@ -103,7 +103,7 @@ func update_binding(event: InputEvent) -> void:
 			add_axis_range(event)
 			act.type = ControllerAction.Type.AXIS
 			act.axis = axis
-			axis_range.call_deferred("set_bounds", act.axis_min, act.axis_max)
+			axis_range.set_bounds.call_deferred(act.axis_min, act.axis_max)
 	else:
 		remove_binding()
 	binding_updated.emit()

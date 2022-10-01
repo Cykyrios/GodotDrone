@@ -46,14 +46,14 @@ func _ready() -> void:
 	button_low.focus_mode = Control.FOCUS_NONE
 	button_high.focus_mode = Control.FOCUS_NONE
 
-	call_deferred("update_pos")
+	update_pos.call_deferred()
 
 	var _discard = button_low.button_down.connect(_on_button_pressed.bind(1))
 	_discard = button_high.button_down.connect(_on_button_pressed.bind(2))
 	_discard = button_low.button_up.connect(_on_button_released)
 	_discard = button_high.button_up.connect(_on_button_released)
 
-	call_deferred("update_bounds")
+	update_bounds.call_deferred()
 
 
 func _gui_input(event: InputEvent) -> void:

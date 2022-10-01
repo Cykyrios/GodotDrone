@@ -83,7 +83,7 @@ func _ready() -> void:
 	fisheye_msaa.get_popup().add_item("8x")
 	fisheye_msaa.get_popup().add_item("16x")
 	fisheye_msaa.get_popup().add_item("Same as Game MSAA")
-	_discard = fisheye_msaa.connect("item_selected",Callable(self,"_on_fisheye_msaa_changed"))
+	_discard = fisheye_msaa.item_selected.connect(_on_fisheye_msaa_changed)
 	fisheye_msaa.select(Graphics.graphics_settings["fisheye_msaa"])
 
 	_discard = $PanelContainer/VBoxContainer/HBoxContainer/ButtonBack.pressed.connect(_on_back_pressed)

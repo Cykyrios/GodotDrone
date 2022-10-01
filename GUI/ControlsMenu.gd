@@ -200,8 +200,8 @@ func _on_controller_selected(id: int) -> void:
 		var checkbutton_pressed: bool = (Input.get_joy_guid(active_controller) == Controls.default_controller_guid)
 		controller_checkbutton.button_pressed = checkbutton_pressed
 		var _discard = Controls.update_active_device(active_controller)
-		call_deferred("update_input_map")
-		call_deferred("update_axes_and_buttons", active_controller)
+		update_input_map.call_deferred()
+		update_axes_and_buttons.call_deferred(active_controller)
 
 
 func _on_checkbutton_toggled(pressed: bool) -> void:
@@ -246,12 +246,12 @@ func update_input_map() -> void:
 				var event := InputEventJoypadButton.new()
 				event.button_index = act.button
 				event.device = active_controller
-				call_deferred("update_binding", binding, event)
+				update_binding.call_deferred(binding, event)
 			elif act.type == ControllerAction.Type.AXIS:
 				var event := InputEventJoypadMotion.new()
 				event.axis = act.axis
 				event.device = active_controller
-				call_deferred("update_binding", binding, event)
+				update_binding.call_deferred(binding, event)
 
 
 func save_input_map() -> void:
