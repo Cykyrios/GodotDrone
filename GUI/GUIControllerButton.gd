@@ -1,5 +1,5 @@
 class_name GUIControllerButton
-extends "res://GUI/GUIControllerAxis.gd"
+extends GUIControllerAxis
 
 
 func _ready() -> void:
