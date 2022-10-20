@@ -39,6 +39,7 @@ text = "Godot Drone Simulator"
 label_settings = SubResource("LabelSettings_cl45d")
 
 [node name="ButtonFly" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 47.0
 offset_right = 268.0
@@ -46,6 +47,7 @@ offset_bottom = 78.0
 text = "Fly"
 
 [node name="ButtonQuad" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 88.0
 offset_right = 268.0
@@ -53,6 +55,7 @@ offset_bottom = 119.0
 text = "Quad Settings"
 
 [node name="ButtonHelp" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 129.0
 offset_right = 268.0
@@ -60,6 +63,7 @@ offset_bottom = 160.0
 text = "Help"
 
 [node name="ButtonOptions" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 170.0
 offset_right = 268.0
@@ -67,6 +71,7 @@ offset_bottom = 201.0
 text = "Options"
 
 [node name="ButtonQuit" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 211.0
 offset_right = 268.0

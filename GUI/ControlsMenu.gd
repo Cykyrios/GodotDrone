@@ -8,12 +8,16 @@ var packed_calibration_menu := preload("res://GUI/CalibrationMenu.tscn")
 var packed_binding_popup := preload("res://GUI/ConfirmationPopup.tscn")
 var binding_popup: Popup = null
 
-@onready var controller_list := $HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox/OptionButton
-@onready var controller_checkbutton := $HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox/ControllerCheckButton
-@onready var axes_list := $HBoxContainer/ControllerPanel/ControllerVBox/AxesVBox/AxesList
-@onready var button_grid := $HBoxContainer/ControllerPanel/ControllerVBox/ButtonsVBox/ButtonGrid
+@onready var controller_list := $%ControllerList as OptionButton
+@onready var controller_checkbutton := $%ControllerCheckButton as CheckButton
+@onready var axes_list := $%AxesList as VBoxContainer
+@onready var button_grid := $%ButtonGrid as GridContainer
 
-@onready var actions_list := $HBoxContainer/VBoxContainer/BindingsPanel/BindingsVBox/ScrollContainer/ActionsVBox
+@onready var button_calibrate := $%ButtonCalibrate as Button
+@onready var button_reset := $%ButtonReset as Button
+@onready var button_back := $%ButtonBack as Button
+
+@onready var actions_list := $%ActionsVBox as VBoxContainer
 var show_binding_popup := false
 var binding_popup_text := ""
 var binding_popup_clear := false
@@ -31,8 +35,8 @@ func _ready() -> void:
 	var _discard = controller_detected.connect(_on_controller_autodetected)
 	_discard = Input.joy_connection_changed.connect(_on_joypad_connection_changed)
 
-	_discard = $MenuPanel/MenuVBox/ButtonCalibrate.pressed.connect(_on_calibrate_pressed)
-	_discard = $MenuPanel/MenuVBox/ButtonBack.pressed.connect(_on_back_pressed)
+	_discard = button_calibrate.pressed.connect(_on_calibrate_pressed)
+	_discard = button_back.pressed.connect(_on_back_pressed)
 
 	_discard = controller_list.pressed.connect(_on_controller_list_pressed)
 	_discard = controller_list.get_popup().id_pressed.connect(_on_controller_selected)
@@ -81,8 +85,9 @@ func _ready() -> void:
 				active_device = connected_joypads[0]
 	controller_list.get_popup().id_pressed.emit(connected_joypads.find(active_device))
 
-	$HBoxContainer/ControllerPanel/ControllerVBox.position.y = \
-			(size - $HBoxContainer/ControllerPanel/ControllerVBox.size).y / 2
+	var controller_vbox := $HBoxContainer/ControllerPanel/ControllerVBox
+	controller_vbox.position.y = \
+			(size - controller_vbox.size).y / 2
 
 	# Actions bindings
 	for action in Controls.action_list:
@@ -132,13 +137,14 @@ func _on_calibrate_pressed() -> void:
 	if packed_calibration_menu.can_instantiate():
 		var calibration_menu := packed_calibration_menu.instantiate()
 		add_child(calibration_menu)
+		var radio_transmitter := $SubViewportContainer/SubViewport/RadioTransmitter
 		var _discard = calibration_menu.connect("calibration_step_changed",
-				$SubViewportContainer/SubViewport/RadioTransmitter._on_calibration_step_changed)
+				radio_transmitter._on_calibration_step_changed)
 		calibration_menu.calibration_step_changed.emit(calibration_menu.calibration_step)
 		$MenuPanel.modulate = Color(1, 1, 1, 0)
-		$SubViewportContainer/SubViewport/RadioTransmitter.accept_input = false
+		radio_transmitter.accept_input = false
 		await calibration_menu.back
-		$SubViewportContainer/SubViewport/RadioTransmitter.accept_input = true
+		radio_transmitter.accept_input = true
 		calibration_menu.queue_free()
 		$MenuPanel.modulate = Color(1, 1, 1, 1)
 

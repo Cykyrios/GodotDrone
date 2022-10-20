@@ -3,9 +3,11 @@ extends MarginContainer
 
 signal back
 
+@onready var button_back := $%ButtonBack as Button
+
 
 func _ready() -> void:
-	var _discard = $PanelContainer/VBoxContainer/HBoxContainer/ButtonBack.pressed.connect(_on_back_pressed)
+	var _discard = button_back.pressed.connect(_on_back_pressed)
 
 
 func _input(event):

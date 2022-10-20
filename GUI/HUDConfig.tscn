@@ -9,6 +9,8 @@ process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
@@ -50,6 +52,7 @@ theme = ExtResource("1")
 text = "HUD FPS"
 
 [node name="SpinBoxRefreshRate" type="SpinBox" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = 72.0
 offset_right = 156.0
@@ -79,6 +82,7 @@ theme = ExtResource("1")
 text = "HUD Components"
 
 [node name="CheckCrosshair" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 438.0
 offset_right = 156.0
@@ -90,6 +94,7 @@ theme = ExtResource("1")
 text = "Crosshair"
 
 [node name="CheckHorizon" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 473.0
 offset_right = 156.0
@@ -101,6 +106,7 @@ theme = ExtResource("1")
 text = "Horizon"
 
 [node name="CheckLadder" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 508.0
 offset_right = 156.0
@@ -112,6 +118,7 @@ theme = ExtResource("1")
 text = "Pitch Ladder"
 
 [node name="CheckSpeed" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 543.0
 offset_right = 156.0
@@ -123,6 +130,7 @@ theme = ExtResource("1")
 text = "Speed"
 
 [node name="CheckAltitude" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 578.0
 offset_right = 156.0
@@ -134,6 +142,7 @@ theme = ExtResource("1")
 text = "Altitude"
 
 [node name="CheckHeading" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 613.0
 offset_right = 156.0
@@ -145,6 +154,7 @@ theme = ExtResource("1")
 text = "Heading"
 
 [node name="CheckSticks" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 648.0
 offset_right = 156.0
@@ -156,6 +166,7 @@ theme = ExtResource("1")
 text = "Stick Input"
 
 [node name="CheckRPM" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 683.0
 offset_right = 156.0
@@ -167,6 +178,7 @@ theme = ExtResource("1")
 text = "Motor RPM"
 
 [node name="HUD" parent="." instance=ExtResource("2")]
+unique_name_in_owner = true
 layout_mode = 2
 anchors_preset = 0
 anchor_right = 0.0
@@ -174,6 +186,8 @@ anchor_bottom = 0.0
 offset_left = 642.0
 offset_right = 1920.0
 offset_bottom = 1080.0
+grow_horizontal = 1
+grow_vertical = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0

@@ -85,6 +85,7 @@ size_flags_vertical = 9
 alignment = 2
 
 [node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = 1806.0
 offset_right = 1920.0

@@ -1,17 +1,17 @@
 extends HBoxContainer
 
 
-@onready var fps := $ScrollContainer/VBoxContainer/HBoxContainer/SpinBoxRefreshRate
-@onready var check_crosshair := $ScrollContainer/VBoxContainer/CheckCrosshair
-@onready var check_horizon := $ScrollContainer/VBoxContainer/CheckHorizon
-@onready var check_ladder := $ScrollContainer/VBoxContainer/CheckLadder
-@onready var check_speed := $ScrollContainer/VBoxContainer/CheckSpeed
-@onready var check_altitude := $ScrollContainer/VBoxContainer/CheckAltitude
-@onready var check_heading := $ScrollContainer/VBoxContainer/CheckHeading
-@onready var check_sticks := $ScrollContainer/VBoxContainer/CheckSticks
-@onready var check_rpm := $ScrollContainer/VBoxContainer/CheckRPM
+@onready var fps := $%SpinBoxRefreshRate as SpinBox
+@onready var check_crosshair := $%CheckCrosshair as CheckButton
+@onready var check_horizon := $%CheckHorizon as CheckButton
+@onready var check_ladder := $%CheckLadder as CheckButton
+@onready var check_speed := $%CheckSpeed as CheckButton
+@onready var check_altitude := $%CheckAltitude as CheckButton
+@onready var check_heading := $%CheckHeading as CheckButton
+@onready var check_sticks := $%CheckSticks as CheckButton
+@onready var check_rpm := $%CheckRPM as CheckButton
 
-@onready var hud := $HUD
+@onready var hud := $%HUD as Control
 
 
 func _ready() -> void:
@@ -21,7 +21,7 @@ func _ready() -> void:
 	var buttons := [check_crosshair, check_horizon, check_ladder, check_speed,
 			check_altitude, check_heading, check_sticks, check_rpm]
 	for button in buttons:
-		button.toggled.connect(_on_button_toggled.bind(button))
+		_discard = button.toggled.connect(_on_button_toggled.bind(button))
 		if button == check_crosshair:
 			button.button_pressed = GameSettings.hud_config["crosshair"]
 			hud.show_component(HUD.Component.CROSSHAIR, button.button_pressed)

@@ -49,13 +49,15 @@ offset_right = 186.0
 offset_bottom = 26.0
 text = "Active controller:"
 
-[node name="OptionButton" type="OptionButton" parent="HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox"]
+[node name="ControllerList" type="OptionButton" parent="HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 30.0
 offset_right = 186.0
 offset_bottom = 50.0
 
 [node name="ControllerCheckButton" type="CheckButton" parent="HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 54.0
 offset_right = 186.0
@@ -80,6 +82,7 @@ offset_bottom = 26.0
 text = "Axes:"
 
 [node name="AxesList" type="VBoxContainer" parent="HBoxContainer/ControllerPanel/ControllerVBox/AxesVBox"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 30.0
 offset_right = 41.0
@@ -101,6 +104,7 @@ offset_bottom = 26.0
 text = "Buttons:"
 
 [node name="ButtonGrid" type="GridContainer" parent="HBoxContainer/ControllerPanel/ControllerVBox/ButtonsVBox"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 30.0
 offset_right = 66.0
@@ -166,6 +170,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ActionsVBox" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/BindingsPanel/BindingsVBox/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_right = 150.0
 offset_bottom = 170.0

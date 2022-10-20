@@ -5,13 +5,19 @@ var packed_quad_settings_menu := preload("res://GUI/QuadSettingsMenu.tscn")
 var packed_options_menu := preload("res://GUI/OptionsMenu.tscn")
 var packed_help_page := preload("res://GUI/HelpPage.tscn")
 
+@onready var button_fly := $%ButtonFly as Button
+@onready var button_quad := $%ButtonQuad as Button
+@onready var button_help := $%ButtonHelp as Button
+@onready var button_options := $%ButtonOptions as Button
+@onready var button_quit := $%ButtonQuit as Button
+
 
 func _ready() -> void:
-	var _discard = $PanelContainer/VBoxContainer/ButtonFly.pressed.connect(_on_fly_pressed)
-	_discard = $PanelContainer/VBoxContainer/ButtonQuad.pressed.connect(_on_quad_settings_pressed)
-	_discard = $PanelContainer/VBoxContainer/ButtonHelp.pressed.connect(_on_help_pressed)
-	_discard = $PanelContainer/VBoxContainer/ButtonOptions.pressed.connect(_on_options_pressed)
-	_discard = $PanelContainer/VBoxContainer/ButtonQuit.pressed.connect(_on_quit_pressed)
+	var _discard = button_fly.pressed.connect(_on_fly_pressed)
+	_discard = button_quad.pressed.connect(_on_quad_settings_pressed)
+	_discard = button_help.pressed.connect(_on_help_pressed)
+	_discard = button_options.pressed.connect(_on_options_pressed)
+	_discard = button_quit.pressed.connect(_on_quit_pressed)
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 

@@ -66,7 +66,8 @@ offset_bottom = 26.0
 text = "Master Volume"
 
 [node name="MasterSlider" type="HSlider" parent="PanelContainer/VBoxContainer/ScrollContainer/Grid"]
-custom_minimum_size = Vector2i(200, 0)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 offset_left = 138.0
 offset_top = 5.0
@@ -80,6 +81,7 @@ tick_count = 5
 ticks_on_borders = true
 
 [node name="MasterValue" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/Grid"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = 358.0
 offset_right = 400.0
@@ -98,6 +100,7 @@ size_flags_vertical = 10
 alignment = 2
 
 [node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_right = 45.0
 offset_bottom = 31.0

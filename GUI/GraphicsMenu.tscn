@@ -63,7 +63,8 @@ offset_bottom = 26.0
 text = "Window Mode"
 
 [node name="WindowOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
-custom_minimum_size = Vector2i(200, 0)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 offset_left = 149.0
 offset_right = 349.0
@@ -77,6 +78,7 @@ offset_bottom = 56.0
 text = "Resolution"
 
 [node name="ResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = 149.0
 offset_top = 30.0
@@ -91,6 +93,7 @@ offset_bottom = 86.0
 text = "MSAA"
 
 [node name="GameMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = 149.0
 offset_top = 60.0
@@ -105,6 +108,7 @@ offset_bottom = 116.0
 text = "Anisotropic Filter"
 
 [node name="GameAFOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = 149.0
 offset_top = 90.0
@@ -119,6 +123,7 @@ offset_bottom = 146.0
 text = "Shadows Quality"
 
 [node name="ShadowsOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = 149.0
 offset_top = 120.0
@@ -133,6 +138,7 @@ offset_bottom = 176.0
 text = "Fisheye Camera3D"
 
 [node name="FPVFisheyeOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = 149.0
 offset_top = 150.0
@@ -147,6 +153,7 @@ offset_bottom = 206.0
 text = "Fisheye Resolution"
 
 [node name="FisheyeResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = 149.0
 offset_top = 180.0
@@ -161,6 +168,7 @@ offset_bottom = 236.0
 text = "Fisheye MSAA"
 
 [node name="FisheyeMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_left = 149.0
 offset_top = 210.0
@@ -178,6 +186,7 @@ size_flags_vertical = 10
 alignment = 2
 
 [node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_right = 45.0
 offset_bottom = 31.0

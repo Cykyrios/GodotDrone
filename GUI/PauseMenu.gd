@@ -10,13 +10,19 @@ var packed_options_menu := preload("res://GUI/OptionsMenu.tscn")
 
 var can_resume := true
 
+@onready var button_resume := $%ButtonResume as Button
+@onready var button_quad := $%ButtonQuad as Button
+@onready var button_help := $%ButtonHelp as Button
+@onready var button_options := $%ButtonOptions as Button
+@onready var button_main_menu := $%ButtonMainMenu as Button
+
 
 func _ready() -> void:
-	var _discard = $PanelContainer/VBoxContainer/ButtonResume.pressed.connect(_on_resume_pressed)
-	_discard = $PanelContainer/VBoxContainer/ButtonQuad.pressed.connect(_on_quad_settings_pressed)
-	_discard = $PanelContainer/VBoxContainer/ButtonHelp.pressed.connect(_on_help_pressed)
-	_discard = $PanelContainer/VBoxContainer/ButtonOptions.pressed.connect(_on_options_pressed)
-	_discard = $PanelContainer/VBoxContainer/ButtonMainMenu.pressed.connect(_on_menu_pressed)
+	var _discard = button_resume.pressed.connect(_on_resume_pressed)
+	_discard = button_quad.pressed.connect(_on_quad_settings_pressed)
+	_discard = button_help.pressed.connect(_on_help_pressed)
+	_discard = button_options.pressed.connect(_on_options_pressed)
+	_discard = button_main_menu.pressed.connect(_on_menu_pressed)
 
 
 func _input(event: InputEvent) -> void:

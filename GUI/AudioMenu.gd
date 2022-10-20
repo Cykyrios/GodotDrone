@@ -4,8 +4,9 @@ extends Control
 signal back
 
 
-@onready var master_volume := $PanelContainer/VBoxContainer/ScrollContainer/Grid/MasterSlider
-@onready var master_volume_label := $PanelContainer/VBoxContainer/ScrollContainer/Grid/MasterValue
+@onready var master_volume := $%MasterSlider as HSlider
+@onready var master_volume_label := $%MasterValue as Label
+@onready var button_back := $ButtonBack as Button
 
 
 func _ready() -> void:
@@ -13,7 +14,7 @@ func _ready() -> void:
 	master_volume.value = volume_to_slider(Audio.audio_settings["master_volume"])
 	master_volume_label.text = update_slider_label(master_volume.value)
 
-	_discard = $PanelContainer/VBoxContainer/HBoxContainer/ButtonBack.pressed.connect(_on_back_pressed)
+	_discard = button_back.pressed.connect(_on_back_pressed)
 
 
 func _input(event):

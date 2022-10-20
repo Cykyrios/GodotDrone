@@ -39,6 +39,7 @@ label_settings = SubResource("LabelSettings_ngoj6")
 horizontal_alignment = 1
 
 [node name="ButtonResume" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 41.0
 offset_right = 173.0
@@ -46,6 +47,7 @@ offset_bottom = 72.0
 text = "Resume"
 
 [node name="ButtonQuad" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 76.0
 offset_right = 173.0
@@ -53,6 +55,7 @@ offset_bottom = 107.0
 text = "Quad Settings"
 
 [node name="ButtonHelp" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 111.0
 offset_right = 173.0
@@ -60,6 +63,7 @@ offset_bottom = 142.0
 text = "Help"
 
 [node name="ButtonOptions" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 146.0
 offset_right = 173.0
@@ -67,6 +71,7 @@ offset_bottom = 177.0
 text = "Options"
 
 [node name="ButtonMainMenu" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 181.0
 offset_right = 173.0

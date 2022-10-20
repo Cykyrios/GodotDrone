@@ -4,34 +4,38 @@ extends Control
 signal back
 
 
-@onready var angle_slider := $PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad/AngleSlider
-@onready var angle_label := $PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad/AngleCurrent
-@onready var dry_weight_slider := $PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad/DryWeightSlider
-@onready var dry_weight_label := $PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad/DryWeightCurrent
-@onready var battery_weight_slider := $PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad/BatteryWeightSlider
-@onready var battery_weight_label := $PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad/BatteryWeightCurrent
+@onready var camera_angle_slider := $%CameraAngleSlider as HSlider
+@onready var camera_angle_label := $%CameraAngleCurrent as Label
+@onready var dry_weight_slider := $%DryWeightSlider as HSlider
+@onready var dry_weight_label := $%DryWeightCurrent as Label
+@onready var battery_weight_slider := $%BatteryWeightSlider as HSlider
+@onready var battery_weight_label := $%BatteryWeightCurrent as Label
 
-@onready var rate_pitch_slider := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/PitchSlider
-@onready var rate_roll_slider := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/RollSlider
-@onready var rate_yaw_slider := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/YawSlider
-@onready var rate_pitch_label := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/PitchRate
-@onready var rate_roll_label := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/RollRate
-@onready var rate_yaw_label := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/YawRate
-@onready var expo_pitch_slider := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/PitchExpoSlider
-@onready var expo_roll_slider := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/RollExpoSlider
-@onready var expo_yaw_slider := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/YawExpoSlider
-@onready var expo_pitch_label := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/PitchExpo
-@onready var expo_roll_label := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/RollExpo
-@onready var expo_yaw_label := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust/YawExpo
+@onready var rate_pitch_slider := $%PitchSlider as HSlider
+@onready var rate_roll_slider := $%RollSlider as HSlider
+@onready var rate_yaw_slider := $%YawSlider as HSlider
+@onready var rate_pitch_label := $%PitchRate as Label
+@onready var rate_roll_label := $%RollRate as Label
+@onready var rate_yaw_label := $%YawRate as Label
+@onready var expo_pitch_slider := $%PitchExpoSlider as HSlider
+@onready var expo_roll_slider := $%RollExpoSlider as HSlider
+@onready var expo_yaw_slider := $%YawExpoSlider as HSlider
+@onready var expo_pitch_label := $%PitchExpo as Label
+@onready var expo_roll_label := $%RollExpo as Label
+@onready var expo_yaw_label := $%YawExpo as Label
 
-@onready var rate_graph := $PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateGraph
+@onready var rate_graph := $%RateGraph as Control
+
+@onready var button_reset_quad := $%ButtonResetQuad as Button
+@onready var button_reset_rates := $%ButtonResetRates as Button
+@onready var button_back := $%ButtonBack as Button
 
 
 func _ready() -> void:
 	QuadSettings.load_quad_settings()
 
-	var _discard = angle_slider.value_changed.connect(_on_angle_changed)
-	angle_slider.value = QuadSettings.angle
+	var _discard = camera_angle_slider.value_changed.connect(_on_angle_changed)
+	camera_angle_slider.value = QuadSettings.angle
 
 	_discard = dry_weight_slider.value_changed.connect(_on_dry_weight_changed)
 	_discard = battery_weight_slider.value_changed.connect(_on_battery_weight_changed)
@@ -51,9 +55,9 @@ func _ready() -> void:
 	expo_roll_slider.value = QuadSettings.expo_roll
 	expo_yaw_slider.value = QuadSettings.expo_yaw
 
-	_discard = $PanelContainer/VBoxContainer/ButtonsHBox/ButtonResetQuad.pressed.connect(_on_reset_quad_pressed)
-	_discard = $PanelContainer/VBoxContainer/ButtonsHBox/ButtonResetRates.pressed.connect(_on_reset_rates_pressed)
-	_discard = $PanelContainer/VBoxContainer/ButtonsHBox/ButtonBack.pressed.connect(_on_back_pressed)
+	_discard = button_reset_quad.pressed.connect(_on_reset_quad_pressed)
+	_discard = button_reset_rates.pressed.connect(_on_reset_rates_pressed)
+	_discard = button_back.pressed.connect(_on_back_pressed)
 
 
 func _input(event):
@@ -63,7 +67,7 @@ func _input(event):
 
 
 func _on_angle_changed(value: float) -> void:
-	angle_label.text = "%d deg" % [int(value)]
+	camera_angle_label.text = "%d deg" % [int(value)]
 	QuadSettings.angle = int(value)
 
 
@@ -112,7 +116,7 @@ func update_graph() -> void:
 
 func _on_reset_quad_pressed() -> void:
 	QuadSettings.reset_quad()
-	angle_slider.value = QuadSettings.angle
+	camera_angle_slider.value = QuadSettings.angle
 	dry_weight_slider.value = QuadSettings.dry_weight * 1000
 	battery_weight_slider.value = QuadSettings.battery_weight * 1000
 

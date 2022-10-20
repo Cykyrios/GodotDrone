@@ -37,12 +37,14 @@ grow_vertical = 2
 alignment = 1
 
 [node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_right = 122.0
 offset_bottom = 26.0
 text = "Calibrating..."
 
 [node name="LabelAction" type="Label" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 30.0
 offset_right = 122.0
@@ -51,6 +53,7 @@ size_flags_vertical = 6
 text = "Center all sticks"
 
 [node name="ButtonCancel" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 60.0
 offset_right = 122.0

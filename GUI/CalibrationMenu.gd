@@ -5,8 +5,9 @@ signal calibration_step_changed
 signal calibration_done
 signal back
 
-@onready var title := $PanelContainer/VBoxContainer/Title
-@onready var label_action := $PanelContainer/VBoxContainer/LabelAction
+@onready var title := $%Title as Label
+@onready var label_action := $%LabelAction as Label
+@onready var button_cancel := $%ButtonCancel as Label
 
 var calibration_step := -1
 var device := 0
@@ -22,7 +23,7 @@ var display_popup := false
 
 
 func _ready() -> void:
-	var _discard = $PanelContainer/VBoxContainer/ButtonCancel.pressed.connect(_on_cancel_pressed)
+	var _discard = button_cancel.pressed.connect(_on_cancel_pressed)
 	_discard = calibration_done.connect(_on_calibration_done)
 
 	reset_calibration()

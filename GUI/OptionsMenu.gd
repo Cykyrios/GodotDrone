@@ -9,10 +9,11 @@ var packed_audio_menu := preload("res://GUI/AudioMenu.tscn")
 var packed_controls_menu := preload("res://GUI/ControlsMenu.tscn")
 
 
-@onready var button_game := $PanelContainer/VBoxContainer/ButtonGame
-@onready var button_graphics := $PanelContainer/VBoxContainer/ButtonGraphics
-@onready var button_audio := $PanelContainer/VBoxContainer/ButtonAudio
-@onready var button_controls := $PanelContainer/VBoxContainer/ButtonControls
+@onready var button_game := $%ButtonGame as Button
+@onready var button_graphics := $%ButtonGraphics as Button
+@onready var button_audio := $%ButtonAudio as Button
+@onready var button_controls := $%ButtonControls as Button
+@onready var button_back := $%ButtonBack as Button
 
 
 func _ready() -> void:
@@ -20,7 +21,7 @@ func _ready() -> void:
 	_discard = button_graphics.pressed.connect(_on_graphics_pressed)
 	_discard = button_audio.pressed.connect(_on_audio_pressed)
 	_discard = button_controls.pressed.connect(_on_controls_pressed)
-	_discard = $PanelContainer/VBoxContainer/ButtonBack.pressed.connect(_on_back_pressed)
+	_discard = button_back.pressed.connect(_on_back_pressed)
 
 
 func _input(event: InputEvent) -> void:

@@ -4,14 +4,16 @@ extends Control
 signal back
 
 
-@onready var window_mode := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/WindowOptions
-@onready var resolution := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/ResolutionOptions
-@onready var game_msaa := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/GameMSAAOptions
-@onready var game_af := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/GameAFOptions
-@onready var shadows := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/ShadowsOptions
-@onready var fisheye_mode := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/FPVFisheyeOptions
-@onready var fisheye_resolution := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/FisheyeResolutionOptions
-@onready var fisheye_msaa := $PanelContainer/VBoxContainer/ScrollContainer/WindowGrid/FisheyeMSAAOptions
+@onready var window_mode := $%WindowOptions as OptionButton
+@onready var resolution := $%ResolutionOptions as OptionButton
+@onready var game_msaa := $%GameMSAAOptions as OptionButton
+@onready var game_af := $%GameAFOptions as OptionButton
+@onready var shadows := $%ShadowsOptions as OptionButton
+@onready var fisheye_mode := $%FPVFisheyeOptions as OptionButton
+@onready var fisheye_resolution := $%FisheyeResolutionOptions as OptionButton
+@onready var fisheye_msaa := $%FisheyeMSAAOptions as OptionButton
+
+@onready var button_back := $%ButtonBack as Button
 
 
 func _ready() -> void:
@@ -86,7 +88,7 @@ func _ready() -> void:
 	_discard = fisheye_msaa.item_selected.connect(_on_fisheye_msaa_changed)
 	fisheye_msaa.select(Graphics.graphics_settings["fisheye_msaa"])
 
-	_discard = $PanelContainer/VBoxContainer/HBoxContainer/ButtonBack.pressed.connect(_on_back_pressed)
+	_discard = button_back.pressed.connect(_on_back_pressed)
 
 
 func _input(event):

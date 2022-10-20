@@ -4,12 +4,13 @@ extends MarginContainer
 signal back
 
 
-@onready var label := $PanelContainer/VBoxContainer/RichTextLabel
+@onready var label := $%HelpLabel as RichTextLabel
+@onready var button_back := $%ButtonBack as Button
 
 
 func _ready() -> void:
 	var _discard = label.meta_clicked.connect(_on_url_clicked)
-	_discard = $PanelContainer/VBoxContainer/ButtonBack.pressed.connect(_on_back_pressed)
+	_discard = button_back.pressed.connect(_on_back_pressed)
 
 	label.bbcode_enabled = true
 
