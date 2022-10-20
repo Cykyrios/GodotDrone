@@ -42,8 +42,7 @@ func initialize() -> void:
 	if not dir.dir_exists(replay_dir):
 		var _discard = dir.make_dir(replay_dir)
 	if not dir.file_exists(highscore_path):
-		var file := FileAccess.open(highscore_path, FileAccess.WRITE)
-		file = null
+		var _file := FileAccess.open(highscore_path, FileAccess.WRITE)
 
 	startup = false
 

@@ -231,7 +231,7 @@ func init_telemetry() -> void:
 
 
 func write_telemetry() -> void:
-	if !telemetry_file.file_exists("user://telemetry.csv"):
+	if not FileAccess.file_exists("user://telemetry.csv"):
 		init_telemetry()
 
 	telemetry_file = FileAccess.open("user://telemetry.csv", FileAccess.READ_WRITE)
