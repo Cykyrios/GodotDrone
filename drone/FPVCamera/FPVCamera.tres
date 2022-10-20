@@ -1,23 +1,8 @@
-[gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://yhq1cfgilxhe"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://yhq1cfgilxhe"]
 
 [ext_resource type="Shader" path="res://drone/FPVCamera/FPVCamera.gdshader" id="1"]
-
-[sub_resource type="ViewportTexture" id="1"]
-
-[sub_resource type="ViewportTexture" id="2"]
-
-[sub_resource type="ViewportTexture" id="3"]
-
-[sub_resource type="ViewportTexture" id="4"]
-
-[sub_resource type="ViewportTexture" id="5"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1")
-shader_parameter/Texture0 = SubResource("1")
-shader_parameter/Texture1 = SubResource("2")
-shader_parameter/Texture2 = SubResource("3")
-shader_parameter/Texture3 = SubResource("4")
-shader_parameter/Texture4 = SubResource("5")
 shader_parameter/hfov = 150.0

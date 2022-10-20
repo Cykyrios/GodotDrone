@@ -42,10 +42,13 @@ vec3 fisheye_ray(vec2 p) {
 	return fisheye_inverse(p * scale);
 }
 
-
-void vertex() {
-	POSITION = vec4(VERTEX, 1.0);
+vec3 srgb_to_linear(vec3 color) {
+	return color * (color * (color * 0.305306011 + 0.682171111) + 0.012522878);
 }
+
+//void vertex() {
+//	POSITION = vec4(VERTEX, 1.0);
+//}
 
 void fragment() {
 	float view_ratio = VIEWPORT_SIZE.x / VIEWPORT_SIZE.y;
@@ -66,23 +69,23 @@ void fragment() {
 		if (pos.z <= 0.0) {
 			if (az > ax && az > ay) {
 				uv = vec2(0.5 * (vec2(pos.x / az, pos.y / az)) + 0.5);
-				ALBEDO = texture(Texture0, uv).rgb;
+				ALBEDO = srgb_to_linear(texture(Texture0, uv).rgb);
 			} else {
 				if (ax > ay) {
 					if (pos.x < 0.0) {
 						uv = vec2(0.5 * (vec2(-pos.z / ax, pos.y / ax)) + 0.5);
-						ALBEDO = texture(Texture1, uv).rgb;
+						ALBEDO = srgb_to_linear(texture(Texture1, uv).rgb);
 					} else {
 						uv = vec2(0.5 * (vec2(pos.z / ax, pos.y / ax)) + 0.5);
-						ALBEDO = texture(Texture2, uv).rgb;
+						ALBEDO = srgb_to_linear(texture(Texture2, uv).rgb);
 					}
 				} else {
 					if (pos.y < 0.0) {
 						uv = vec2(0.5 * (vec2(pos.x / ay, -pos.z / ay)) + 0.5);
-						ALBEDO = texture(Texture3, uv).rgb;
+						ALBEDO = srgb_to_linear(texture(Texture3, uv).rgb);
 					} else {
 						uv = vec2(0.5 * (vec2(pos.x / ay, pos.z / ay)) + 0.5);
-						ALBEDO = texture(Texture4, uv).rgb;
+						ALBEDO = srgb_to_linear(texture(Texture4, uv).rgb);
 					}
 				}
 			}

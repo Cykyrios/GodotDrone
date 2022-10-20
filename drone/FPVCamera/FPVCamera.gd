@@ -13,7 +13,6 @@ var viewports := []
 var cameras := []
 var camera_layer := 11
 var num_cameras := 5
-var fpv_environment: Environment = load("res://drone/FPVCamera/FPVCameraEnvironment.tres")
 
 @onready var render_quad: MeshInstance3D = null
 var mat: ShaderMaterial = load("res://drone/FPVCamera/FPVCamera.tres")
@@ -31,17 +30,15 @@ func _ready() -> void:
 	elif fisheye_mode == Graphics.FisheyeMode.FAST:
 		num_cameras = 2
 		mat.shader = load("res://drone/FPVCamera/FPVCamera_fast.gdshader")
-	environment = fpv_environment
 	cull_mask = int(pow(2, camera_layer - 1))
 	render_quad = MeshInstance3D.new()
 	add_child(render_quad)
 	render_quad.translate_object_local(Vector3.FORWARD * (near + 0.1))
-	render_quad.rotate_object_local(Vector3.RIGHT, PI / 2)
-	render_quad.mesh = PlaneMesh.new()
+	render_quad.mesh = QuadMesh.new()
 	render_quad.mesh.size = Vector2(2, 2)
 	render_quad.layers = int(pow(2, camera_layer - 1))
 	render_quad.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	render_quad.mesh.surface_set_material(0, mat)
+	render_quad.mesh.material = mat
 	render_quad.visible = false
 
 	mat.set_shader_parameter("hfov", fov_h)
@@ -56,10 +53,8 @@ func _ready() -> void:
 			viewport.msaa_3d = root_viewport.msaa_3d
 		else:
 			viewport.msaa_3d = Graphics.graphics_settings["fisheye_msaa"]
-#		viewport.hdr = true
-#		viewport.keep_3d_linear = true
+		viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 		viewports.append(viewport)
-		mat.set_shader_parameter("Texture2D%d" % [i], viewports[i].get_texture())
 
 		var camera := Camera3D.new()
 		viewport.add_child(camera)
@@ -69,8 +64,9 @@ func _ready() -> void:
 		camera.near = clip_near
 		camera.far = clip_far
 		camera.cull_mask -= int(pow(2, camera_layer - 1))
-		camera.environment = fpv_environment
 		cameras.append(camera)
+
+	update_viewport_textures.call_deferred()
 
 
 func _process(_delta: float) -> void:
@@ -100,3 +96,12 @@ func _on_fisheye_msaa_changed() -> void:
 			viewport.msaa_3d = Graphics.graphics_settings["msaa"]
 		else:
 			viewport.msaa_3d = Graphics.graphics_settings["fisheye_msaa"]
+
+
+func update_viewport_textures() -> void:
+	await RenderingServer.frame_post_draw
+	for i in num_cameras:
+		var viewport := viewports[i] as SubViewport
+		var viewport_texture := viewport.get_texture()
+		viewport_texture.viewport_path = viewport.get_path()
+		mat.set_shader_parameter("Texture%d" % [i], viewport_texture)

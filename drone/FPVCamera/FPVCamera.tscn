@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2oyx01l385r7"]
+[gd_scene load_steps=4 format=3 uid="uid://b2oyx01l385r7"]
 
 [ext_resource type="Script" path="res://drone/FPVCamera/FPVCamera.gd" id="1"]
 [ext_resource type="Material" uid="uid://yhq1cfgilxhe" path="res://drone/FPVCamera/FPVCamera.tres" id="2"]
@@ -6,12 +6,6 @@
 [sub_resource type="PlaneMesh" id="1"]
 material = ExtResource("2")
 orientation = 2
-
-[sub_resource type="Sky" id="2"]
-
-[sub_resource type="Environment" id="3"]
-background_mode = 2
-sky = SubResource("2")
 
 [node name="FPVCamera" type="Camera3D"]
 cull_mask = 1024
@@ -34,10 +28,9 @@ size = Vector2i(720, 720)
 [node name="Camera0" type="Camera3D" parent="Viewport0"]
 visible = false
 cull_mask = 1047551
-environment = SubResource("3")
 fov = 90.0
 near = 0.01
-far = 500.0
+far = 1000.0
 
 [node name="Viewport1" type="SubViewport" parent="."]
 handle_input_locally = false
@@ -47,10 +40,9 @@ size = Vector2i(720, 720)
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 visible = false
 cull_mask = 1047551
-environment = SubResource("3")
 fov = 90.0
 near = 0.01
-far = 500.0
+far = 1000.0
 
 [node name="Viewport2" type="SubViewport" parent="."]
 handle_input_locally = false
@@ -60,10 +52,9 @@ size = Vector2i(720, 720)
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 visible = false
 cull_mask = 1047551
-environment = SubResource("3")
 fov = 90.0
 near = 0.01
-far = 500.0
+far = 1000.0
 
 [node name="Viewport3" type="SubViewport" parent="."]
 handle_input_locally = false
@@ -73,10 +64,9 @@ size = Vector2i(720, 720)
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 visible = false
 cull_mask = 1047551
-environment = SubResource("3")
 fov = 90.0
 near = 0.01
-far = 500.0
+far = 1000.0
 
 [node name="Viewport4" type="SubViewport" parent="."]
 handle_input_locally = false
@@ -86,7 +76,6 @@ size = Vector2i(720, 720)
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 visible = false
 cull_mask = 1047551
-environment = SubResource("3")
 fov = 90.0
 near = 0.01
-far = 500.0
+far = 1000.0
