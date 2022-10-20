@@ -68,5 +68,5 @@ func _on_quit_pressed() -> void:
 	confirm_dialog.dialog_text = "Do you really want to quit?"
 	confirm_dialog.ok_button_text = "Quit"
 	confirm_dialog.cancel_button_text = "Cancel"
-	confirm_dialog.confirmed.connect(func(): get_tree().quit())
+	var _discard = confirm_dialog.confirmed.connect(func(): get_tree().quit())
 	confirm_dialog.popup_centered()

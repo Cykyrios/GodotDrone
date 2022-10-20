@@ -87,11 +87,11 @@ func _on_menu_pressed() -> void:
 	confirm_dialog.dialog_text = "Return to Main Menu?"
 	confirm_dialog.ok_button_text = "Confirm"
 	confirm_dialog.cancel_button_text = "Cancel"
-	confirm_dialog.confirmed.connect(func():
+	var _discard = confirm_dialog.confirmed.connect(func():
 		can_resume = true
 		resumed.emit()
 		menu.emit())
-	confirm_dialog.cancelled.connect(func(): can_resume = true)
+	_discard = confirm_dialog.cancelled.connect(func(): can_resume = true)
 	confirm_dialog.popup_centered()
 
 
