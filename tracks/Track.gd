@@ -529,12 +529,12 @@ func write_new_record(pos: int, time: float) -> void:
 					if element != "":
 						file.store_line(element)
 				file.store_line(track_name)
-				file.store_line(time as String)
+				file.store_line("%f" % [time])
 			else:
 				for i in range(idx + 1 + pos):
 					if array[i] != "":
 						file.store_line(array[i])
-				file.store_line(time as String)
+				file.store_line("%f" % [time])
 				for i in range(idx + 2 + pos, array.size()):
 					if array[i] != "":
 						file.store_line(array[i])

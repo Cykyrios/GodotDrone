@@ -39,7 +39,7 @@ func _ready() -> void:
 
 func add_lap(time: LapTimer) -> void:
 	laps += 1
-	add_labels(laps as String, time.get_time_string())
+	add_labels("%d" % [laps], time.get_time_string())
 
 
 func add_labels(lap: String, time: String) -> void:
