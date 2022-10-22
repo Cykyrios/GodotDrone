@@ -38,7 +38,11 @@ func _unhandled_input(event) -> void:
 			value = event.get_action_strength("roll_right") - event.get_action_strength("roll_left")
 		if stick > -1:
 			var angle := get_stick_angle(value)
-			skeleton.set_bone_global_pose_override(stick, Transform3D.IDENTITY.rotated(axis, angle), 1.0)
+			skeleton.set_bone_global_pose_override(stick,
+					skeleton.get_bone_global_pose(skeleton.get_bone_parent(stick)) \
+					* skeleton.get_bone_rest(stick) \
+					* Transform3D.IDENTITY.rotated(axis, angle), 1.0, true)
+			skeleton.force_update_bone_child_transform(stick)
 
 
 func get_stick_angle(value: float) -> float:
