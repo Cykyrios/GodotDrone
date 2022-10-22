@@ -236,7 +236,7 @@ func _on_reset() -> void:
 		var launch_area: LaunchArea = Global.active_track.get_random_launch_area()
 		var launch_transform: Transform3D = launch_area.global_transform
 		var offset: float = -motors[0].transform.origin.z + 0.02
-		respawn_transform = launch_transform.translated(Vector3(0, 0.1, offset))
+		respawn_transform = launch_transform.translated_local(Vector3(0, 0.1, offset))
 
 	await get_tree().physics_frame
 	linear_velocity = Vector3.ZERO
