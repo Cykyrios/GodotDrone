@@ -7,7 +7,7 @@ signal back
 
 @onready var title := $%Title as Label
 @onready var label_action := $%LabelAction as Label
-@onready var button_cancel := $%ButtonCancel as Label
+@onready var button_cancel := $%ButtonCancel as Button
 
 var calibration_step := -1
 var device := 0
