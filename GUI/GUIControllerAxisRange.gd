@@ -77,7 +77,7 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func update_pos() -> void:
-	custom_minimum_size.y = button_high.size.y
+	custom_minimum_size.y = button_high.size.y as int
 	size_flags_vertical = SIZE_EXPAND
 	grow_vertical = Control.GROW_DIRECTION_BOTH
 	position = size / 2

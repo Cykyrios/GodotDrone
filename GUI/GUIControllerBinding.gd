@@ -24,9 +24,9 @@ var pressed := false
 func _ready() -> void:
 	add_child(label)
 	add_child(controller_button)
-	label.add_theme_font_override("font", load("res://GUI/BindingsFont.tres"))
+	size_flags_horizontal = SIZE_EXPAND_FILL
 	size_flags_vertical = SIZE_EXPAND_FILL
-	controller_button.size_flags_horizontal = 0
+	controller_button.size_flags_horizontal = SIZE_SHRINK_CENTER
 	controller_button.size_flags_vertical = SIZE_SHRINK_CENTER
 	controller_button.custom_minimum_size = Vector2(controller_button.custom_minimum_size.x, 16)
 	controller_button.set_range(0, 1, 1)
@@ -58,20 +58,6 @@ func _on_mouse_exited() -> void:
 	modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 
-func _input(event: InputEvent) -> void:
-	if InputMap.has_action(action) and !event is InputEventJoypadMotion:
-		if event.is_action(action):
-			if event.pressed:
-				controller_button.value = 1
-			else:
-				controller_button.value = 0
-	elif event is InputEventJoypadMotion:
-		if event.device == device and event.axis == axis:
-			axis_range.axis_monitor.value = event.axis_value
-			axis_value = event.axis_value
-			check_action_state()
-
-
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -85,6 +71,20 @@ func _gui_input(event: InputEvent) -> void:
 					clicked.emit()
 				else:
 					mouse_exited.emit()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if InputMap.has_action(action) and !event is InputEventJoypadMotion:
+		if event.is_action(action):
+			if event.pressed:
+				controller_button.value = 1
+			else:
+				controller_button.value = 0
+	elif event is InputEventJoypadMotion:
+		if event.device == device and event.axis == axis:
+			axis_range.axis_monitor.value = event.axis_value
+			axis_value = event.axis_value
+			check_action_state()
 
 
 func update_binding(event: InputEvent) -> void:

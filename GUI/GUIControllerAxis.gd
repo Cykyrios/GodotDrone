@@ -8,7 +8,7 @@ var color_on := Color(1.0, 0.6, 0.0, 1.0)
 var color_off := color_on * 0.25
 
 func _ready() -> void:
-	custom_minimum_size = Vector2i(200, 12)
+	custom_minimum_size = Vector2(200, 12)
 	set_range(-1.0, 1.0, 0.01)
 	value = 0.0
 	nine_patch_stretch = true
