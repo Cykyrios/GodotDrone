@@ -75,10 +75,10 @@ func _physics_process(_delta: float) -> void:
 
 
 func read_input() -> void:
-	var power = (Input.get_action_strength("throttle_up") - Input.get_action_strength("throttle_down") + 1) / 2
-	var pitch = Input.get_action_strength("pitch_up") - Input.get_action_strength("pitch_down")
-	var roll = Input.get_action_strength("roll_right") - Input.get_action_strength("roll_left")
-	var yaw = Input.get_action_strength("yaw_right") - Input.get_action_strength("yaw_left")
+	var power := (Input.get_axis("throttle_down", "throttle_up") + 1) / 2
+	var pitch := Input.get_axis("pitch_down", "pitch_up")
+	var roll := Input.get_axis("roll_left", "roll_right")
+	var yaw := Input.get_axis("yaw_left", "yaw_right")
 	input = [power, yaw, roll, pitch]
 
 
