@@ -99,7 +99,8 @@ func update_resolution() -> void:
 		DisplayServer.window_set_size(DisplayServer.screen_get_size())
 	else:
 		DisplayServer.window_set_size(screen_resolution * resolution_multiplier)
-		DisplayServer.window_set_position((DisplayServer.screen_get_size() - DisplayServer.window_get_size()) / 2)
+		DisplayServer.window_set_position(
+				(DisplayServer.screen_get_size() - DisplayServer.window_get_size()) / 2)
 	get_viewport().size = screen_resolution * resolution_multiplier
 
 

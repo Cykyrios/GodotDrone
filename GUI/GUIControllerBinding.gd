@@ -156,7 +156,8 @@ func check_action_state() -> void:
 		Input.parse_input_event(simulate_action_event(action, false))
 	else:
 		if act.type == ControllerAction.Type.BUTTON:
-			Input.parse_input_event(simulate_action_event(action, Input.is_joy_button_pressed(device, button)))
+			Input.parse_input_event(simulate_action_event(
+					action, Input.is_joy_button_pressed(device, button)))
 		else:
 			axis_range.axis_monitor.value = axis_value
 			var bound_low := axis_range.bound_low

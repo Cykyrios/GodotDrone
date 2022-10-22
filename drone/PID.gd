@@ -96,7 +96,9 @@ func get_output(mv: float, dt: float, p_print: bool = false) -> float:
 	else:
 		saturated = false
 	if p_print:
-		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f total: %8.3f clamp: %8.3f windup: %s"
-				% [target, err, proportional, integral, derivative, output, clamped_output, windup])
+		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f "
+				% [target, err, proportional, integral, derivative]
+				+ "total: %8.3f clamp: %8.3f windup: %s"
+				% [output, clamped_output, windup])
 
 	return clamped_output

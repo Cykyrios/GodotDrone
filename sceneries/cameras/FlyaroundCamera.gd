@@ -49,9 +49,11 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		var mouse_rot := Vector2(event.relative.x, event.relative.y)
-		var rot_max := minf(deg_to_rad(mouse_rot.y * look_around_sensitivity) * sign(mouse_rot.y), look_around_speed)
+		var rot_max := minf(deg_to_rad(mouse_rot.y * look_around_sensitivity) * sign(mouse_rot.y),
+				look_around_speed)
 		rotation_helper.rotate_x(rot_max * sign(mouse_rot.y) * -1)
-		rot_max = minf(deg_to_rad(mouse_rot.x * look_around_sensitivity) * sign(mouse_rot.x), look_around_speed)
+		rot_max = minf(deg_to_rad(mouse_rot.x * look_around_sensitivity) * sign(mouse_rot.x),
+				look_around_speed)
 		self.rotate_y(rot_max * sign(mouse_rot.x) * -1)
 		var camera_rot: Vector3 = rotation_helper.rotation_degrees
 		camera_rot.x = clamp(camera_rot.x, -89, 89)

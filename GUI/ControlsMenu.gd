@@ -110,7 +110,8 @@ func _input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventJoypadMotion or event is InputEventJoypadButton:
 		if auto_detect_controller:
-			if event is InputEventJoypadMotion and absf(event.axis_value) > 0.8 or event is InputEventJoypadButton:
+			if event is InputEventJoypadMotion and absf(event.axis_value) > 0.8 \
+					or event is InputEventJoypadButton:
 				controller_detected.emit(event.device)
 		elif Input.get_joy_name(event.device) == controller_list.text:
 			if event is InputEventJoypadMotion and event.axis < 8:
@@ -203,7 +204,8 @@ func _on_controller_selected(id: int) -> void:
 		return
 	if connected_joypads[id] != active_controller:
 		active_controller = connected_joypads[id]
-		var checkbutton_pressed: bool = (Input.get_joy_guid(active_controller) == Controls.default_controller_guid)
+		var checkbutton_pressed: bool = (Input.get_joy_guid(active_controller) \
+				== Controls.default_controller_guid)
 		controller_checkbutton.button_pressed = checkbutton_pressed
 		var _discard = Controls.update_active_device(active_controller)
 		update_input_map.call_deferred()
@@ -211,7 +213,8 @@ func _on_controller_selected(id: int) -> void:
 
 
 func _on_checkbutton_toggled(pressed: bool) -> void:
-	if (!pressed and active_controller != default_controller) or (pressed and active_controller == default_controller):
+	if (!pressed and active_controller != default_controller) \
+			or (pressed and active_controller == default_controller):
 		return
 	if pressed:
 		default_controller = active_controller

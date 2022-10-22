@@ -184,7 +184,8 @@ func _on_checkpoint_passed(cp: Checkpoint) -> void:
 func end_current_lap() -> void:
 	timers[current_lap - 1].stop()
 	var time: Dictionary = timers[current_lap - 1].get_minute_second_decimal()
-	print("Lap %d/%d: %02d:%02d.%02d" % [current_lap, laps, time["minute"], time["second"], time["decimal"]])
+	print("Lap %d/%d: %02d:%02d.%02d"
+			% [current_lap, laps, time["minute"], time["second"], time["decimal"]])
 
 
 func start_next_lap() -> void:

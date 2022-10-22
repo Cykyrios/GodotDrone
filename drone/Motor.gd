@@ -156,8 +156,10 @@ func update_sound(abs_rpm: float = 0.0) -> void:
 	var pitch1_high: float = pitch_range[1]
 	var pitch2_low: float = pitch_range[2]
 	var pitch2_high: float = pitch_range[3]
-	sound1.pitch_scale = lerp(pitch1_low, pitch1_high, 1 - (range_end - rpm_ratio) / (range_end - range_start))
-	sound2.pitch_scale = lerp(pitch2_low, pitch2_high, 1 - (range_end - rpm_ratio) / (range_end - range_start))
+	sound1.pitch_scale = lerp(pitch1_low, pitch1_high,
+			1 - (range_end - rpm_ratio) / (range_end - range_start))
+	sound2.pitch_scale = lerp(pitch2_low, pitch2_high,
+			1 - (range_end - rpm_ratio) / (range_end - range_start))
 	if sound_selector == 0:
 		sound1.volume_db = -80
 		sound2.volume_db = -80
@@ -217,5 +219,8 @@ func get_rpm_ratio_range(start: float = 0.0, end: float = 1.0) -> Array:
 	return [start, end]
 
 
-func get_pitch_range(start1: float = 1.0, end1: float = 1.0, start2: float = 1.0, end2: float = 1.0) -> Array:
+func get_pitch_range(
+		start1: float = 1.0, end1: float = 1.0,
+		start2: float = 1.0, end2: float = 1.0
+) -> Array:
 	return [start1, end1, start2, end2]

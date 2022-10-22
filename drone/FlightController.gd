@@ -72,37 +72,48 @@ func _ready() -> void:
 		pid_controllers.append(PID.new())
 		add_child(pid_controllers[-1])
 
-	pid_controllers[Controller.ALTITUDE].set_coefficients(300 * pid_scale_p, 300 * pid_scale_i, 800 * pid_scale_d)
+	pid_controllers[Controller.ALTITUDE].set_coefficients(
+			300 * pid_scale_p, 300 * pid_scale_i, 800 * pid_scale_d)
 	pid_controllers[Controller.ALTITUDE].set_clamp_limits(0.3, 0.7)
-	pid_controllers[Controller.VERTICAL_SPEED].set_coefficients(200 * pid_scale_p, 600 * pid_scale_i, 200 * pid_scale_d)
+	pid_controllers[Controller.VERTICAL_SPEED].set_coefficients(
+			200 * pid_scale_p, 600 * pid_scale_i, 200 * pid_scale_d)
 	pid_controllers[Controller.VERTICAL_SPEED].set_clamp_limits(0.1, 1)
-	pid_controllers[Controller.ROLL].set_coefficients(50 * pid_scale_p, 30 * pid_scale_i, 120 * pid_scale_d)
+	pid_controllers[Controller.ROLL].set_coefficients(
+			50 * pid_scale_p, 30 * pid_scale_i, 120 * pid_scale_d)
 	pid_controllers[Controller.ROLL].set_clamp_limits(-0.025, 0.025)
-	pid_controllers[Controller.PITCH].set_coefficients(50 * pid_scale_p, 30 * pid_scale_i, 120 * pid_scale_d)
+	pid_controllers[Controller.PITCH].set_coefficients(
+			50 * pid_scale_p, 30 * pid_scale_i, 120 * pid_scale_d)
 	pid_controllers[Controller.PITCH].set_clamp_limits(-0.025, 0.025)
 
 	# Clamp limits for speed controllers are equal to the maximum pitch/roll angle
 	var max_angle = deg_to_rad(35)
-	pid_controllers[Controller.FORWARD_SPEED].set_coefficients(50 * pid_scale_p, 50 * pid_scale_i, 1 * pid_scale_d)
+	pid_controllers[Controller.FORWARD_SPEED].set_coefficients(
+			50 * pid_scale_p, 50 * pid_scale_i, 1 * pid_scale_d)
 	pid_controllers[Controller.FORWARD_SPEED].set_clamp_limits(-max_angle, max_angle)
-	pid_controllers[Controller.LATERAL_SPEED].set_coefficients(50 * pid_scale_p, 50 * pid_scale_i, 1 * pid_scale_d)
+	pid_controllers[Controller.LATERAL_SPEED].set_coefficients(
+			50 * pid_scale_p, 50 * pid_scale_i, 1 * pid_scale_d)
 	pid_controllers[Controller.LATERAL_SPEED].set_clamp_limits(-max_angle, max_angle)
 
-	pid_controllers[Controller.YAW_SPEED].set_coefficients(pid_scale_p * pid_yaw_p, pid_scale_i * pid_yaw_i, pid_scale_d * pid_yaw_d)
+	pid_controllers[Controller.YAW_SPEED].set_coefficients(
+			pid_scale_p * pid_yaw_p, pid_scale_i * pid_yaw_i, pid_scale_d * pid_yaw_d)
 	pid_controllers[Controller.YAW_SPEED].set_clamp_limits(-0.25, 0.25)
-	pid_controllers[Controller.ROLL_SPEED].set_coefficients(pid_scale_p * pid_roll_p, pid_scale_i * pid_roll_i, pid_scale_d * pid_roll_d)
+	pid_controllers[Controller.ROLL_SPEED].set_coefficients(
+			pid_scale_p * pid_roll_p, pid_scale_i * pid_roll_i, pid_scale_d * pid_roll_d)
 	pid_controllers[Controller.ROLL_SPEED].set_clamp_limits(-0.25, 0.25)
-	pid_controllers[Controller.PITCH_SPEED].set_coefficients(pid_scale_p * pid_pitch_p, pid_scale_i * pid_pitch_i, pid_scale_d * pid_pitch_d)
+	pid_controllers[Controller.PITCH_SPEED].set_coefficients(
+			pid_scale_p * pid_pitch_p, pid_scale_i * pid_pitch_i, pid_scale_d * pid_pitch_d)
 	pid_controllers[Controller.PITCH_SPEED].set_clamp_limits(-0.25, 0.25)
 
 	pid_controllers[Controller.POS_X].set_coefficients(0.5, 0.05, 0.3)
 	pid_controllers[Controller.POS_X].set_clamp_limits(-0.5, 0.5)
 	pid_controllers[Controller.POS_Z].set_coefficients(0.5, 0.05, 0.3)
 	pid_controllers[Controller.POS_Z].set_clamp_limits(-0.5, 0.5)
-	pid_controllers[Controller.YAW].set_coefficients(50 * pid_scale_p, 20 * pid_scale_i, 100 * pid_scale_d)
+	pid_controllers[Controller.YAW].set_coefficients(
+			50 * pid_scale_p, 20 * pid_scale_i, 100 * pid_scale_d)
 	pid_controllers[Controller.YAW].set_clamp_limits(-0.5, 0.5)
 
-	pid_controllers[Controller.LAUNCH].set_coefficients(700 * pid_scale_p, 300 * pid_scale_i, 700 * pid_scale_d)
+	pid_controllers[Controller.LAUNCH].set_coefficients(
+			700 * pid_scale_p, 300 * pid_scale_i, 700 * pid_scale_d)
 	pid_controllers[Controller.LAUNCH].set_clamp_limits(-0.5, 0)
 
 	var _discard = flight_mode_changed.connect(get_parent()._on_flight_mode_changed)
@@ -238,25 +249,91 @@ func write_telemetry() -> void:
 	if telemetry_file:
 		telemetry_file.seek_end()
 		var delta_pos := (get_tracking_target() - pos).rotated(Vector3.UP, -angles.y)
-		var data := PackedStringArray([time, input[0], input[1], input[2], input[3],
-				pos.x, pos.y, pos.z, lin_vel.x, lin_vel.y, lin_vel.z, local_vel.x, local_vel.y, local_vel.z,
-				angles.y, angles.z, angles.x, ang_vel.y, ang_vel.z, ang_vel.x,
-				delta_pos.x, delta_pos.y, delta_pos.z,
-				motors[0].get_rpm(), motors[1].get_rpm(), motors[2].get_rpm(), motors[3].get_rpm(),
-				motors[0].propeller.forces[0].length(), motors[1].propeller.forces[0].length(), motors[2].propeller.forces[0].length(), motors[3].propeller.forces[0].length(),
-				pid_controllers[Controller.ALTITUDE].target, pid_controllers[Controller.ALTITUDE].err, pid_controllers[Controller.ALTITUDE].output, pid_controllers[Controller.ALTITUDE].clamped_output,
-				pid_controllers[Controller.PITCH].target, pid_controllers[Controller.PITCH].err, pid_controllers[Controller.PITCH].output, pid_controllers[Controller.PITCH].clamped_output,
-				pid_controllers[Controller.ROLL].target, pid_controllers[Controller.ROLL].err, pid_controllers[Controller.ROLL].output, pid_controllers[Controller.ROLL].clamped_output,
-				pid_controllers[Controller.YAW].target, pid_controllers[Controller.YAW].err, pid_controllers[Controller.YAW].output, pid_controllers[Controller.YAW].clamped_output,
-				pid_controllers[Controller.YAW_SPEED].target, pid_controllers[Controller.YAW_SPEED].err, pid_controllers[Controller.YAW_SPEED].output, pid_controllers[Controller.YAW_SPEED].clamped_output,
-				pid_controllers[Controller.PITCH_SPEED].target, pid_controllers[Controller.PITCH_SPEED].err, pid_controllers[Controller.PITCH_SPEED].output, pid_controllers[Controller.PITCH_SPEED].clamped_output,
-				pid_controllers[Controller.ROLL_SPEED].target, pid_controllers[Controller.ROLL_SPEED].err, pid_controllers[Controller.ROLL_SPEED].output, pid_controllers[Controller.ROLL_SPEED].clamped_output,
-				pid_controllers[Controller.FORWARD_SPEED].target, pid_controllers[Controller.FORWARD_SPEED].err, pid_controllers[Controller.FORWARD_SPEED].output, pid_controllers[Controller.FORWARD_SPEED].clamped_output,
-				pid_controllers[Controller.LATERAL_SPEED].target, pid_controllers[Controller.LATERAL_SPEED].err, pid_controllers[Controller.LATERAL_SPEED].output, pid_controllers[Controller.LATERAL_SPEED].clamped_output,
-				pid_controllers[Controller.VERTICAL_SPEED].target, pid_controllers[Controller.VERTICAL_SPEED].err, pid_controllers[Controller.VERTICAL_SPEED].output, pid_controllers[Controller.VERTICAL_SPEED].clamped_output,
-				pid_controllers[Controller.POS_X].target, pid_controllers[Controller.POS_X].err, pid_controllers[Controller.POS_X].output, pid_controllers[Controller.POS_X].clamped_output,
-				pid_controllers[Controller.POS_Z].target, pid_controllers[Controller.POS_Z].err, pid_controllers[Controller.POS_Z].output, pid_controllers[Controller.POS_Z].clamped_output,
-				pid_controllers[Controller.LAUNCH].target, pid_controllers[Controller.LAUNCH].err, pid_controllers[Controller.LAUNCH].output, pid_controllers[Controller.LAUNCH].clamped_output])
+		var data := PackedStringArray([
+			time,
+			input[0],
+			input[1],
+			input[2],
+			input[3],
+			pos.x,
+			pos.y,
+			pos.z,
+			lin_vel.x,
+			lin_vel.y,
+			lin_vel.z,
+			local_vel.x,
+			local_vel.y,
+			local_vel.z,
+			angles.y,
+			angles.z,
+			angles.x,
+			ang_vel.y,
+			ang_vel.z,
+			ang_vel.x,
+			delta_pos.x,
+			delta_pos.y,
+			delta_pos.z,
+			motors[0].get_rpm(),
+			motors[1].get_rpm(),
+			motors[2].get_rpm(),
+			motors[3].get_rpm(),
+			motors[0].propeller.forces[0].length(),
+			motors[1].propeller.forces[0].length(),
+			motors[2].propeller.forces[0].length(),
+			motors[3].propeller.forces[0].length(),
+			pid_controllers[Controller.ALTITUDE].target,
+			pid_controllers[Controller.ALTITUDE].err,
+			pid_controllers[Controller.ALTITUDE].output,
+			pid_controllers[Controller.ALTITUDE].clamped_output,
+			pid_controllers[Controller.PITCH].target,
+			pid_controllers[Controller.PITCH].err,
+			pid_controllers[Controller.PITCH].output,
+			pid_controllers[Controller.PITCH].clamped_output,
+			pid_controllers[Controller.ROLL].target,
+			pid_controllers[Controller.ROLL].err,
+			pid_controllers[Controller.ROLL].output,
+			pid_controllers[Controller.ROLL].clamped_output,
+			pid_controllers[Controller.YAW].target,
+			pid_controllers[Controller.YAW].err,
+			pid_controllers[Controller.YAW].output,
+			pid_controllers[Controller.YAW].clamped_output,
+			pid_controllers[Controller.YAW_SPEED].target,
+			pid_controllers[Controller.YAW_SPEED].err,
+			pid_controllers[Controller.YAW_SPEED].output,
+			pid_controllers[Controller.YAW_SPEED].clamped_output,
+			pid_controllers[Controller.PITCH_SPEED].target,
+			pid_controllers[Controller.PITCH_SPEED].err,
+			pid_controllers[Controller.PITCH_SPEED].output,
+			pid_controllers[Controller.PITCH_SPEED].clamped_output,
+			pid_controllers[Controller.ROLL_SPEED].target,
+			pid_controllers[Controller.ROLL_SPEED].err,
+			pid_controllers[Controller.ROLL_SPEED].output,
+			pid_controllers[Controller.ROLL_SPEED].clamped_output,
+			pid_controllers[Controller.FORWARD_SPEED].target,
+			pid_controllers[Controller.FORWARD_SPEED].err,
+			pid_controllers[Controller.FORWARD_SPEED].output,
+			pid_controllers[Controller.FORWARD_SPEED].clamped_output,
+			pid_controllers[Controller.LATERAL_SPEED].target,
+			pid_controllers[Controller.LATERAL_SPEED].err,
+			pid_controllers[Controller.LATERAL_SPEED].output,
+			pid_controllers[Controller.LATERAL_SPEED].clamped_output,
+			pid_controllers[Controller.VERTICAL_SPEED].target,
+			pid_controllers[Controller.VERTICAL_SPEED].err,
+			pid_controllers[Controller.VERTICAL_SPEED].output,
+			pid_controllers[Controller.VERTICAL_SPEED].clamped_output,
+			pid_controllers[Controller.POS_X].target,
+			pid_controllers[Controller.POS_X].err,
+			pid_controllers[Controller.POS_X].output,
+			pid_controllers[Controller.POS_X].clamped_output,
+			pid_controllers[Controller.POS_Z].target,
+			pid_controllers[Controller.POS_Z].err,
+			pid_controllers[Controller.POS_Z].output,
+			pid_controllers[Controller.POS_Z].clamped_output,
+			pid_controllers[Controller.LAUNCH].target,
+			pid_controllers[Controller.LAUNCH].err,
+			pid_controllers[Controller.LAUNCH].output,
+			pid_controllers[Controller.LAUNCH].clamped_output,
+		])
 		telemetry_file.store_csv_line(data)
 		telemetry_file = null
 
@@ -271,7 +348,11 @@ func _on_cycle_flight_modes() -> void:
 	if flight_mode == FlightMode.TURTLE or flight_mode == FlightMode.LAUNCH:
 		return
 	flight_mode += 1
-	while flight_mode == FlightMode.AUTO or flight_mode == FlightMode.TURTLE or flight_mode == FlightMode.LAUNCH:
+	while (
+			flight_mode == FlightMode.AUTO
+			or flight_mode == FlightMode.TURTLE
+			or flight_mode == FlightMode.LAUNCH
+	):
 		flight_mode += 1
 	if flight_mode >= FlightMode.size():
 		flight_mode = 0
@@ -315,9 +396,11 @@ func set_tracking_target(target: Vector3) -> void:
 
 
 func get_tracking_target() -> Vector3:
-	var target := Vector3(pid_controllers[Controller.POS_X].target, pid_controllers[Controller.ALTITUDE].target,
-			pid_controllers[Controller.POS_Z].target)
-	return target
+	return Vector3(
+		pid_controllers[Controller.POS_X].target,
+		pid_controllers[Controller.ALTITUDE].target,
+		pid_controllers[Controller.POS_Z].target
+	)
 
 
 func update_control(delta: float) -> void:
@@ -440,12 +523,12 @@ func update_command() -> Array:
 		motor_control[1] = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 
 		pid_controllers[Controller.LATERAL_SPEED].target = ((1 - expo_r) * r + expo_r * pow(r, 3)) * 10.0
-		var roll_change: float = pid_controllers[Controller.LATERAL_SPEED].get_output(flat_vel.x, dt, false)
+		var roll_change := pid_controllers[Controller.LATERAL_SPEED].get_output(flat_vel.x, dt, false)
 		pid_controllers[Controller.ROLL].target = clampf(roll_change, -bank_limit, bank_limit)
 		motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 
 		pid_controllers[Controller.FORWARD_SPEED].target = ((1 - expo_p) * p + expo_p * pow(p, 3)) * 10.0
-		var pitch_change: float = pid_controllers[Controller.FORWARD_SPEED].get_output(flat_vel.z, dt, false)
+		var pitch_change := pid_controllers[Controller.FORWARD_SPEED].get_output(flat_vel.z, dt, false)
 		pid_controllers[Controller.PITCH].target = clampf(pitch_change, -bank_limit, bank_limit)
 		motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 
@@ -459,7 +542,7 @@ func update_command() -> Array:
 
 		motor_control[0] = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
 
-		var target_angle: float = pid_controllers[Controller.YAW].target \
+		var target_angle := pid_controllers[Controller.YAW].target \
 				- ((1 - expo_y) * y + expo_y * pow(y, 3)) * PI / 2.0 * dt
 		while target_angle > PI:
 			target_angle -= 2 * PI
@@ -485,21 +568,21 @@ func update_command() -> Array:
 		var bank_limit := deg_to_rad(35)
 		if lin_vel.length() > 2.8 or target_vel.length() > 2.8 or delta_pos.length() > 3.0:
 			pid_controllers[Controller.LATERAL_SPEED].target = (target_vel * basis_curr).x + 2 * delta_pos.x
-			var roll_change: float = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
+			var roll_change := pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
 			pid_controllers[Controller.ROLL].target = clampf(roll_change, -bank_limit, bank_limit)
 			motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 
 			pid_controllers[Controller.FORWARD_SPEED].target = (target_vel * basis_curr).z + 2 * delta_pos.z
-			var pitch_change: float = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
+			var pitch_change := pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
 			pid_controllers[Controller.PITCH].target = clampf(pitch_change, -bank_limit, bank_limit)
 			motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 
 		else:
-			var roll_target: float = pid_controllers[Controller.POS_X].get_output(target.x - delta_pos.x, dt)
+			var roll_target := pid_controllers[Controller.POS_X].get_output(target.x - delta_pos.x, dt)
 			pid_controllers[Controller.ROLL].target = clampf(roll_target,-bank_limit, bank_limit)
 			motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
 
-			var pitch_target: float = pid_controllers[Controller.POS_Z].get_output(target.z - delta_pos.z, dt)
+			var pitch_target := pid_controllers[Controller.POS_Z].get_output(target.z - delta_pos.z, dt)
 			pid_controllers[Controller.PITCH].target = clampf(pitch_target,-bank_limit, bank_limit)
 			motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt)
 
@@ -516,7 +599,8 @@ func update_command() -> Array:
 	elif flight_mode == FlightMode.LAUNCH:
 		motor_control[0] = pwr
 
-		var pitch_input: float = pid_controllers[Controller.LAUNCH].target + ((1 - expo_p) * p + expo_p * pow(p, 3)) * dt
+		var pitch_input := pid_controllers[Controller.LAUNCH].target + ((1 - expo_p) * p \
+				+ expo_p * pow(p, 3)) * dt
 		pid_controllers[Controller.LAUNCH].target = pitch_input
 		motor_control[3] = pid_controllers[Controller.LAUNCH].get_output(angles.x, dt, false)
 
@@ -533,12 +617,12 @@ func update_command() -> Array:
 			motor_control[0] = pid_controllers[Controller.VERTICAL_SPEED].get_output(lin_vel.y, dt, false)
 
 			pid_controllers[Controller.LATERAL_SPEED].target = 0
-			var roll_change: float = pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
+			var roll_change := pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
 			pid_controllers[Controller.ROLL].target = clampf(roll_change, -bank_limit, bank_limit)
 			motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
 
 			pid_controllers[Controller.FORWARD_SPEED].target = 0
-			var pitch_change: float = pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
+			var pitch_change := pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
 			pid_controllers[Controller.PITCH].target = clampf(pitch_change, -bank_limit, bank_limit)
 			motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
 

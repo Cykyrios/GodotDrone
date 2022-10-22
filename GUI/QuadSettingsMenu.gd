@@ -110,8 +110,10 @@ func _on_expo_changed(value: float, slider: HSlider) -> void:
 
 
 func update_graph() -> void:
-	rate_graph.update_rates(Vector3(rate_pitch_slider.value, rate_roll_slider.value, rate_yaw_slider.value),
-			Vector3(expo_pitch_slider.value, expo_roll_slider.value, expo_yaw_slider.value))
+	rate_graph.update_rates(
+			Vector3(rate_pitch_slider.value, rate_roll_slider.value, rate_yaw_slider.value),
+			Vector3(expo_pitch_slider.value, expo_roll_slider.value, expo_yaw_slider.value)
+	)
 
 
 func _on_reset_quad_pressed() -> void:
