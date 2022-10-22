@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://drev3v3v5smfq" path="res://GUI/ControlsMenuRadioTransmitter.tscn" id="1"]
 [ext_resource type="Script" path="res://GUI/ControlsMenu.gd" id="2"]
-[ext_resource type="PackedScene" path="res://GUI/ControlsMenuDrone.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://ban68gsplyec1" path="res://GUI/ControlsMenuDrone.tscn" id="4"]
 
 [node name="ControlsMenu" type="MarginContainer"]
 process_mode = 3
@@ -11,12 +11,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 script = ExtResource("2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-offset_right = 1920.0
-offset_bottom = 1080.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 1900.0
+offset_bottom = 1060.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -25,9 +31,9 @@ alignment = 1
 
 [node name="ControllerPanel" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
-offset_top = 463.0
+offset_top = 443.0
 offset_right = 186.0
-offset_bottom = 616.0
+offset_bottom = 596.0
 size_flags_horizontal = 2
 size_flags_vertical = 4
 
@@ -115,9 +121,9 @@ columns = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
-offset_left = 1560.0
-offset_right = 1920.0
-offset_bottom = 1080.0
+offset_left = 1520.0
+offset_right = 1880.0
+offset_bottom = 1040.0
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -127,6 +133,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 
 [node name="SubViewport" type="SubViewport" parent="HBoxContainer/VBoxContainer/SubViewportContainer"]
+own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(360, 240)
@@ -137,16 +144,16 @@ render_target_update_mode = 4
 [node name="BindingsPanel" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 offset_left = 210.0
-offset_top = 880.0
+offset_top = 840.0
 offset_right = 360.0
-offset_bottom = 1080.0
+offset_bottom = 1040.0
 grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 10
 size_flags_vertical = 10
 
 [node name="BindingsVBox" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/BindingsPanel"]
-custom_minimum_size = Vector2i(150, 200)
+custom_minimum_size = Vector2(150, 200)
 layout_mode = 2
 offset_right = 150.0
 offset_bottom = 200.0
@@ -180,11 +187,13 @@ size_flags_vertical = 3
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 2
 offset_left = 640.0
+offset_top = 20.0
 offset_right = 1280.0
-offset_bottom = 1080.0
+offset_bottom = 1060.0
 size_flags_horizontal = 4
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(640, 360)
@@ -214,6 +223,7 @@ offset_bottom = 26.0
 text = "Controls"
 
 [node name="ButtonCalibrate" type="Button" parent="MenuPanel/MenuVBox"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 30.0
 offset_right = 140.0
@@ -221,6 +231,7 @@ offset_bottom = 61.0
 text = "Calibrate axes"
 
 [node name="ButtonReset" type="Button" parent="MenuPanel/MenuVBox"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 65.0
 offset_right = 140.0
@@ -228,6 +239,7 @@ offset_bottom = 96.0
 text = "Reset to Defaults"
 
 [node name="ButtonBack" type="Button" parent="MenuPanel/MenuVBox"]
+unique_name_in_owner = true
 layout_mode = 2
 offset_top = 100.0
 offset_right = 140.0
