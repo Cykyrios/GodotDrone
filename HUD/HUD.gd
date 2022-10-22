@@ -46,10 +46,10 @@ func _process(_delta: float) -> void:
 		reset_data()
 
 
-func show_component(component: int, show: bool = true) -> void:
+func show_component(component: int, show_comp: bool = true) -> void:
 	var self_only := false
 	var mod := Color(1, 1, 1, 1)
-	if not show:
+	if not show_comp:
 		mod = Color(1, 1, 1, 0)
 	var hud_component := []
 	match component:
