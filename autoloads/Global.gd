@@ -36,7 +36,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func initialize() -> void:
-	var dir := DirAccess.open("")
+	var dir := DirAccess.open("user://")
 	if not dir.dir_exists(config_dir):
 		var _discard = dir.make_dir(config_dir)
 	if not dir.dir_exists(replay_dir):
