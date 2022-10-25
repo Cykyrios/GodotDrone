@@ -45,7 +45,10 @@ func load_quad_settings() -> void:
 	elif err == ERR_PARSE_ERROR:
 		Global.log_error(err, "Parse error while loading quad settings.")
 		text = "Parse error while loading settings. Default settings will be loaded."
-	elif err != ERR_FILE_NOT_FOUND:
+	elif err == ERR_FILE_NOT_FOUND:
+		save_quad_settings()
+		return
+	else:
 		Global.log_error(err, "Error loading quad settings.")
 		text = "Error loading settings. Default settings will be loaded."
 	Global.show_error_popup(get_tree().root.get_children()[-1], text)
