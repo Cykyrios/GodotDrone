@@ -6,7 +6,7 @@ signal back
 
 @onready var master_volume := $%MasterSlider as HSlider
 @onready var master_volume_label := $%MasterValue as Label
-@onready var button_back := $ButtonBack as Button
+@onready var button_back := $%ButtonBack as Button
 
 
 func _ready() -> void:
