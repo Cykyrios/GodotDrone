@@ -54,11 +54,12 @@ func get_formatted_date_time() -> String:
 	return time
 
 
-func show_error_popup(control: Control, error: String) -> void:
+func show_error_popup(control: Node, error: String) -> void:
+	await get_tree().process_frame
 	var controller_dialog := AcceptDialog.new()
-	control.add_child(controller_dialog)
 	controller_dialog.dialog_text = error
-	controller_dialog.popup_centered()
+	control.add_child(controller_dialog)
+	controller_dialog.popup_centered.call_deferred()
 
 
 func log_error(err_code: int, message: String = "") -> void:
