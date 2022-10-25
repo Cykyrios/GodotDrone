@@ -10,8 +10,8 @@ var speed := 0.0
 const MAX_SPEED := 300.0
 const MIN_SPEED := 0.1
 
-@onready var rotation_helper := $RotationHelper
-@onready var camera := $RotationHelper/Camera3D
+@onready var rotation_helper := $RotationHelper as Node3D
+@onready var camera := $RotationHelper/Camera3D as Camera3D
 
 
 func _ready() -> void:
@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 		speed += speed * speed_modifier * delta
 	elif Input.is_action_pressed("camera_speed_down"):
 		speed -= speed * speed_modifier * delta
-	speed = clamp(speed, MIN_SPEED, MAX_SPEED)
+	speed = clampf(speed, MIN_SPEED, MAX_SPEED)
 
 	# retrieve rotation_helper basis?
 	dir = dir.normalized()
@@ -55,6 +55,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		rot_max = minf(deg_to_rad(mouse_rot.x * look_around_sensitivity) * sign(mouse_rot.x),
 				look_around_speed)
 		self.rotate_y(rot_max * sign(mouse_rot.x) * -1)
-		var camera_rot: Vector3 = rotation_helper.rotation_degrees
-		camera_rot.x = clamp(camera_rot.x, -89, 89)
-		rotation_helper.rotation_degrees = camera_rot
+		var camera_rot: Vector3 = rotation_helper.rotation
+		camera_rot.x = clampf(camera_rot.x, deg_to_rad(-89), deg_to_rad(89))
+		rotation_helper.rotation = camera_rot
