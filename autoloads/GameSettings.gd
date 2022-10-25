@@ -21,7 +21,7 @@ func load_hud_config() -> void:
 				var value = config.get_value(hud_section, key)
 				if hud_config.has(key):
 					if key == "fps" and (value is int or value is float):
-						hud_config[key] = clamp(int(value), 5, 60)
+						hud_config[key] = clampf(value, 5, 60) as int
 					elif value is bool:
 						hud_config[key] = value
 		return

@@ -239,7 +239,7 @@ func get_ground_effect() -> float:
 		var a3 := 0.5 * r_square * ray_length / sqrt(b3 * b3 * b3)
 		var b4 := b_square + 4 * z_square
 		var a4 := 2 * r_square * ray_length / sqrt(b4 * b4 * b4) * gnd_kb
-		ground_effect = clamp(1.0 / (1 - a1 - a2 - a3 - a4), 1, 2)
+		ground_effect = clampf(1.0 / (1 - a1 - a2 - a3 - a4), 1, 2)
 		if ground_effect < 1.01 and ray_length < 2 * gnd_radius:
 			ground_effect = 2
 	return ground_effect
