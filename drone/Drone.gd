@@ -58,7 +58,7 @@ func _ready() -> void:
 
 	add_child(control_profile)
 	control_profile.set_rates(rate_pitch, rate_roll, rate_yaw)
-	control_profile.set_expo(expo_pitch, expo_roll, expo_yaw)
+	control_profile.set_expos(expo_pitch, expo_roll, expo_yaw)
 	flight_controller.set_control_profile(control_profile)
 
 	QuadSettings.load_quad_settings()
@@ -288,7 +288,7 @@ func _on_quad_settings_updated() -> void:
 	mass = QuadSettings.dry_weight + QuadSettings.battery_weight
 	$FPVCamera.transform.basis = Basis.IDENTITY.rotated(Vector3.RIGHT, deg_to_rad(QuadSettings.angle))
 	control_profile.set_rates(QuadSettings.rate_pitch, QuadSettings.rate_roll, QuadSettings.rate_yaw)
-	control_profile.set_expo(QuadSettings.expo_pitch, QuadSettings.expo_roll, QuadSettings.expo_yaw)
+	control_profile.set_expos(QuadSettings.expo_pitch, QuadSettings.expo_roll, QuadSettings.expo_yaw)
 
 
 func _on_hud_config_updated() -> void:
