@@ -74,17 +74,17 @@ func _gui_input(event: InputEvent) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if InputMap.has_action(action) and !event is InputEventJoypadMotion:
+	if event is InputEventJoypadMotion:
+		if event.device == device and event.axis == axis:
+			axis_range.axis_monitor.value = event.axis_value
+			axis_value = event.axis_value
+			check_action_state()
+	elif InputMap.has_action(action):
 		if event.is_action(action):
 			if event.pressed:
 				controller_button.value = 1
 			else:
 				controller_button.value = 0
-	elif event is InputEventJoypadMotion:
-		if event.device == device and event.axis == axis:
-			axis_range.axis_monitor.value = event.axis_value
-			axis_value = event.axis_value
-			check_action_state()
 
 
 func update_binding(event: InputEvent) -> void:
