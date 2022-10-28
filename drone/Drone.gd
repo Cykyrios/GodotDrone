@@ -11,12 +11,6 @@ var motors := []
 var hud := preload("res://HUD/HUD.tscn").instantiate()
 
 var control_profile := ControlProfile.new()
-@export_range (1.0, 1800.0) var rate_pitch := 667.0
-@export_range (1.0, 1800.0) var rate_roll := 667.0
-@export_range (1.0, 1800.0) var rate_yaw := 667.0
-@export_range (0.0, 1.0) var expo_pitch := 0.2
-@export_range (0.0, 1.0) var expo_roll := 0.2
-@export_range (0.0, 1.0) var expo_yaw := 0.2
 
 var drone_transform := Transform3D.IDENTITY
 var drone_pos := Vector3.ZERO
@@ -56,14 +50,11 @@ func _ready() -> void:
 	_discard = flight_controller.flight_mode_changed.connect(hud.status._on_mode_changed)
 	_discard = flight_controller.arm_failed.connect(hud.status._on_arm_failed)
 
-	add_child(control_profile)
-	control_profile.set_rates(rate_pitch, rate_roll, rate_yaw)
-	control_profile.set_expos(expo_pitch, expo_roll, expo_yaw)
-	flight_controller.set_control_profile(control_profile)
-
 	QuadSettings.load_quad_settings()
 	_discard = QuadSettings.settings_updated.connect(_on_quad_settings_updated)
 	_on_quad_settings_updated()
+
+	add_child(control_profile)
 
 	GameSettings.load_hud_config()
 	_discard = GameSettings.hud_config_updated.connect(_on_hud_config_updated)
@@ -287,8 +278,8 @@ func _on_flight_mode_changed(flight_mode: int) -> void:
 func _on_quad_settings_updated() -> void:
 	mass = QuadSettings.dry_weight + QuadSettings.battery_weight
 	$FPVCamera.transform.basis = Basis.IDENTITY.rotated(Vector3.RIGHT, deg_to_rad(QuadSettings.angle))
-	control_profile.set_rates(QuadSettings.rate_pitch, QuadSettings.rate_roll, QuadSettings.rate_yaw)
-	control_profile.set_expos(QuadSettings.expo_pitch, QuadSettings.expo_roll, QuadSettings.expo_yaw)
+	control_profile = QuadSettings.control_profile
+	flight_controller.control_profile = control_profile
 
 
 func _on_hud_config_updated() -> void:

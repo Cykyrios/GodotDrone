@@ -32,7 +32,7 @@ var motors := []
 var hover_thrust := 0.0
 var input := [0.0, 0.0, 0.0, 0.0]
 
-var control_profile = null
+var control_profile: ControlProfile = null
 
 var state_armed := false :
 	set(arm):
@@ -477,25 +477,22 @@ func update_command() -> Array:
 	var r: float = input[2]
 	var p: float = input[3]
 
-	var expo_y: float = control_profile.expo_yaw
-	var rate_y: float = control_profile.rate_yaw
-	var expo_r: float = control_profile.expo_roll
-	var rate_r: float = control_profile.rate_roll
-	var expo_p: float = control_profile.expo_pitch
-	var rate_p: float = control_profile.rate_pitch
+	var expo_y: float = control_profile.yaw_expo
+	var expo_r: float = control_profile.roll_expo
+	var expo_p: float = control_profile.pitch_expo
 
 	if flight_mode == FlightMode.RATE:
 		motor_control[0] = pwr
 
-		var yaw_input := -((1 - expo_y) * y + expo_y * pow(y, 3)) * deg_to_rad(rate_y)
+		var yaw_input := deg_to_rad(-control_profile.get_axis_command(ControlProfile.Axis.YAW, y))
 		pid_controllers[Controller.YAW_SPEED].target = yaw_input
 		motor_control[1] = pid_controllers[Controller.YAW_SPEED].get_output(ang_vel.y, dt, false)
 
-		var roll_input := ((1 - expo_r) * r + expo_r * pow(r, 3)) * deg_to_rad(rate_r)
+		var roll_input := deg_to_rad(control_profile.get_axis_command(ControlProfile.Axis.ROLL, r))
 		pid_controllers[Controller.ROLL_SPEED].target = roll_input
 		motor_control[2] = pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
 
-		var pitch_input := ((1 - expo_p) * p + expo_p * pow(p, 3)) * deg_to_rad(rate_p)
+		var pitch_input := deg_to_rad(control_profile.get_axis_command(ControlProfile.Axis.PITCH, p))
 		pid_controllers[Controller.PITCH_SPEED].target = pitch_input
 		motor_control[3] = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
 

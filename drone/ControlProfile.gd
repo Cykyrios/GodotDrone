@@ -2,37 +2,62 @@ extends Node
 class_name ControlProfile
 
 
-var rate_pitch := 667.0
-var rate_roll := 667.0
-var rate_yaw := 667.0
+enum Axis {PITCH, ROLL, YAW}
+enum RateCurve {ACTUAL, RACEFLIGHT, KISS, QUICKRATES}
 
-var expo_pitch := 0.2
-var expo_roll := 0.2
-var expo_yaw := 0.2
+var pitch_rate := 667.0
+var roll_rate := 667.0
+var yaw_rate := 667.0
+var pitch_rc := 200.0
+var roll_rc := 200.0
+var yaw_rc := 200.0
+var pitch_expo := 0.2
+var roll_expo := 0.2
+var yaw_expo := 0.2
 
-
-func _ready() -> void:
-	set_rates(rate_pitch, rate_roll, rate_yaw)
-	set_expos(expo_pitch, expo_roll, expo_yaw)
-
-
-func get_rates() -> Array:
-	var rates := [rate_pitch, rate_roll, rate_yaw]
-	return rates
+var rate_curve := RateCurve.ACTUAL
 
 
-func set_rates(p : float, r : float, y : float) -> void:
-	rate_pitch = p
-	rate_roll = r
-	rate_yaw = y
+func get_axis_command(axis: Axis, input: float) -> float:
+	input = clampf(input, -1, 1)
+	var rate := 0.0
+	var rc_rate := 0.0
+	var expo := 0.0
+	match axis:
+		Axis.PITCH:
+			rate = pitch_rate
+			rc_rate = pitch_rc
+			expo = pitch_expo
+		Axis.ROLL:
+			rate = roll_rate
+			rc_rate = roll_rc
+			expo = roll_expo
+		Axis.YAW:
+			rate = yaw_rate
+			rc_rate = yaw_rc
+			expo = yaw_expo
+	var output := get_rate_curve_output(input, rate, rc_rate, expo)
+	return output
 
 
-func get_expos() -> Array:
-	var expo = [pow(expo_pitch, 3.0), pow(expo_roll, 3.0), pow(expo_yaw, 3.0)]
-	return expo
-
-
-func set_expos(p : float, r : float, y : float) -> void:
-	expo_pitch = pow(p, 1 / 3.0)
-	expo_roll = pow(r, 1 / 3.0)
-	expo_yaw = pow(y, 1 / 3.0)
+func get_rate_curve_output(input: float, rate: float, rc_rate: float, expo: float) -> float:
+	var output := 0.0
+	match rate_curve:
+		RateCurve.ACTUAL:
+			var curve := absf(input) * (pow(input, 5) * expo + input * (1 - expo))
+			output = input * rc_rate + maxf(0, rate - rc_rate) * curve
+		RateCurve.RACEFLIGHT:
+			var curve := (1 + expo * (input * input - 1)) * input
+			output = curve * (rate + absf(curve) * rc_rate * rate * 0.01)
+		RateCurve.KISS:
+			rate /= 100
+			rc_rate /= 100
+			var command := (pow(input, 3) * expo + input * (1 - expo)) * rc_rate / 10
+			output = 2000 / (1 - absf(input) * rate) * command
+		RateCurve.QUICKRATES:
+			rc_rate = 2 * rc_rate
+			rate = maxf(rate, rc_rate)
+			var super_expo := (rate / rc_rate - 1) / (rate / rc_rate)
+			var curve := pow(absf(input), 3) * expo + absf(input) * (1 - expo)
+			output = input * rc_rate / (1 - curve * super_expo)
+	return output
