@@ -40,6 +40,14 @@ func get_axis_command(axis: Axis, input: float) -> float:
 	return output
 
 
+func get_max_rate(axis: Axis) -> float:
+	return get_axis_command(axis, 1.0)
+
+
+func get_normalized_axis_command(axis: Axis, input: float) -> float:
+	return get_axis_command(axis, input) / get_max_rate(axis)
+
+
 func get_rate_curve_output(input: float, rate: float, rc_rate: float, expo: float) -> float:
 	var output := 0.0
 	match rate_curve:
