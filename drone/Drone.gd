@@ -21,7 +21,6 @@ var drone_basis := Basis.IDENTITY
 
 var ray : RayCast3D
 
-#@onready var debug_geom := get_tree().root.get_node_or_null("Level/DebugGeometry")
 var b_debug := false
 
 
@@ -80,37 +79,36 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	update_hud_data(delta)
 
-#	if b_debug and debug_geom:
 	if b_debug:
 		for motor in motors:
 			var prop = motor.propeller
 			var vec_force: Vector3 = prop.global_transform.basis.y * prop.get_thrust()
 			var vec_pos: Vector3 = prop.global_transform.origin - global_transform.origin
-#			debug_geom.draw_debug_arrow(delta, global_transform.origin + vec_pos, vec_force,
-#					vec_force.length() / 50, Color(5, 1, 0))
+			DebugGeometry.draw_debug_arrow(delta, global_transform.origin + vec_pos, vec_force,
+					vec_force.length() / 50, Color(5, 1, 0))
 
 		var global_xform := global_transform
 		var global_basis := global_xform.basis
-#		debug_geom.draw_debug_grid(0.02, global_xform * Vector3(0, 0, 0), 1.5, 1.5, 1, 1,
-#				Vector3.UP, global_basis * Vector3.RIGHT)
-#		debug_geom.draw_debug_arrow(0.02, global_xform * Vector3.UP,
-#				linear_velocity, linear_velocity.length() / 10)
-#		debug_geom.draw_debug_arrow(0.02, global_xform * Vector3.UP,
-#				Vector3.RIGHT, linear_velocity.x / 10, Color(10, 0, 0))
-#		debug_geom.draw_debug_arrow(0.02, global_xform * Vector3.UP,
-#				Vector3.UP, linear_velocity.y / 10, Color(0, 10, 0))
-#		debug_geom.draw_debug_arrow(0.02, global_xform * Vector3.UP,
-#				Vector3.BACK, linear_velocity.z / 10, Color(0, 0, 10))
+		DebugGeometry.draw_debug_grid(0.02, global_xform * Vector3(0, 0, 0), 1.5, 1.5, 1, 1,
+				Vector3.UP, global_basis * Vector3.RIGHT)
+		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3.UP,
+				linear_velocity, linear_velocity.length() / 10)
+		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3.UP,
+				Vector3.RIGHT, linear_velocity.x / 10, Color(10, 0, 0))
+		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3.UP,
+				Vector3.UP, linear_velocity.y / 10, Color(0, 10, 0))
+		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3.UP,
+				Vector3.BACK, linear_velocity.z / 10, Color(0, 0, 10))
 
-#		debug_geom.draw_debug_arrow(0.02, global_xform * Vector3(0.2, 0, 0.5),
-#				global_basis * Vector3.RIGHT, (linear_velocity * global_basis).x / 10,
-#				Color(10, 0, 0))
-#		debug_geom.draw_debug_arrow(0.02, global_xform * Vector3(-0.2, 0, 0.5),
-#				global_basis * Vector3.UP, linear_velocity.y / 10,
-#				Color(0, 10, 0))
-#		debug_geom.draw_debug_arrow(0.02, global_xform * Vector3(0.2, 0, 0.5),
-#				global_basis * Vector3.DOWN, (linear_velocity * global_basis).z / 10,
-#				Color(0, 0, 10))
+		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3(0.2, 0, 0.5),
+				global_basis * Vector3.RIGHT, (linear_velocity * global_basis).x / 10,
+				Color(10, 0, 0))
+		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3(-0.2, 0, 0.5),
+				global_basis * Vector3.UP, linear_velocity.y / 10,
+				Color(0, 10, 0))
+		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3(0.2, 0, 0.5),
+				global_basis * Vector3.DOWN, (linear_velocity * global_basis).z / 10,
+				Color(0, 0, 10))
 
 
 func _physics_process(_delta: float) -> void:
@@ -134,9 +132,9 @@ func _physics_process(_delta: float) -> void:
 		if collider is Area3D and collider.has_method("_on_drone_raycast_hit"):
 			collider.call("_on_drone_raycast_hit", self)
 
-#	if b_debug and debug_geom:
-#		var drag: Vector3 = get_drag(linear_velocity, angular_velocity, drone_basis)[0]
-#		debug_geom.draw_debug_arrow(0.01, drone_pos, drag.normalized(), drag.length() / 10)
+	if b_debug:
+		var drag: Vector3 = get_drag(linear_velocity, angular_velocity, drone_basis)[0]
+		DebugGeometry.draw_debug_arrow(0.01, drone_pos, drag.normalized(), drag.length() / 10)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
@@ -170,14 +168,14 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 			if motor.rpm < 0:
 				prop_thrust = -prop_thrust / 2
 			var prop_drag: Vector3 = bas * prop_forces[1]
-#			if b_debug and debug_geom and i == 0 and prop.name == "Propeller1":
-#				print("V: %5.2f, T: %5.2f, D: %5.2f" % [prop.velocity.y, prop_forces[0].length(),
-#						prop_forces[1].length()])
-#				# Draw debug arrows relative to FPV camera
-#				debug_geom.draw_debug_arrow(0.016, xform * Vector3(0, 1, -2),
-#						prop_thrust.normalized(), prop_thrust.length() / 10.0, Color(1, 0, 0))
-#				debug_geom.draw_debug_arrow(0.016, xform * Vector3(0, 1, -2),
-#						prop_drag.normalized(), prop_drag.length() / 5.0, Color(0, 1, 0))
+			if b_debug and i == 0 and prop.name == "Propeller1":
+				print("V: %5.2f, T: %5.2f, D: %5.2f" % [prop.velocity.y, prop_forces[0].length(),
+						prop_forces[1].length()])
+				# Draw debug arrows relative to FPV camera
+				DebugGeometry.draw_debug_arrow(0.016, xform * Vector3(0, 1, -2),
+						prop_thrust.normalized(), prop_thrust.length() / 10.0, Color(1, 0, 0))
+				DebugGeometry.draw_debug_arrow(0.016, xform * Vector3(0, 1, -2),
+						prop_drag.normalized(), prop_drag.length() / 5.0, Color(0, 1, 0))
 			vec_force += prop_thrust + prop_drag
 			vec_torque += motor.torque * bas.y
 			vec_torque -= prop_thrust.cross(bas * prop_xform.origin)
