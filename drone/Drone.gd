@@ -10,8 +10,6 @@ var motors := []
 @onready var flight_controller := $FlightController
 var hud := preload("res://HUD/HUD.tscn").instantiate()
 
-var control_profile := ControlProfile.new()
-
 var drone_transform := Transform3D.IDENTITY
 var drone_pos := Vector3.ZERO
 var drone_basis := Basis.IDENTITY
@@ -52,8 +50,6 @@ func _ready() -> void:
 	QuadSettings.load_quad_settings()
 	_discard = QuadSettings.settings_updated.connect(_on_quad_settings_updated)
 	_on_quad_settings_updated()
-
-	add_child(control_profile)
 
 	GameSettings.load_hud_config()
 	_discard = GameSettings.hud_config_updated.connect(_on_hud_config_updated)
@@ -277,8 +273,7 @@ func _on_flight_mode_changed(flight_mode: int) -> void:
 func _on_quad_settings_updated() -> void:
 	mass = QuadSettings.dry_weight + QuadSettings.battery_weight
 	$FPVCamera.transform.basis = Basis.IDENTITY.rotated(Vector3.RIGHT, deg_to_rad(QuadSettings.angle))
-	control_profile = QuadSettings.control_profile
-	flight_controller.control_profile = control_profile
+	flight_controller.control_profile = QuadSettings.control_profile
 
 
 func _on_hud_config_updated() -> void:
