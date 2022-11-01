@@ -52,7 +52,7 @@ func _ready() -> void:
 	_discard = battery_weight_slider.value_changed.connect(_on_battery_weight_changed)
 	dry_weight_slider.value = QuadSettings.dry_weight * 1000
 	battery_weight_slider.value = QuadSettings.battery_weight * 1000
-	
+
 	rates_curve_list.clear()
 	for item in ControlProfile.RateCurve:
 		rates_curve_list.add_item(item)
@@ -90,7 +90,7 @@ func _ready() -> void:
 	_discard = button_reset_quad.pressed.connect(_on_reset_quad_pressed)
 	_discard = button_reset_rates.pressed.connect(_on_reset_rates_pressed)
 	_discard = button_back.pressed.connect(_on_back_pressed)
-	
+
 	update_rates_ui()
 
 
@@ -169,7 +169,7 @@ func update_graph() -> void:
 	var pitch: Array[Vector2] = []
 	var roll: Array[Vector2] = []
 	var yaw: Array[Vector2] = []
-	
+
 	var num_points := 101
 	for i in num_points:
 		var input := (i / 50.0 - 1) as float
@@ -206,7 +206,7 @@ func update_rates_labels() -> void:
 func update_rates_ui() -> void:
 	update_rates_labels()
 	update_slider_limits()
-	_on_reset_rates_pressed()
+	update_sliders()
 	update_graph()
 
 
@@ -266,15 +266,7 @@ func update_slider_limits() -> void:
 			yaw_rc_slider.max_value = 255
 
 
-func _on_reset_quad_pressed() -> void:
-	QuadSettings.reset_quad()
-	camera_angle_slider.value = QuadSettings.angle
-	dry_weight_slider.value = QuadSettings.dry_weight * 1000
-	battery_weight_slider.value = QuadSettings.battery_weight * 1000
-
-
-func _on_reset_rates_pressed() -> void:
-	QuadSettings.reset_rates()
+func update_sliders() -> void:
 	pitch_rate_slider.value = QuadSettings.control_profile.pitch_rate
 	roll_rate_slider.value = QuadSettings.control_profile.roll_rate
 	yaw_rate_slider.value = QuadSettings.control_profile.yaw_rate
@@ -284,6 +276,18 @@ func _on_reset_rates_pressed() -> void:
 	pitch_expo_slider.value = QuadSettings.control_profile.pitch_expo
 	roll_expo_slider.value = QuadSettings.control_profile.roll_expo
 	yaw_expo_slider.value = QuadSettings.control_profile.yaw_expo
+
+
+func _on_reset_quad_pressed() -> void:
+	QuadSettings.reset_quad()
+	camera_angle_slider.value = QuadSettings.angle
+	dry_weight_slider.value = QuadSettings.dry_weight * 1000
+	battery_weight_slider.value = QuadSettings.battery_weight * 1000
+
+
+func _on_reset_rates_pressed() -> void:
+	QuadSettings.reset_rates()
+	update_sliders()
 
 
 func _on_back_pressed() -> void:
