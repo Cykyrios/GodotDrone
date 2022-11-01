@@ -12,6 +12,8 @@ func _ready() -> void:
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	mesh = im
 
+	process_priority = 1000
+
 
 func _process(delta: float) -> void:
 	update_geometry_timer(delta)

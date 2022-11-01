@@ -133,6 +133,7 @@ func _physics_process(_delta: float) -> void:
 
 	if b_debug:
 		var drag: Vector3 = get_drag(linear_velocity, angular_velocity, drone_basis)[0]
+		# Note: calling DebugGeometry from _physics_process produces duplicates
 		DebugGeometry.draw_debug_arrow(0.0, drone_pos, drag.normalized(), drag.length() / 10)
 
 
@@ -171,6 +172,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 				print("V: %5.2f, T: %5.2f, D: %5.2f" % [prop.velocity.y, prop_forces[0].length(),
 						prop_forces[1].length()])
 				# Draw debug arrows relative to FPV camera
+				# Note: calling DebugGeometry from _physics_process produces duplicates
 				DebugGeometry.draw_debug_arrow(0.0, xform * Vector3(0, 1, -2),
 						prop_thrust.normalized(), prop_thrust.length() / 10.0, Color(1, 0, 0))
 				DebugGeometry.draw_debug_arrow(0.0, xform * Vector3(0, 1, -2),
