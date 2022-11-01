@@ -8,8 +8,8 @@ var debug_shapes: Array[DebugShape] = []
 
 
 func _ready() -> void:
-	mat.set_flag(3, true)
-	material_override = mat
+	mat.vertex_color_use_as_albedo = true
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	mesh = im
 
 
@@ -407,10 +407,12 @@ class DebugArrow extends DebugShapeCompound:
 		var arrow_end_local := direction * length
 		var arrow_body := DebugCylinder.new(
 				position, position + 0.8 * arrow_end_local, 0.05 * length, 8)
+		arrow_body.color = color
 		arrow_body.draw_surfaces = draw_surfaces
 		arrow_body.draw_caps = true
 		var arrow_tip := DebugCone.new(
 				position + 0.8 * arrow_end_local, position + arrow_end_local, 0.1 * length, 0, 8)
+		arrow_tip.color = color
 		arrow_tip.draw_surfaces = draw_surfaces
 		arrow_tip.draw_caps = true
 		add_debug_shape(arrow_body)
