@@ -21,10 +21,12 @@ func update_geometry_timer(delta: float) -> void:
 	clear_geometry()
 	draw_geometry()
 	if not debug_shapes.is_empty():
-		for shape in debug_shapes:
+		var count := debug_shapes.size()
+		for i in count:
+			var shape := debug_shapes[count - 1 - i]
 			shape.draw_time -= delta
 			if shape.draw_time < 0.0:
-				debug_shapes.erase(shape)
+				debug_shapes.remove_at(count - 1 - i)
 
 
 func clear_geometry() -> void:
