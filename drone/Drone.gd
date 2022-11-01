@@ -82,9 +82,8 @@ func _process(delta: float) -> void:
 	if b_debug:
 		for motor in motors:
 			var prop = motor.propeller
-			var vec_force: Vector3 = prop.global_transform.basis.y * prop.get_thrust()
-			var vec_pos: Vector3 = prop.global_transform.origin - global_transform.origin
-			DebugGeometry.draw_debug_arrow(delta, global_transform.origin + vec_pos, vec_force,
+			var vec_force: Vector3 = prop.global_transform.basis.y * (prop.forces[0] as Vector3).length()
+			DebugGeometry.draw_debug_arrow(delta, prop.global_transform.origin, vec_force,
 					vec_force.length() / 50, Color(5, 1, 0))
 
 		var global_xform := global_transform
