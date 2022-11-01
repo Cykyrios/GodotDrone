@@ -83,29 +83,29 @@ func _process(delta: float) -> void:
 		for motor in motors:
 			var prop = motor.propeller
 			var vec_force: Vector3 = prop.global_transform.basis.y * (prop.forces[0] as Vector3).length()
-			DebugGeometry.draw_debug_arrow(delta, prop.global_transform.origin, vec_force,
+			DebugGeometry.draw_debug_arrow(0.0, prop.global_transform.origin, vec_force,
 					vec_force.length() / 50, Color(5, 1, 0))
 
 		var global_xform := global_transform
 		var global_basis := global_xform.basis
-		DebugGeometry.draw_debug_grid(0.02, global_xform * Vector3(0, 0, 0), 1.5, 1.5, 1, 1,
+		DebugGeometry.draw_debug_grid(0.0, global_xform * Vector3(0, 0, 0), 1.5, 1.5, 1, 1,
 				Vector3.UP, global_basis * Vector3.RIGHT)
-		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3.UP,
+		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3.UP,
 				linear_velocity, linear_velocity.length() / 10)
-		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3.UP,
+		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3.UP,
 				Vector3.RIGHT, linear_velocity.x / 10, Color(10, 0, 0))
-		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3.UP,
+		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3.UP,
 				Vector3.UP, linear_velocity.y / 10, Color(0, 10, 0))
-		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3.UP,
+		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3.UP,
 				Vector3.BACK, linear_velocity.z / 10, Color(0, 0, 10))
 
-		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3(0.2, 0, 0.5),
+		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3(0.2, 0, 0.5),
 				global_basis * Vector3.RIGHT, (linear_velocity * global_basis).x / 10,
 				Color(10, 0, 0))
-		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3(-0.2, 0, 0.5),
+		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3(-0.2, 0, 0.5),
 				global_basis * Vector3.UP, linear_velocity.y / 10,
 				Color(0, 10, 0))
-		DebugGeometry.draw_debug_arrow(0.02, global_xform * Vector3(0.2, 0, 0.5),
+		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3(0.2, 0, 0.5),
 				global_basis * Vector3.DOWN, (linear_velocity * global_basis).z / 10,
 				Color(0, 0, 10))
 
@@ -133,7 +133,7 @@ func _physics_process(_delta: float) -> void:
 
 	if b_debug:
 		var drag: Vector3 = get_drag(linear_velocity, angular_velocity, drone_basis)[0]
-		DebugGeometry.draw_debug_arrow(0.01, drone_pos, drag.normalized(), drag.length() / 10)
+		DebugGeometry.draw_debug_arrow(0.0, drone_pos, drag.normalized(), drag.length() / 10)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
@@ -171,9 +171,9 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 				print("V: %5.2f, T: %5.2f, D: %5.2f" % [prop.velocity.y, prop_forces[0].length(),
 						prop_forces[1].length()])
 				# Draw debug arrows relative to FPV camera
-				DebugGeometry.draw_debug_arrow(0.016, xform * Vector3(0, 1, -2),
+				DebugGeometry.draw_debug_arrow(0.0, xform * Vector3(0, 1, -2),
 						prop_thrust.normalized(), prop_thrust.length() / 10.0, Color(1, 0, 0))
-				DebugGeometry.draw_debug_arrow(0.016, xform * Vector3(0, 1, -2),
+				DebugGeometry.draw_debug_arrow(0.0, xform * Vector3(0, 1, -2),
 						prop_drag.normalized(), prop_drag.length() / 5.0, Color(0, 1, 0))
 			vec_force += prop_thrust + prop_drag
 			vec_torque += motor.torque * bas.y
