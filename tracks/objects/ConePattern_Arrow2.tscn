@@ -1,77 +1,63 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://dbjploq5u1qes"]
 
-[ext_resource path="res://Assets/Tracks/Objects/RacingCone_1.mesh" type="ArrayMesh" id=1]
-[ext_resource path="res://tracks/ObjectPattern.gd" type="Script" id=2]
+[ext_resource type="Script" path="res://tracks/ObjectPattern.gd" id="2"]
+[ext_resource type="ArrayMesh" uid="uid://bxrdbn3jvnd7y" path="res://tracks/objects/RacingCone_1.mesh" id="2_j3f00"]
 
-
-
-[sub_resource type="MultiMesh" id=1]
+[sub_resource type="MultiMesh" id="1"]
 transform_format = 1
-mesh = ExtResource( 1 )
+mesh = ExtResource("2_j3f00")
 
 [node name="ObjectPattern" type="Node3D"]
-script = ExtResource( 2 )
-mesh = ExtResource( 1 )
+script = ExtResource("2")
+mesh = ExtResource("2_j3f00")
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
-multimesh = SubResource( 1 )
+multimesh = SubResource("1")
 
 [node name="MeshInstance1" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.1 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.1)
+mesh = ExtResource("2_j3f00")
 
 [node name="MeshInstance2" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.3)
+mesh = ExtResource("2_j3f00")
 
 [node name="MeshInstance3" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+mesh = ExtResource("2_j3f00")
 
 [node name="MeshInstance4" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7)
+mesh = ExtResource("2_j3f00")
 
 [node name="MeshInstance5" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0, -0.5 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0, -0.5)
+mesh = ExtResource("2_j3f00")
 
 [node name="MeshInstance6" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0, -0.5 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0, -0.5)
+mesh = ExtResource("2_j3f00")
 
 [node name="MeshInstance7" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0, -0.3 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0, -0.3)
+mesh = ExtResource("2_j3f00")
 
 [node name="MeshInstance8" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, -0.3 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, -0.3)
+mesh = ExtResource("2_j3f00")
 
 [node name="MeshInstance9" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, -0.1 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, -0.1)
+mesh = ExtResource("2_j3f00")
 
 [node name="MeshInstance10" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, -0.1 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, -0.1)
+mesh = ExtResource("2_j3f00")
 
 [node name="MeshInstance11" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
+mesh = ExtResource("2_j3f00")
 
 [node name="MeshInstance12" type="MeshInstance3D" parent="MultiMeshInstance3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3 )
-mesh = ExtResource( 1 )
-material/0 = null
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.3)
+mesh = ExtResource("2_j3f00")

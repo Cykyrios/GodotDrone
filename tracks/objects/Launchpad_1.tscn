@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3]
 
-[ext_resource path="res://Assets/Tracks/Objects/Launchpad_1.glb" type="PackedScene" id=1]
-[ext_resource path="res://tracks/LaunchArea.gd" type="Script" id=2]
-[ext_resource path="res://tracks/Launchpad.gd" type="Script" id=3]
+[ext_resource type="PackedScene" uid="uid://1bbjqlvjwl56" path="res://tracks/objects/Launchpad_1.glb" id="1"]
+[ext_resource type="Script" path="res://tracks/LaunchArea.gd" id="2"]
+[ext_resource type="Script" path="res://tracks/Launchpad.gd" id="3"]
 
 [sub_resource type="PhysicsMaterial" id=1]
 rough = true
