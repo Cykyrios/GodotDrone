@@ -56,7 +56,7 @@ func get_cameras(node: Node) -> Array:
 		if child is Camera3D:
 			cams.append(child)
 		if not child is FPVCamera:
-			cams += get_cameras(child)
+			cams.append_array(get_cameras(child))
 	return cams
 
 
