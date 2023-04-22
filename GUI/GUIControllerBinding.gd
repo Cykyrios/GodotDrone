@@ -26,7 +26,7 @@ func _ready() -> void:
 	add_child(controller_button)
 	size_flags_horizontal = SIZE_EXPAND_FILL
 	size_flags_vertical = SIZE_EXPAND_FILL
-	controller_button.size_flags_horizontal = SIZE_SHRINK_CENTER
+	controller_button.size_flags_horizontal = SIZE_SHRINK_BEGIN
 	controller_button.size_flags_vertical = SIZE_SHRINK_CENTER
 	controller_button.custom_minimum_size = Vector2(controller_button.custom_minimum_size.x, 16)
 	controller_button.set_range(0, 1, 1)

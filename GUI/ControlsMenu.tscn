@@ -102,7 +102,7 @@ size_flags_horizontal = 10
 size_flags_vertical = 10
 
 [node name="BindingsVBox" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/BindingsPanel"]
-custom_minimum_size = Vector2(150, 200)
+custom_minimum_size = Vector2(250, 400)
 layout_mode = 2
 size_flags_horizontal = 8
 alignment = 1
@@ -115,6 +115,7 @@ text = "Bindings:"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
 [node name="ActionsVBox" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/BindingsPanel/BindingsVBox/ScrollContainer"]
 unique_name_in_owner = true
