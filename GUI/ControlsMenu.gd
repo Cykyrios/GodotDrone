@@ -8,16 +8,16 @@ var packed_calibration_menu := preload("res://GUI/CalibrationMenu.tscn")
 var packed_binding_popup := preload("res://GUI/ConfirmationPopup.tscn")
 var binding_popup: Popup = null
 
-@onready var controller_list := $%ControllerList as OptionButton
-@onready var controller_checkbutton := $%ControllerCheckButton as CheckButton
-@onready var axes_list := $%AxesList as VBoxContainer
-@onready var button_grid := $%ButtonGrid as GridContainer
+@onready var controller_list := %ControllerList as OptionButton
+@onready var controller_checkbutton := %ControllerCheckButton as CheckButton
+@onready var axes_list := %AxesList as VBoxContainer
+@onready var button_grid := %ButtonGrid as GridContainer
 
-@onready var button_calibrate := $%ButtonCalibrate as Button
-@onready var button_reset := $%ButtonReset as Button
-@onready var button_back := $%ButtonBack as Button
+@onready var button_calibrate := %ButtonCalibrate as Button
+@onready var button_reset := %ButtonReset as Button
+@onready var button_back := %ButtonBack as Button
 
-@onready var actions_list := $%ActionsVBox as VBoxContainer
+@onready var actions_list := %ActionsVBox as VBoxContainer
 var show_binding_popup := false
 var binding_popup_text := ""
 var binding_popup_clear := false

@@ -1,17 +1,17 @@
 extends HBoxContainer
 
 
-@onready var fps := $%SpinBoxRefreshRate as SpinBox
-@onready var check_crosshair := $%CheckCrosshair as CheckButton
-@onready var check_horizon := $%CheckHorizon as CheckButton
-@onready var check_ladder := $%CheckLadder as CheckButton
-@onready var check_speed := $%CheckSpeed as CheckButton
-@onready var check_altitude := $%CheckAltitude as CheckButton
-@onready var check_heading := $%CheckHeading as CheckButton
-@onready var check_sticks := $%CheckSticks as CheckButton
-@onready var check_rpm := $%CheckRPM as CheckButton
+@onready var fps := %SpinBoxRefreshRate as SpinBox
+@onready var check_crosshair := %CheckCrosshair as CheckButton
+@onready var check_horizon := %CheckHorizon as CheckButton
+@onready var check_ladder := %CheckLadder as CheckButton
+@onready var check_speed := %CheckSpeed as CheckButton
+@onready var check_altitude := %CheckAltitude as CheckButton
+@onready var check_heading := %CheckHeading as CheckButton
+@onready var check_sticks := %CheckSticks as CheckButton
+@onready var check_rpm := %CheckRPM as CheckButton
 
-@onready var hud := $%HUD as Control
+@onready var hud := %HUD as Control
 
 
 func _ready() -> void:

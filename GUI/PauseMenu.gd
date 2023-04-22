@@ -10,11 +10,11 @@ var packed_options_menu := preload("res://GUI/OptionsMenu.tscn")
 
 var can_resume := true
 
-@onready var button_resume := $%ButtonResume as Button
-@onready var button_quad := $%ButtonQuad as Button
-@onready var button_help := $%ButtonHelp as Button
-@onready var button_options := $%ButtonOptions as Button
-@onready var button_main_menu := $%ButtonMainMenu as Button
+@onready var button_resume := %ButtonResume as Button
+@onready var button_quad := %ButtonQuad as Button
+@onready var button_help := %ButtonHelp as Button
+@onready var button_options := %ButtonOptions as Button
+@onready var button_main_menu := %ButtonMainMenu as Button
 
 
 func _ready() -> void:

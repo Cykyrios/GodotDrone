@@ -4,16 +4,16 @@ extends Control
 signal back
 
 
-@onready var window_mode := $%WindowOptions as OptionButton
-@onready var resolution := $%ResolutionOptions as OptionButton
-@onready var game_msaa := $%GameMSAAOptions as OptionButton
-@onready var game_af := $%GameAFOptions as OptionButton
-@onready var shadows := $%ShadowsOptions as OptionButton
-@onready var fisheye_mode := $%FPVFisheyeOptions as OptionButton
-@onready var fisheye_resolution := $%FisheyeResolutionOptions as OptionButton
-@onready var fisheye_msaa := $%FisheyeMSAAOptions as OptionButton
+@onready var window_mode := %WindowOptions as OptionButton
+@onready var resolution := %ResolutionOptions as OptionButton
+@onready var game_msaa := %GameMSAAOptions as OptionButton
+@onready var game_af := %GameAFOptions as OptionButton
+@onready var shadows := %ShadowsOptions as OptionButton
+@onready var fisheye_mode := %FPVFisheyeOptions as OptionButton
+@onready var fisheye_resolution := %FisheyeResolutionOptions as OptionButton
+@onready var fisheye_msaa := %FisheyeMSAAOptions as OptionButton
 
-@onready var button_back := $%ButtonBack as Button
+@onready var button_back := %ButtonBack as Button
 
 
 func _ready() -> void:

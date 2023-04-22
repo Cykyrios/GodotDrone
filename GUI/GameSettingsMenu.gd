@@ -3,7 +3,7 @@ extends MarginContainer
 
 signal back
 
-@onready var button_back := $%ButtonBack as Button
+@onready var button_back := %ButtonBack as Button
 
 
 func _ready() -> void:

@@ -4,42 +4,42 @@ extends Control
 signal back
 
 
-@onready var camera_angle_slider := $%CameraAngleSlider as HSlider
-@onready var camera_angle_label := $%CameraAngleCurrent as Label
-@onready var dry_weight_slider := $%DryWeightSlider as HSlider
-@onready var dry_weight_label := $%DryWeightCurrent as Label
-@onready var battery_weight_slider := $%BatteryWeightSlider as HSlider
-@onready var battery_weight_label := $%BatteryWeightCurrent as Label
+@onready var camera_angle_slider := %CameraAngleSlider as HSlider
+@onready var camera_angle_label := %CameraAngleCurrent as Label
+@onready var dry_weight_slider := %DryWeightSlider as HSlider
+@onready var dry_weight_label := %DryWeightCurrent as Label
+@onready var battery_weight_slider := %BatteryWeightSlider as HSlider
+@onready var battery_weight_label := %BatteryWeightCurrent as Label
 
-@onready var rates_curve_list := $%RatesCurveOptionButton as OptionButton
-@onready var rate_label := $%RateLabel as Label
-@onready var rc_label := $%RcLabel as Label
-@onready var expo_label := $%ExpoLabel as Label
+@onready var rates_curve_list := %RatesCurveOptionButton as OptionButton
+@onready var rate_label := %RateLabel as Label
+@onready var rc_label := %RcLabel as Label
+@onready var expo_label := %ExpoLabel as Label
 
-@onready var pitch_rate_slider := $%PitchRateSlider as HSlider
-@onready var roll_rate_slider := $%RollRateSlider as HSlider
-@onready var yaw_rate_slider := $%YawRateSlider as HSlider
-@onready var pitch_rate_label := $%PitchRate as Label
-@onready var roll_rate_label := $%RollRate as Label
-@onready var yaw_rate_label := $%YawRate as Label
-@onready var pitch_rc_slider := $%PitchRcSlider as HSlider
-@onready var roll_rc_slider := $%RollRcSlider as HSlider
-@onready var yaw_rc_slider := $%YawRcSlider as HSlider
-@onready var pitch_rc_label := $%PitchRc as Label
-@onready var roll_rc_label := $%RollRc as Label
-@onready var yaw_rc_label := $%YawRc as Label
-@onready var pitch_expo_slider := $%PitchExpoSlider as HSlider
-@onready var roll_expo_slider := $%RollExpoSlider as HSlider
-@onready var yaw_expo_slider := $%YawExpoSlider as HSlider
-@onready var pitch_expo_label := $%PitchExpo as Label
-@onready var roll_expo_label := $%RollExpo as Label
-@onready var yaw_expo_label := $%YawExpo as Label
+@onready var pitch_rate_slider := %PitchRateSlider as HSlider
+@onready var roll_rate_slider := %RollRateSlider as HSlider
+@onready var yaw_rate_slider := %YawRateSlider as HSlider
+@onready var pitch_rate_label := %PitchRate as Label
+@onready var roll_rate_label := %RollRate as Label
+@onready var yaw_rate_label := %YawRate as Label
+@onready var pitch_rc_slider := %PitchRcSlider as HSlider
+@onready var roll_rc_slider := %RollRcSlider as HSlider
+@onready var yaw_rc_slider := %YawRcSlider as HSlider
+@onready var pitch_rc_label := %PitchRc as Label
+@onready var roll_rc_label := %RollRc as Label
+@onready var yaw_rc_label := %YawRc as Label
+@onready var pitch_expo_slider := %PitchExpoSlider as HSlider
+@onready var roll_expo_slider := %RollExpoSlider as HSlider
+@onready var yaw_expo_slider := %YawExpoSlider as HSlider
+@onready var pitch_expo_label := %PitchExpo as Label
+@onready var roll_expo_label := %RollExpo as Label
+@onready var yaw_expo_label := %YawExpo as Label
 
-@onready var rate_graph := $%RateGraph as Control
+@onready var rate_graph := %RateGraph as Control
 
-@onready var button_reset_quad := $%ButtonResetQuad as Button
-@onready var button_reset_rates := $%ButtonResetRates as Button
-@onready var button_back := $%ButtonBack as Button
+@onready var button_reset_quad := %ButtonResetQuad as Button
+@onready var button_reset_rates := %ButtonResetRates as Button
+@onready var button_back := %ButtonBack as Button
 
 
 func _ready() -> void:
