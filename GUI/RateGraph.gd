@@ -23,7 +23,7 @@ func _ready() -> void:
 	max_rates_label.position = Vector2(10, 10)
 	max_rates_label.bbcode_enabled = true
 	max_rates_label.clip_contents = false
-	max_rates_label.fit_content_height = true
+	max_rates_label.custom_minimum_size = Vector2.ONE * graph_size * 0.5
 	queue_redraw()
 
 
