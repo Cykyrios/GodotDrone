@@ -9,11 +9,11 @@ var checkpoint: Checkpoint
 
 func _ready() -> void:
 	_add_geometry()
-	
+
 	static_body = StaticBody3D.new()
 	add_child(static_body)
 	_add_collision()
-	
+
 	checkpoint = Checkpoint.new()
 	add_child(checkpoint)
 	_add_checkpoint()

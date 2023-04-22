@@ -12,7 +12,7 @@ func update_speed(s: float, dt: float) -> void:
 	speed_prev = speed
 	speed = s
 	speed_label.text = "%03d" % [s * 3.6]
-	
+
 	var speed_delta := 0.0
 	if dt != 0:
 		speed_delta = (speed - speed_prev) / dt
