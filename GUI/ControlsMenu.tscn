@@ -19,116 +19,71 @@ script = ExtResource("2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 1900.0
-offset_bottom = 1060.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
 [node name="ControllerPanel" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
-offset_top = 443.0
-offset_right = 186.0
-offset_bottom = 596.0
 size_flags_horizontal = 2
 size_flags_vertical = 4
 
 [node name="ControllerVBox" type="VBoxContainer" parent="HBoxContainer/ControllerPanel"]
 layout_mode = 2
-offset_right = 186.0
-offset_bottom = 153.0
-grow_vertical = 2
 alignment = 1
 
 [node name="ControllerVBox" type="VBoxContainer" parent="HBoxContainer/ControllerPanel/ControllerVBox"]
 layout_mode = 2
-offset_right = 186.0
-offset_bottom = 85.0
 
 [node name="LabelController" type="Label" parent="HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox"]
 layout_mode = 2
-offset_right = 186.0
-offset_bottom = 26.0
 text = "Active controller:"
 
 [node name="ControllerList" type="OptionButton" parent="HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 30.0
-offset_right = 186.0
-offset_bottom = 50.0
 
 [node name="ControllerCheckButton" type="CheckButton" parent="HBoxContainer/ControllerPanel/ControllerVBox/ControllerVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 54.0
-offset_right = 186.0
-offset_bottom = 85.0
-grow_horizontal = 0
-grow_vertical = 2
 size_flags_horizontal = 0
 focus_mode = 0
 text = "Default controller"
 
 [node name="AxesVBox" type="VBoxContainer" parent="HBoxContainer/ControllerPanel/ControllerVBox"]
 layout_mode = 2
-offset_top = 89.0
-offset_right = 41.0
-offset_bottom = 119.0
 size_flags_horizontal = 0
 
 [node name="LabelAxes" type="Label" parent="HBoxContainer/ControllerPanel/ControllerVBox/AxesVBox"]
 layout_mode = 2
-offset_right = 41.0
-offset_bottom = 26.0
 text = "Axes:"
 
 [node name="AxesList" type="VBoxContainer" parent="HBoxContainer/ControllerPanel/ControllerVBox/AxesVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 30.0
-offset_right = 41.0
-offset_bottom = 30.0
 size_flags_vertical = 3
 alignment = 1
 
 [node name="ButtonsVBox" type="VBoxContainer" parent="HBoxContainer/ControllerPanel/ControllerVBox"]
 layout_mode = 2
-offset_top = 123.0
-offset_right = 66.0
-offset_bottom = 153.0
 size_flags_horizontal = 0
 
 [node name="LabelButtons" type="Label" parent="HBoxContainer/ControllerPanel/ControllerVBox/ButtonsVBox"]
 layout_mode = 2
-offset_right = 66.0
-offset_bottom = 26.0
 text = "Buttons:"
 
 [node name="ButtonGrid" type="GridContainer" parent="HBoxContainer/ControllerPanel/ControllerVBox/ButtonsVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 30.0
-offset_right = 66.0
-offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
-offset_left = 1520.0
-offset_right = 1880.0
-offset_bottom = 1040.0
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
-offset_right = 360.0
-offset_bottom = 240.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 
@@ -143,53 +98,32 @@ render_target_update_mode = 4
 
 [node name="BindingsPanel" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
-offset_left = 210.0
-offset_top = 840.0
-offset_right = 360.0
-offset_bottom = 1040.0
-grow_horizontal = 0
-grow_vertical = 2
 size_flags_horizontal = 10
 size_flags_vertical = 10
 
 [node name="BindingsVBox" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/BindingsPanel"]
 custom_minimum_size = Vector2(150, 200)
 layout_mode = 2
-offset_right = 150.0
-offset_bottom = 200.0
-grow_horizontal = 0
-grow_vertical = 2
 size_flags_horizontal = 8
 alignment = 1
 
 [node name="LabelActions" type="Label" parent="HBoxContainer/VBoxContainer/BindingsPanel/BindingsVBox"]
 layout_mode = 2
-offset_right = 150.0
-offset_bottom = 26.0
 text = "Bindings:"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/VBoxContainer/BindingsPanel/BindingsVBox"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 150.0
-offset_bottom = 200.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ActionsVBox" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/BindingsPanel/BindingsVBox/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_right = 150.0
-offset_bottom = 170.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 2
-offset_left = 640.0
-offset_top = 20.0
-offset_right = 1280.0
-offset_bottom = 1060.0
 size_flags_horizontal = 4
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
@@ -203,45 +137,28 @@ render_target_update_mode = 4
 
 [node name="MenuPanel" type="PanelContainer" parent="."]
 layout_mode = 2
-offset_left = 890.0
-offset_top = 474.0
-offset_right = 1030.0
-offset_bottom = 605.0
 size_flags_horizontal = 6
 size_flags_vertical = 4
 
 [node name="MenuVBox" type="VBoxContainer" parent="MenuPanel"]
 layout_mode = 2
-offset_right = 140.0
-offset_bottom = 131.0
 alignment = 1
 
 [node name="Title" type="Label" parent="MenuPanel/MenuVBox"]
 layout_mode = 2
-offset_right = 140.0
-offset_bottom = 26.0
 text = "Controls"
 
 [node name="ButtonCalibrate" type="Button" parent="MenuPanel/MenuVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 30.0
-offset_right = 140.0
-offset_bottom = 61.0
 text = "Calibrate axes"
 
 [node name="ButtonReset" type="Button" parent="MenuPanel/MenuVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 65.0
-offset_right = 140.0
-offset_bottom = 96.0
 text = "Reset to Defaults"
 
 [node name="ButtonBack" type="Button" parent="MenuPanel/MenuVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 100.0
-offset_right = 140.0
-offset_bottom = 131.0
 text = "Back to Menu"

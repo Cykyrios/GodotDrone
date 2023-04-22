@@ -16,24 +16,14 @@ script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
-offset_left = 873.0
-offset_top = 434.0
-offset_right = 1046.0
-offset_bottom = 646.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
-offset_right = 173.0
-offset_bottom = 212.0
 
 [node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
-offset_right = 173.0
-offset_bottom = 37.0
 text = "Pause"
 label_settings = SubResource("LabelSettings_ngoj6")
 horizontal_alignment = 1
@@ -41,39 +31,24 @@ horizontal_alignment = 1
 [node name="ButtonResume" type="Button" parent="PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 41.0
-offset_right = 173.0
-offset_bottom = 72.0
 text = "Resume"
 
 [node name="ButtonQuad" type="Button" parent="PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 76.0
-offset_right = 173.0
-offset_bottom = 107.0
 text = "Quad Settings"
 
 [node name="ButtonHelp" type="Button" parent="PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 111.0
-offset_right = 173.0
-offset_bottom = 142.0
 text = "Help"
 
 [node name="ButtonOptions" type="Button" parent="PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 146.0
-offset_right = 173.0
-offset_bottom = 177.0
 text = "Options"
 
 [node name="ButtonMainMenu" type="Button" parent="PanelContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 181.0
-offset_right = 173.0
-offset_bottom = 212.0
 text = "Return to Main Menu"

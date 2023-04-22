@@ -1,20 +1,19 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://ckklfikxed53j"]
 
-[ext_resource path="res://HUD/HUDBidirectionalGauge.tscn" type="PackedScene" id=1]
-[ext_resource path="res://HUD/HUDHeadingScale.gd" type="Script" id=2]
-[ext_resource path="res://HUD/HUD_dynamic_font_32.tres" type="FontFile" id=3]
+[ext_resource type="PackedScene" uid="uid://cmrbcb2sgf4bh" path="res://HUD/HUDBidirectionalGauge.tscn" id="1"]
+[ext_resource type="Script" path="res://HUD/HUDHeadingScale.gd" id="2"]
 
 [node name="HUDHeadingScale" type="Control"]
+layout_mode = 3
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-script = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource("2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -25,28 +24,13 @@ offset_right = 31.5
 offset_bottom = 21.5
 grow_horizontal = 2
 grow_vertical = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="VBoxContainer"]
-offset_right = 63.0
-offset_bottom = 39.0
+layout_mode = 2
 size_flags_horizontal = 4
-custom_fonts/font = ExtResource( 3 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "000"
-align = 1
-valign = 1
 
-[node name="HeadingGauge" parent="VBoxContainer" instance=ExtResource( 1 )]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 43.0
-offset_right = 0.0
-offset_bottom = 43.0
+[node name="HeadingGauge" parent="VBoxContainer" instance=ExtResource("1")]
+layout_mode = 2
 horizontal = true
 height = 4

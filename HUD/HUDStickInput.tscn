@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cmrym3tfbgg0m" path="res://Assets/HUD/StickDisplay_Frame.png" id="3"]
 
 [node name="HUDStickInput" type="Control"]
-custom_minimum_size = Vector2i(128, 128)
+custom_minimum_size = Vector2(128, 128)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5

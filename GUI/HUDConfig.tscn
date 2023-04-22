@@ -18,35 +18,22 @@ script = ExtResource("3")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
-offset_right = 638.0
-offset_bottom = 1080.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
-offset_left = 241.0
-offset_right = 397.0
-offset_bottom = 1080.0
 size_flags_horizontal = 6
 size_flags_vertical = 3
 alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
-offset_top = 365.0
-offset_right = 156.0
-offset_bottom = 396.0
 size_flags_horizontal = 3
 alignment = 1
 
 [node name="LabelRefreshRate" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-offset_top = 2.0
-offset_right = 68.0
-offset_bottom = 28.0
 size_flags_horizontal = 2
 theme = ExtResource("1")
 text = "HUD FPS"
@@ -54,11 +41,6 @@ text = "HUD FPS"
 [node name="SpinBoxRefreshRate" type="SpinBox" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_left = 72.0
-offset_right = 156.0
-offset_bottom = 31.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 9
 theme = ExtResource("1")
 min_value = 5.0
@@ -69,26 +51,15 @@ rounded = true
 
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
-offset_top = 400.0
-offset_right = 156.0
-offset_bottom = 404.0
 
 [node name="LabelElements" type="Label" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
-offset_top = 408.0
-offset_right = 156.0
-offset_bottom = 434.0
 theme = ExtResource("1")
 text = "HUD Components"
 
 [node name="CheckCrosshair" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 438.0
-offset_right = 156.0
-offset_bottom = 469.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 theme = ExtResource("1")
 text = "Crosshair"
@@ -96,11 +67,6 @@ text = "Crosshair"
 [node name="CheckHorizon" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 473.0
-offset_right = 156.0
-offset_bottom = 504.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 theme = ExtResource("1")
 text = "Horizon"
@@ -108,11 +74,6 @@ text = "Horizon"
 [node name="CheckLadder" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 508.0
-offset_right = 156.0
-offset_bottom = 539.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 theme = ExtResource("1")
 text = "Pitch Ladder"
@@ -120,11 +81,6 @@ text = "Pitch Ladder"
 [node name="CheckSpeed" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 543.0
-offset_right = 156.0
-offset_bottom = 574.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 theme = ExtResource("1")
 text = "Speed"
@@ -132,11 +88,6 @@ text = "Speed"
 [node name="CheckAltitude" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 578.0
-offset_right = 156.0
-offset_bottom = 609.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 theme = ExtResource("1")
 text = "Altitude"
@@ -144,11 +95,6 @@ text = "Altitude"
 [node name="CheckHeading" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 613.0
-offset_right = 156.0
-offset_bottom = 644.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 theme = ExtResource("1")
 text = "Heading"
@@ -156,11 +102,6 @@ text = "Heading"
 [node name="CheckSticks" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 648.0
-offset_right = 156.0
-offset_bottom = 679.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 theme = ExtResource("1")
 text = "Stick Input"
@@ -168,11 +109,6 @@ text = "Stick Input"
 [node name="CheckRPM" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_top = 683.0
-offset_right = 156.0
-offset_bottom = 714.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 theme = ExtResource("1")
 text = "Motor RPM"
@@ -180,14 +116,6 @@ text = "Motor RPM"
 [node name="HUD" parent="." instance=ExtResource("2")]
 unique_name_in_owner = true
 layout_mode = 2
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 642.0
-offset_right = 1920.0
-offset_bottom = 1080.0
-grow_horizontal = 1
-grow_vertical = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0

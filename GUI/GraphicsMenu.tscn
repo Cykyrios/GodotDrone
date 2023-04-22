@@ -16,171 +16,98 @@ script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
-offset_right = 1920.0
-offset_bottom = 1080.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 5
 size_flags_vertical = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
-offset_right = 1920.0
-offset_bottom = 1080.0
 alignment = 1
 
 [node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
-offset_right = 1920.0
-offset_bottom = 37.0
 text = "Graphics"
 label_settings = SubResource("LabelSettings_nvkxk")
 horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
-offset_top = 41.0
-offset_right = 1920.0
-offset_bottom = 1045.0
 size_flags_horizontal = 5
 size_flags_vertical = 7
 size_flags_stretch_ratio = 100.0
 
 [node name="WindowGrid" type="GridContainer" parent="PanelContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
-offset_right = 1920.0
-offset_bottom = 1004.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 7
 size_flags_vertical = 7
 columns = 2
 
 [node name="WindowLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 layout_mode = 2
-offset_right = 145.0
-offset_bottom = 26.0
 text = "Window Mode"
 
 [node name="WindowOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-offset_left = 149.0
-offset_right = 349.0
-offset_bottom = 26.0
 
 [node name="ResolutionLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 145.0
-offset_bottom = 56.0
 text = "Resolution"
 
 [node name="ResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_left = 149.0
-offset_top = 30.0
-offset_right = 349.0
-offset_bottom = 56.0
 
 [node name="GameMSAALabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 layout_mode = 2
-offset_top = 60.0
-offset_right = 145.0
-offset_bottom = 86.0
 text = "MSAA"
 
 [node name="GameMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_left = 149.0
-offset_top = 60.0
-offset_right = 349.0
-offset_bottom = 86.0
 
 [node name="GameAFLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 layout_mode = 2
-offset_top = 90.0
-offset_right = 145.0
-offset_bottom = 116.0
 text = "Anisotropic Filter"
 
 [node name="GameAFOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_left = 149.0
-offset_top = 90.0
-offset_right = 349.0
-offset_bottom = 116.0
 
 [node name="ShadowsLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 layout_mode = 2
-offset_top = 120.0
-offset_right = 145.0
-offset_bottom = 146.0
 text = "Shadows Quality"
 
 [node name="ShadowsOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_left = 149.0
-offset_top = 120.0
-offset_right = 349.0
-offset_bottom = 146.0
 
 [node name="FPVFisheyeLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 layout_mode = 2
-offset_top = 150.0
-offset_right = 145.0
-offset_bottom = 176.0
 text = "Fisheye Camera3D"
 
 [node name="FPVFisheyeOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_left = 149.0
-offset_top = 150.0
-offset_right = 349.0
-offset_bottom = 176.0
 
 [node name="FisheyeResolutionLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 layout_mode = 2
-offset_top = 180.0
-offset_right = 145.0
-offset_bottom = 206.0
 text = "Fisheye Resolution"
 
 [node name="FisheyeResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_left = 149.0
-offset_top = 180.0
-offset_right = 349.0
-offset_bottom = 206.0
 
 [node name="FisheyeMSAALabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 layout_mode = 2
-offset_top = 210.0
-offset_right = 145.0
-offset_bottom = 236.0
 text = "Fisheye MSAA"
 
 [node name="FisheyeMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_left = 149.0
-offset_top = 210.0
-offset_right = 349.0
-offset_bottom = 236.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
-offset_left = 1875.0
-offset_top = 1049.0
-offset_right = 1920.0
-offset_bottom = 1080.0
 size_flags_horizontal = 8
 size_flags_vertical = 10
 alignment = 2
@@ -188,6 +115,4 @@ alignment = 2
 [node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_right = 45.0
-offset_bottom = 31.0
 text = "Back"

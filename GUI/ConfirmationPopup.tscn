@@ -5,6 +5,7 @@
 [node name="ConfirmationPopup" type="Popup"]
 process_mode = 3
 size = Vector2i(235, 105)
+visible = true
 exclusive = true
 script = ExtResource("2")
 
@@ -20,56 +21,29 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
-offset_left = 857.0
-offset_top = 505.0
-offset_right = 1054.0
-offset_bottom = 566.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 alignment = 1
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
-offset_right = 197.0
-offset_bottom = 26.0
 text = "Do you want to continue?"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
-offset_top = 30.0
-offset_right = 197.0
-offset_bottom = 61.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 
 [node name="ButtonYes" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-offset_right = 63.0
-offset_bottom = 31.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 text = "Yes"
 
 [node name="ButtonNo" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-offset_left = 67.0
-offset_right = 130.0
-offset_bottom = 31.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 text = "No"
 
 [node name="ButtonAlt" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-offset_left = 134.0
-offset_right = 197.0
-offset_bottom = 31.0
-grow_horizontal = 2
-grow_vertical = 2
 size_flags_horizontal = 3
 text = "Alt"
