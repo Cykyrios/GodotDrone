@@ -288,7 +288,7 @@ func save_input_map() -> void:
 
 
 func update_binding(binding: GUIControllerBinding, event: InputEvent) -> void:
-	var action = binding.action
+	var action := binding.action
 	binding.action_idx = actions_list.get_children().find(binding)
 	if InputMap.has_action(action):
 		InputMap.action_erase_events(action)

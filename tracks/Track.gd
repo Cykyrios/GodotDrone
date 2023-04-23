@@ -24,7 +24,7 @@ signal race_state_changed(state)
 	set(selected):
 		if !Engine.is_editor_hint():
 			return
-		var size = checkpoints.size()
+		var size := checkpoints.size()
 		if size == 0:
 			selected_checkpoint = -1
 			return

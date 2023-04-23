@@ -56,7 +56,7 @@ var use_blur := false
 		prop_disk.mesh.surface_get_material(0).set_shader_parameter("emission_falloff", prop_disk_falloff)
 
 var velocity := Vector3.ZERO
-var forces := [Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO]
+var forces: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO]
 
 var radius := diameter * 0.0254 / 2.0
 var theta_tip := 1.25 * pitch / (PI * diameter)

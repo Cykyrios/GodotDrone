@@ -30,7 +30,7 @@ var basis_flat := basis_curr
 
 var motors := []
 var hover_thrust := 0.0
-var input := [0.0, 0.0, 0.0, 0.0]
+var input: Array[float] = [0.0, 0.0, 0.0, 0.0]
 
 var control_profile: ControlProfile = null
 
@@ -86,7 +86,7 @@ func _ready() -> void:
 	pid_controllers[Controller.PITCH].set_clamp_limits(-0.025, 0.025)
 
 	# Clamp limits for speed controllers are equal to the maximum pitch/roll angle
-	var max_angle = deg_to_rad(35)
+	var max_angle := deg_to_rad(35)
 	pid_controllers[Controller.FORWARD_SPEED].set_coefficients(
 			50 * pid_scale_p, 50 * pid_scale_i, 1 * pid_scale_d)
 	pid_controllers[Controller.FORWARD_SPEED].set_clamp_limits(-max_angle, max_angle)
@@ -408,19 +408,21 @@ func update_control(delta: float) -> void:
 	var motor_control := update_command()
 #	print("%8.3f %8.3f %8.3f %8.3f" % [power, yaw, roll, pitch])
 
-	var power: float = motor_control[0]
-	var yaw: float = motor_control[1]
-	var roll: float = motor_control[2]
-	var pitch: float = motor_control[3]
-	var motor_pwm := [power + yaw + roll + pitch,
+	var power := motor_control[0]
+	var yaw := motor_control[1]
+	var roll := motor_control[2]
+	var pitch := motor_control[3]
+	var motor_pwm: Array[float] = [
+			power + yaw + roll + pitch,
 			power - yaw - roll + pitch,
 			power + yaw - roll - pitch,
-			power - yaw + roll - pitch]
+			power - yaw + roll - pitch,
+	]
 
 	# Air Mode
-	var pwm_min: float = motor_pwm.min()
-	var pwm_max: float = motor_pwm.max()
-	var idle_pwm: float = motors[0].MIN_POWER / 100.0
+	var pwm_min := motor_pwm.min() as float
+	var pwm_max := motor_pwm.max() as float
+	var idle_pwm := motors[0].MIN_POWER / 100.0 as float
 	# Scale PWM to range [idle, 1] as needed
 	if pwm_max - pwm_min > 1 - idle_pwm:
 		var pwm_mid := (pwm_min + pwm_max) / 2.0
@@ -469,13 +471,13 @@ func update_control(delta: float) -> void:
 	motors[3].set_pwm(motor_pwm[3])
 
 
-func update_command() -> Array:
-	var motor_control := [0.0, 0.0, 0.0, 0.0]
+func update_command() -> Array[float]:
+	var motor_control: Array[float] = [0.0, 0.0, 0.0, 0.0]
 
-	var pwr: float = input[0]
-	var y: float = input[1]
-	var r: float = input[2]
-	var p: float = input[3]
+	var pwr := input[0]
+	var y := input[1]
+	var r := input[2]
+	var p := input[3]
 
 	var yaw_input := control_profile.get_normalized_axis_command(ControlProfile.Axis.YAW, y)
 	var roll_input := control_profile.get_normalized_axis_command(ControlProfile.Axis.ROLL, r)
@@ -620,7 +622,6 @@ func update_command() -> Array:
 			var pitch_change := pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
 			pid_controllers[Controller.PITCH].target = clampf(pitch_change, -bank_limit, bank_limit)
 			motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
-
 		else:
 			if ang_vel.length_squared() <= deg_to_rad(360):
 				pid_controllers[Controller.ROLL].target = 0
@@ -632,7 +633,6 @@ func update_command() -> Array:
 				motor_control[2] = pid_controllers[Controller.ROLL_SPEED].get_output(-ang_vel.z, dt, false)
 				pid_controllers[Controller.PITCH_SPEED].target = 0
 				motor_control[3] = pid_controllers[Controller.PITCH_SPEED].get_output(ang_vel.x, dt, false)
-
 	return motor_control
 
 

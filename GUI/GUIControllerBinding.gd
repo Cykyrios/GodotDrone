@@ -43,8 +43,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if highlight:
 		t += delta
-		var col1 = cos(2 * PI * (t + 0.5)) * 0.2 + 0.2
-		var col2 = cos(2 * PI * (t + 0.5)) * 0.5 + 0.5
+		var col1 := cos(2 * PI * (t + 0.5)) * 0.2 + 0.2
+		var col2 := cos(2 * PI * (t + 0.5)) * 0.5 + 0.5
 		modulate = Color(1.0, 1.0 - col1, 1.0 - col2, 1.0)
 
 

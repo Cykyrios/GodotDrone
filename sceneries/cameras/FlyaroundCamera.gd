@@ -21,7 +21,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	var dir = Vector3.ZERO
+	var dir := Vector3.ZERO
 	if Input.is_action_pressed("camera_forward"):
 		dir.z -= 1
 	if Input.is_action_pressed("camera_backward"):
@@ -43,18 +43,18 @@ func _process(delta: float) -> void:
 
 	# retrieve rotation_helper basis?
 	dir = dir.normalized()
-	self.translate_object_local(dir * speed * delta)
+	translate_object_local(dir * speed * delta)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		var mouse_rot := Vector2(event.relative.x, event.relative.y)
-		var rot_max := minf(deg_to_rad(mouse_rot.y * look_around_sensitivity) * sign(mouse_rot.y),
+		var rot_max := minf(deg_to_rad(mouse_rot.y * look_around_sensitivity) * signf(mouse_rot.y),
 				look_around_speed)
-		rotation_helper.rotate_x(rot_max * sign(mouse_rot.y) * -1)
-		rot_max = minf(deg_to_rad(mouse_rot.x * look_around_sensitivity) * sign(mouse_rot.x),
+		rotation_helper.rotate_x(rot_max * signf(mouse_rot.y) * -1)
+		rot_max = minf(deg_to_rad(mouse_rot.x * look_around_sensitivity) * signf(mouse_rot.x),
 				look_around_speed)
-		self.rotate_y(rot_max * sign(mouse_rot.x) * -1)
+		rotate_y(rot_max * signf(mouse_rot.x) * -1)
 		var camera_rot: Vector3 = rotation_helper.rotation
 		camera_rot.x = clampf(camera_rot.x, deg_to_rad(-89), deg_to_rad(89))
 		rotation_helper.rotation = camera_rot

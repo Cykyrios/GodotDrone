@@ -440,7 +440,7 @@ class DebugCoordinateSystem extends DebugShapeCompound:
 		debug_shapes.clear()
 
 		dir_x = dir_x.normalized()
-		var dir_z = dir_x.cross(dir_y).normalized()
+		var dir_z := dir_x.cross(dir_y).normalized()
 		dir_y = dir_z.cross(dir_x).normalized()
 
 		color_intensity = clamp(color_intensity, 0, 10)

@@ -9,11 +9,11 @@ signal disarm_input
 
 
 @export var target_path: NodePath = ^""
-var target = null
+var target: Drone = null
 
-var input := [0.0, 0.0, 0.0, 0.0]
+var input: Array[float] = [0.0, 0.0, 0.0, 0.0]
 
-var axis_bindings := []
+var axis_bindings: Array[ControllerAction] = []
 
 
 func _ready() -> void:
@@ -32,7 +32,7 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventJoypadMotion:
-		var controller_action = null
+		var controller_action: ControllerAction = null
 		for i in range(axis_bindings.size()):
 			if event.axis == axis_bindings[i].axis:
 				controller_action = axis_bindings[i]
@@ -83,7 +83,7 @@ func read_input() -> void:
 
 
 func simulate_action_event(action_name: String, action_pressed: bool) -> InputEventAction:
-	var event = InputEventAction.new()
+	var event := InputEventAction.new()
 	event.action = action_name
 	event.pressed = action_pressed
 	return event

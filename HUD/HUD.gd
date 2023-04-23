@@ -132,16 +132,15 @@ func reset_data() -> void:
 
 
 func get_adjusted_angles(angles: Vector3) -> Vector3:
-	var result = angles
-	var correction = 0
+	var result := angles
+	var correction := 0
 
 	for i in range(3):
 		# Check sign changes by difference with PI as arbitrary threshold
-		if abs(angles[i] - first_angles[i]) > PI:
+		if absf(angles[i] - first_angles[i]) > PI:
 			if first_angles[i] > 0:
 				correction = 1
 			else:
 				correction = -1
 			result[i] = angles[i] + 2 * PI * correction
-
 	return result

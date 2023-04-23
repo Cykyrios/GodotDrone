@@ -1,3 +1,4 @@
+class_name ModeLED
 extends Node3D
 
 
