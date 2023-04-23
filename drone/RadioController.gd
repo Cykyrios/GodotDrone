@@ -85,5 +85,5 @@ func read_input() -> void:
 func simulate_action_event(action_name: String, action_pressed: bool) -> InputEventAction:
 	var event = InputEventAction.new()
 	event.action = action_name
-	event.button_pressed = action_pressed
+	event.pressed = action_pressed
 	return event
