@@ -98,7 +98,7 @@ func _on_menu_pressed() -> void:
 		can_resume = true
 		resumed.emit()
 		menu.emit())
-	_discard = confirm_dialog.cancelled.connect(func(): can_resume = true)
+	_discard = confirm_dialog.canceled.connect(func(): can_resume = true)
 	confirm_dialog.popup_centered()
 
 
