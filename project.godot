@@ -24,6 +24,10 @@ Graphics="*res://autoloads/Graphics.gd"
 QuadSettings="*res://autoloads/QuadSettings.gd"
 DebugGeometry="*res://autoloads/debug_geometry.gd"
 
+[debug]
+
+gdscript/warnings/return_value_discarded=1
+
 [display]
 
 window/size/viewport_width=1920
