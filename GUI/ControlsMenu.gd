@@ -320,7 +320,7 @@ func _on_binding_clicked(binding: GUIControllerBinding) -> void:
 		binding_popup.queue_free()
 		binding_popup = null
 		show_binding_popup = false
-	binding_popup.confirm_pressed.connect(
+	var _discard = binding_popup.confirm_pressed.connect(
 		func _on_confirmed_pressed() -> void:
 			if binding_event or binding_popup_clear and not binding_event:
 				update_binding(binding, binding_event)
@@ -328,12 +328,12 @@ func _on_binding_clicked(binding: GUIControllerBinding) -> void:
 				binding_popup_clear = false
 				clear_popup.call()
 	)
-	binding_popup.cancel_pressed.connect(
+	_discard = binding_popup.cancel_pressed.connect(
 		func _on_cancel_pressed() -> void:
 			binding_popup_clear = false
 			clear_popup.call()
 	)
-	binding_popup.clear_pressed.connect(
+	_discard = binding_popup.clear_pressed.connect(
 		func _on_clear_pressed() -> void:
 			binding_event = null
 			binding_popup_clear = true
