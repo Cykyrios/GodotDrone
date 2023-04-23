@@ -5,7 +5,7 @@ var input_map_path := "%s/InputMap.cfg" % [Global.config_dir]
 var active_controller_guid := ""
 var default_controller_guid := ""
 
-var action_list := []
+var action_list: Array[ControllerAction] = []
 
 
 func _ready() -> void:

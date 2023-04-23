@@ -6,7 +6,7 @@ signal back
 
 var packed_calibration_menu := preload("res://GUI/CalibrationMenu.tscn")
 var packed_binding_popup := preload("res://GUI/ConfirmationPopup.tscn")
-var binding_popup: Popup = null
+var binding_popup: BindingPopup = null
 
 @onready var controller_list := %ControllerList as OptionButton
 @onready var controller_checkbutton := %ControllerCheckButton as CheckButton
@@ -216,10 +216,7 @@ func _on_checkbutton_toggled(pressed: bool) -> void:
 	if (!pressed and active_controller != default_controller) \
 			or (pressed and active_controller == default_controller):
 		return
-	if pressed:
-		default_controller = active_controller
-	else:
-		default_controller = -1
+	default_controller = active_controller if pressed else -1
 	var err := Controls.update_default_device(default_controller)
 	if err != OK:
 		Global.log_error(err, "Error while saving default controller settings.")
@@ -238,27 +235,27 @@ func update_axis_value(id: int, value: float) -> void:
 
 
 func update_button_value(id: int, pressed: bool) -> void:
-	var button = button_grid.get_children()[id]
+	var button := button_grid.get_children()[id] as GUIControllerButton
 	button.value = pressed as int
 
 
 func update_input_map() -> void:
 	for binding in actions_list.get_children():
-		binding.remove_binding()
+		(binding as GUIControllerBinding).remove_binding()
 	var _discard = Controls.load_input_map()
 	var act_list := Controls.action_list
 	for i in range(act_list.size()):
-		var act: ControllerAction = act_list[i]
+		var act := act_list[i] as ControllerAction
 		var binding := actions_list.get_child(i)
 		if act.bound:
 			if act.type == ControllerAction.Type.BUTTON:
 				var event := InputEventJoypadButton.new()
-				event.button_index = act.button
+				event.button_index = act.button as JoyButton
 				event.device = active_controller
 				update_binding.call_deferred(binding, event)
 			elif act.type == ControllerAction.Type.AXIS:
 				var event := InputEventJoypadMotion.new()
-				event.axis = act.axis
+				event.axis = act.axis as JoyAxis
 				event.device = active_controller
 				update_binding.call_deferred(binding, event)
 
@@ -299,45 +296,49 @@ func update_binding(binding: GUIControllerBinding, event: InputEvent) -> void:
 
 
 func _on_binding_clicked(binding: GUIControllerBinding) -> void:
-	binding_popup = packed_binding_popup.instantiate()
+	if show_binding_popup:
+		return
+	binding_popup = BindingPopup.new()
 	add_child(binding_popup)
 	binding_popup_text = "Press a button or flip a switch\nfor action: %s" % [binding.label.text]
 	var current_binding_text := "..."
-	if !binding_popup_clear:
+	if not binding_popup_clear:
 		if binding.device >= 0 and binding.axis >= 0:
-#			current_binding_text = Input.get_joy_axis_string(binding.axis)
-			current_binding_text = "%d" % [binding.axis]
+			current_binding_text = "Axis %d" % [binding.axis]
 		var action_events := InputMap.action_get_events(binding.action)
-		if !action_events.is_empty():
+		if not action_events.is_empty():
 			if action_events[0] is InputEventJoypadMotion:
 				var axis: int = action_events[0].axis
-#				current_binding_text = "Axis %d (%s)" % [axis, Input.get_joy_axis_string(axis)]
 				current_binding_text = "Axis %d" % [axis]
 			elif action_events[0] is InputEventJoypadButton:
 				var button: int = action_events[0].button_index
-#				current_binding_text = "Button %d (%s)"  % [button, Input.get_joy_button_string(button)]
 				current_binding_text = "Button %d"  % [button]
 	binding_popup.set_text(binding_popup_text + "\n" + current_binding_text)
-	binding_popup.set_buttons("Confirm", "Cancel", "Clear")
 	show_binding_popup = true
-#	binding_popup.show_modal(true)
-	binding_popup.visible = true
-	var popup: int = await binding_popup.validated
-	binding_popup.queue_free()
-	binding_popup = null
-	show_binding_popup = false
-	match popup:
-		0:
-			if binding_event or binding_popup_clear and !binding_event:
+
+	var clear_popup := func clear_popup() -> void:
+		binding_popup.queue_free()
+		binding_popup = null
+		show_binding_popup = false
+	binding_popup.confirm_pressed.connect(
+		func _on_confirmed_pressed() -> void:
+			if binding_event or binding_popup_clear and not binding_event:
 				update_binding(binding, binding_event)
 				binding_event = null
 				binding_popup_clear = false
-		1:
+				clear_popup.call()
+	)
+	binding_popup.cancel_pressed.connect(
+		func _on_cancel_pressed() -> void:
 			binding_popup_clear = false
-		2:
+			clear_popup.call()
+	)
+	binding_popup.clear_pressed.connect(
+		func _on_clear_pressed() -> void:
 			binding_event = null
 			binding_popup_clear = true
-			binding.clicked.emit()
+			binding_popup.set_text(binding_popup_text + "\n" + "...")
+	)
 
 
 func _on_binding_updated() -> void:

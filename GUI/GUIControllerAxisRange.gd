@@ -21,7 +21,7 @@ func _ready() -> void:
 	add_child(button_low)
 	add_child(button_high)
 
-	axis_range.size = axis_monitor.minimum_size
+	axis_range.size = axis_monitor.custom_minimum_size
 	axis_range.texture_progress = load("res://Assets/GUI/ControlAxes_Transparent.png")
 	axis_range.nine_patch_stretch = true
 	axis_range.stretch_margin_top = 3
@@ -34,11 +34,11 @@ func _ready() -> void:
 	axis_range.value = 1
 
 	var axis_size: Vector2 = axis_monitor.custom_minimum_size as Vector2
-	button_low.minimum_size = Vector2(20, axis_size.y + 20)
+	button_low.custom_minimum_size = Vector2(20, axis_size.y + 20)
 	var button_low_pos := (axis_size - (button_low.custom_minimum_size as Vector2) \
 			+ bound_low * Vector2(axis_size.x, 0)) / 2
 	button_low.position = button_low_pos
-	button_high.minimum_size = Vector2(20, axis_size.y + 20)
+	button_high.custom_minimum_size = Vector2(20, axis_size.y + 20)
 	var button_high_pos := (axis_size - (button_high.custom_minimum_size as Vector2) \
 			+ bound_high * Vector2(axis_size.x, 0)) / 2
 	button_high.position = button_high_pos
@@ -55,7 +55,7 @@ func _ready() -> void:
 	update_bounds.call_deferred()
 
 
-func _gui_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and dragging > 0:
 		var delta := (event as InputEventMouseMotion).relative.x
 		var axis_size := axis_monitor.size
