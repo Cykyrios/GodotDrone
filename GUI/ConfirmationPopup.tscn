@@ -10,6 +10,7 @@ exclusive = true
 script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -26,6 +27,7 @@ size_flags_vertical = 6
 alignment = 1
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Do you want to continue?"
 
@@ -34,16 +36,19 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="ButtonYes" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Yes"
 
 [node name="ButtonNo" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "No"
 
 [node name="ButtonAlt" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Alt"

@@ -3,21 +3,21 @@ extends Popup
 
 signal validated
 
-@onready var popup_title := $PanelContainer/VBoxContainer/Label
-@onready var button_yes := $PanelContainer/VBoxContainer/HBoxContainer/ButtonYes
-@onready var button_no := $PanelContainer/VBoxContainer/HBoxContainer/ButtonNo
-@onready var button_alt := $PanelContainer/VBoxContainer/HBoxContainer/ButtonAlt
+@onready var popup_title := %Label as Label
+@onready var button_yes := %ButtonYes as Button
+@onready var button_no := %ButtonNo as Button
+@onready var button_alt := %ButtonAlt as Button
 
 
 func _ready() -> void:
 	var _discard = button_yes.pressed.connect(_on_button_pressed.bind(0))
 	_discard = button_no.pressed.connect(_on_button_pressed.bind(1))
 	_discard = button_alt.pressed.connect(_on_button_pressed.bind(2))
-	_discard = $PanelContainer.resized.connect(_on_resized)
+	_discard = %PanelContainer.resized.connect(_on_resized)
 
 
 func _on_resized() -> void:
-	size = $PanelContainer.size
+	size = %PanelContainer.size
 	position = (get_parent().size - (size as Vector2)) / 2
 
 
