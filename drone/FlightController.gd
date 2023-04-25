@@ -113,7 +113,7 @@ func _ready() -> void:
 	pid_controllers[Controller.YAW].set_clamp_limits(-0.5, 0.5)
 
 	pid_controllers[Controller.LAUNCH].set_coefficients(
-			700 * pid_scale_p, 300 * pid_scale_i, 700 * pid_scale_d)
+			300 * pid_scale_p, 30 * pid_scale_i, 500 * pid_scale_d)
 	pid_controllers[Controller.LAUNCH].set_clamp_limits(-0.5, 0)
 
 	var _discard = flight_mode_changed.connect(get_parent()._on_flight_mode_changed)
