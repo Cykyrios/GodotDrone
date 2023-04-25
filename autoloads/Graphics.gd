@@ -7,10 +7,10 @@ signal fisheye_resolution_changed
 signal fisheye_msaa_changed
 
 
-enum WindowMode {FULLSCREEN, FULLSCREEN_WINDOW, WINDOW, BORDERLESS_WINDOW}
+enum WindowMode {FULLSCREEN, WINDOW, BORDERLESS_WINDOW}
 enum GameMSAA {OFF, X2, X4, X8, X16}
 enum GameAF {OFF, X2, X4, X8, X16}
-enum Shadows {OFF, LOW, MEDIUM, HIGH, ULTRA}
+enum Shadows {VERY_LOW, LOW, MEDIUM, HIGH, ULTRA}
 enum FisheyeMode {OFF, FULL, FAST}
 enum FisheyeResolution {FISHEYE_2160P, FISHEYE_1440P, FISHEYE_1080P,
 		FISHEYE_720P, FISHEYE_480P, FISHEYE_240P}
@@ -19,14 +19,16 @@ enum FisheyeMSAA {OFF, X2, X4, X8, X16, SAME_AS_GAME}
 
 var graphics_settings_path := "%s/Graphics.cfg" % [Global.config_dir]
 
-var graphics_settings := {"window_mode": WindowMode.FULLSCREEN,
-		"resolution": "100",
-		"msaa": GameMSAA.X4,
-		"af": GameAF.X4,
-		"shadows": Shadows.MEDIUM,
-		"fisheye_mode": FisheyeMode.FULL,
-		"fisheye_resolution": FisheyeResolution.FISHEYE_720P,
-		"fisheye_msaa": FisheyeMSAA.SAME_AS_GAME}
+var graphics_settings := {
+	"window_mode": WindowMode.FULLSCREEN,
+	"resolution": "100",
+	"msaa": GameMSAA.X4,
+	"af": GameAF.X4,
+	"shadows": Shadows.MEDIUM,
+	"fisheye_mode": FisheyeMode.FULL,
+	"fisheye_resolution": FisheyeResolution.FISHEYE_720P,
+	"fisheye_msaa": FisheyeMSAA.SAME_AS_GAME,
+}
 var fisheye_resolution := 720
 
 
@@ -69,33 +71,24 @@ func save_graphics_settings() -> void:
 
 
 func update_window_mode() -> void:
-	var mode: int = graphics_settings["window_mode"]
+	var mode := graphics_settings["window_mode"] as WindowMode
 	var window := get_tree().root as Window
 	if mode == WindowMode.FULLSCREEN:
-		ProjectSettings.set_setting("display/window/size/fullscreen", true)
+		window.mode = Window.MODE_FULLSCREEN
 		window.size = DisplayServer.screen_get_size()
-		window.unresizable = true
 	else:
-		ProjectSettings.set_setting("display/window/size/fullscreen", false)
-		if mode == WindowMode.FULLSCREEN_WINDOW:
-			window.borderless = true
+		window.mode = Window.MODE_WINDOWED
+		window.unresizable = false
+		if window.size > DisplayServer.screen_get_size():
 			window.size = DisplayServer.screen_get_size()
-			window.unresizable = true
-		else:
-			window.unresizable = false
-			if window.size > DisplayServer.screen_get_size():
-				window.size = DisplayServer.screen_get_size()
-			if mode == WindowMode.BORDERLESS_WINDOW:
-				window.borderless = true
-			else:
-				window.borderless = false
+		window.borderless = true if mode == WindowMode.BORDERLESS_WINDOW else false
 
 
 func update_resolution() -> void:
 	var resolution_multiplier := float(graphics_settings["resolution"]) / 100.0
 	var screen_resolution := DisplayServer.screen_get_size()
 	var mode: int = graphics_settings["window_mode"]
-	if mode == WindowMode.FULLSCREEN or mode == WindowMode.FULLSCREEN_WINDOW:
+	if mode == WindowMode.FULLSCREEN:
 		DisplayServer.window_set_size(DisplayServer.screen_get_size())
 	else:
 		DisplayServer.window_set_size(screen_resolution * resolution_multiplier)
@@ -119,36 +112,31 @@ func update_shadows(viewport: Viewport = null) -> void:
 	if not viewport:
 		viewport = get_viewport() as Viewport
 	match graphics_settings["shadows"]:
-		Shadows.OFF:
-			viewport.positional_shadow_atlas_size = 4096
-			viewport.positional_shadow_atlas_quad_0 = 0
-			viewport.positional_shadow_atlas_quad_1 = 0
-			viewport.positional_shadow_atlas_quad_2 = 0
-			viewport.positional_shadow_atlas_quad_3 = 0
+		Shadows.VERY_LOW:
+			viewport.positional_shadow_atlas_size = 512
+			RenderingServer.directional_shadow_atlas_set_size(512, true)
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_HARD)
+			RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_HARD)
 		Shadows.LOW:
-			viewport.positional_shadow_atlas_size = 4096
-			viewport.positional_shadow_atlas_quad_0 = 1
-			viewport.positional_shadow_atlas_quad_1 = 2
-			viewport.positional_shadow_atlas_quad_2 = 3
-			viewport.positional_shadow_atlas_quad_3 = 4
+			viewport.positional_shadow_atlas_size = 1024
+			RenderingServer.directional_shadow_atlas_set_size(1024, true)
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
+			RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
 		Shadows.MEDIUM:
 			viewport.positional_shadow_atlas_size = 4096
-			viewport.positional_shadow_atlas_quad_0 = 2
-			viewport.positional_shadow_atlas_quad_1 = 3
-			viewport.positional_shadow_atlas_quad_2 = 4
-			viewport.positional_shadow_atlas_quad_3 = 5
+			RenderingServer.directional_shadow_atlas_set_size(4096, true)
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_MEDIUM)
+			RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_MEDIUM)
 		Shadows.HIGH:
-			viewport.positional_shadow_atlas_size = 4096
-			viewport.positional_shadow_atlas_quad_0 = 3
-			viewport.positional_shadow_atlas_quad_1 = 4
-			viewport.positional_shadow_atlas_quad_2 = 5
-			viewport.positional_shadow_atlas_quad_3 = 6
-		Shadows.ULTRA:
 			viewport.positional_shadow_atlas_size = 8192
-			viewport.positional_shadow_atlas_quad_0 = 3
-			viewport.positional_shadow_atlas_quad_1 = 4
-			viewport.positional_shadow_atlas_quad_2 = 5
-			viewport.positional_shadow_atlas_quad_3 = 6
+			RenderingServer.directional_shadow_atlas_set_size(8192, true)
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_HIGH)
+			RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_HIGH)
+		Shadows.ULTRA:
+			viewport.positional_shadow_atlas_size = 16384
+			RenderingServer.directional_shadow_atlas_set_size(16384, true)
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_ULTRA)
+			RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_ULTRA)
 	shadows_updated.emit()
 
 

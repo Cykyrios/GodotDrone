@@ -18,7 +18,6 @@ signal back
 
 func _ready() -> void:
 	window_mode.get_popup().add_item("Full Screen")
-	window_mode.get_popup().add_item("Full Screen Window")
 	window_mode.get_popup().add_item("Window")
 	window_mode.get_popup().add_item("Borderless Window")
 	var _discard = window_mode.item_selected.connect(_on_window_mode_changed)
@@ -28,7 +27,7 @@ func _ready() -> void:
 	resolution.get_popup().add_item("75%")
 	resolution.get_popup().add_item("50%")
 	_discard = resolution.item_selected.connect(_on_resolution_changed)
-	var res: int = Graphics.graphics_settings["resolution"]
+	var res := Graphics.graphics_settings["resolution"] as int
 	var option := 0
 	match res:
 		100:
@@ -55,14 +54,13 @@ func _ready() -> void:
 	_discard = game_af.item_selected.connect(_on_af_changed)
 	game_af.select(Graphics.graphics_settings["af"])
 
-	shadows.get_popup().add_item("Off")
+	shadows.get_popup().add_item("Very Low")
 	shadows.get_popup().add_item("Low")
 	shadows.get_popup().add_item("Medium")
 	shadows.get_popup().add_item("High")
 	shadows.get_popup().add_item("Ultra")
 	_discard = shadows.item_selected.connect(_on_shadows_changed)
 	shadows.select(Graphics.graphics_settings["shadows"])
-	shadows.disabled = true
 
 	fisheye_mode.get_popup().add_item("Off")
 	fisheye_mode.get_popup().add_item("Full")
