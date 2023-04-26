@@ -2,7 +2,7 @@ extends Control
 
 
 var packed_quad_settings_menu := preload("res://GUI/QuadSettingsMenu.tscn")
-var packed_options_menu := preload("res://GUI/OptionsMenu.tscn")
+var packed_options_menu := preload("res://GUI/options_menu/OptionsMenu.tscn")
 var packed_help_page := preload("res://GUI/HelpPage.tscn")
 
 @onready var button_fly := %ButtonFly as Button

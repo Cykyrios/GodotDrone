@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cdihf8jlkmulq"]
 
-[ext_resource type="Script" path="res://GUI/GameSettingsMenu.gd" id="2"]
-[ext_resource type="PackedScene" uid="uid://be6l02nphlj5e" path="res://GUI/HUDConfig.tscn" id="3"]
+[ext_resource type="Script" path="res://GUI/options_menu/GameSettingsMenu.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://be6l02nphlj5e" path="res://GUI/options_menu/HUDConfig.tscn" id="3"]
 
 [node name="GameSettingsMenu" type="MarginContainer"]
 process_mode = 3

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://drev3v3v5smfq"]
 
-[ext_resource type="PackedScene" path="res://GUI/RadioTransmitter.tscn" id="1"]
-[ext_resource type="Script" path="res://GUI/ControlsMenuRadioTransmitter.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://bmmju6b2gybd4" path="res://GUI/options_menu/controls_menu/RadioTransmitter.tscn" id="1"]
+[ext_resource type="Script" path="res://GUI/options_menu/controls_menu/ControlsMenuRadioTransmitter.gd" id="2"]
 
 [sub_resource type="Environment" id="Environment_gad0a"]
 background_intensity = 300.0

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dsknbw5ds268e"]
 
-[ext_resource type="Script" path="res://GUI/CalibrationMenu.gd" id="1"]
+[ext_resource type="Script" path="res://GUI/options_menu/controls_menu/CalibrationMenu.gd" id="1"]
 
 [node name="CalibrationMenu" type="MarginContainer"]
 process_mode = 3

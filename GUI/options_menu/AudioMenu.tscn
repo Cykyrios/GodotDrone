@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bsa5oyivvnqp0"]
 
-[ext_resource type="Script" path="res://GUI/AudioMenu.gd" id="2"]
+[ext_resource type="Script" path="res://GUI/options_menu/AudioMenu.gd" id="2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_m6mta"]
 font_size = 24

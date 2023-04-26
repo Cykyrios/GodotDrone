@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://be6l02nphlj5e"]
 
 [ext_resource type="Theme" uid="uid://du6ekwmwgd35i" path="res://GUI/ThemeMenu.tres" id="1"]
-[ext_resource type="PackedScene" path="res://HUD/HUD.tscn" id="2"]
-[ext_resource type="Script" path="res://GUI/HUDConfig.gd" id="3"]
+[ext_resource type="PackedScene" uid="uid://cmn8s6qwptgio" path="res://HUD/HUD.tscn" id="2"]
+[ext_resource type="Script" path="res://GUI/options_menu/HUDConfig.gd" id="3"]
 
 [node name="HUDConfig" type="HBoxContainer"]
 process_mode = 3

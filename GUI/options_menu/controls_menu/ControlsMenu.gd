@@ -4,7 +4,7 @@ extends Control
 signal controller_detected
 signal back
 
-var packed_calibration_menu := preload("res://GUI/CalibrationMenu.tscn")
+var packed_calibration_menu := preload("res://GUI/options_menu/controls_menu/CalibrationMenu.tscn")
 var packed_binding_popup := preload("res://GUI/ConfirmationPopup.tscn")
 var binding_popup: BindingPopup = null
 
