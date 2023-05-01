@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://eonct0r3co2a"]
+[gd_scene load_steps=4 format=3 uid="uid://eonct0r3co2a"]
 
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://GUI/menu_theme.tres" id="1_bshb1"]
 [ext_resource type="Script" path="res://GUI/options_menu/GraphicsMenu.gd" id="2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvkxk"]
-font_size = 24
+font_size = 48
 
 [node name="GraphicsMenu" type="MarginContainer"]
 process_mode = 3
@@ -12,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_bshb1")
 script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -84,7 +86,7 @@ layout_mode = 2
 
 [node name="FPVFisheyeLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 layout_mode = 2
-text = "Fisheye Camera3D"
+text = "Fisheye Camera"
 
 [node name="FPVFisheyeOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
 unique_name_in_owner = true

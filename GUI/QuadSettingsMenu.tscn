@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkf8x6mpk8jpd"]
+[gd_scene load_steps=6 format=3 uid="uid://dkf8x6mpk8jpd"]
 
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://GUI/menu_theme.tres" id="1_qd5lq"]
 [ext_resource type="Script" path="res://GUI/QuadSettingsMenu.gd" id="2"]
 [ext_resource type="Script" path="res://GUI/RateGraph.gd" id="3"]
+[ext_resource type="Theme" uid="uid://24uqagsx1gy3" path="res://GUI/help_page_theme.tres" id="3_chqgv"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_bj45n"]
-font_size = 24
+font_size = 48
 
 [node name="QuadSettingsMenu" type="MarginContainer"]
 process_mode = 3
@@ -13,6 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_qd5lq")
 script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -49,7 +52,7 @@ columns = 3
 
 [node name="CameraAngleLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
 layout_mode = 2
-text = "FPV Camera3D Angle"
+text = "FPV Camera Angle"
 
 [node name="CameraAngleSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
 unique_name_in_owner = true
@@ -325,6 +328,7 @@ text = "0.00"
 [node name="RateGraph" type="Control" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_chqgv")
 script = ExtResource("3")
 
 [node name="ButtonsHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]

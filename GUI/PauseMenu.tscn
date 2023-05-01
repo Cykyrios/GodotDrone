@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bsk1mpj5na1ou"]
+[gd_scene load_steps=4 format=3 uid="uid://bsk1mpj5na1ou"]
 
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://GUI/menu_theme.tres" id="1_kmgdu"]
 [ext_resource type="Script" path="res://GUI/PauseMenu.gd" id="2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ngoj6"]
-font_size = 24
+font_size = 48
 
 [node name="PauseMenu" type="MarginContainer"]
 process_mode = 2
@@ -12,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_kmgdu")
 script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

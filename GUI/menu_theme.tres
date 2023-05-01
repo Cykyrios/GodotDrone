@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cg8ia5t16ecpj"]
+
+[ext_resource type="FontFile" uid="uid://q4qsdhpd4hqf" path="res://GUI/RecursiveSansLnrSt-Med.otf" id="1_ogwui"]
+
+[resource]
+default_font = ExtResource("1_ogwui")
+default_font_size = 32

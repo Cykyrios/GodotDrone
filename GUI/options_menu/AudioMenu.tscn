@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bsa5oyivvnqp0"]
+[gd_scene load_steps=4 format=3 uid="uid://bsa5oyivvnqp0"]
 
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://GUI/menu_theme.tres" id="1_dowr3"]
 [ext_resource type="Script" path="res://GUI/options_menu/AudioMenu.gd" id="2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_m6mta"]
-font_size = 24
+font_size = 48
 
 [node name="AudioMenu" type="MarginContainer"]
 process_mode = 3
@@ -14,6 +15,7 @@ offset_left = -1.0
 offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_dowr3")
 script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

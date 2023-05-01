@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://be6l02nphlj5e"]
 
-[ext_resource type="Theme" uid="uid://du6ekwmwgd35i" path="res://GUI/ThemeMenu.tres" id="1"]
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://GUI/menu_theme.tres" id="1_vw00j"]
 [ext_resource type="PackedScene" uid="uid://cmn8s6qwptgio" path="res://HUD/HUD.tscn" id="2"]
 [ext_resource type="Script" path="res://GUI/options_menu/HUDConfig.gd" id="3"]
 
@@ -13,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("1_vw00j")
 alignment = 1
 script = ExtResource("3")
 
@@ -35,14 +36,12 @@ alignment = 1
 [node name="LabelRefreshRate" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-theme = ExtResource("1")
 text = "HUD FPS"
 
 [node name="SpinBoxRefreshRate" type="SpinBox" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 9
-theme = ExtResource("1")
 min_value = 5.0
 max_value = 60.0
 step = 5.0
@@ -54,63 +53,54 @@ layout_mode = 2
 
 [node name="LabelElements" type="Label" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("1")
 text = "HUD Components"
 
 [node name="CheckCrosshair" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("1")
 text = "Crosshair"
 
 [node name="CheckHorizon" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("1")
 text = "Horizon"
 
 [node name="CheckLadder" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("1")
 text = "Pitch Ladder"
 
 [node name="CheckSpeed" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("1")
 text = "Speed"
 
 [node name="CheckAltitude" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("1")
 text = "Altitude"
 
 [node name="CheckHeading" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("1")
 text = "Heading"
 
 [node name="CheckSticks" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("1")
 text = "Stick Input"
 
 [node name="CheckRPM" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("1")
 text = "Motor RPM"
 
 [node name="HUD" parent="." instance=ExtResource("2")]

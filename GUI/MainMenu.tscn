@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dt2bw5xmlongu"]
+[gd_scene load_steps=4 format=3 uid="uid://dt2bw5xmlongu"]
 
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://GUI/menu_theme.tres" id="1_4ry8b"]
 [ext_resource type="Script" path="res://GUI/MainMenu.gd" id="2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cl45d"]
-font_size = 24
+font_size = 64
 
 [node name="MainMenu" type="MarginContainer"]
 process_mode = 3
@@ -12,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_4ry8b")
 script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

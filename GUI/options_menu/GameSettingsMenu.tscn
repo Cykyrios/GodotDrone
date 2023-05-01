@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdihf8jlkmulq"]
+[gd_scene load_steps=4 format=3 uid="uid://cdihf8jlkmulq"]
 
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://GUI/menu_theme.tres" id="1_x1sst"]
 [ext_resource type="Script" path="res://GUI/options_menu/GameSettingsMenu.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://be6l02nphlj5e" path="res://GUI/options_menu/HUDConfig.tscn" id="3"]
 
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_x1sst")
 script = ExtResource("2")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
