@@ -239,12 +239,7 @@ func setup_countdown() -> void:
 
 	countdown_label = Label.new()
 	add_child(countdown_label)
-	var label_settings := LabelSettings.new()
-	label_settings.font_size = 48
-	label_settings.outline_size = 10
-	label_settings.outline_color = Color(0, 0, 0)
-	countdown_label.label_settings = label_settings
-#	countdown_label.theme = load("res://GUI/ThemeCountdown.tres")
+	countdown_label.theme = load("res://GUI/countdown_theme.tres")
 	countdown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	countdown_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	countdown_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
@@ -254,7 +249,7 @@ func setup_countdown() -> void:
 func setup_end_label() -> void:
 	end_label = Label.new()
 	add_child(end_label)
-	end_label.theme = load("res://GUI/ThemeCountdown.tres")
+	end_label.theme = load("res://GUI/countdown_theme.tres")
 	end_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	end_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	end_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER, Control.PRESET_MODE_MINSIZE)
@@ -264,7 +259,7 @@ func setup_end_label() -> void:
 func setup_timer_label() -> void:
 	timer_label = Label.new()
 	add_child(timer_label)
-	timer_label.theme = load("res://GUI/ThemeTimer.tres")
+	timer_label.theme = load("res://GUI/timer_theme.tres")
 	timer_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	timer_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	timer_label.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT, Control.PRESET_MODE_MINSIZE)

@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://6unf86o7qmc7"]
+
+[ext_resource type="FontFile" uid="uid://q4qsdhpd4hqf" path="res://GUI/RecursiveSansLnrSt-Med.otf" id="1_70csx"]
+
+[resource]
+default_font = ExtResource("1_70csx")
+default_font_size = 64
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 12

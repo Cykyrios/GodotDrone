@@ -27,7 +27,7 @@ func _ready() -> void:
 	vbox.add_child(button)
 	var _discard = button.pressed.connect(_on_button_pressed)
 
-	label_theme = load("res://GUI/ThemeCountdown.tres")
+	label_theme = preload("res://GUI/timer_theme.tres")
 	add_labels("Lap", "Time")
 
 	modulate = Color(1, 1, 1, 0.8)
