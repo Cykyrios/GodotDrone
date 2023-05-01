@@ -46,12 +46,12 @@ func add_labels(lap: String, time: String) -> void:
 	var label := Label.new()
 	label.text = lap
 	label.theme = label_theme
-	label.align = Label.ALIGNMENT_CENTER
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	grid.add_child(label)
 	label = Label.new()
 	label.text = time
 	label.theme = label_theme
-	label.align = Label.ALIGNMENT_CENTER
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	grid.add_child(label)
 
 
