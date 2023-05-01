@@ -15,14 +15,14 @@ func _ready() -> void:
 	label.bbcode_enabled = true
 
 	label.append_text("Please note this game is a Work In Progress! Feel free to report issues ")
-	label.append_text("[url=https://github.com/Cykyrios/GodotDrone]checked GitHub[/url].")
+	label.append_text("[url=https://github.com/Cykyrios/GodotDrone]on GitHub[/url].")
 	label.append_text("\n\n")
 	label.append_text("You need a gamepad or radio transmitter to play, or really any device with 4 ")
 	label.append_text("axes that your computer recognizes.")
 	label.append_text("\n\n")
 	label.append_text("Keyboard controls are hard-coded at this time and are the following:")
 	label.append_text("\n\t- C changes the active camera")
-	label.append_text("\n\t- R toggles race mode, which spawns the drone checked the closest launch pad")
+	label.append_text("\n\t- R toggles race mode, which spawns the drone on the closest launch pad")
 	label.append_text("\n\t- M cycles through flight modes")
 	label.append_text("\n\t- Backspace respawns the drone and resets the race")
 	label.append_text("\n\t- Escape brings up the pause menu")
