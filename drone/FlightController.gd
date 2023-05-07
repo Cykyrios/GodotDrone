@@ -117,7 +117,7 @@ func _ready() -> void:
 	pid_controllers[Controller.LAUNCH].set_clamp_limits(-0.5, 0)
 
 	var _discard = flight_mode_changed.connect(get_parent()._on_flight_mode_changed)
-	change_flight_mode(FlightMode.RATE)
+	change_flight_mode.call_deferred(FlightMode.RATE)
 
 	if b_telemetry:
 		var dir := DirAccess.open("")
