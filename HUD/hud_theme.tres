@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cf465axlen6ii"]
+
+[ext_resource type="FontFile" uid="uid://domue31w35df7" path="res://HUD/RecursiveMonoLnrSt-Regular.otf" id="1_x2pkj"]
+
+[resource]
+default_font = ExtResource("1_x2pkj")
+default_font_size = 24
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 4

@@ -1,17 +1,18 @@
+class_name HUDSpeedScale
 extends Control
 
 
-@onready var speed_label := $HBoxContainer/Label
-@onready var speed_gauge := $HBoxContainer/SpeedGauge
+@onready var speed_label := %Label as Label
+@onready var speed_gauge := %SpeedGauge as HUDBidirectionalGauge
 
 var speed := 0.0
 var speed_prev := 0.0
 
 
-func update_speed(s: float, dt: float) -> void:
+func update_speed(new_speed: float, dt: float) -> void:
 	speed_prev = speed
-	speed = s
-	speed_label.text = "%03d" % [s * 3.6]
+	speed = new_speed
+	speed_label.text = "%03d" % [speed * 3.6]
 
 	var speed_delta := 0.0
 	if dt != 0:

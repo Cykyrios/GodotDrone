@@ -1,0 +1,41 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://domue31w35df7"
+path="res://.godot/imported/RecursiveMonoLnrSt-Regular.otf-78d746830e59c83aedae29033ff2b2a1.fontdata"
+
+[deps]
+
+source_file="res://HUD/RecursiveMonoLnrSt-Regular.otf"
+dest_files=["res://.godot/imported/RecursiveMonoLnrSt-Regular.otf-78d746830e59c83aedae29033ff2b2a1.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "New Configuration",
+"size": Vector2i(16, 0)
+}]
+language_support={}
+script_support={}
+opentype_features={
+1936928824: 1,
+1936929073: 1
+}

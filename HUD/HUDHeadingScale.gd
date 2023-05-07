@@ -1,8 +1,9 @@
+class_name HUDHeadingScale
 extends Control
 
 
-@onready var heading_label := $VBoxContainer/Label
-@onready var heading_gauge := $VBoxContainer/HeadingGauge
+@onready var heading_label := %Label as Label
+@onready var heading_gauge := %HeadingGauge as HUDBidirectionalGauge
 
 var heading := 0.0
 var heading_prev := 0.0
@@ -19,7 +20,7 @@ func update_heading(hdg: float, dt: float) -> void:
 	var heading_delta := 0.0
 	if dt != 0:
 		var overflow_fix := 0.0
-		if abs(heading - heading_prev) > PI:
-			overflow_fix = 2 * PI * sign(heading)
+		if absf(heading - heading_prev) > PI:
+			overflow_fix = 2 * PI * signf(heading)
 		heading_delta = -(heading - heading_prev - overflow_fix) / dt
 	heading_gauge.update_gauge(heading_delta)

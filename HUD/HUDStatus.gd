@@ -1,10 +1,11 @@
+class_name HUDStatus
 extends Label
 
 
 enum Status {DISARMED, ARMED, LAUNCH, TURTLE, RECOVERY}
 
 
-var status: int = Status.DISARMED :
+var status := Status.DISARMED:
 	set(s):
 		if s < Status.size():
 			status = s

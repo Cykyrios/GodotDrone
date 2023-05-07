@@ -1,3 +1,4 @@
+class_name HUDBidirectionalGauge
 extends Control
 
 
@@ -9,13 +10,13 @@ extends Control
 var value := 0.0
 
 var container: BoxContainer = null
-@onready var pos := $TextureProgressPos
-@onready var neg := $TextureProgressNeg
+@onready var pos := %TextureProgressPos as TextureProgressBar
+@onready var neg := %TextureProgressNeg as TextureProgressBar
 
 
 func _ready() -> void:
-	self.remove_child(pos)
-	self.remove_child(neg)
+	remove_child(pos)
+	remove_child(neg)
 	if horizontal:
 		container = HBoxContainer.new()
 		add_child(container)
@@ -57,14 +58,14 @@ func _ready() -> void:
 		neg.custom_minimum_size = Vector2(width, height / 2.0)
 
 
-func update_gauge(v: float) -> void:
-	value = v
+func update_gauge(new_value: float) -> void:
+	value = new_value
 	if value > 0:
 		pos.value = value
 		neg.value = 0
 	elif value < 0:
 		pos.value = 0
 		neg.value = -value
-	elif value == 0:
+	else:
 		pos.value = 0
 		neg.value = 0

@@ -10,6 +10,8 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -24,10 +26,12 @@ offset_bottom = 50.0
 alignment = 2
 
 [node name="Label" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "000.0"
 
 [node name="SpeedGauge" parent="HBoxContainer" instance=ExtResource("3")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

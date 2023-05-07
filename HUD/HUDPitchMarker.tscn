@@ -10,6 +10,8 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1")
@@ -30,11 +32,14 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="HBoxContainer/LeftHalf"]
+[node name="LeftLabel" type="Label" parent="HBoxContainer/LeftHalf"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "05"
 
-[node name="Line" type="NinePatchRect" parent="HBoxContainer/LeftHalf"]
+[node name="LeftLine" type="NinePatchRect" parent="HBoxContainer/LeftHalf"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -49,12 +54,14 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 
-[node name="Line" type="NinePatchRect" parent="HBoxContainer/RightHalf"]
+[node name="RightLine" type="NinePatchRect" parent="HBoxContainer/RightHalf"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("3")
 
-[node name="Label" type="Label" parent="HBoxContainer/RightHalf"]
+[node name="RightLabel" type="Label" parent="HBoxContainer/RightHalf"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "05"

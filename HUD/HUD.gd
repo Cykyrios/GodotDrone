@@ -6,14 +6,16 @@ enum Component {CROSSHAIR, STATUS, HEADING, SPEED, ALTITUDE, LADDER, HORIZON, ST
 enum FlightMode {LEVEL, SPEED, TRACK}
 
 # HUD components
-@onready var ladder := $VBoxContainer/HBoxLadder/HUDLadder
-@onready var speed_scale := $VBoxContainer/HBoxLadder/HUDSpeedScale
-@onready var altitude_scale := $VBoxContainer/HBoxLadder/HUDAltitudeScale
-@onready var heading_scale := $VBoxContainer/HUDHeadingScale
-@onready var stick_left := $VBoxContainer/HBoxInput/HUDStickLeft
-@onready var stick_right := $VBoxContainer/HBoxInput/HUDStickRight
-@onready var rpm_table := $HUDRPM
-@onready var status := $HUDStatus
+@onready var crosshair := %Crosshair as TextureRect
+@onready var ladder := %HUDLadder as HUDLadder
+@onready var speed_scale := %HUDSpeedScale as HUDSpeedScale
+@onready var altitude_scale := %HUDAltitudeScale as HUDAltitudeScale
+@onready var heading_scale := %HUDHeadingScale as HUDHeadingScale
+@onready var stick_left := %HUDStickLeft as HUDStickInput
+@onready var stick_right := %HUDStickRight as HUDStickInput
+@onready var rpm_table := %HUDRPM as HUDRPM
+@onready var status := %HUDStatus as HUDStatus
+@onready var flight_mode := %FlightMode as Label
 
 # Flight data
 var hud_timer := 0.1
@@ -54,7 +56,7 @@ func show_component(component: int, show_comp: bool = true) -> void:
 	var hud_component := []
 	match component:
 		Component.CROSSHAIR:
-			hud_component.append($Crosshair)
+			hud_component.append(crosshair)
 		Component.STATUS:
 			hud_component.append(status)
 		Component.HEADING:
@@ -116,7 +118,7 @@ func update_flight_mode(mode: int) -> void:
 			text = "SPEED"
 		FlightMode.TRACK:
 			text = "POSITION"
-	$MarginContainer/FlightMode.text = text
+	flight_mode.text = text
 
 
 func reset_data() -> void:
