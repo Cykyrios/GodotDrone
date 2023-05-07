@@ -65,15 +65,15 @@ constant = Color(0.784314, 0, 0, 1)
 operator = 2
 
 [sub_resource type="VisualShaderNodeSwitch" id="23"]
-default_input_values = [0, false, 1, Vector2(1, 1), 2, Vector2(0, 0)]
-op_type = 3
+default_input_values = [0, false, 1, Vector3(1, 1, 1), 2, Vector3(0, 0, 0)]
+op_type = 4
 
 [sub_resource type="VisualShaderNodeBooleanParameter" id="24"]
 parameter_name = "CheckpointBackward"
 
 [sub_resource type="VisualShaderNodeSwitch" id="25"]
-default_input_values = [0, false, 1, Vector2(1, 1), 2, Vector2(0, 0)]
-op_type = 3
+default_input_values = [0, false, 1, Vector3(1, 1, 1), 2, Vector3(0, 0, 0)]
+op_type = 4
 
 [sub_resource type="VisualShaderNodeVectorOp" id="26"]
 operator = 2
@@ -82,8 +82,8 @@ operator = 2
 constant = -1.0
 
 [sub_resource type="VisualShaderNodeSwitch" id="28"]
-default_input_values = [0, false, 1, Vector2(1, 1), 2, Vector2(0, 0)]
-op_type = 3
+default_input_values = [0, false, 1, Vector3(1, 1, 1), 2, Vector3(0, 0, 0)]
+op_type = 4
 
 [sub_resource type="VisualShaderNodeSwitch" id="29"]
 
@@ -141,9 +141,9 @@ void fragment() {
 	vec3 n_out46p0 = vec3(n_out47p0) * n_out6p0;
 
 
-	vec2 n_out48p0;
+	vec3 n_out48p0;
 // Switch:48
-	n_out48p0 = mix(vec2(n_out6p0.xy), vec2(n_out46p0.xy), float(n_out43p0));
+	n_out48p0 = mix(n_out6p0, n_out46p0, float(n_out43p0));
 
 
 // Input:53
@@ -159,7 +159,7 @@ void fragment() {
 
 
 // DotProduct:30
-	float n_out30p0 = dot(vec3(n_out48p0, 0.0), n_out29p0);
+	float n_out30p0 = dot(n_out48p0, n_out29p0);
 
 
 // ColorConstant:3
@@ -188,13 +188,13 @@ void fragment() {
 	}
 
 
-	vec2 n_out45p0;
+	vec3 n_out45p0;
 // Switch:45
-	n_out45p0 = mix(vec2(n_out50p0.xy), vec2(n_out5p0.xy), float(n_out21p0));
+	n_out45p0 = mix(n_out50p0, vec3(n_out5p0.xyz), float(n_out21p0));
 
 
 // DotProduct:8
-	float n_out8p0 = dot(vec3(n_out48p0, 0.0), n_out29p0);
+	float n_out8p0 = dot(n_out48p0, n_out29p0);
 
 
 	vec3 n_out14p0;
@@ -215,9 +215,9 @@ void fragment() {
 	}
 
 
-	vec2 n_out42p0;
+	vec3 n_out42p0;
 // Switch:42
-	n_out42p0 = mix(vec2(n_out14p0.xy), n_out45p0, float(n_out20p0));
+	n_out42p0 = mix(n_out14p0, n_out45p0, float(n_out20p0));
 
 
 // Input:33
@@ -280,14 +280,14 @@ void fragment() {
 
 
 // Output:0
-	ALBEDO = vec3(n_out42p0, 0.0);
+	ALBEDO = n_out42p0;
 	ALPHA = n_out49p0;
-	EMISSION = vec3(n_out42p0, 0.0);
+	EMISSION = n_out42p0;
 
 
 }
 "
-graph_offset = Vector2(-804, -263)
+graph_offset = Vector2(-835.23, -209.877)
 nodes/fragment/0/position = Vector2(800, 200)
 nodes/fragment/3/node = SubResource("10")
 nodes/fragment/3/position = Vector2(-1000, 400)
