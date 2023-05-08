@@ -197,3 +197,10 @@ lights_and_shadows/positional_shadow/soft_shadow_filter_quality=3
 textures/default_filters/anisotropic_filtering_level=3
 textures/decals/filter=5
 textures/light_projectors/filter=5
+
+[shader_globals]
+
+grid_texture={
+"type": "sampler2D",
+"value": "res://Assets/grid_texture.png"
+}

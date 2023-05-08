@@ -2,9 +2,10 @@
 
 [ext_resource type="PackedScene" path="res://tracks/tracks/Track_TorusTunnel.tscn" id="1"]
 [ext_resource type="Script" path="res://sceneries/Level.gd" id="3"]
-[ext_resource type="Shader" uid="uid://b1gnbvtmovyv4" path="res://Assets/GridShader.tres" id="4"]
+[ext_resource type="Shader" uid="uid://b1gnbvtmovyv4" path="res://Assets/grid_shader.tres" id="4"]
 [ext_resource type="Script" path="res://drone/RadioController.gd" id="5"]
-[ext_resource type="PackedScene" path="res://drone/drones/Drone1.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://drpyo8j7v14s4" path="res://drone/drones/Drone1.tscn" id="6"]
+[ext_resource type="Material" uid="uid://7auec3ko8opy" path="res://Assets/grid_material.tres" id="6_3cqco"]
 [ext_resource type="PackedScene" uid="uid://bcgfl0s4ppsv6" path="res://tracks/tracks/Track_MultiGP_2018_Regional_Qualifier.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://cpwlqiq68no60" path="res://sceneries/cameras/FlyaroundCamera.tscn" id="8"]
 [ext_resource type="PackedScene" uid="uid://cbsls72667u5s" path="res://sceneries/cameras/FollowCamera.tscn" id="9"]
@@ -39,16 +40,8 @@ auto_exposure_enabled = true
 [sub_resource type="BoxShape3D" id="1"]
 size = Vector3(40, 1, 40)
 
-[sub_resource type="ShaderMaterial" id="2"]
-render_priority = 0
-shader = ExtResource("4")
-shader_parameter/TileX = 50.0
-shader_parameter/TileY = 50.0
-shader_parameter/Color1 = Color(0.501961, 0.501961, 0.501961, 1)
-shader_parameter/Color2 = Color(0, 0, 0, 1)
-
 [sub_resource type="BoxMesh" id="3"]
-material = SubResource("2")
+material = ExtResource("6_3cqco")
 size = Vector3(200, 1, 200)
 
 [sub_resource type="BoxShape3D" id="4"]
@@ -57,10 +50,6 @@ size = Vector3(4, 1, 4)
 [sub_resource type="ShaderMaterial" id="5"]
 render_priority = 0
 shader = ExtResource("4")
-shader_parameter/TileX = 1.0
-shader_parameter/TileY = 1.0
-shader_parameter/Color1 = Color(0.501961, 0.501961, 0.501961, 1)
-shader_parameter/Color2 = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="6"]
 material = SubResource("5")
@@ -223,6 +212,9 @@ shape = SubResource("1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+instance_shader_parameters/TileX = 50.0
+instance_shader_parameters/TileY = 50.0
+instance_shader_parameters/main_color = Color(0.5, 0.5, 0.5, 1)
 mesh = SubResource("3")
 
 [node name="Pillar3" type="StaticBody3D" parent="Objects"]
@@ -234,6 +226,9 @@ shape = SubResource("4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Pillar3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+instance_shader_parameters/TileX = 1.0
+instance_shader_parameters/TileY = 1.0
+instance_shader_parameters/main_color = Color(0.5, 0.5, 0.5, 1)
 mesh = SubResource("6")
 
 [node name="MockPilot" type="StaticBody3D" parent="Objects"]

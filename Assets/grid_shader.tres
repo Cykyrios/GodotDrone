@@ -1,23 +1,23 @@
-[gd_resource type="VisualShader" load_steps=16 format=3 uid="uid://b1gnbvtmovyv4"]
+[gd_resource type="VisualShader" load_steps=18 format=3 uid="uid://b1gnbvtmovyv4"]
 
-[ext_resource type="Texture2D" uid="uid://dem5fonoln70q" path="res://Assets/Grid.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://dem5fonoln70q" path="res://Assets/grid_texture.png" id="1"]
 
 [sub_resource type="VisualShaderNodeInput" id="1"]
-output_port_for_preview = 0
 input_name = "uv"
 
 [sub_resource type="VisualShaderNodeFloatParameter" id="2"]
 parameter_name = "TileX"
+qualifier = 2
 
 [sub_resource type="VisualShaderNodeFloatParameter" id="3"]
 parameter_name = "TileY"
+qualifier = 2
 
 [sub_resource type="VisualShaderNodeVectorOp" id="4"]
 default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(3, 2, 1)]
 operator = 2
 
 [sub_resource type="VisualShaderNodeVectorFunc" id="5"]
-output_port_for_preview = 0
 function = 20
 
 [sub_resource type="VisualShaderNodeVectorCompose" id="6"]
@@ -26,12 +26,15 @@ function = 20
 operator = 2
 
 [sub_resource type="VisualShaderNodeColorParameter" id="8"]
-parameter_name = "Color1"
+parameter_name = "main_color"
+qualifier = 2
 
 [sub_resource type="VisualShaderNodeColorParameter" id="9"]
-parameter_name = "Color2"
+parameter_name = "sub_color"
+qualifier = 2
 
 [sub_resource type="VisualShaderNodeTexture" id="10"]
+source = 5
 texture = ExtResource("1")
 texture_type = 1
 
@@ -47,15 +50,25 @@ operator = 1
 
 [sub_resource type="VisualShaderNodeMix" id="14"]
 
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_hvsfu"]
+parameter_name = "grid_texture"
+qualifier = 1
+texture_type = 1
+texture_filter = 6
+texture_repeat = 1
+
+[sub_resource type="VisualShaderNodeFloatFunc" id="VisualShaderNodeFloatFunc_k0ay2"]
+function = 31
+
 [resource]
 code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
 
-uniform float TileX;
-uniform float TileY;
-uniform sampler2D tex_frg_81 : source_color;
-uniform vec4 Color1 : source_color;
-uniform vec4 Color2 : source_color;
+instance uniform float TileX;
+instance uniform float TileY;
+global uniform sampler2D grid_texture : source_color, filter_linear_mipmap_anisotropic, repeat_enable;
+instance uniform vec4 main_color : source_color;
+instance uniform vec4 sub_color : source_color;
 
 
 
@@ -90,12 +103,13 @@ void fragment() {
 	vec3 n_out78p0 = n_out77p0 * n_out76p0;
 
 
+	vec4 n_out81p0;
 // Texture2D:81
-	vec4 n_out81p0 = texture(tex_frg_81, vec2(n_out78p0.xy));
+	n_out81p0 = texture(grid_texture, vec2(n_out78p0.xy));
 
 
 // ColorParameter:79
-	vec4 n_out79p0 = Color1;
+	vec4 n_out79p0 = main_color;
 
 
 // VectorOp:82
@@ -108,7 +122,7 @@ void fragment() {
 
 
 // ColorParameter:80
-	vec4 n_out80p0 = Color2;
+	vec4 n_out80p0 = sub_color;
 
 
 // VectorOp:83
@@ -120,39 +134,49 @@ void fragment() {
 	float n_out85p0 = mix(n_out82p0.x, n_out83p0.x, n_in85p2);
 
 
+// FloatFunc:87
+	float n_out87p0 = 1.0 - n_out84p0.x;
+
+
 // Output:0
 	ALBEDO = vec3(n_out85p0);
+	ROUGHNESS = n_out87p0;
 
 
 }
 "
+graph_offset = Vector2(-529, -370)
 nodes/fragment/0/position = Vector2(400, 0)
 nodes/fragment/2/node = SubResource("1")
-nodes/fragment/2/position = Vector2(-1400, 0)
+nodes/fragment/2/position = Vector2(-1400, -200)
 nodes/fragment/22/node = SubResource("2")
-nodes/fragment/22/position = Vector2(-1200, -140)
+nodes/fragment/22/position = Vector2(-1200, -600)
 nodes/fragment/61/node = SubResource("3")
-nodes/fragment/61/position = Vector2(-1200, -80)
+nodes/fragment/61/position = Vector2(-1200, -400)
 nodes/fragment/67/node = SubResource("4")
-nodes/fragment/67/position = Vector2(-1200, 0)
+nodes/fragment/67/position = Vector2(-1000, -200)
 nodes/fragment/76/node = SubResource("5")
-nodes/fragment/76/position = Vector2(-1000, 0)
+nodes/fragment/76/position = Vector2(-800, -200)
 nodes/fragment/77/node = SubResource("6")
-nodes/fragment/77/position = Vector2(-1000, -140)
+nodes/fragment/77/position = Vector2(-800, -400)
 nodes/fragment/78/node = SubResource("7")
-nodes/fragment/78/position = Vector2(-800, -140)
+nodes/fragment/78/position = Vector2(-600, -400)
 nodes/fragment/79/node = SubResource("8")
-nodes/fragment/79/position = Vector2(-400, 200)
+nodes/fragment/79/position = Vector2(-400, 0)
 nodes/fragment/80/node = SubResource("9")
-nodes/fragment/80/position = Vector2(-400, 320)
+nodes/fragment/80/position = Vector2(-400, 200)
 nodes/fragment/81/node = SubResource("10")
-nodes/fragment/81/position = Vector2(-600, -180)
+nodes/fragment/81/position = Vector2(-400, -200)
 nodes/fragment/82/node = SubResource("11")
-nodes/fragment/82/position = Vector2(-180, -80)
+nodes/fragment/82/position = Vector2(0, -200)
 nodes/fragment/83/node = SubResource("12")
-nodes/fragment/83/position = Vector2(-180, 40)
+nodes/fragment/83/position = Vector2(0, 0)
 nodes/fragment/84/node = SubResource("13")
-nodes/fragment/84/position = Vector2(-400, 20)
+nodes/fragment/84/position = Vector2(-200, -200)
 nodes/fragment/85/node = SubResource("14")
-nodes/fragment/85/position = Vector2(0, 0)
-nodes/fragment/connections = PackedInt32Array(2, 0, 67, 0, 67, 0, 76, 0, 22, 0, 77, 0, 61, 0, 77, 1, 77, 0, 78, 0, 76, 0, 78, 1, 78, 0, 81, 0, 81, 0, 82, 0, 79, 0, 82, 1, 81, 0, 84, 1, 84, 0, 83, 0, 80, 0, 83, 1, 82, 0, 85, 0, 83, 0, 85, 1, 85, 0, 0, 0)
+nodes/fragment/85/position = Vector2(200, -140)
+nodes/fragment/86/node = SubResource("VisualShaderNodeTexture2DParameter_hvsfu")
+nodes/fragment/86/position = Vector2(-800, 0)
+nodes/fragment/87/node = SubResource("VisualShaderNodeFloatFunc_k0ay2")
+nodes/fragment/87/position = Vector2(200, 40)
+nodes/fragment/connections = PackedInt32Array(2, 0, 67, 0, 67, 0, 76, 0, 22, 0, 77, 0, 61, 0, 77, 1, 77, 0, 78, 0, 76, 0, 78, 1, 78, 0, 81, 0, 81, 0, 82, 0, 79, 0, 82, 1, 81, 0, 84, 1, 84, 0, 83, 0, 80, 0, 83, 1, 82, 0, 85, 0, 83, 0, 85, 1, 85, 0, 0, 0, 86, 0, 81, 2, 84, 0, 87, 0, 87, 0, 0, 3)
