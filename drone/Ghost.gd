@@ -49,22 +49,25 @@ func update_drone_model(path: String) -> void:
 
 		var mat := StandardMaterial3D.new()
 		mat.params_cull_mode = StandardMaterial3D.CULL_DISABLED
-		mat.albedo_color = Color(0.7, 0.7, 0.7, 0.3)
 		mat.distance_fade_mode = StandardMaterial3D.DISTANCE_FADE_PIXEL_DITHER
 		mat.distance_fade_max_distance = 1.0
 		mat.distance_fade_min_distance = 0.2
+		var color := Color.BLACK
 		match type:
 			Type.GOLD:
-				mat.emission = Color(0.8, 0.6, 0.1)
+				color = Color(0.8, 0.6, 0.1)
 			Type.SILVER:
-				mat.emission = Color(0.65, 0.7, 0.8)
+				color = Color(0.65, 0.7, 0.8)
 			Type.BRONZE:
-				mat.emission = Color(0.4, 0.2, 0.05)
+				color = Color(0.4, 0.2, 0.05)
 			Type.PREVIOUS:
-				mat.emission = Color(0.1, 0.1, 0.8)
+				color = Color(0.1, 0.1, 0.8)
 			Type.ABORTED:
-				mat.emission = Color(0.8, 0.1, 0.1)
+				color = Color(0.8, 0.1, 0.1)
+		mat.albedo_color = color
+		mat.emission = color
 		mat.emission_enabled = true
+		mat.emission_energy_multiplier = 10
 
 		for child in get_children():
 			(child as MeshInstance3D).material_override = mat
