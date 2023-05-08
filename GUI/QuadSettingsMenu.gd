@@ -94,7 +94,7 @@ func _ready() -> void:
 	update_rates_ui()
 
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event.is_action("ui_cancel") and event.is_pressed() and not event.is_echo():
 		accept_event()
 		QuadSettings.save_quad_settings()

@@ -15,7 +15,7 @@ var mode: int = Mode.MODE_2
 var accept_input := true
 
 
-func _unhandled_input(event) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventJoypadMotion and accept_input:
 		var stick := -1
 		var axis := Vector3.ZERO

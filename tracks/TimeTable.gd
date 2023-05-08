@@ -68,7 +68,7 @@ func _on_button_pressed() -> void:
 	delete()
 
 
-func _on_game_mode_changed(mode) -> void:
+func _on_game_mode_changed(mode: Global.GameMode) -> void:
 	if mode != Global.GameMode.RACE:
 		delete()
 

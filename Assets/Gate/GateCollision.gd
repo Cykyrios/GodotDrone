@@ -4,7 +4,7 @@ extends StaticBody3D
 @onready var shape := $CollisionShape1 as CollisionShape3D
 
 
-func _ready():
+func _ready() -> void:
 	var num := 32
 	for i in range(num):
 		var s := shape.duplicate() as CollisionShape3D

@@ -80,7 +80,7 @@ func update_transform() -> void:
 		global_transform = Transform3D(basis_x, basis_y, basis_z, origin)
 
 
-func read_replay():
+func read_replay() -> void:
 	replay.clear()
 	match type:
 		Type.PREVIOUS:

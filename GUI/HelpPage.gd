@@ -48,13 +48,13 @@ func _ready() -> void:
 	label.append_text("\n\n")
 
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event.is_action("ui_cancel") and event.is_pressed() and not event.is_echo():
 		accept_event()
 		back.emit()
 
 
-func _on_url_clicked(meta) -> void:
+func _on_url_clicked(meta: Variant) -> void:
 	var _discard = OS.shell_open(meta)
 
 
