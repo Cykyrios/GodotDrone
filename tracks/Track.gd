@@ -464,14 +464,15 @@ func stop_recording_replay(save: bool = false, race_completed: bool = true) -> v
 		if replay_recorder.size() > 0:
 			write_replay(replay_recorder.size())
 			replay_recorder.clear()
-		var dir := DirAccess.open("")
+		var dir := DirAccess.open(Global.replay_dir)
 		if save:
 			var replace := "prev"
 			if race_completed == false:
 				replace = "aborted"
-			var _discard = dir.rename(replay_path, replay_path.replace(".rpl", "_%s.rpl" % [replace]))
+			var new_path := replay_path.replace(".rpl", "_%s.rpl" % [replace])
+			var _error := dir.rename(replay_path, new_path)
 		else:
-			var _discard = dir.remove(replay_path)
+			var _error := dir.remove(replay_path)
 
 
 func check_best_time() -> void:
