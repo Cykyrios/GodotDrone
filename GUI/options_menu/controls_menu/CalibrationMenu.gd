@@ -186,7 +186,7 @@ func _on_calibration_done() -> void:
 	InputMap.action_erase_events("roll_right")
 	InputMap.action_add_event("roll_left", roll[1])
 	InputMap.action_add_event("roll_right", roll[2])
-	var err = save_input_map()
+	var err := save_input_map()
 	if err != OK:
 		var popup: Control = packed_popup.instantiate()
 		add_child(popup)
@@ -200,9 +200,9 @@ func _on_calibration_done() -> void:
 	back.emit()
 
 
-func save_input_map() -> int:
+func save_input_map() -> Error:
 	var config := ConfigFile.new()
-	var err = config.load(Controls.input_map_path)
+	var err := config.load(Controls.input_map_path)
 	if err == OK or err == ERR_FILE_NOT_FOUND:
 		var guid := Input.get_joy_guid(device)
 		config.set_value("controls", "active_controller_guid", guid)

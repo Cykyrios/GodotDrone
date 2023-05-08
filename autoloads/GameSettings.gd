@@ -18,7 +18,7 @@ func load_hud_config() -> void:
 		var hud_section := "hud_config"
 		if config.has_section(hud_section):
 			for key in config.get_section_keys(hud_section):
-				var value = config.get_value(hud_section, key)
+				var value: Variant = config.get_value(hud_section, key)
 				if hud_config.has(key):
 					if key == "fps" and (value is int or value is float):
 						hud_config[key] = clampf(value, 5, 60) as int
