@@ -481,33 +481,38 @@ func check_best_time() -> void:
 		total_time += timer.time
 	var track_name := replay_path.replace(".rpl", "").split("/")[-1]
 	var record_exists := false
-	var new_record := 0
 	var file := FileAccess.open(Global.highscore_path, FileAccess.READ)
 	if file:
+		var records: Array[float] = []
 		while not file.eof_reached():
 			var line := file.get_line()
 			if line == track_name:
 				record_exists = true
-				while new_record < 3:
-					line = file.get_line()
-					if line.begins_with("Track") or line == "":
-						new_record = 3
-						break
-					if (line as float) < 0.1 or total_time < (line as float):
-						break
-					else:
-						new_record += 1
-				break
+			elif record_exists:
+				if line.begins_with("Track") or line == "":
+					break
+				var time := line.to_float()
+				if time > 0.1:
+					records.append(time)
 		file = null
-		if new_record < 3 or not record_exists:
-			write_new_record(new_record, total_time)
-			var dir := DirAccess.open("")
+		var records_count := records.size()
+		if records_count < 3 or total_time < records[-1] or not record_exists:
+			var get_record_pos := func get_record_pos(value: float, array: Array[float]) -> int:
+				var pos := array.size()
+				for i in array.size():
+					if value < array[i]:
+						pos = i
+						break
+				return pos
+			var new_record_pos := get_record_pos.call(total_time, records) as int
+			write_new_record(new_record_pos, total_time)
+			var dir := DirAccess.open(Global.replay_dir)
 			var replace := ["gold", "silver", "bronze"]
-			for i in range(2 - new_record):
+			for i in range(2 - new_record_pos):
 				var _discard = dir.rename(replay_path.replace(".rpl", "_%s.rpl" % [replace[-2 - i]]),
 						replay_path.replace(".rpl", "_%s.rpl" % [replace[-1 - i]]))
 			var _discard = dir.rename(replay_path.replace(".rpl", "_prev.rpl"),
-					replay_path.replace(".rpl", "_%s.rpl" % [replace[new_record]]))
+					replay_path.replace(".rpl", "_%s.rpl" % [replace[new_record_pos]]))
 
 
 func write_new_record(pos: int, time: float) -> void:
