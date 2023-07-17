@@ -1,5 +1,5 @@
 class_name PID
-extends Node
+extends RefCounted
 
 
 var target := 0.0
@@ -20,9 +20,9 @@ var saturated := false
 
 var disabled := false
 
-@export var kp := 0.0
-@export var ki := 0.0
-@export var kd := 0.0
+var kp := 0.0
+var ki := 0.0
+var kd := 0.0
 
 
 func set_coefficients(p: float, i: float, d: float) -> void:
@@ -39,11 +39,11 @@ func set_clamp_limits(low: float, high: float) -> void:
 	clamp_high = high
 
 
-func set_derivative_filter_tau(t: float = 0.01) -> void:
+func set_derivative_filter_tau(t := 0.01) -> void:
 	tau = abs(t)
 
 
-func set_derivative_filter_frequency(f: float = 16.0) -> void:
+func set_derivative_filter_frequency(f := 16.0) -> void:
 	# Default frequency of 16 Hz corresponds to tau = 0.01
 	if f > 0:
 		tau = 1 / (2 * PI * f)
@@ -61,11 +61,11 @@ func reset() -> void:
 	clamped_output = 0.0
 
 
-func reset_integral(i: float = 0.0) -> void:
+func reset_integral(i := 0.0) -> void:
 	integral = i
 
 
-func get_output(mv: float, dt: float, p_print: bool = false) -> float:
+func get_output(mv: float, dt: float, print_data := false) -> float:
 	if disabled:
 		return 0.0
 
@@ -91,11 +91,8 @@ func get_output(mv: float, dt: float, p_print: bool = false) -> float:
 
 	output = proportional + integral + derivative
 	clamped_output = clampf(output, clamp_low, clamp_high)
-	if absf(output) >= absf(clamped_output):
-		saturated = true
-	else:
-		saturated = false
-	if p_print:
+	saturated = true if absf(output) >= absf(clamped_output) else false
+	if print_data:
 		print("target: %8.3f err: %8.3f prop: %8.3f integral: %8.3f deriv: %8.3f "
 				% [target, err, proportional, integral, derivative]
 				+ "total: %8.3f clamp: %8.3f windup: %s"

@@ -70,7 +70,6 @@ var telemetry_file: FileAccess = null
 func _ready() -> void:
 	for _i in range(Controller.size()):
 		pid_controllers.append(PID.new())
-		add_child(pid_controllers[-1])
 
 	pid_controllers[Controller.ALTITUDE].set_coefficients(
 			300 * pid_scale_p, 300 * pid_scale_i, 800 * pid_scale_d)
