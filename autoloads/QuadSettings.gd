@@ -17,6 +17,8 @@ func load_quad_settings() -> void:
 	var config := ConfigFile.new()
 	var text := ""
 	var err := config.load(quad_settings_path)
+	
+	print(quad_settings_path)
 	if err == OK:
 		if config.has_section_key("quad", "angle"):
 			angle = clampf(config.get_value("quad", "angle"), -20, 80) as int

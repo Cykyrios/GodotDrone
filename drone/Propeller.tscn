@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://c3jgnr2e5sr66"]
 
 [ext_resource type="Script" path="res://drone/Propeller.gd" id="1"]
-[ext_resource type="Material" path="res://Assets/Drones/Parts/Propellers/dev_prop/Propeller.material" id="2"]
+[ext_resource type="Material" uid="uid://dwcg2esgrl68x" path="res://Assets/Drones/Parts/Propellers/dev_prop/Propeller.material" id="2"]
 
 [sub_resource type="ArrayMesh" id="1"]
 resource_name = "CW"
@@ -33,6 +33,8 @@ radius = 0.2
 
 [node name="dev_prop" type="Node3D"]
 script = ExtResource("1")
+diameter = 6.0
+pitch = 6.0
 
 [node name="CW" type="MeshInstance3D" parent="."]
 mesh = SubResource("1")

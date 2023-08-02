@@ -160,6 +160,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 			prop.velocity = lin_vel * bas + (ang_vel * bas).cross(prop_local_pos)
 			prop.update_forces()
 			var prop_forces: Array[Vector3] = prop.forces
+
 			var prop_thrust := bas * prop_forces[0]
 			if motor.rpm < 0:
 				prop_thrust = -prop_thrust / 2
@@ -183,6 +184,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 		# Integrate forces and velocities
 		var a := vec_force * state.inverse_mass + Vector3(0, -9.81, 0)
+#		print(a)
 		lin_vel += a * dt
 		pos += lin_vel * dt
 
@@ -270,7 +272,8 @@ func _on_flight_mode_changed(flight_mode: int) -> void:
 
 func _on_quad_settings_updated() -> void:
 	mass = QuadSettings.dry_weight + QuadSettings.battery_weight
-	($FPVCamera as FPVCamera).transform.basis = Basis.IDENTITY.rotated(
+
+	($FPVCamera).transform.basis = Basis.IDENTITY.rotated(
 			Vector3.RIGHT, deg_to_rad(QuadSettings.angle))
 	flight_controller.control_profile = QuadSettings.control_profile
 

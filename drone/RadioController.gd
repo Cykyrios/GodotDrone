@@ -69,14 +69,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(_delta: float) -> void:
 	read_input()
-
+#	print(input)
 	if target is Drone:
 		target.flight_controller.input = input
 
 
 func read_input() -> void:
 	var power := (Input.get_axis("throttle_down", "throttle_up") + 1) / 2
-	var pitch := Input.get_axis("pitch_down", "pitch_up")
+	var pitch := Input.get_axis("pitch_up", "pitch_down")
 	var roll := Input.get_axis("roll_left", "roll_right")
 	var yaw := Input.get_axis("yaw_left", "yaw_right")
 	input = [power, yaw, roll, pitch]

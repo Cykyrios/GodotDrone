@@ -1,0 +1,30 @@
+[gd_resource type="Shader" format=3 uid="uid://drlug1fn4qiaw"]
+
+[resource]
+code = "shader_type spatial;
+render_mode cull_disabled, depth_draw_opaque;
+
+uniform vec4 propeller_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform float alpha_boost : hint_range(1.0, 5.0);
+uniform float emission_power : hint_range(0.0, 2.0) = 0.0;
+uniform float emission_falloff : hint_range(5.0, 20.0) = 10.0;
+
+void vertex() {
+    // Transform the vertex position (optional)
+    // For a disc effect, you may not need to modify the vertex position
+}
+
+void fragment() {
+    // Calculate the distance from the fragment to the center of the disc
+    vec2 center = vec2(0.5, 0.5); // Center of the disc (normalized coordinates)
+    float dist = distance(SCREEN_UV, center);
+
+    // Calculate the alpha value based on the distance
+	float alpha = 0.1;
+
+
+    // Set the output color with the calculated alpha value
+	ALBEDO = propeller_color.rgb;
+    ALPHA = alpha;
+}
+"

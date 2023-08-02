@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://c3mj4l34tq614"]
+
+[ext_resource type="Script" path="res://drone/Drone.gd" id="1_bqmwi"]
+[ext_resource type="Script" path="res://drone/FlightController.gd" id="2_wyphy"]
+[ext_resource type="PackedScene" uid="uid://dmh4b4js6orhx" path="res://drone/LED.tscn" id="3_6mycu"]
+[ext_resource type="PackedScene" uid="uid://dbayfhc24c857" path="res://Assets/Drones/Parts/Frames/Frame1/Frame1.glb" id="4_gqsm5"]
+[ext_resource type="Script" path="res://drone/Frame.gd" id="5_hdww8"]
+[ext_resource type="PackedScene" uid="uid://n1sgj52epvpi" path="res://drone/Motor.tscn" id="6_v7pa8"]
+[ext_resource type="PackedScene" uid="uid://c3jgnr2e5sr66" path="res://drone/Propeller.tscn" id="7_mkoyt"]
+
+[node name="Drone" type="RigidBody3D"]
+script = ExtResource("1_bqmwi")
+
+[node name="FlightController" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_wyphy")
+
+[node name="LEDMode" parent="." instance=ExtResource("3_6mycu")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0518737, 0.029)
+
+[node name="Frame" parent="." instance=ExtResource("4_gqsm5")]
+unique_name_in_owner = true
+script = ExtResource("5_hdww8")
+
+[node name="Motor" parent="." instance=ExtResource("6_v7pa8")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, -0.08)
+
+[node name="Propeller1" parent="Motor" instance=ExtResource("7_mkoyt")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.0175326, 0)
+
+[node name="Motor2" parent="." instance=ExtResource("6_v7pa8")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, -0.08)
+
+[node name="Propeller2" parent="Motor2" instance=ExtResource("7_mkoyt")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.0175326, 0)
+
+[node name="Motor3" parent="." instance=ExtResource("6_v7pa8")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, 0.08)
+
+[node name="Propeller3" parent="Motor3" instance=ExtResource("7_mkoyt")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.0175326, 0)
+
+[node name="Motor4" parent="." instance=ExtResource("6_v7pa8")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, 0.08)
+
+[node name="Propeller4" parent="Motor4" instance=ExtResource("7_mkoyt")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.0175326, 0)

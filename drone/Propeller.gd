@@ -6,6 +6,9 @@ extends Node3D
 @onready var cw := $CW
 @onready var ccw := $CCW
 @onready var prop_disk := $PropBlurDisk
+@onready var cw_blur := $CWBlur
+@onready var ccw_blur := $CCWBlur
+
 
 @onready var ray := $RayCast3D as RayCast3D
 var max_ray_length := 0.0
@@ -33,27 +36,30 @@ var use_blur := false
 		if !is_inside_tree():
 			await self.ready
 		color = col
-		cw.mesh.surface_get_material(0).set_shader_parameter("propeller_color", color)
-		ccw.mesh.surface_get_material(0).set_shader_parameter("propeller_color", color)
-		prop_disk.mesh.surface_get_material(0).set_shader_parameter("propeller_color", color)
+		cw.get_surface_override_material(0).set_shader_parameter("propeller_color", color)
+		ccw.get_surface_override_material(0).set_shader_parameter("propeller_color", color)
+		cw_blur.get_surface_override_material(0).set_shader_parameter("propeller_color", color)
+		ccw_blur.get_surface_override_material(0).set_shader_parameter("propeller_color", color)
+		prop_disk.get_surface_override_material(0).set_shader_parameter("propeller_color", color)
 @export_range (1, 3) var prop_disk_alpha := 1.0 :
 	set(alpha):
 		if !is_inside_tree():
 			await self.ready
 		prop_disk_alpha = alpha
-		prop_disk.mesh.surface_get_material(0).set_shader_parameter("alpha_boost", prop_disk_alpha)
+#		print(prop_disk.get_surface_override_material(0))
+		prop_disk.get_surface_override_material(0).set_shader_parameter("alpha_boost", prop_disk_alpha)
 @export_range (0, 2) var prop_disk_emission := 0.0 :
 	set(emission):
 		if !is_inside_tree():
 			await self.ready
 		prop_disk_emission = emission
-		prop_disk.mesh.surface_get_material(0).set_shader_parameter("emission_power", prop_disk_emission)
+		prop_disk.get_surface_override_material(0).set_shader_parameter("emission_power", prop_disk_emission)
 @export_range (1, 20) var prop_disk_falloff := 10 :
 	set(falloff):
 		if !is_inside_tree():
 			await self.ready
 		prop_disk_falloff = falloff
-		prop_disk.mesh.surface_get_material(0).set_shader_parameter("emission_falloff", prop_disk_falloff)
+		prop_disk.get_surface_override_material(0).set_shader_parameter("emission_falloff", prop_disk_falloff)
 
 var velocity := Vector3.ZERO
 var forces: Array[Vector3] = [Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO, Vector3.ZERO]
@@ -98,7 +104,7 @@ func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 
-	if abs(rpm) > 500:
+	if abs(rpm) > 12000:
 		if !use_blur:
 			use_blur = true
 			prop_disk.visible = true
@@ -114,15 +120,20 @@ func set_visibility(show_prop: bool) -> void:
 	if show_prop:
 		cw.visible = clockwise
 		ccw.visible = !clockwise
+		cw_blur.visible = false
+		ccw_blur.visible = false
 	else:
 		cw.visible = false
 		ccw.visible = false
+		cw_blur.visible = clockwise
+		ccw_blur.visible = !clockwise
 
 
 func update_forces() -> void:
 	# Forces computed according to paper from ETH Zurich: Rajan Gill and Raffaello D'Andrea
 	# Computationally Efficient Force and Moment Models for Propellers in UAV Forward Flight Applications
 	var rho := 1.225
+#	print(rpm)
 	w = rpm * PI / 30.0
 	var v := -velocity
 	var v_len := v.length()

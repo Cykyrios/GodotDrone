@@ -5,4 +5,6 @@ export.cfg
 export_presets.cfg
 Export/
 
+*.import
+
 .mono/

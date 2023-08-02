@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://sceneries/Level.gd" id="3"]
 [ext_resource type="Shader" uid="uid://b1gnbvtmovyv4" path="res://Assets/grid_shader.tres" id="4"]
 [ext_resource type="Script" path="res://drone/RadioController.gd" id="5"]
+[ext_resource type="PackedScene" uid="uid://b2oyx01l385r7" path="res://drone/FPVCamera/FPVCamera.tscn" id="5_f1ear"]
 [ext_resource type="PackedScene" uid="uid://drpyo8j7v14s4" path="res://drone/drones/Drone1.tscn" id="6"]
 [ext_resource type="Material" uid="uid://7auec3ko8opy" path="res://Assets/grid_material.tres" id="6_3cqco"]
 [ext_resource type="PackedScene" uid="uid://bcgfl0s4ppsv6" path="res://tracks/tracks/Track_MultiGP_2018_Regional_Qualifier.tscn" id="7"]
@@ -13,7 +14,6 @@
 [ext_resource type="PackedScene" path="res://tracks/tracks/Track_FigureEight.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://bpy5wcppe31o0" path="res://tracks/tracks/Track_MultiGP_2020_Global_Qualifier.tscn" id="12"]
 [ext_resource type="PackedScene" uid="uid://c8f7gpaq0tesn" path="res://tracks/tracks/Track_MultiGP_2018_Regional_Final.tscn" id="13"]
-[ext_resource type="Script" path="res://drone/FPVCamera/FPVCamera.gd" id="14"]
 [ext_resource type="PackedScene" uid="uid://ckemy41jveddk" path="res://tracks/tracks/Track_MultiGP_2019_Global_Qualifier.tscn" id="15"]
 [ext_resource type="PackedScene" uid="uid://b2j57x7tra4lm" path="res://tracks/tracks/Track_MultiGP_2021_Global_Qualifier.tscn" id="16"]
 [ext_resource type="PackedScene" uid="uid://dphmx20imcptm" path="res://tracks/tracks/Track_MultiGP_2022_Global_Qualifier.tscn" id="17"]
@@ -101,10 +101,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
 [node name="Drone" parent="." instance=ExtResource("6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
 
-[node name="FPVCamera" type="Camera3D" parent="Drone"]
-transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0.00459784, -0.0626912)
-script = ExtResource("14")
-clip_near = 0.006
+[node name="FPVCamera" parent="Drone" instance=ExtResource("5_f1ear")]
+transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0.005, -0.063)
 
 [node name="Objects" type="Node3D" parent="."]
 

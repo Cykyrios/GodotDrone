@@ -46,7 +46,7 @@ func draw_debug_shape(shape: DebugShape) -> void:
 		for sub_shape in shape.debug_shapes:
 			draw_debug_shape(sub_shape)
 	else:
-		var primitives: Array[Primitive] = []
+		var primitives := []
 		if shape.draw_surfaces:
 			im.surface_begin(Mesh.PRIMITIVE_TRIANGLES, mat)
 			primitives = shape.triangle_primitives

@@ -33,7 +33,7 @@ func _enter_tree() -> void:
 	$LightMesh.material_override = mat
 	mat.albedo_color = Color(0.4, 0.4, 0.4)
 	mat.emission_enabled = true
-	mat.emission_energy = 1
+	mat.emission_energy = 10
 	mat.emission = color
 
 

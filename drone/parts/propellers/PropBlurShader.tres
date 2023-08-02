@@ -1,4 +1,4 @@
-[gd_resource type="Shader" format=2]
+[gd_resource type="Shader" format=3 uid="uid://ghy2xnnwduee"]
 
 [resource]
 code = "shader_type spatial;
@@ -10,12 +10,22 @@ uniform float alpha_boost : hint_range(1.0, 5.0);
 uniform float emission_power : hint_range(0.0, 2.0) = 0.0;
 uniform float emission_falloff : hint_range(5.0, 20.0) = 10.0;
 
+void vertex() {
+    // Transform the vertex position (optional)
+    // For a disc effect, you may not need to modify the vertex position
+}
 
 void fragment() {
+    // Calculate the distance from the fragment to the center of the disc
 	vec4 col = texture(prop_blur, UV);
-	
-	ALBEDO = col.rgb * propeller_color.rgb;
-	ALPHA = clamp(col.a * alpha_boost, 0.0, 1.0);
-	EMISSION = pow(1.0 - ALPHA, emission_falloff) * ALBEDO * 30.0 * emission_power;
+    vec2 center = vec2(0.5, 0.5); // Center of the disc (normalized coordinates)
+    float dist = distance(SCREEN_UV, center);
+
+    // Calculate the alpha value based on the distance
+	float alpha = 0.2;
+
+    // Set the output color with the calculated alpha value
+	ALBEDO = COLOR.rgb * propeller_color.rgb;
+    ALPHA = alpha;
 }
 "

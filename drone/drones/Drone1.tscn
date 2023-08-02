@@ -1,39 +1,52 @@
-[gd_scene load_steps=7 format=3 uid="uid://drpyo8j7v14s4"]
+[gd_scene load_steps=10 format=3 uid="uid://drpyo8j7v14s4"]
 
 [ext_resource type="PackedScene" uid="uid://dbayfhc24c857" path="res://Assets/Drones/Parts/Frames/Frame1/Frame1.glb" id="1"]
 [ext_resource type="Script" path="res://drone/Drone.gd" id="2"]
 [ext_resource type="Script" path="res://drone/FlightController.gd" id="3"]
-[ext_resource type="PackedScene" path="res://drone/LED.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://drone/parts/propellers/Propeller1.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://dmh4b4js6orhx" path="res://drone/LED.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://bvqmyftvv13w6" path="res://drone/parts/propellers/Propeller1.tscn" id="5"]
+[ext_resource type="Script" path="res://drone/Frame.gd" id="5_rmq1d"]
 [ext_resource type="PackedScene" uid="uid://bgtdc8niopper" path="res://Assets/Drones/Parts/Motors/Motor1/Motor1.glb" id="7"]
+[ext_resource type="Script" path="res://drone/Motor.gd" id="7_78jvf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tubqj"]
+size = Vector3(0.20076, 0.0789196, 0.182812)
 
 [node name="Drone1" type="RigidBody3D"]
 mass = 0.7
 custom_integrator = true
 continuous_cd = true
 script = ExtResource("2")
-projected_area = Vector3(0.0128, 0.0135, 0.0058)
+projected_area = Vector3(0.013, 0.006, 0.014)
 
 [node name="FlightController" type="Node3D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3")
 
 [node name="LEDMode" parent="." instance=ExtResource("4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.015, 0.045)
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0456649, 0.045)
 
 [node name="Frame" parent="." instance=ExtResource("1")]
+unique_name_in_owner = true
+script = ExtResource("5_rmq1d")
 
 [node name="Motor1" parent="." instance=ExtResource("7")]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, -0.08)
+script = ExtResource("7_78jvf")
 MAX_RPM = 30000.0
 RPM_ACCELERATION = 150000.0
 MIN_POWER = 2
 kv = 2400
 
 [node name="Propeller1" parent="Motor1" instance=ExtResource("5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0095, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.018, 0)
 
 [node name="Motor2" parent="." instance=ExtResource("7")]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, -0.08)
+script = ExtResource("7_78jvf")
 clockwise = false
 MAX_RPM = 30000.0
 RPM_ACCELERATION = 150000.0
@@ -41,20 +54,24 @@ MIN_POWER = 2
 kv = 2400
 
 [node name="Propeller2" parent="Motor2" instance=ExtResource("5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0095, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.018, 0)
 
 [node name="Motor3" parent="." instance=ExtResource("7")]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0, 0.08)
+script = ExtResource("7_78jvf")
 MAX_RPM = 30000.0
 RPM_ACCELERATION = 150000.0
 MIN_POWER = 2
 kv = 2400
 
 [node name="Propeller3" parent="Motor3" instance=ExtResource("5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0095, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.018, 0)
 
 [node name="Motor4" parent="." instance=ExtResource("7")]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, 0, 0.08)
+script = ExtResource("7_78jvf")
 clockwise = false
 MAX_RPM = 30000.0
 RPM_ACCELERATION = 150000.0
@@ -62,4 +79,8 @@ MIN_POWER = 2
 kv = 2400
 
 [node name="Propeller4" parent="Motor4" instance=ExtResource("5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0095, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.018, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.011, 0)
+shape = SubResource("BoxShape3D_tubqj")

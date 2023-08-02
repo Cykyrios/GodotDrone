@@ -1,12 +1,12 @@
 [gd_scene load_steps=21 format=3 uid="uid://npmj48vnd08n"]
 
-[ext_resource type="PackedScene" path="res://drone/Propeller.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://c3jgnr2e5sr66" path="res://drone/Propeller.tscn" id="1"]
 [ext_resource type="Script" path="res://drone/Drone.gd" id="2"]
 [ext_resource type="Script" path="res://drone/FlightController.gd" id="3"]
-[ext_resource type="PackedScene" path="res://drone/LED.tscn" id="4"]
-[ext_resource type="Material" path="res://Assets/Drones/Parts/Frames/dev_prototype/RightGreen.material" id="5"]
-[ext_resource type="Material" path="res://Assets/Drones/Parts/Frames/dev_prototype/LeftRed.material" id="6"]
-[ext_resource type="Material" path="res://Assets/Drones/Parts/Frames/dev_prototype/DroneBody.material" id="7"]
+[ext_resource type="PackedScene" uid="uid://dmh4b4js6orhx" path="res://drone/LED.tscn" id="4"]
+[ext_resource type="Material" uid="uid://b68xe6wqr0xql" path="res://Assets/Drones/Parts/Frames/dev_prototype/RightGreen.material" id="5"]
+[ext_resource type="Material" uid="uid://7pkub8lg2hmr" path="res://Assets/Drones/Parts/Frames/dev_prototype/LeftRed.material" id="6"]
+[ext_resource type="Material" uid="uid://vhwcqps8grbk" path="res://Assets/Drones/Parts/Frames/dev_prototype/DroneBody.material" id="7"]
 [ext_resource type="PackedScene" uid="uid://bgtdc8niopper" path="res://Assets/Drones/Parts/Motors/Motor1/Motor1.glb" id="8"]
 
 [sub_resource type="ArrayMesh" id="1"]
@@ -144,10 +144,6 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 
 [node name="Motor1" parent="." instance=ExtResource("8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.13, -0.4)
-MAX_TORQUE = 10000.0
-RPM_ACCELERATION = 50000.0
-MIN_POWER = 5
-kv = 1000
 
 [node name="Propeller1" parent="Motor1" instance=ExtResource("1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
@@ -156,11 +152,6 @@ pitch = 10.0
 
 [node name="Motor2" parent="." instance=ExtResource("8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.13, -0.4)
-clockwise = false
-MAX_TORQUE = 10000.0
-RPM_ACCELERATION = 50000.0
-MIN_POWER = 5
-kv = 1000
 
 [node name="Propeller2" parent="Motor2" instance=ExtResource("1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
@@ -169,10 +160,6 @@ pitch = 10.0
 
 [node name="Motor3" parent="." instance=ExtResource("8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.13, 0.4)
-MAX_TORQUE = 10000.0
-RPM_ACCELERATION = 50000.0
-MIN_POWER = 5
-kv = 1000
 
 [node name="Propeller3" parent="Motor3" instance=ExtResource("1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
@@ -181,11 +168,6 @@ pitch = 10.0
 
 [node name="Motor4" parent="." instance=ExtResource("8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.13, 0.4)
-clockwise = false
-MAX_TORQUE = 10000.0
-RPM_ACCELERATION = 50000.0
-MIN_POWER = 5
-kv = 1000
 
 [node name="Propeller4" parent="Motor4" instance=ExtResource("1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
