@@ -145,7 +145,6 @@ void fragment() {
 
 }
 "
-graph_offset = Vector2(-906.934, -216.799)
 nodes/fragment/0/position = Vector2(400, 0)
 nodes/fragment/2/node = SubResource("1")
 nodes/fragment/2/position = Vector2(-1400, -200)

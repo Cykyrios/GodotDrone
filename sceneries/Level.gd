@@ -21,6 +21,7 @@ func _ready() -> void:
 			camera_index = cameras.find(c)
 #	camera = cameras[camera_index]
 	camera = cameras[0]
+	camera_index = 1
 	change_camera()
 
 	for c in get_children():
@@ -29,6 +30,7 @@ func _ready() -> void:
 	var _discard = Global.game_mode_changed.connect(_on_game_mode_changed)
 
 	_discard = drone.respawned.connect(_on_drone_reset)
+	
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -94,11 +96,10 @@ func _on_drone_reset() -> void:
 
 
 func _on_resume() -> void:
-	if pause_menu.can_resume:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		pause_menu.queue_free()
-		await get_tree().process_frame
-		get_tree().paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pause_menu.queue_free()
+	await get_tree().process_frame
+	get_tree().paused = false
 
 
 func _on_return_to_menu() -> void:

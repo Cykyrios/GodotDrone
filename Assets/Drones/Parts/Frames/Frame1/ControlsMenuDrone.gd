@@ -15,18 +15,22 @@ func _ready() -> void:
 	$Motor2/Propeller2/PropBlurDisk.hide()
 	$Motor3/Propeller3/PropBlurDisk.hide()
 	$Motor4/Propeller4/PropBlurDisk.hide()
+	$"Motor1/Propeller1/PropDisk-cylinder".hide()
+	$"Motor2/Propeller2/PropDisk-cylinder".hide()
+	$"Motor3/Propeller3/PropDisk-cylinder".hide()
+	$"Motor4/Propeller4/PropDisk-cylinder".hide()
 	$Motor1/Propeller1/CCW.hide()
 	$Motor2/Propeller2/CW.hide()
 	$Motor3/Propeller3/CCW.hide()
 	$Motor4/Propeller4/CW.hide()
 
-	var color := Color(0.7, 0.05, 0.05)
-	var prop := "CW"
-	for i in range(4):
-		if i == 1 or i == 3:
-			prop = "CCW"
-		get_node("Motor%d/Propeller%d/%s" % [i + 1, i + 1, prop]) \
-				.mesh.surface_get_material(0).set_shader_parameter("propeller_color", color)
+#	var color := Color(0.7, 0.05, 0.05)
+#	var prop := "CW"
+#	for i in range(4):
+#		if i == 1 or i == 3:
+#			prop = "CCW"
+#		get_node("Motor%d/Propeller%d/%s" % [i + 1, i + 1, prop]) \
+#				.mesh.surface_get_material(0).set_shader_parameter("propeller_color", color)
 
 
 func _process(delta: float) -> void:

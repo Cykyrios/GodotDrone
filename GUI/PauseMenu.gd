@@ -16,6 +16,7 @@ var can_resume := true
 @onready var button_help := %ButtonHelp as Button
 @onready var button_options := %ButtonOptions as Button
 @onready var button_main_menu := %ButtonMainMenu as Button
+@onready var pausemenu_container: PanelContainer = $PanelContainer
 
 
 func _ready() -> void:
@@ -54,36 +55,36 @@ func _on_resume_pressed() -> void:
 func _on_quad_settings_pressed() -> void:
 	if packed_quad_settings_menu.can_instantiate():
 		var quad_settings_menu := packed_quad_settings_menu.instantiate()
-		get_parent().add_child(quad_settings_menu)
+		add_child(quad_settings_menu)
 		can_resume = false
-		visible = false
+		pausemenu_container.visible = false
 		await quad_settings_menu.back
 		quad_settings_menu.queue_free()
-		visible = true
+		pausemenu_container.visible = true
 		can_resume = true
 
 
 func _on_help_pressed() -> void:
 	if packed_help_page.can_instantiate():
 		var help_page := packed_help_page.instantiate()
-		get_parent().add_child(help_page)
+		add_child(help_page)
 		can_resume = false
-		visible = false
+		pausemenu_container.visible = false
 		await help_page.back
 		help_page.queue_free()
-		visible = true
+		pausemenu_container.visible = true
 		can_resume = true
 
 
 func _on_options_pressed() -> void:
 	if packed_options_menu.can_instantiate():
 		var options_menu := packed_options_menu.instantiate()
-		get_parent().add_child(options_menu)
+		add_child(options_menu)
 		can_resume = false
-		visible = false
+		pausemenu_container.visible = false
 		await options_menu.back
 		options_menu.queue_free()
-		visible = true
+		pausemenu_container.visible = true
 		can_resume = true
 
 

@@ -69,7 +69,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(_delta: float) -> void:
 	read_input()
-#	print(input)
+
 	if target is Drone:
 		target.flight_controller.input = input
 
