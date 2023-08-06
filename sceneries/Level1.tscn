@@ -18,24 +18,19 @@
 [ext_resource type="PackedScene" uid="uid://b2j57x7tra4lm" path="res://tracks/tracks/Track_MultiGP_2021_Global_Qualifier.tscn" id="16"]
 [ext_resource type="PackedScene" uid="uid://dphmx20imcptm" path="res://tracks/tracks/Track_MultiGP_2022_Global_Qualifier.tscn" id="17"]
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_730eg"]
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_l32kd"]
 
 [sub_resource type="Sky" id="Sky_8cqmd"]
-sky_material = SubResource("PhysicalSkyMaterial_730eg")
+sky_material = SubResource("PhysicalSkyMaterial_l32kd")
 
 [sub_resource type="Environment" id="Environment_bxx2h"]
 background_mode = 2
 sky = SubResource("Sky_8cqmd")
-ambient_light_source = 3
-reflected_light_source = 2
-tonemap_mode = 2
 sdfgi_use_occlusion = true
-glow_enabled = true
 fog_density = 0.0
 fog_aerial_perspective = 0.5
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ybxki"]
-auto_exposure_enabled = true
 
 [sub_resource type="BoxShape3D" id="1"]
 size = Vector3(40, 1, 40)

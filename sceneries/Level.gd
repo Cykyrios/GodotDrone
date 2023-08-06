@@ -68,8 +68,12 @@ func change_camera() -> void:
 
 	if camera is FPVCamera:
 		drone.hud.visible = true
+		drone.hud.show_component(drone.hud.Component.CROSSHAIR, GameSettings.hud_config["crosshair"])
+		drone.hud.show_component(drone.hud.Component.HORIZON, GameSettings.hud_config["horizon"])
 	else:
-		drone.hud.visible = false
+		drone.hud.visible = true
+		drone.hud.show_component(drone.hud.Component.CROSSHAIR, false)
+		drone.hud.show_component(drone.hud.Component.HORIZON, false)
 
 
 func add_pause_menu() -> void:

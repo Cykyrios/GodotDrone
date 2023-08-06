@@ -66,17 +66,25 @@ void fragment() {
 		float ay = abs(pos.y);
 		float az = abs(pos.z);
 		
+		// Micro adjustments for fisheye sides and middle textures to blend together
+		// Without the adjustments artifact lines from sampling textures at uv coordinates 
+		// beyond the desired texture areas
+		float midsection_adjust = 0.0003;
+		float side_adjust = 0.0007;
+		
 		if (pos.z <= 0.0) {
-			if (az > ax && az > ay) {
+			if (az > ax + midsection_adjust && az > ay) {
 				uv = vec2(0.5 * (vec2(pos.x / az, pos.y / az)) + 0.5);
 				ALBEDO = srgb_to_linear(texture(Texture0, uv).rgb);
 			} else {
 				if (ax > ay) {
 					if (pos.x < 0.0) {
 						uv = vec2(0.5 * (vec2(-pos.z / ax, pos.y / ax)) + 0.5);
+						uv.x -= side_adjust;
 						ALBEDO = srgb_to_linear(texture(Texture1, uv).rgb);
 					} else {
 						uv = vec2(0.5 * (vec2(pos.z / ax, pos.y / ax)) + 0.5);
+						uv.x += side_adjust;
 						ALBEDO = srgb_to_linear(texture(Texture2, uv).rgb);
 					}
 				} else {
