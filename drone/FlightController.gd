@@ -5,7 +5,7 @@ extends Node3D
 enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
 		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED,
 		LAUNCH}
-enum FlightMode {RATE, LEVEL, SPEED, TRACK, LAUNCH, TURTLE, AUTO}
+enum FlightMode {RATE, LEVEL, SPEED, TRACK, POSITION, LAUNCH, TURTLE, AUTO}
 enum ArmFail {THROTTLE_HIGH, CRASH_RECOVERY_MODE}
 
 
@@ -125,12 +125,12 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if (flight_mode == FlightMode.LEVEL or flight_mode == FlightMode.SPEED \
-			or flight_mode == FlightMode.TRACK) and not is_flight_safe():
+			or flight_mode == FlightMode.TRACK or flight_mode == FlightMode.POSITION) and not is_flight_safe():
 		change_flight_mode(FlightMode.AUTO)
 	elif flight_mode == FlightMode.LAUNCH and (angles.x < deg_to_rad(-80) or angles.x > deg_to_rad(10)):
 		_on_disarm_input()
 
-	if flight_mode == FlightMode.TRACK:
+	if flight_mode == FlightMode.TRACK or flight_mode == FlightMode.POSITION:
 		if debug_geom:
 			debug_geom.draw_debug_cube(0.02, get_tracking_target(), Vector3(0.2, 0.2, 0.2))
 
@@ -359,7 +359,7 @@ func _on_cycle_flight_modes() -> void:
 
 	if flight_mode == FlightMode.LEVEL:
 		pid_controllers[Controller.ALTITUDE].target = pos.y
-	if flight_mode == FlightMode.TRACK:
+	if flight_mode == FlightMode.TRACK or flight_mode == FlightMode.POSITION:
 		pid_controllers[Controller.ALTITUDE].target = pos.y
 		pid_controllers[Controller.POS_X].target = pos.x
 		pid_controllers[Controller.POS_Z].target = pos.z
@@ -534,10 +534,77 @@ func update_command() -> Array[float]:
 	elif flight_mode == FlightMode.TRACK:
 		var target := get_tracking_target()
 		var target_prev := target
-		var target_speed := 5.0
+		var target_speed := 5
+		
 		target.x = target.x + roll_input * target_speed * dt
 		target.y = target.y + (pwr - 0.5) * target_speed * dt
 		target.z = target.z + pitch_input * target_speed * dt
+		
+		
+		set_tracking_target(target)
+
+		motor_control[0] = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)
+
+		var target_angle := pid_controllers[Controller.YAW].target - yaw_input * PI / 2.0 * dt
+		while target_angle > PI:
+			target_angle -= 2 * PI
+		while target_angle < -PI:
+			target_angle += 2 * PI
+		pid_controllers[Controller.YAW].target = target_angle
+		var hdg_delta := 0.0
+		if absf(target_angle - angles.y) > PI:
+			hdg_delta = 2 * PI
+			if target_angle < 0:
+				hdg_delta = -hdg_delta
+		var measurement := angles.y + hdg_delta
+		# Manually correct previous PID measurement to remove discontinuity
+		if absf(pid_controllers[Controller.YAW].mv_prev - measurement) > PI:
+			pid_controllers[Controller.YAW].mv_prev += hdg_delta
+		motor_control[1] = pid_controllers[Controller.YAW].get_output(measurement, dt, false)
+
+		var xform := Transform3D(basis_curr, pos)
+		target = get_tracking_target()
+		var delta_pos: Vector3 = target * xform
+		var target_vel := (target - target_prev) / dt
+
+		var bank_limit := deg_to_rad(35)
+		if lin_vel.length() > 2.8 or target_vel.length() > 2.8 or delta_pos.length() > 3.0:
+			pid_controllers[Controller.LATERAL_SPEED].target = (target_vel * basis_curr).x + 2 * delta_pos.x
+			var roll_change := pid_controllers[Controller.LATERAL_SPEED].get_output(local_vel.x, dt, false)
+			pid_controllers[Controller.ROLL].target = clampf(roll_change, -bank_limit, bank_limit)
+			motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt, false)
+
+			pid_controllers[Controller.FORWARD_SPEED].target = (target_vel * basis_curr).z + 2 * delta_pos.z
+			var pitch_change := pid_controllers[Controller.FORWARD_SPEED].get_output(local_vel.z, dt, false)
+			pid_controllers[Controller.PITCH].target = clampf(pitch_change, -bank_limit, bank_limit)
+			motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt, false)
+		else:
+			var roll_target := pid_controllers[Controller.POS_X].get_output(target.x - delta_pos.x, dt)
+			pid_controllers[Controller.ROLL].target = clampf(roll_target,-bank_limit, bank_limit)
+			motor_control[2] = pid_controllers[Controller.ROLL].get_output(-angles.z, dt)
+
+			var pitch_target := pid_controllers[Controller.POS_Z].get_output(target.z - delta_pos.z, dt)
+			pid_controllers[Controller.PITCH].target = clampf(pitch_target,-bank_limit, bank_limit)
+			motor_control[3] = pid_controllers[Controller.PITCH].get_output(angles.x, dt)
+	
+	elif flight_mode == FlightMode.POSITION:
+		var target := get_tracking_target()
+		var user_target: Vector3 = Vector3(-6.19, 3.0, 0.0)
+		var target_prev := target
+		var target_speed := 5
+		var delta_target := (user_target - target)
+		delta_target /= delta_target.length()
+		
+		var delta_y: float = 0.0
+		delta_y = delta_target.y
+			
+		if (user_target-global_position).length() > 2:
+			target.x = target.x + delta_target.x * target_speed * dt
+			target.y = target.y + (delta_y) * target_speed * dt
+			target.z = target.z + delta_target.z * target_speed * dt
+		else:
+			target = user_target
+		
 		set_tracking_target(target)
 
 		motor_control[0] = pid_controllers[Controller.ALTITUDE].get_output(pos.y, dt, false)

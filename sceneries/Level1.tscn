@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bdyif1vqok2vp"]
+[gd_scene load_steps=30 format=3 uid="uid://bdyif1vqok2vp"]
 
 [ext_resource type="PackedScene" path="res://tracks/tracks/Track_TorusTunnel.tscn" id="1"]
 [ext_resource type="Script" path="res://sceneries/Level.gd" id="3"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://ckemy41jveddk" path="res://tracks/tracks/Track_MultiGP_2019_Global_Qualifier.tscn" id="15"]
 [ext_resource type="PackedScene" uid="uid://b2j57x7tra4lm" path="res://tracks/tracks/Track_MultiGP_2021_Global_Qualifier.tscn" id="16"]
 [ext_resource type="PackedScene" uid="uid://dphmx20imcptm" path="res://tracks/tracks/Track_MultiGP_2022_Global_Qualifier.tscn" id="17"]
+[ext_resource type="Script" path="res://autoloads/debug_geometry.gd" id="18_1rmd1"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_l32kd"]
 
@@ -266,3 +267,6 @@ transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 
 [node name="Track_MultiGP_2022_Global_Qualifier" parent="." instance=ExtResource("17")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 0, 0)
 edit_track = false
+
+[node name="DebugGeometry" type="MeshInstance3D" parent="."]
+script = ExtResource("18_1rmd1")
