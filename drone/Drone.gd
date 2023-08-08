@@ -184,7 +184,6 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 
 		# Integrate forces and velocities
 		var a := vec_force * state.inverse_mass + Vector3(0, -9.81, 0)
-#		print(a)
 		lin_vel += a * dt
 		pos += lin_vel * dt
 
@@ -258,6 +257,8 @@ func _on_flight_mode_changed(flight_mode: int) -> void:
 		led.change_color(Color(1, 1, 0))
 	elif flight_mode == FlightController.FlightMode.TRACK:
 		led.change_color(Color(0, 1, 0))
+	elif flight_mode == FlightController.FlightMode.POSITION:
+		led.change_color(Color(0.5, 0, 1))
 	elif flight_mode == FlightController.FlightMode.AUTO:
 		led.change_color(Color(1, 0, 0))
 		led.blink_pattern = [Vector2(0.25, 0.25)]
@@ -288,3 +289,4 @@ func _on_hud_config_updated() -> void:
 	hud.show_component(HUD.Component.HEADING, GameSettings.hud_config["heading"])
 	hud.show_component(HUD.Component.STICKS, GameSettings.hud_config["sticks"])
 	hud.show_component(HUD.Component.RPM, GameSettings.hud_config["rpm"])
+	hud.show_component(HUD.Component.HUDPOS, GameSettings.hud_config["gps"])

@@ -31,7 +31,7 @@ func _ready() -> void:
 	label.append_text("\n\t- red: acro")
 	label.append_text("\n\t- blue: horizon")
 	label.append_text("\n\t- yellow: speed")
-	label.append_text("\n\t- green: position")
+	label.append_text("\n\t- green: track")
 	label.append_text("\n\t- flashing red: recovery")
 	label.append_text("\n\n")
 	label.append_text("All stabilized modes hold altitude as well. Stabilized modes trigger recovery ")

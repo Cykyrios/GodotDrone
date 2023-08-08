@@ -10,6 +10,7 @@ extends HBoxContainer
 @onready var check_heading := %CheckHeading as CheckButton
 @onready var check_sticks := %CheckSticks as CheckButton
 @onready var check_rpm := %CheckRPM as CheckButton
+@onready var check_gps := %CheckGPS as CheckButton
 
 @onready var hud := %HUD as Control
 
@@ -19,7 +20,7 @@ func _ready() -> void:
 	var _discard = fps.value_changed.connect(_on_hud_fps_changed)
 	fps.value = GameSettings.hud_config["fps"]
 	var buttons := [check_crosshair, check_horizon, check_ladder, check_speed,
-			check_altitude, check_heading, check_sticks, check_rpm]
+			check_altitude, check_heading, check_sticks, check_rpm, check_gps]
 	for button in buttons:
 		_discard = button.toggled.connect(_on_button_toggled.bind(button))
 		if button == check_crosshair:
@@ -46,6 +47,9 @@ func _ready() -> void:
 		elif button == check_rpm:
 			button.button_pressed = GameSettings.hud_config["rpm"]
 			hud.show_component(HUD.Component.RPM, button.button_pressed)
+		elif button == check_gps:
+			button.button_pressed = GameSettings.hud_config["gps"]
+			hud.show_component(HUD.Component.HUDPOS, button.button_pressed)
 
 
 func _on_hud_fps_changed(value: float) -> void:
@@ -81,6 +85,9 @@ func _on_button_toggled(button_pressed: bool, button: CheckButton) -> void:
 	elif button == check_rpm:
 		component = HUD.Component.RPM
 		key = "rpm"
+	elif button == check_gps:
+		component = HUD.Component.HUDPOS
+		key = "gps"
 	hud.show_component(component, button_pressed)
 	GameSettings.hud_config[key] = button_pressed
 	GameSettings.save_hud_config()

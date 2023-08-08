@@ -2,7 +2,7 @@ extends Control
 class_name HUD
 
 
-enum Component {CROSSHAIR, STATUS, HEADING, SPEED, ALTITUDE, LADDER, HORIZON, STICKS, RPM}
+enum Component {CROSSHAIR, STATUS, HEADING, SPEED, ALTITUDE, LADDER, HORIZON, STICKS, RPM, HUDPOS}
 enum FlightMode {ACRO, LEVEL, SPEED, TRACK, POSITION}
 
 # HUD components
@@ -16,6 +16,7 @@ enum FlightMode {ACRO, LEVEL, SPEED, TRACK, POSITION}
 @onready var rpm_table := %HUDRPM as HUDRPM
 @onready var status := %HUDStatus as HUDStatus
 @onready var flight_mode := %FlightMode as Label
+@onready var position_scale := %HUDPosition as HUDPosition
 
 # Flight data
 var hud_timer := 0.1
@@ -76,6 +77,8 @@ func show_component(component: int, show_comp: bool = true) -> void:
 			hud_component.append(stick_right)
 		Component.RPM:
 			hud_component.append(rpm_table)
+		Component.HUDPOS:
+			hud_component.append(position_scale)
 	for comp in hud_component:
 		if self_only:
 			comp.self_modulate = mod
@@ -91,6 +94,7 @@ func update_display() -> void:
 	stick_left.update_stick_input(hud_left_stick)
 	stick_right.update_stick_input(hud_right_stick)
 	rpm_table.update_rpm(hud_rpm[0], hud_rpm[1], hud_rpm[2], hud_rpm[3])
+	position_scale.update_position(hud_position)
 
 
 func update_data(dt: float, pos: Vector3, angles: Vector3, velocity: Vector3,

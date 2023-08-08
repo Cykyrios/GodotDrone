@@ -6,8 +6,9 @@ signal hud_config_updated
 
 var game_settings_path := "%s/GameSettings.cfg" % [Global.config_dir]
 
-var hud_config := {"fps": 10, "crosshair": true, "horizon": true, "ladder": false,
-		"speed": false, "altitude": false, "heading": false, "sticks": false, "rpm": false}
+var hud_config := {"fps": 10, "crosshair": false, "horizon": false, "ladder": false,
+		"speed": false, "altitude": false, "heading": false, "sticks": false, "rpm": false,
+		"gps": true}
 
 
 func load_hud_config() -> void:

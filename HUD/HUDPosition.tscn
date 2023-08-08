@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvr37dkvgol5e"]
+
+[ext_resource type="Script" path="res://HUD/HUDPosition.gd" id="1_7ibdj"]
+
+[node name="HUDPosition" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7ibdj")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 50.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = -50.0
+columns = 2
+
+[node name="XLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "X:"
+
+[node name="XValue" type="Label" parent="GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "-0000.00"
+
+[node name="YLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Y:
+"
+
+[node name="YValue" type="Label" parent="GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "-0000.00"
+
+[node name="ZLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Z:"
+
+[node name="ZValue" type="Label" parent="GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "-0000.00"

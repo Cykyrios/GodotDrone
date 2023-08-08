@@ -27,6 +27,7 @@ var ang_vel := Vector3(0, 0, 0)
 var basis_curr := Basis()
 var basis_prev := basis_curr
 var basis_flat := basis_curr
+var input_target: Vector3 =  Vector3(-6.19, 3.0, 0.0)
 
 var motors := []
 var hover_thrust := 0.0
@@ -589,21 +590,18 @@ func update_command() -> Array[float]:
 	
 	elif flight_mode == FlightMode.POSITION:
 		var target := get_tracking_target()
-		var user_target: Vector3 = Vector3(-6.19, 3.0, 0.0)
 		var target_prev := target
 		var target_speed := 5
-		var delta_target := (user_target - target)
-		delta_target /= delta_target.length()
+		var delta_target := (input_target - target)
+		var delta_dist: float = delta_target.length()
+		delta_target = delta_target / delta_dist if delta_dist != 0 else delta_target
 		
-		var delta_y: float = 0.0
-		delta_y = delta_target.y
-			
-		if (user_target-global_position).length() > 2:
+		if (input_target - global_position).length() > 2:
 			target.x = target.x + delta_target.x * target_speed * dt
-			target.y = target.y + (delta_y) * target_speed * dt
+			target.y = target.y + delta_target.y * target_speed * dt
 			target.z = target.z + delta_target.z * target_speed * dt
 		else:
-			target = user_target
+			target = input_target
 		
 		set_tracking_target(target)
 
