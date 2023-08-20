@@ -100,7 +100,7 @@ func set_pwm(p: float) -> void:
 	rpm_target = p * MAX_RPM
 
 
-func _on_armed(_mode: int) -> void:
+func _on_armed(_mode: FlightMode) -> void:
 	sound1 = sounds[0]
 	sound2 = sounds[1]
 	for player in sounds:
