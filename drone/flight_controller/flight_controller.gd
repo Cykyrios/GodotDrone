@@ -180,7 +180,7 @@ func setup_flight_modes() -> void:
 	flight_mode_track.pid_speed_side = pid_controllers[Controller.LATERAL_SPEED]
 	flight_modes.append(flight_mode_track)
 	var flight_mode_launch := FlightModeLaunch.new()
-	flight_mode_launch.pid_launch = pid_controllers[Controller.PITCH]
+	flight_mode_launch.pid_launch = pid_controllers[Controller.LAUNCH]
 	flight_modes.append(flight_mode_launch)
 	var flight_mode_turtle := FlightModeTurtle.new()
 	flight_modes.append(flight_mode_turtle)

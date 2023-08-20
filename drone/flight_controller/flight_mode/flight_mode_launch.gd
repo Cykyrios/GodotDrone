@@ -19,7 +19,7 @@ func _get_command(input: FlightCommand) -> FlightCommand:
 
 	flight_command.power = input.power
 
-	pid_launch.target += flight_command.pitch * dt
+	pid_launch.target += input.pitch * dt
 	flight_command.pitch = pid_launch.get_output(angles.x, dt, false)
 
 	return flight_command
