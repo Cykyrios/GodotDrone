@@ -2,28 +2,28 @@ class_name FlightController
 extends Node3D
 
 
-signal armed(mode)
+signal armed(mode: FlightMode)
 signal disarmed
-signal arm_failed(reason)
-signal flight_mode_changed(mode)
+signal arm_failed(reason: ArmFail)
+signal flight_mode_changed(mode: FlightMode)
 
 enum Controller {YAW, ROLL, PITCH, YAW_SPEED, ROLL_SPEED, PITCH_SPEED,
 		ALTITUDE, POS_X, POS_Z, VERTICAL_SPEED, FORWARD_SPEED, LATERAL_SPEED,
 		LAUNCH}
 enum ArmFail {THROTTLE_HIGH, CRASH_RECOVERY_MODE}
 
-@export_range (0.0, 1000.0) var pid_roll_p := 50.0
-@export_range (0.0, 1000.0) var pid_roll_i := 30.0
-@export_range (0.0, 1000.0) var pid_roll_d := 30.0
-@export_range (0.0, 1000.0) var pid_pitch_p := 50.0
-@export_range (0.0, 1000.0) var pid_pitch_i := 30.0
-@export_range (0.0, 1000.0) var pid_pitch_d := 30.0
-@export_range (0.0, 1000.0) var pid_yaw_p := 70.0
-@export_range (0.0, 1000.0) var pid_yaw_i := 90.0
-@export_range (0.0, 1000.0) var pid_yaw_d := 40.0
+var pid_roll_p := 50.0
+var pid_roll_i := 30.0
+var pid_roll_d := 30.0
+var pid_pitch_p := 50.0
+var pid_pitch_i := 30.0
+var pid_pitch_d := 30.0
+var pid_yaw_p := 70.0
+var pid_yaw_i := 90.0
+var pid_yaw_d := 40.0
 
-@export var debug_geometry_enabled := false
-@export var telemetry_enabled := false
+var debug_geometry_enabled := false
+var telemetry_enabled := false
 
 var time := 0.0
 var dt := 0.0
