@@ -66,6 +66,9 @@ func _ready() -> void:
 		camera.cull_mask -= int(pow(2, camera_layer - 1))
 		cameras.append(camera)
 
+		var camera_attributes := CameraAttributesPractical.new()
+		camera.attributes = camera_attributes
+
 	update_viewport_textures.call_deferred()
 
 
