@@ -49,10 +49,10 @@ func draw_debug_shape(shape: DebugShape) -> void:
 		var primitives: Array[Primitive] = []
 		if shape.draw_surfaces:
 			im.surface_begin(Mesh.PRIMITIVE_TRIANGLES, mat)
-			primitives = shape.triangle_primitives
+			primitives.assign(shape.triangle_primitives)
 		else:
 			im.surface_begin(Mesh.PRIMITIVE_LINES, mat)
-			primitives = shape.line_primitives
+			primitives.assign(shape.line_primitives)
 		im.surface_set_color(shape.color)
 		for primitive in primitives:
 			for vertex in primitive.vertices:
