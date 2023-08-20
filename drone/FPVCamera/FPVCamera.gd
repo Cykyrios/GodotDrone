@@ -103,5 +103,4 @@ func update_viewport_textures() -> void:
 	for i in num_cameras:
 		var viewport := viewports[i] as SubViewport
 		var viewport_texture := viewport.get_texture()
-		viewport_texture.viewport_path = viewport.get_path()
 		mat.set_shader_parameter("Texture%d" % [i], viewport_texture)
