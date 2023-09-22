@@ -7,7 +7,7 @@ signal back
 
 
 func _ready() -> void:
-	var _discard = button_back.pressed.connect(_on_back_pressed)
+	var _discard := button_back.pressed.connect(_on_back_pressed)
 
 
 func _input(event: InputEvent) -> void:

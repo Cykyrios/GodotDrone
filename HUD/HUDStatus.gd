@@ -31,7 +31,7 @@ var message_timer := Timer.new()
 func _ready() -> void:
 	add_child(message_timer)
 	message_timer.one_shot = true
-	var _discard = message_timer.timeout.connect(_on_message_timer_timeout)
+	var _discard := message_timer.timeout.connect(_on_message_timer_timeout)
 
 	set_message("DISARMED")
 

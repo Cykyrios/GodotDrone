@@ -72,7 +72,7 @@ func _ready() -> void:
 	setup_pids()
 	setup_flight_modes()
 
-	var _discard = flight_mode_changed.connect(get_parent()._on_flight_mode_changed)
+	var _discard := flight_mode_changed.connect(get_parent()._on_flight_mode_changed)
 	change_flight_mode.call_deferred(FlightMode.Type.ACRO)
 
 	if telemetry_enabled:
@@ -434,7 +434,7 @@ func is_flight_safe() -> bool:
 func set_motors(motor_array: Array) -> void:
 	motors = motor_array
 	for motor in motors:
-		var _discard = armed.connect(motor._on_armed)
+		var _discard := armed.connect(motor._on_armed)
 
 
 func set_hover_thrust(t: float) -> void:

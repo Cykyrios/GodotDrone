@@ -20,7 +20,7 @@ func _ready() -> void:
 	window_mode.get_popup().add_item("Full Screen")
 	window_mode.get_popup().add_item("Window")
 	window_mode.get_popup().add_item("Borderless Window")
-	var _discard = window_mode.item_selected.connect(_on_window_mode_changed)
+	var _discard := window_mode.item_selected.connect(_on_window_mode_changed)
 	window_mode.select(Graphics.graphics_settings["window_mode"])
 
 	resolution.get_popup().add_item("100%")

@@ -23,7 +23,7 @@ var display_popup := false
 
 
 func _ready() -> void:
-	var _discard = button_cancel.pressed.connect(_on_cancel_pressed)
+	var _discard := button_cancel.pressed.connect(_on_cancel_pressed)
 	_discard = calibration_done.connect(_on_calibration_done)
 
 	reset_calibration()

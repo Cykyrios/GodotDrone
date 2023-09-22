@@ -23,7 +23,7 @@ var binding_popup_text := ""
 var binding_popup_clear := false
 var binding_event: InputEvent = null
 
-var connected_joypads := []
+var connected_joypads: Array[int] = []
 var auto_detect_controller := false
 var active_controller := -1
 var default_controller := -1
@@ -32,7 +32,7 @@ var calibrating_axes := false
 
 
 func _ready() -> void:
-	var _discard = controller_detected.connect(_on_controller_autodetected)
+	var _discard := controller_detected.connect(_on_controller_autodetected)
 	_discard = Input.joy_connection_changed.connect(_on_joypad_connection_changed)
 
 	_discard = button_calibrate.pressed.connect(_on_calibrate_pressed)
@@ -139,7 +139,7 @@ func _on_calibrate_pressed() -> void:
 		var calibration_menu := packed_calibration_menu.instantiate()
 		add_child(calibration_menu)
 		var radio_transmitter := $SubViewportContainer/SubViewport/RadioTransmitter
-		var _discard = calibration_menu.connect("calibration_step_changed",
+		var _discard := calibration_menu.connect("calibration_step_changed",
 				radio_transmitter._on_calibration_step_changed)
 		calibration_menu.calibration_step_changed.emit(calibration_menu.calibration_step)
 		$MenuPanel.modulate = Color(1, 1, 1, 0)
@@ -207,7 +207,7 @@ func _on_controller_selected(id: int) -> void:
 		var checkbutton_pressed: bool = (Input.get_joy_guid(active_controller) \
 				== Controls.default_controller_guid)
 		controller_checkbutton.button_pressed = checkbutton_pressed
-		var _discard = Controls.update_active_device(active_controller)
+		var _discard := Controls.update_active_device(active_controller)
 		update_input_map.call_deferred()
 		update_axes_and_buttons.call_deferred(active_controller)
 
@@ -242,7 +242,7 @@ func update_button_value(id: int, pressed: bool) -> void:
 func update_input_map() -> void:
 	for binding in actions_list.get_children():
 		(binding as GUIControllerBinding).remove_binding()
-	var _discard = Controls.load_input_map()
+	var _discard := Controls.load_input_map()
 	var act_list := Controls.action_list
 	for i in range(act_list.size()):
 		var act := act_list[i] as ControllerAction
@@ -269,7 +269,7 @@ func save_input_map() -> void:
 			var action_name: String = action.action_name
 			if config.has_section_key(section, action_name):
 				config.erase_section_key(section, action_name)
-				for key in ["_button", "_axis", "_min", "_max"]:
+				for key: String in ["_button", "_axis", "_min", "_max"]:
 					if config.has_section_key(section, action_name + key):
 						config.erase_section_key(section, action_name + key)
 			if action.bound:
@@ -320,7 +320,7 @@ func _on_binding_clicked(binding: GUIControllerBinding) -> void:
 		binding_popup.queue_free()
 		binding_popup = null
 		show_binding_popup = false
-	var _discard = binding_popup.confirm_pressed.connect(
+	var _discard := binding_popup.confirm_pressed.connect(
 		func _on_confirmed_pressed() -> void:
 			if binding_event or binding_popup_clear and not binding_event:
 				update_binding(binding, binding_event)

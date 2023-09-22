@@ -16,9 +16,9 @@ extends HBoxContainer
 
 func _ready() -> void:
 	GameSettings.load_hud_config()
-	var _discard = fps.value_changed.connect(_on_hud_fps_changed)
+	var _discard := fps.value_changed.connect(_on_hud_fps_changed)
 	fps.value = GameSettings.hud_config["fps"]
-	var buttons := [check_crosshair, check_horizon, check_ladder, check_speed,
+	var buttons: Array[CheckButton] = [check_crosshair, check_horizon, check_ladder, check_speed,
 			check_altitude, check_heading, check_sticks, check_rpm]
 	for button in buttons:
 		_discard = button.toggled.connect(_on_button_toggled.bind(button))

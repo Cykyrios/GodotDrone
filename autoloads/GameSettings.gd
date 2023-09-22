@@ -38,9 +38,9 @@ func save_hud_config() -> void:
 	var config := ConfigFile.new()
 	var err := config.load(game_settings_path)
 	if err == OK or err == ERR_FILE_NOT_FOUND or err == ERR_PARSE_ERROR:
-		for key in hud_config.keys():
+		for key: String in hud_config.keys():
 			config.set_value("hud_config", key, hud_config[key])
-		var _discard = config.save(game_settings_path)
+		var _discard := config.save(game_settings_path)
 		hud_config_updated.emit()
 	else:
 		Global.log_error(err, "Error while saving HUD config.")

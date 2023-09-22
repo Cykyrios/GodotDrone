@@ -25,7 +25,7 @@ func _ready() -> void:
 	var button := Button.new()
 	button.text = "Dismiss"
 	vbox.add_child(button)
-	var _discard = button.pressed.connect(_on_button_pressed)
+	var _discard := button.pressed.connect(_on_button_pressed)
 
 	label_theme = preload("res://GUI/timer_theme.tres")
 	add_labels("Lap", "Time")

@@ -10,7 +10,7 @@ signal back
 
 
 func _ready() -> void:
-	var _discard = master_volume.value_changed.connect(_on_master_volume_changed)
+	var _discard := master_volume.value_changed.connect(_on_master_volume_changed)
 	master_volume.value = volume_to_slider(Audio.audio_settings["master_volume"])
 	master_volume_label.text = update_slider_label(master_volume.value)
 

@@ -2,7 +2,7 @@ extends Node3D
 class_name Launchpad
 
 
-var launch_areas := []
+var launch_areas: Array[LaunchArea] = []
 
 
 func _ready() -> void:

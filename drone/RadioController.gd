@@ -24,7 +24,7 @@ func _ready() -> void:
 		if controller_action.type == ControllerAction.Type.AXIS:
 			axis_bindings.append(controller_action)
 
-	var _discard = reset_requested.connect(target._on_reset)
+	var _discard := reset_requested.connect(target._on_reset)
 	_discard = mode_changed.connect(target.flight_controller._on_cycle_flight_modes)
 	_discard = arm_input.connect(target.flight_controller._on_arm_input)
 	_discard = disarm_input.connect(target.flight_controller._on_disarm_input)

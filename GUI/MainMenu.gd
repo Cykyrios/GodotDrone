@@ -13,7 +13,7 @@ var packed_help_page := preload("res://GUI/HelpPage.tscn")
 
 
 func _ready() -> void:
-	var _discard = button_fly.pressed.connect(_on_fly_pressed)
+	var _discard := button_fly.pressed.connect(_on_fly_pressed)
 	_discard = button_quad.pressed.connect(_on_quad_settings_pressed)
 	_discard = button_help.pressed.connect(_on_help_pressed)
 	_discard = button_options.pressed.connect(_on_options_pressed)
@@ -35,7 +35,7 @@ func _ready() -> void:
 
 
 func _on_fly_pressed() -> void:
-	var _discard = get_tree().change_scene_to_file("res://sceneries/Level1.tscn")
+	var _discard := get_tree().change_scene_to_file("res://sceneries/Level1.tscn")
 
 
 func _on_quad_settings_pressed() -> void:
@@ -74,5 +74,5 @@ func _on_quit_pressed() -> void:
 	confirm_dialog.dialog_text = "Do you really want to quit?"
 	confirm_dialog.ok_button_text = "Quit"
 	confirm_dialog.cancel_button_text = "Cancel"
-	var _discard = confirm_dialog.confirmed.connect(func(): get_tree().quit())
+	var _discard := confirm_dialog.confirmed.connect(func() -> void: get_tree().quit())
 	confirm_dialog.popup_centered()

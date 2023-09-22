@@ -3,7 +3,7 @@ class_name Track
 extends Node3D
 
 
-signal race_state_changed(state)
+signal race_state_changed(state: Global.RaceState)
 
 
 @export var edit_track := false :
@@ -39,7 +39,7 @@ signal race_state_changed(state)
 @export_multiline var course := ""
 var course_array: Array[String] = []
 
-var checkpoints := []
+var checkpoints: Array[Checkpoint] = []
 var current_checkpoint: Checkpoint = null
 var current := 0
 
@@ -47,7 +47,7 @@ var current := 0
 var current_lap := 1
 var lap_start := 0
 var lap_end := 0
-var timers := []
+var timers: Array[LapTimer] = []
 var timer_label: Label = null
 
 var race_state: int = Global.RaceState.START :
@@ -60,10 +60,10 @@ var countdown_step := 0
 var end_label: Label = null
 
 var has_launchpad := false
-var launch_areas := []
+var launch_areas: Array[LaunchArea] = []
 
 var replay_path := ""
-var ghosts := []
+var ghosts: Array[Ghost] = []
 var replay_recorder := []
 var record_replay := false
 
@@ -84,7 +84,7 @@ func _ready() -> void:
 	update_checkpoints()
 
 	for cp in checkpoints:
-		var _discard = cp.passed.connect(_on_checkpoint_passed)
+		var _discard := cp.passed.connect(_on_checkpoint_passed)
 
 	update_course()
 
@@ -94,7 +94,7 @@ func _ready() -> void:
 
 	update_launch_areas()
 	for area in launch_areas:
-		var _discard = area.body_exited.connect(_on_body_exited_launchpad)
+		var _discard := area.body_exited.connect(_on_body_exited_launchpad)
 
 	replay_path = "%s/%s" % [Global.replay_dir, scene_file_path.replace(".tscn", ".rpl").split("/")[-1]]
 	ghosts.clear()
@@ -158,7 +158,7 @@ func update_course() -> void:
 func update_launch_areas() -> void:
 	for child in get_children():
 		if child is Launchpad:
-			for area in child.launch_areas:
+			for area in (child as Launchpad).launch_areas:
 				launch_areas.append(area)
 	has_launchpad = not launch_areas.is_empty()
 
@@ -235,7 +235,7 @@ func setup_countdown() -> void:
 	countdown_timer = Timer.new()
 	add_child(countdown_timer)
 	countdown_timer.one_shot = true
-	var _discard = countdown_timer.timeout.connect(_on_countdown_timer_timeout)
+	var _discard := countdown_timer.timeout.connect(_on_countdown_timer_timeout)
 
 	countdown_label = Label.new()
 	add_child(countdown_label)
@@ -388,7 +388,7 @@ func display_time_table() -> void:
 	var total_time := 0.0
 	var time_table := TimeTable.new()
 	add_child(time_table)
-	var _discard = race_state_changed.connect(time_table._on_race_state_changed)
+	var _discard := race_state_changed.connect(time_table._on_race_state_changed)
 	for i in timers.size():
 		time_table.add_lap(timers[i])
 		total_time += timers[i].time
@@ -421,7 +421,7 @@ func load_replays() -> void:
 
 func initialize_replay(drone: Drone) -> void:
 	if not drone.transform_updated.is_connected(_on_drone_transform_updated):
-		var _discard = drone.transform_updated.connect(_on_drone_transform_updated)
+		var _discard := drone.transform_updated.connect(_on_drone_transform_updated)
 	delete_previous_replay()
 	record_replay = true
 	# Write drone scene path at the beginning of the replay file
@@ -432,7 +432,7 @@ func delete_previous_replay() -> void:
 	replay_recorder.clear()
 	var dir := DirAccess.open("")
 	if dir.file_exists(replay_path):
-		var _discard = dir.remove(replay_path)
+		var _discard := dir.remove(replay_path)
 
 
 func _on_drone_transform_updated(xform_string: String, init: bool = false) -> void:
@@ -508,16 +508,17 @@ func check_best_time() -> void:
 			write_new_record(new_record_pos, total_time)
 			var dir := DirAccess.open(Global.replay_dir)
 			var replace := ["gold", "silver", "bronze"]
+			var _discard: int
 			for i in range(2 - new_record_pos):
-				var _discard = dir.rename(replay_path.replace(".rpl", "_%s.rpl" % [replace[-2 - i]]),
+				_discard = dir.rename(replay_path.replace(".rpl", "_%s.rpl" % [replace[-2 - i]]),
 						replay_path.replace(".rpl", "_%s.rpl" % [replace[-1 - i]]))
-			var _discard = dir.rename(replay_path.replace(".rpl", "_prev.rpl"),
+			_discard = dir.rename(replay_path.replace(".rpl", "_prev.rpl"),
 					replay_path.replace(".rpl", "_%s.rpl" % [replace[new_record_pos]]))
 
 
 func write_new_record(pos: int, time: float) -> void:
 	var track_name := replay_path.replace(".rpl", "").split("/")[-1]
-	var array := []
+	var array: Array[String] = []
 	var file := FileAccess.open(Global.highscore_path, FileAccess.READ)
 	if file:
 		while not file.eof_reached():

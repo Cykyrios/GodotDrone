@@ -30,14 +30,14 @@ var area_visible := false :
 				c.visible = vis
 var mat := ShaderMaterial.new()
 
-var drone_raycasts := []
+var drone_raycasts: Array[Drone] = []
 
 
 func _ready() -> void:
 	var shad := load("res://tracks/CheckpointShader.tres")
 	mat.shader = shad
 
-	var _discard = body_entered.connect(_on_entered)
+	var _discard := body_entered.connect(_on_entered)
 	_discard = body_exited.connect(_on_exited)
 
 	setup_checkpoint_mesh.call_deferred()

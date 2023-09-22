@@ -59,10 +59,10 @@ func load_input_map(update_controller: bool = false) -> String:
 			if default_device >= 0:
 				active_device = default_device
 				active_controller_guid = default_controller_guid
-				var _discard = update_active_device(active_device)
+				var _discard := update_active_device(active_device)
 			if default_device < 0 and !Input.get_connected_joypads().is_empty():
 				active_device = Input.get_connected_joypads()[0]
-				var _discard = update_active_device(active_device)
+				var _discard := update_active_device(active_device)
 		if active_device >= 0:
 			var section := "controls_%s" % [active_controller_guid]
 			var actions := config.get_section_keys(section)
@@ -146,7 +146,7 @@ func create_action_list() -> void:
 			["mode_turtle", "Mode: Turtle"],
 			["mode_launch", "Mode: Launch Control"],
 			["altitude_hold", "Altitude hold"]]
-	for action in actions:
+	for action: Array in actions:
 		action_list.append(ControllerAction.new())
 		action_list[-1].init(action[0], action[1])
 

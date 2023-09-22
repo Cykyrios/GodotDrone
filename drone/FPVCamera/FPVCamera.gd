@@ -19,7 +19,7 @@ var mat: ShaderMaterial = load("res://drone/FPVCamera/FPVCamera.tres")
 
 
 func _ready() -> void:
-	var _discard = Graphics.fisheye_resolution_changed.connect(_on_fisheye_resolution_changed)
+	var _discard := Graphics.fisheye_resolution_changed.connect(_on_fisheye_resolution_changed)
 	_discard = Graphics.fisheye_msaa_changed.connect(_on_fisheye_msaa_changed)
 
 	var fisheye_mode: int = Graphics.graphics_settings["fisheye_mode"]

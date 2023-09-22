@@ -6,8 +6,7 @@ var mat := StandardMaterial3D.new()
 @export var color := Color(0, 0, 0)
 
 var timer := Timer.new()
-# blink_pattern is an array of Vector2 containing checked and unchecked durations
-var blink_pattern := [] :
+var blink_pattern: Array[Vector2] = [] :
 	get:
 		return blink_pattern # TODOConverter40 Non existent get function
 	set(pattern):
@@ -39,7 +38,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	add_child(timer)
-	var _discard = timer.timeout.connect(_on_timer_elapsed)
+	var _discard := timer.timeout.connect(_on_timer_elapsed)
 
 
 func change_color(c: Color = Color(0, 0, 0)) -> void:

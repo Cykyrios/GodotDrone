@@ -74,7 +74,7 @@ func save_quad_settings() -> void:
 		config.set_value("rates", "pitch_expo", control_profile.pitch_expo)
 		config.set_value("rates", "roll_expo", control_profile.roll_expo)
 		config.set_value("rates", "yaw_expo", control_profile.yaw_expo)
-		var _discard = config.save(quad_settings_path)
+		var _discard := config.save(quad_settings_path)
 	else:
 		Global.log_error(err, "Error while saving quad settings.")
 	settings_updated.emit()

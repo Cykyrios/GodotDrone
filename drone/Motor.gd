@@ -103,7 +103,7 @@ func set_pwm(p: float) -> void:
 func _on_armed(_mode: FlightMode) -> void:
 	sound1 = sounds[0]
 	sound2 = sounds[1]
-	for player in sounds:
+	for player: AudioStreamPlayer in sounds:
 		player.volume_db = -80
 		player.play()
 
@@ -172,10 +172,10 @@ func update_sound(abs_rpm: float = 0.0) -> void:
 func update_sound_source(source: int = 0) -> void:
 	if source != sound_selector:
 		if source == 0:
-			for player in sounds:
+			for player: AudioStreamPlayer in sounds:
 				player.stop()
 		elif sound_selector == 0:
-			for player in sounds:
+			for player: AudioStreamPlayer in sounds:
 				player.play()
 		sound_selector = source
 		if sound_selector == 0:

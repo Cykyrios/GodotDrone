@@ -9,7 +9,7 @@ signal back
 
 
 func _ready() -> void:
-	var _discard = label.meta_clicked.connect(_on_url_clicked)
+	var _discard := label.meta_clicked.connect(_on_url_clicked)
 	_discard = button_back.pressed.connect(_on_back_pressed)
 
 	label.bbcode_enabled = true
@@ -55,7 +55,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _on_url_clicked(meta: Variant) -> void:
-	var _discard = OS.shell_open(meta)
+	var _discard := OS.shell_open(meta)
 
 
 func _on_back_pressed() -> void:

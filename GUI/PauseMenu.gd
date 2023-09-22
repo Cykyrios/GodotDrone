@@ -19,7 +19,7 @@ var can_resume := true
 
 
 func _ready() -> void:
-	var _discard = button_resume.pressed.connect(_on_resume_pressed)
+	var _discard := button_resume.pressed.connect(_on_resume_pressed)
 	_discard = button_quad.pressed.connect(_on_quad_settings_pressed)
 	_discard = button_help.pressed.connect(_on_help_pressed)
 	_discard = button_options.pressed.connect(_on_options_pressed)
@@ -94,11 +94,11 @@ func _on_menu_pressed() -> void:
 	confirm_dialog.dialog_text = "Return to Main Menu?"
 	confirm_dialog.ok_button_text = "Confirm"
 	confirm_dialog.cancel_button_text = "Cancel"
-	var _discard = confirm_dialog.confirmed.connect(func():
+	var _discard := confirm_dialog.confirmed.connect(func() -> void:
 		can_resume = true
 		resumed.emit()
 		menu.emit())
-	_discard = confirm_dialog.canceled.connect(func(): can_resume = true)
+	_discard = confirm_dialog.canceled.connect(func() -> void: can_resume = true)
 	confirm_dialog.popup_centered()
 
 

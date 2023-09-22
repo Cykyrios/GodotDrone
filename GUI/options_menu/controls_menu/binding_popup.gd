@@ -27,9 +27,9 @@ func _ready() -> void:
 	button_confirm.text = "Confirm"
 	button_cancel.text = "Cancel"
 	button_clear.text = "Clear"
-	var _discard = button_confirm.pressed.connect(func(): confirm_pressed.emit())
-	_discard = button_cancel.pressed.connect(func(): cancel_pressed.emit())
-	_discard = button_clear.pressed.connect(func(): clear_pressed.emit())
+	var _discard := button_confirm.pressed.connect(func() -> void: confirm_pressed.emit())
+	_discard = button_cancel.pressed.connect(func() -> void: cancel_pressed.emit())
+	_discard = button_clear.pressed.connect(func() -> void: clear_pressed.emit())
 
 
 func set_text(text: String) -> void:

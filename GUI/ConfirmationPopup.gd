@@ -10,7 +10,7 @@ signal validated
 
 
 func _ready() -> void:
-	var _discard = button_yes.pressed.connect(_on_button_pressed.bind(0))
+	var _discard := button_yes.pressed.connect(_on_button_pressed.bind(0))
 	_discard = button_no.pressed.connect(_on_button_pressed.bind(1))
 	_discard = button_alt.pressed.connect(_on_button_pressed.bind(2))
 	_discard = %PanelContainer.resized.connect(_on_resized)

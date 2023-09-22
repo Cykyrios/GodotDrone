@@ -3,7 +3,7 @@ extends RigidBody3D
 
 
 signal respawned
-signal transform_updated(transform)
+signal transform_updated(transform: Transform3D)
 
 
 var motors: Array[Motor] = []
@@ -23,7 +23,7 @@ var b_debug := false
 
 
 func _ready() -> void:
-	for shape in $Frame.collision_shapes:
+	for shape: CollisionShape3D in $Frame.collision_shapes:
 		$Frame.remove_child(shape)
 		add_child(shape)
 	motors = [$Motor1 as Motor, $Motor2 as Motor, $Motor3 as Motor, $Motor4 as Motor]
@@ -42,7 +42,7 @@ func _ready() -> void:
 		motor.propeller.set_ground_effect_parameters(rad, d, b, 1)
 
 	add_child(hud)
-	var _discard = flight_controller.armed.connect(hud.status._on_armed)
+	var _discard := flight_controller.armed.connect(hud.status._on_armed)
 	_discard = flight_controller.disarmed.connect(hud.status._on_disarmed)
 	_discard = flight_controller.flight_mode_changed.connect(hud.status._on_mode_changed)
 	_discard = flight_controller.arm_failed.connect(hud.status._on_arm_failed)

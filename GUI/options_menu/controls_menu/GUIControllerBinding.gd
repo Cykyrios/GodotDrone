@@ -36,7 +36,7 @@ func _ready() -> void:
 	label.mouse_filter = Control.MOUSE_FILTER_PASS
 	controller_button.mouse_filter = Control.MOUSE_FILTER_PASS
 
-	var _discard = mouse_entered.connect(_on_mouse_entered)
+	var _discard := mouse_entered.connect(_on_mouse_entered)
 	_discard = mouse_exited.connect(_on_mouse_exited)
 
 
@@ -122,7 +122,7 @@ func remove_binding() -> void:
 func add_axis_range(event: InputEventJoypadMotion) -> void:
 	axis_range = GUIControllerAxisRange.new()
 	add_child(axis_range)
-	var _discard = axis_range.range_updated.connect(_on_axis_range_updated)
+	var _discard := axis_range.range_updated.connect(_on_axis_range_updated)
 	_discard = axis_range.range_released.connect(_on_axis_range_released)
 	device = event.device
 	axis = event.axis

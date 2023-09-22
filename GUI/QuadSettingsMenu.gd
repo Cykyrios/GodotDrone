@@ -45,7 +45,7 @@ signal back
 func _ready() -> void:
 	QuadSettings.load_quad_settings()
 
-	var _discard = camera_angle_slider.value_changed.connect(_on_angle_changed)
+	var _discard := camera_angle_slider.value_changed.connect(_on_angle_changed)
 	camera_angle_slider.value = QuadSettings.angle
 
 	_discard = dry_weight_slider.value_changed.connect(_on_dry_weight_changed)
@@ -54,7 +54,7 @@ func _ready() -> void:
 	battery_weight_slider.value = QuadSettings.battery_weight * 1000
 
 	rates_curve_list.clear()
-	for item in ControlProfile.RateCurve:
+	for item: String in ControlProfile.RateCurve.keys():
 		rates_curve_list.add_item(item)
 	rates_curve_list.select(QuadSettings.control_profile.rate_curve)
 	_discard = rates_curve_list.item_selected.connect(_on_rate_curve_selected)

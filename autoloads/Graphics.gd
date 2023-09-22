@@ -37,7 +37,7 @@ func load_graphics_settings() -> String:
 	var text := ""
 	var err := config.load(graphics_settings_path)
 	if err == OK:
-		for key in graphics_settings.keys():
+		for key: String in graphics_settings.keys():
 			if config.has_section_key("graphics", key):
 				graphics_settings[key] = config.get_value("graphics", key)
 		update_window_mode()
@@ -63,7 +63,7 @@ func save_graphics_settings() -> void:
 	var config := ConfigFile.new()
 	var err := config.load(graphics_settings_path)
 	if err == OK or err == ERR_FILE_NOT_FOUND or err == ERR_PARSE_ERROR:
-		for key in graphics_settings.keys():
+		for key: String in graphics_settings.keys():
 			config.set_value("graphics", key, graphics_settings[key])
 		err = config.save(graphics_settings_path)
 	if err != OK and err != ERR_FILE_NOT_FOUND:

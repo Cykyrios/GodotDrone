@@ -42,6 +42,7 @@ func _post_import(scene: Node) -> Object:
 		sb.transform.origin = Vector3(0, transform.origin.y, 0)
 		var packed_scene := PackedScene.new()
 		if packed_scene.pack(sb) == OK:
+			@warning_ignore("return_value_discarded")
 			ResourceSaver.save(packed_scene, path + "/" + (sb.name as String) + ".tscn")
 		sb.transform = transform
 		reset_owner(sb, scene)

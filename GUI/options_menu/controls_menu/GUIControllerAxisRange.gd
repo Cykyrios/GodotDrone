@@ -47,7 +47,7 @@ func _ready() -> void:
 
 	update_pos.call_deferred()
 
-	var _discard = button_low.button_down.connect(_on_button_pressed.bind(1))
+	var _discard := button_low.button_down.connect(_on_button_pressed.bind(1))
 	_discard = button_high.button_down.connect(_on_button_pressed.bind(2))
 	_discard = button_low.button_up.connect(_on_button_released)
 	_discard = button_high.button_up.connect(_on_button_released)

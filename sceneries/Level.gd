@@ -4,14 +4,14 @@ extends Node3D
 var packed_pause_menu := preload("res://GUI/PauseMenu.tscn")
 var pause_menu: PauseMenu = null
 
-var cameras := []
+var cameras: Array[Camera3D] = []
 var camera_index := 0
 var camera: Camera3D = null
 
 @onready var drone := $Drone
 @onready var radio_controller := $RadioController
 
-var tracks := []
+var tracks: Array[Track] = []
 
 
 func _ready() -> void:
@@ -26,7 +26,7 @@ func _ready() -> void:
 	for c in get_children():
 		if c is Track:
 			tracks.append(c)
-	var _discard = Global.game_mode_changed.connect(_on_game_mode_changed)
+	var _discard := Global.game_mode_changed.connect(_on_game_mode_changed)
 
 	_discard = drone.respawned.connect(_on_drone_reset)
 
@@ -45,8 +45,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
-func get_cameras(node: Node) -> Array:
-	var cams := []
+func get_cameras(node: Node) -> Array[Camera3D]:
+	var cams: Array[Camera3D] = []
 	for child in node.get_children():
 		if child is Camera3D:
 			cams.append(child)
@@ -75,9 +75,9 @@ func change_camera() -> void:
 func add_pause_menu() -> void:
 	pause_menu = packed_pause_menu.instantiate()
 	add_child(pause_menu)
-	var _discard = pause_menu.resumed.connect(_on_resume)
+	var _discard := pause_menu.resumed.connect(_on_resume)
 	_discard = pause_menu.menu.connect(_on_return_to_menu)
-	_discard = pause_menu.resumed.connect(func(): pause_menu.queue_free())
+	_discard = pause_menu.resumed.connect(func() -> void: pause_menu.queue_free())
 
 
 func _on_drone_reset() -> void:
@@ -98,7 +98,7 @@ func _on_resume() -> void:
 
 
 func _on_return_to_menu() -> void:
-	var _discard = get_tree().change_scene_to_file("res://GUI/MainMenu.tscn")
+	var _discard := get_tree().change_scene_to_file("res://GUI/MainMenu.tscn")
 	queue_free()
 
 

@@ -43,7 +43,7 @@ func draw_geometry(index: int = 0) -> void:
 
 func draw_debug_shape(shape: DebugShape) -> void:
 	if shape is DebugShapeCompound:
-		for sub_shape in shape.debug_shapes:
+		for sub_shape: DebugShape in shape.debug_shapes:
 			draw_debug_shape(sub_shape)
 	else:
 		var primitives: Array[Primitive] = []

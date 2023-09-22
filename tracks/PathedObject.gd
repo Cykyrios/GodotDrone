@@ -18,7 +18,7 @@ var multimesh: MultiMesh = null
 
 
 func _ready() -> void:
-	var _discard = curve_changed.connect(_on_curve_changed)
+	var _discard := curve_changed.connect(_on_curve_changed)
 	if !multimesh:
 		create_multimesh()
 	update_multimesh()

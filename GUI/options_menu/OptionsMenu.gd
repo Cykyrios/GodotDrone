@@ -17,7 +17,7 @@ var packed_controls_menu := preload("res://GUI/options_menu/controls_menu/Contro
 
 
 func _ready() -> void:
-	var _discard = button_game.pressed.connect(_on_game_settings_pressed)
+	var _discard := button_game.pressed.connect(_on_game_settings_pressed)
 	_discard = button_graphics.pressed.connect(_on_graphics_pressed)
 	_discard = button_audio.pressed.connect(_on_audio_pressed)
 	_discard = button_controls.pressed.connect(_on_controls_pressed)

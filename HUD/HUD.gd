@@ -52,7 +52,7 @@ func show_component(component: int, show_comp: bool = true) -> void:
 	var mod := Color(1, 1, 1, 1)
 	if not show_comp:
 		mod = Color(1, 1, 1, 0)
-	var hud_component := []
+	var hud_component: Array[Control] = []
 	match component:
 		Component.CROSSHAIR:
 			hud_component.append(crosshair)
