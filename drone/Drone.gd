@@ -203,8 +203,8 @@ func update_hud_data(delta: float) -> void:
 	var velocity := flight_controller.lin_vel
 	var pos := flight_controller.pos
 	var input := flight_controller.input
-	var left_stick := Vector2(input[1], -2 * (input[0] - 0.5))
-	var right_stick := Vector2(input[2], input[3])
+	var left_stick := Vector2(input.yaw, -2 * (input.power - 0.5))
+	var right_stick := Vector2(input.roll, input.pitch)
 	var mot := flight_controller.motors
 	var rpm := [mot[0].rpm, mot[1].rpm, mot[2].rpm, mot[3].rpm]
 	hud.update_data(delta, pos, angles, velocity, left_stick, right_stick, rpm)
@@ -245,24 +245,24 @@ func get_drag(lin_vel: Vector3, ang_vel: Vector3, orientation: Basis) -> Array[V
 	return drag
 
 
-func _on_flight_mode_changed(flight_mode: int) -> void:
+func _on_flight_mode_changed(flight_mode: FlightMode) -> void:
 	var led := $LEDMode as ModeLED
 	led.blink_pattern = []
-	if flight_mode == FlightController.FlightMode.RATE:
+	if flight_mode is FlightModeAcro:
 		led.change_color(Color(1, 0, 0))
-	elif flight_mode == FlightController.FlightMode.LEVEL:
+	elif flight_mode is FlightModeHorizon:
 		led.change_color(Color(0.2, 0.2, 1))
-	elif flight_mode == FlightController.FlightMode.SPEED:
+	elif flight_mode is FlightModeSpeed:
 		led.change_color(Color(1, 1, 0))
-	elif flight_mode == FlightController.FlightMode.TRACK:
+	elif flight_mode is FlightModeTrack:
 		led.change_color(Color(0, 1, 0))
-	elif flight_mode == FlightController.FlightMode.AUTO:
+	elif flight_mode is FlightModeRecover:
 		led.change_color(Color(1, 0, 0))
 		led.blink_pattern = [Vector2(0.25, 0.25)]
-	elif flight_mode == FlightController.FlightMode.TURTLE:
+	elif flight_mode is FlightModeTurtle:
 		led.change_color(Color(1, 0, 0))
 		led.blink_pattern = [Vector2(0.1, 0.1), Vector2(0.1, 0.7)]
-	elif flight_mode == FlightController.FlightMode.LAUNCH:
+	elif flight_mode is FlightModeLaunch:
 		led.change_color(Color(1, 0, 0))
 		led.blink_pattern = [Vector2(0.15, 0.15), Vector2(0.55, 0.15)]
 	hud.update_flight_mode(flight_mode)
@@ -272,7 +272,7 @@ func _on_quad_settings_updated() -> void:
 	mass = QuadSettings.dry_weight + QuadSettings.battery_weight
 	($FPVCamera as FPVCamera).transform.basis = Basis.IDENTITY.rotated(
 			Vector3.RIGHT, deg_to_rad(QuadSettings.angle))
-	flight_controller.control_profile = QuadSettings.control_profile
+	flight_controller.set_control_profile(QuadSettings.control_profile)
 
 
 func _on_hud_config_updated() -> void:

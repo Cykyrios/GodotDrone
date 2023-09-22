@@ -1,5 +1,5 @@
-extends Node
 class_name ControlProfile
+extends RefCounted
 
 
 enum Axis {PITCH, ROLL, YAW}

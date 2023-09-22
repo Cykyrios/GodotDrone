@@ -50,11 +50,11 @@ func _on_message_timer_timeout() -> void:
 		status = Status.DISARMED
 
 
-func _on_armed(mode: int) -> void:
+func _on_armed(mode: FlightMode) -> void:
 	match mode:
-		FlightController.FlightMode.TURTLE:
+		FlightMode.Type.TURTLE:
 			self.status = Status.TURTLE
-		FlightController.FlightMode.LAUNCH:
+		FlightMode.Type.LAUNCH:
 			self.status = Status.LAUNCH
 		_:
 			self.status = Status.ARMED
@@ -75,13 +75,13 @@ func _on_arm_failed(reason: int) -> void:
 	message_timer.start(1)
 
 
-func _on_mode_changed(mode: int) -> void:
+func _on_mode_changed(mode: FlightMode) -> void:
 	if status == Status.DISARMED:
 		return
-	if mode != FlightController.FlightMode.TURTLE and mode != FlightController.FlightMode.LAUNCH \
+	if not mode is FlightModeTurtle and not mode is FlightModeLaunch \
 			and (status == Status.TURTLE or status == Status.LAUNCH):
 		clear_message()
-	elif mode == FlightController.FlightMode.AUTO:
+	elif mode is FlightModeRecover:
 		self.status = Status.RECOVERY
 	else:
 		clear_message()

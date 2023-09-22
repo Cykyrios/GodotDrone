@@ -11,7 +11,7 @@ signal disarm_input
 @export var target_path: NodePath = ^""
 var target: Drone = null
 
-var input: Array[float] = [0.0, 0.0, 0.0, 0.0]
+var input := FlightCommand.new()
 
 var axis_bindings: Array[ControllerAction] = []
 
@@ -79,7 +79,10 @@ func read_input() -> void:
 	var pitch := Input.get_axis("pitch_down", "pitch_up")
 	var roll := Input.get_axis("roll_left", "roll_right")
 	var yaw := Input.get_axis("yaw_left", "yaw_right")
-	input = [power, yaw, roll, pitch]
+	input.power = power
+	input.yaw = yaw
+	input.roll = roll
+	input.pitch = pitch
 
 
 func simulate_action_event(action_name: String, action_pressed: bool) -> InputEventAction:

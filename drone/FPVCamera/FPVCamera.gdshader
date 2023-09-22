@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode unshaded;
+render_mode cull_front, unshaded;
 
 uniform sampler2D Texture0;
 uniform sampler2D Texture1;
@@ -18,7 +18,7 @@ vec3 latlon_to_ray(vec2 latlon) {
 
 vec3 fisheye_inverse(vec2 p) {
 	float r = sqrt(p.x * p.x + p.y * p.y);
-	
+
 	if (r > PI) {
 		return vec3(0.0, 0.0, 0.0);
 	}
@@ -46,9 +46,9 @@ vec3 srgb_to_linear(vec3 color) {
 	return color * (color * (color * 0.305306011 + 0.682171111) + 0.012522878);
 }
 
-//void vertex() {
-//	POSITION = vec4(VERTEX, 1.0);
-//}
+void vertex() {
+	POSITION = vec4(VERTEX, 1.0) * vec4(-1.0, -1.0, 1.0, 1.0);
+}
 
 void fragment() {
 	float view_ratio = VIEWPORT_SIZE.x / VIEWPORT_SIZE.y;
@@ -65,7 +65,7 @@ void fragment() {
 		float ax = abs(pos.x);
 		float ay = abs(pos.y);
 		float az = abs(pos.z);
-		
+
 		if (pos.z <= 0.0) {
 			if (az > ax && az > ay) {
 				uv = vec2(0.5 * (vec2(pos.x / az, pos.y / az)) + 0.5);

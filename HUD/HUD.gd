@@ -3,7 +3,6 @@ class_name HUD
 
 
 enum Component {CROSSHAIR, STATUS, HEADING, SPEED, ALTITUDE, LADDER, HORIZON, STICKS, RPM}
-enum FlightMode {LEVEL, SPEED, TRACK}
 
 # HUD components
 @onready var crosshair := %Crosshair as TextureRect
@@ -109,15 +108,14 @@ func update_data(dt: float, pos: Vector3, angles: Vector3, velocity: Vector3,
 		hud_rpm[i] += dt * rpm[i]
 
 
-func update_flight_mode(mode: int) -> void:
+func update_flight_mode(mode: FlightMode) -> void:
 	var text := ""
-	match mode:
-		FlightMode.LEVEL:
-			text = "HORIZON"
-		FlightMode.SPEED:
-			text = "SPEED"
-		FlightMode.TRACK:
-			text = "POSITION"
+	if mode is FlightModeHorizon:
+		text = "HORIZON"
+	elif mode is FlightModeSpeed:
+		text = "SPEED"
+	elif mode is FlightModeTrack:
+		text = "POSITION"
 	flight_mode.text = text
 
 

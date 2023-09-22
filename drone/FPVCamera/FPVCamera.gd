@@ -9,8 +9,8 @@ extends Camera3D
 @export_range (0.001, 1) var clip_near := 0.005
 @export_range (10, 10000) var clip_far := 1000.0
 
-var viewports := []
-var cameras := []
+var viewports: Array[SubViewport] = []
+var cameras: Array[Camera3D] = []
 var camera_layer := 11
 var num_cameras := 5
 
@@ -66,6 +66,9 @@ func _ready() -> void:
 		camera.cull_mask -= int(pow(2, camera_layer - 1))
 		cameras.append(camera)
 
+		var camera_attributes := CameraAttributesPractical.new()
+		camera.attributes = camera_attributes
+
 	update_viewport_textures.call_deferred()
 
 
@@ -103,5 +106,4 @@ func update_viewport_textures() -> void:
 	for i in num_cameras:
 		var viewport := viewports[i] as SubViewport
 		var viewport_texture := viewport.get_texture()
-		viewport_texture.viewport_path = viewport.get_path()
 		mat.set_shader_parameter("Texture%d" % [i], viewport_texture)
