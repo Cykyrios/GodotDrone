@@ -50,7 +50,7 @@ var lap_end := 0
 var timers: Array[LapTimer] = []
 var timer_label: Label = null
 
-var race_state: int = Global.RaceState.START :
+var race_state := Global.RaceState.START :
 	set(state):
 		race_state = state
 		race_state_changed.emit(race_state)
@@ -356,7 +356,7 @@ func _on_countdown_timer_timeout() -> void:
 		stop_countdown()
 
 
-func _on_body_exited_launchpad(body: Node) -> void:
+func _on_body_exited_launchpad(_body: Node) -> void:
 #	if body is Drone and Global.game_mode == Global.GameMode.RACE \
 	if Global.game_mode == Global.GameMode.RACE \
 			and race_state == Global.RaceState.START:
