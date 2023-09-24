@@ -145,7 +145,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	var lin_vel := state.linear_velocity
 	var ang_vel := state.angular_velocity
 
-	for i in range(steps):
+	for i in steps:
 		flight_controller.integrate_loop(dt, pos, bas)
 
 		var vec_force := Vector3.ZERO

@@ -88,7 +88,7 @@ func _ready() -> void:
 
 	update_course()
 
-	for _i in range(laps):
+	for _i in laps:
 		timers.append(LapTimer.new())
 		add_child(timers[-1])
 
@@ -98,7 +98,7 @@ func _ready() -> void:
 
 	replay_path = "%s/%s" % [Global.replay_dir, scene_file_path.replace(".tscn", ".rpl").split("/")[-1]]
 	ghosts.clear()
-	for _i in range(5):
+	for _i in 5:
 		ghosts.append(Ghost.new())
 
 
@@ -123,14 +123,14 @@ func update_course() -> void:
 	course_array.clear()
 	if course == "":
 		course_array = []
-		for i in range(checkpoints.size()):
+		for i in checkpoints.size():
 			course_array.append(str(i))
 	else:
 		course = course.replace("\n", ",")
 		course = course.replace(" ", "")
 		var temp_course := course.split(",")
 		course_array = []
-		for i in range(temp_course.size()):
+		for i in temp_course.size():
 			course_array.append(temp_course[i])
 		while course_array.find("") != -1:
 			course_array.erase("")
@@ -396,7 +396,7 @@ func display_time_table() -> void:
 
 
 func load_replays() -> void:
-	for i in range(5):
+	for i in 5:
 		var file := FileAccess.open(replay_path, FileAccess.READ)
 		if file:
 			if ghosts[i]:
@@ -452,7 +452,7 @@ func write_replay(lines: int) -> void:
 	var file := FileAccess.open(replay_path, FileAccess.READ_WRITE)
 	if file:
 		file.seek_end()
-		for i in range(lines):
+		for i in lines:
 			file.store_line(replay_recorder[i])
 		file = null
 		replay_recorder.clear()
@@ -509,7 +509,7 @@ func check_best_time() -> void:
 			var dir := DirAccess.open(Global.replay_dir)
 			var replace := ["gold", "silver", "bronze"]
 			var _discard: int
-			for i in range(2 - new_record_pos):
+			for i in 2 - new_record_pos:
 				_discard = dir.rename(replay_path.replace(".rpl", "_%s.rpl" % [replace[-2 - i]]),
 						replay_path.replace(".rpl", "_%s.rpl" % [replace[-1 - i]]))
 			_discard = dir.rename(replay_path.replace(".rpl", "_prev.rpl"),
@@ -534,7 +534,7 @@ func write_new_record(pos: int, time: float) -> void:
 				file.store_line(track_name)
 				file.store_line("%f" % [time])
 			else:
-				for i in range(idx + 1 + pos):
+				for i in idx + 1 + pos:
 					if array[i] != "":
 						file.store_line(array[i])
 				file.store_line("%f" % [time])

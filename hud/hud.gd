@@ -41,7 +41,7 @@ func _process(_delta: float) -> void:
 		hud_velocity /= hud_delta
 		hud_left_stick /= hud_delta
 		hud_right_stick /= hud_delta
-		for i in range(hud_rpm.size()):
+		for i in hud_rpm.size():
 			hud_rpm[i] /= hud_delta
 		update_display()
 		reset_data()
@@ -104,7 +104,7 @@ func update_data(dt: float, pos: Vector3, angles: Vector3, velocity: Vector3,
 	hud_velocity += dt * velocity
 	hud_left_stick += dt * left_stick
 	hud_right_stick += dt * right_stick
-	for i in range(hud_rpm.size()):
+	for i in hud_rpm.size():
 		hud_rpm[i] += dt * rpm[i]
 
 
@@ -135,7 +135,7 @@ func get_adjusted_angles(angles: Vector3) -> Vector3:
 	var result := angles
 	var correction := 0
 
-	for i in range(3):
+	for i in 3:
 		# Check sign changes by difference with PI as arbitrary threshold
 		if absf(angles[i] - first_angles[i]) > PI:
 			if first_angles[i] > 0:

@@ -102,7 +102,7 @@ func set_control_profile(profile: ControlProfile) -> void:
 
 
 func setup_pids() -> void:
-	for _i in range(Controller.size()):
+	for _i in Controller.size():
 		pid_controllers.append(PID.new())
 
 	pid_controllers[Controller.ALTITUDE].set_coefficients(
@@ -477,7 +477,7 @@ func update_control(delta: float) -> void:
 	# Scale PWM to range [idle, 1] as needed
 	if pwm_max - pwm_min > 1 - idle_pwm:
 		var pwm_mid := (pwm_min + pwm_max) / 2.0
-		for i in range(4):
+		for i in 4:
 			motor_pwm[i] = pwm_mid + (motor_pwm[i] - pwm_mid) * (1 - idle_pwm) / (pwm_max - pwm_min)
 	pwm_min = motor_pwm.min()
 	pwm_max = motor_pwm.max()
@@ -486,7 +486,7 @@ func update_control(delta: float) -> void:
 		offset = idle_pwm - pwm_min
 	if pwm_max > 1:
 		offset = 1 - pwm_max
-	for i in range(4):
+	for i in 4:
 		motor_pwm[i] += offset
 
 	if flight_mode is FlightModeTurtle:
@@ -538,7 +538,7 @@ func reset() -> void:
 	state_armed = false
 
 	# Update position twice to ensure pos_prev == pos
-	for _i in range(2):
+	for _i in 2:
 		update_position()
 	update_velocity()
 

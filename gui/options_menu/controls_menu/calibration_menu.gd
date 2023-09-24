@@ -32,12 +32,12 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	var next_step_ready := true
 	if calibration_step == 0 and axes.size() == 4:
-		for i in range(4):
+		for i in 4:
 			if absf(Input.get_joy_axis(device, i)) < 0.5:
 				next_step_ready = false
 				break
 	elif calibration_step == 1:
-		for i in range(4):
+		for i in 4:
 			if absf(Input.get_joy_axis(device, i)) > 0.2:
 				next_step_ready = false
 				break

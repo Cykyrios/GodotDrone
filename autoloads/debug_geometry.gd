@@ -293,18 +293,18 @@ class DebugSphere extends DebugShape:
 	func _draw_debug_shape() -> void:
 		super()
 
-		for i in range(1, latitude + 1):
-			var lat0 := PI * (-0.5 + (i - 1) / (latitude as float))
+		for i in latitude:
+			var lat0 := PI * (-0.5 + i / (latitude as float))
 			var y0 := sin(lat0)
 			var r0 := cos(lat0)
-			var lat1 := PI * (-0.5 + i / (latitude as float))
+			var lat1 := PI * (-0.5 + (i + 1) / (latitude as float))
 			var y1 := sin(lat1)
 			var r1 := cos(lat1)
-			for j in range(1, longitude + 1):
-				var lon0 := 2 * PI * ((j - 1) / (longitude as float))
+			for j in longitude:
+				var lon0 := 2 * PI * (j / (longitude as float))
 				var x0 := cos(lon0)
 				var z0 := sin(lon0)
-				var lon1 := 2 * PI * (j / (longitude as float))
+				var lon1 := 2 * PI * ((j + 1) / (longitude as float))
 				var x1 := cos(lon1)
 				var z1 := sin(lon1)
 
@@ -343,11 +343,11 @@ class DebugCone extends DebugShape:
 
 		position = (top + base) / 2
 		var height := (top - base).length()
-		for i in range(1, longitude + 1):
-			var lon0 := 2 * PI * ((i - 1) as float / longitude)
+		for i in longitude:
+			var lon0 := 2 * PI * (i as float / longitude)
 			var x0 := cos(lon0)
 			var z0 := sin(lon0)
-			var lon1 := 2 * PI * (i as float / longitude)
+			var lon1 := 2 * PI * ((i + 1) as float / longitude)
 			var x1 := cos(lon1)
 			var z1 := sin(lon1)
 
@@ -366,7 +366,7 @@ class DebugCone extends DebugShape:
 			elif dir != Vector3.UP and dir != Vector3.ZERO:
 				rot = Vector3.UP.cross(dir).normalized()
 				ang = Vector3.UP.angle_to(dir)
-			for j in range(points.size()):
+			for j in points.size():
 				points[j] = points[j].rotated(rot, ang) + base
 
 			if draw_surfaces:
@@ -505,13 +505,13 @@ class DebugGrid extends DebugShape:
 		if rotated_right_vector.cross(projection).normalized() != normal_direction.normalized():
 			tangent_angle = -tangent_angle
 
-		for i in range(0, length_divs + 1):
+		for i in length_divs + 1:
 			var lx := length * (i as float / length_divs - 0.5)
 			add_line_primitive([Vector3(lx, 0, -width / 2.0).rotated(normal_rotation, normal_angle).rotated(
 					tangent_rotation, tangent_angle) + position,
 					Vector3(lx, 0, width / 2.0).rotated(normal_rotation, normal_angle).rotated(
 					tangent_rotation, tangent_angle) + position])
-		for j in range(0, width_divs + 1):
+		for j in width_divs + 1:
 			var lz := width * (j as float / width_divs - 0.5)
 			add_line_primitive([Vector3(-length / 2.0, 0, lz).rotated(normal_rotation, normal_angle).rotated(
 					tangent_rotation, tangent_angle) + position,

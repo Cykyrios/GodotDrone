@@ -33,7 +33,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventJoypadMotion:
 		var controller_action: ControllerAction = null
-		for i in range(axis_bindings.size()):
+		for i in axis_bindings.size():
 			if event.axis == axis_bindings[i].axis:
 				controller_action = axis_bindings[i]
 				var action: String = controller_action.action_name

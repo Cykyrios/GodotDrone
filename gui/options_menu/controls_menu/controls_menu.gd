@@ -51,13 +51,13 @@ func _ready() -> void:
 	# Controller selector, axes and buttons
 	var axis := GUIControllerAxis.new()
 	axis.size_flags_horizontal = 0
-	for _i in range(8):
+	for _i in 8:
 		axes_list.add_child(axis.duplicate())
 	axis.queue_free()
 
 	var button := GUIControllerButton.new()
 	button.size_flags_horizontal = SIZE_SHRINK_CENTER
-	for _i in range(16):
+	for _i in 16:
 		button_grid.add_child(button.duplicate())
 		button_grid.get_children()[-1].custom_minimum_size = Vector2(20, 20)
 	button.queue_free()
@@ -224,9 +224,9 @@ func _on_checkbutton_toggled(pressed: bool) -> void:
 
 func update_axes_and_buttons(device: int) -> void:
 	controller_list.text = Input.get_joy_name(device)
-	for i in range(8):
+	for i in 8:
 		update_axis_value(i, Input.get_joy_axis(device, i))
-	for i in range(16):
+	for i in 16:
 		update_button_value(i, Input.is_joy_button_pressed(device, i))
 
 
@@ -244,7 +244,7 @@ func update_input_map() -> void:
 		(binding as GUIControllerBinding).remove_binding()
 	var _discard := Controls.load_input_map()
 	var act_list := Controls.action_list
-	for i in range(act_list.size()):
+	for i in act_list.size():
 		var act := act_list[i] as ControllerAction
 		var binding := actions_list.get_child(i)
 		if act.bound:

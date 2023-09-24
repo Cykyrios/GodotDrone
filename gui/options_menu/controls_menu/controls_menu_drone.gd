@@ -22,7 +22,7 @@ func _ready() -> void:
 
 	var color := Color(0.7, 0.05, 0.05)
 	var prop := "CW"
-	for i in range(4):
+	for i in 4:
 		if i == 1 or i == 3:
 			prop = "CCW"
 		get_node("Motor%d/Propeller%d/%s" % [i + 1, i + 1, prop]) \

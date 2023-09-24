@@ -48,7 +48,7 @@ func _ready() -> void:
 	MAX_TORQUE = MAX_TORQUE / 1000.0
 	max_rpm_change = MAX_TORQUE * RPM_ACCELERATION
 
-	for _i in range(8):
+	for _i in 8:
 		sounds.append(AudioStreamPlayer.new())
 		add_child(sounds[-1])
 	sound1 = sounds[0]

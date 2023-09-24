@@ -30,7 +30,7 @@ func _add_collision() -> void:
 	var offset := inner_radius + shape.radius
 	var length := 2 * PI * offset / collision_shape_count
 	shape.height = length
-	for i in range(collision_shape_count):
+	for i in collision_shape_count:
 		var collision_shape := CollisionShape3D.new()
 		collision_shape.shape = shape
 		static_body.add_child(collision_shape)

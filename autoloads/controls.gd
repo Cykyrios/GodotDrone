@@ -99,7 +99,7 @@ func load_input_map(update_controller: bool = false) -> String:
 						current_action = action
 						InputMap.action_erase_events(current_action)
 						binding_type = config.get_value(section, action)
-						for i in range(action_list.size()):
+						for i in action_list.size():
 							if action_list[i].action_name == action:
 								action_idx = i
 								action_list[action_idx].bound = true
@@ -154,7 +154,7 @@ func create_action_list() -> void:
 func get_joypad_guid_list() -> Array[String]:
 	var controller_guids: Array[String] = []
 	var controller_ids := Input.get_connected_joypads()
-	for i in range(controller_ids.size()):
+	for i in controller_ids.size():
 		controller_guids.append(Input.get_joy_guid(controller_ids[i]))
 
 	return controller_guids

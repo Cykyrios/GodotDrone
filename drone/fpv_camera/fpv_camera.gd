@@ -44,7 +44,7 @@ func _ready() -> void:
 	mat.set_shader_parameter("hfov", fov_h)
 
 	var root_viewport := get_tree().root as Viewport
-	for i in range(num_cameras):
+	for i in num_cameras:
 		var viewport := SubViewport.new()
 		add_child(viewport)
 		viewport.size = Graphics.fisheye_resolution * Vector2.ONE

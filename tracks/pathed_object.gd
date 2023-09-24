@@ -57,6 +57,6 @@ func update_multimesh() -> void:
 		multimesh.set_instance_transform(0, transform)
 	else:
 		multimesh.instance_count = int(curve_length / spacing)
-		for i in range(multimesh.instance_count):
+		for i in multimesh.instance_count:
 			multimesh.set_instance_transform(i, Transform3D(Basis.IDENTITY,
 					curve.sample_baked(curve_length / multimesh.instance_count * i, true)))

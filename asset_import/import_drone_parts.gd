@@ -87,7 +87,7 @@ func _post_import(scene: Node) -> Object:
 		var prop_shader := load("res://drone/parts/propellers/propeller_shader.tres") as Shader
 		var prop_mat := ShaderMaterial.new()
 		prop_mat.shader = prop_shader
-		for i in range(2):
+		for i in 2:
 			children[i].mesh.surface_set_material(0, prop_mat)
 
 		if scene_checks != [true, true, true]:
