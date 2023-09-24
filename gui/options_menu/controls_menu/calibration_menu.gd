@@ -18,7 +18,7 @@ var pitch := []
 var roll := []
 
 var calibration_is_done := false
-var packed_popup := load("res://GUI/ConfirmationPopup.tscn")
+var packed_popup := load("res://gui/confirmation_popup.tscn")
 var display_popup := false
 
 
