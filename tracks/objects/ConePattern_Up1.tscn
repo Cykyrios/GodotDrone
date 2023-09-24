@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://da8b4eavx64t6"]
 
-[ext_resource type="Script" path="res://tracks/ObjectPattern.gd" id="2"]
+[ext_resource type="Script" path="res://tracks/object_pattern.gd" id="2"]
 [ext_resource type="ArrayMesh" uid="uid://bxrdbn3jvnd7y" path="res://tracks/objects/RacingCone_1.mesh" id="2_sec0f"]
 
 [sub_resource type="MultiMesh" id="1"]

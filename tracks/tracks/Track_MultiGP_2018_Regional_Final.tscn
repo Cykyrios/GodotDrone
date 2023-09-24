@@ -1,6 +1,6 @@
 [gd_scene load_steps=31 format=3 uid="uid://c8f7gpaq0tesn"]
 
-[ext_resource type="Script" path="res://tracks/Track.gd" id="1"]
+[ext_resource type="Script" path="res://tracks/track.gd" id="1"]
 [ext_resource type="PackedScene" path="res://tracks/objects/Launchpad.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://tracks/gates/Gate_7x6_Elevated.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://tracks/gates/Gate_Flag.tscn" id="4"]
@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" path="res://tracks/gates/Gate_7x6_Simple.tscn" id="11"]
 [ext_resource type="PackedScene" path="res://tracks/gates/Gate_Hurdle_10x5.tscn" id="12"]
 [ext_resource type="PackedScene" path="res://tracks/gates/Gate_7x6_Double.tscn" id="13"]
-[ext_resource type="Script" path="res://tracks/PathedObject.gd" id="14"]
+[ext_resource type="Script" path="res://tracks/pathed_object.gd" id="14"]
 [ext_resource type="ArrayMesh" uid="uid://bxrdbn3jvnd7y" path="res://tracks/objects/RacingCone_1.mesh" id="15_c24gl"]
 [ext_resource type="PackedScene" uid="uid://crmonycbjc4u4" path="res://tracks/objects/ConePattern_Up2.tscn" id="16"]
 [ext_resource type="PackedScene" uid="uid://dbjploq5u1qes" path="res://tracks/objects/ConePattern_Arrow2.tscn" id="17"]

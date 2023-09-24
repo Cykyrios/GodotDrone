@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dti83e420tdpb"]
 
-[ext_resource type="Script" path="res://tracks/Checkpoint.gd" id="1"]
-[ext_resource type="Script" path="res://tracks/Gate.gd" id="2"]
+[ext_resource type="Script" path="res://tracks/checkpoint.gd" id="1"]
+[ext_resource type="Script" path="res://tracks/gate.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://bh6efpyxn1hg0" path="res://tracks/objects/Flag.tscn" id="3"]
 
 [sub_resource type="BoxShape3D" id="1"]

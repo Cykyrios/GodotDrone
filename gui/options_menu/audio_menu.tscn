@@ -1,0 +1,77 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsa5oyivvnqp0"]
+
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://gui/menu_theme.tres" id="1_dowr3"]
+[ext_resource type="Script" path="res://gui/options_menu/audio_menu.gd" id="2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_m6mta"]
+font_size = 48
+
+[node name="AudioMenu" type="MarginContainer"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_dowr3")
+script = ExtResource("2")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Audio"
+label_settings = SubResource("LabelSettings_m6mta")
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 7
+size_flags_stretch_ratio = 100.0
+
+[node name="Grid" type="GridContainer" parent="PanelContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 7
+size_flags_vertical = 7
+theme_override_constants/h_separation = 20
+columns = 3
+
+[node name="MasterLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/Grid"]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="MasterSlider" type="HSlider" parent="PanelContainer/VBoxContainer/ScrollContainer/Grid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+value = 100.0
+rounded = true
+tick_count = 5
+ticks_on_borders = true
+
+[node name="MasterValue" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "100%"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 10
+alignment = 2
+
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back"

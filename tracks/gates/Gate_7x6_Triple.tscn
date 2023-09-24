@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://hubbrd3o21sn"]
 
-[ext_resource type="Script" path="res://tracks/Checkpoint.gd" id="1"]
+[ext_resource type="Script" path="res://tracks/checkpoint.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://deb3xjepqr3ue" path="res://tracks/objects/Gate_7x6_Triple.tscn" id="2"]
-[ext_resource type="Script" path="res://tracks/Gate.gd" id="3"]
+[ext_resource type="Script" path="res://tracks/gate.gd" id="3"]
 
 [sub_resource type="BoxShape3D" id="1"]
 size = Vector3(2.1, 1.8, 0.02)

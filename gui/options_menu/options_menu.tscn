@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://hwv8he00j43l"]
+
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://gui/menu_theme.tres" id="1_6tmuh"]
+[ext_resource type="Script" path="res://gui/options_menu/options_menu.gd" id="2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_abjtp"]
+font_size = 48
+
+[node name="OptionsMenu" type="MarginContainer"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6tmuh")
+script = ExtResource("2")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+label_settings = SubResource("LabelSettings_abjtp")
+horizontal_alignment = 1
+
+[node name="ButtonGame" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Game Settings"
+
+[node name="ButtonGraphics" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Graphics Settings"
+
+[node name="ButtonAudio" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Audio Settings"
+
+[node name="ButtonControls" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Controls"
+
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back to Menu"

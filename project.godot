@@ -11,17 +11,17 @@ config_version=5
 [application]
 
 config/name="Drone"
-run/main_scene="res://GUI/MainMenu.tscn"
+run/main_scene="res://gui/main_menu.tscn"
 config/features=PackedStringArray("4.1")
 
 [autoload]
 
-Global="*res://autoloads/Global.gd"
-Audio="*res://autoloads/Audio.gd"
-Controls="*res://autoloads/Controls.gd"
-GameSettings="*res://autoloads/GameSettings.gd"
-Graphics="*res://autoloads/Graphics.gd"
-QuadSettings="*res://autoloads/QuadSettings.gd"
+Global="*res://autoloads/global.gd"
+Audio="*res://autoloads/audio.gd"
+Controls="*res://autoloads/controls.gd"
+GameSettings="*res://autoloads/game_settings.gd"
+Graphics="*res://autoloads/graphics.gd"
+QuadSettings="*res://autoloads/quad_settings.gd"
 DebugGeometry="*res://autoloads/debug_geometry.gd"
 
 [debug]

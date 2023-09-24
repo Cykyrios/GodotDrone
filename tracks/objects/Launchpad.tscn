@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://tracks/LaunchArea.gd" type="Script" id=1]
-[ext_resource path="res://tracks/Launchpad.gd" type="Script" id=2]
+[ext_resource path="res://tracks/launch_area.gd" type="Script" id=1]
+[ext_resource path="res://tracks/launchpad.gd" type="Script" id=2]
 
 [sub_resource type="PhysicsMaterial" id=1]
 rough = true

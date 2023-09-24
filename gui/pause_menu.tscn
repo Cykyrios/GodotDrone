@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsk1mpj5na1ou"]
+
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://gui/menu_theme.tres" id="1_kmgdu"]
+[ext_resource type="Script" path="res://gui/pause_menu.gd" id="2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ngoj6"]
+font_size = 48
+
+[node name="PauseMenu" type="MarginContainer"]
+process_mode = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_kmgdu")
+script = ExtResource("2")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Pause"
+label_settings = SubResource("LabelSettings_ngoj6")
+horizontal_alignment = 1
+
+[node name="ButtonResume" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Resume"
+
+[node name="ButtonQuad" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quad Settings"
+
+[node name="ButtonHelp" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Help"
+
+[node name="ButtonOptions" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Options"
+
+[node name="ButtonMainMenu" type="Button" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Return to Main Menu"

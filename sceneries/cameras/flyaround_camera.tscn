@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpwlqiq68no60"]
+
+[ext_resource type="Script" path="res://sceneries/cameras/flyaround_camera.gd" id="1_p73yj"]
+
+[node name="FlyaroundCamera" type="Node3D"]
+script = ExtResource("1_p73yj")
+
+[node name="RotationHelper" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="RotationHelper"]
+far = 1000.0

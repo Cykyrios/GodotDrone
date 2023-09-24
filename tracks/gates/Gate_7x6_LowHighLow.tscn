@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://c38do2nhxwr66"]
 
-[ext_resource type="Script" path="res://tracks/Checkpoint.gd" id="1"]
+[ext_resource type="Script" path="res://tracks/checkpoint.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://xhfmi6opv0ll" path="res://tracks/objects/Gate_7x6_Simple.tscn" id="2"]
-[ext_resource type="Script" path="res://tracks/Gate.gd" id="3"]
+[ext_resource type="Script" path="res://tracks/gate.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://bh6efpyxn1hg0" path="res://tracks/objects/Flag.tscn" id="4"]
 
 [sub_resource type="BoxShape3D" id="1"]

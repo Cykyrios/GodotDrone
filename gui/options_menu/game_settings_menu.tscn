@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdihf8jlkmulq"]
+
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://gui/menu_theme.tres" id="1_x1sst"]
+[ext_resource type="Script" path="res://gui/options_menu/game_settings_menu.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://be6l02nphlj5e" path="res://gui/options_menu/hud_config.tscn" id="3"]
+
+[node name="GameSettingsMenu" type="MarginContainer"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_x1sst")
+script = ExtResource("2")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 7
+size_flags_vertical = 7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Gameplay" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Gameplay"]
+modulate = Color(1, 1, 1, 0.470588)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "Nothing here at the moment, head to the HUD tab to customize the HUD."
+
+[node name="HUD" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HUDConfig" parent="PanelContainer/VBoxContainer/TabContainer/HUD" instance=ExtResource("3")]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 9
+alignment = 2
+
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back to Menu"

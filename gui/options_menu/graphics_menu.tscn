@@ -1,0 +1,120 @@
+[gd_scene load_steps=4 format=3 uid="uid://eonct0r3co2a"]
+
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://gui/menu_theme.tres" id="1_bshb1"]
+[ext_resource type="Script" path="res://gui/options_menu/graphics_menu.gd" id="2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nvkxk"]
+font_size = 48
+
+[node name="GraphicsMenu" type="MarginContainer"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_bshb1")
+script = ExtResource("2")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Graphics"
+label_settings = SubResource("LabelSettings_nvkxk")
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 7
+size_flags_stretch_ratio = 100.0
+
+[node name="WindowGrid" type="GridContainer" parent="PanelContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 7
+size_flags_vertical = 7
+columns = 2
+
+[node name="WindowLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+layout_mode = 2
+text = "Window Mode"
+
+[node name="WindowOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="ResolutionLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+layout_mode = 2
+text = "Resolution"
+
+[node name="ResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="GameMSAALabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+layout_mode = 2
+text = "MSAA"
+
+[node name="GameMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="GameAFLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+layout_mode = 2
+text = "Anisotropic Filter"
+
+[node name="GameAFOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ShadowsLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+layout_mode = 2
+text = "Shadows Quality"
+
+[node name="ShadowsOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FPVFisheyeLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+layout_mode = 2
+text = "Fisheye Camera"
+
+[node name="FPVFisheyeOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FisheyeResolutionLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+layout_mode = 2
+text = "Fisheye Resolution"
+
+[node name="FisheyeResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FisheyeMSAALabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+layout_mode = 2
+text = "Fisheye MSAA"
+
+[node name="FisheyeMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 10
+alignment = 2
+
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back"

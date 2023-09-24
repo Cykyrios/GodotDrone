@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvqmyftvv13w6"]
+
+[ext_resource type="PackedScene" uid="uid://c2kives20vbh" path="res://Assets/Drones/Parts/Propellers/Propeller1/Propeller1.glb" id="1_2imp5"]
+
+[node name="Propeller1" instance=ExtResource("1_2imp5")]
+diameter = 5.1
+pitch = 4.8
+num_blades = 3
+c_tip = 0.008
+cl0 = 0.85
+cla = 1.2
+cd0 = 0.05
+color = Color(0.784314, 0, 0, 1)
+prop_disk_alpha = 1.5

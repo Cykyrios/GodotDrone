@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://yhq1cfgilxhe"]
+
+[ext_resource type="Shader" path="res://drone/fpv_camera/fpv_camera.gdshader" id="1"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1")
+shader_parameter/hfov = 150.0

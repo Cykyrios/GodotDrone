@@ -1,0 +1,352 @@
+[gd_scene load_steps=6 format=3 uid="uid://dkf8x6mpk8jpd"]
+
+[ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://gui/menu_theme.tres" id="1_qd5lq"]
+[ext_resource type="Script" path="res://gui/quad_settings_menu.gd" id="2"]
+[ext_resource type="Script" path="res://gui/rate_graph.gd" id="3"]
+[ext_resource type="Theme" uid="uid://24uqagsx1gy3" path="res://gui/help_page_theme.tres" id="3_chqgv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bj45n"]
+font_size = 48
+
+[node name="QuadSettingsMenu" type="MarginContainer"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_qd5lq")
+script = ExtResource("2")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quad Settings"
+label_settings = SubResource("LabelSettings_bj45n")
+horizontal_alignment = 1
+
+[node name="SettingsHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="QuadScroll" type="ScrollContainer" parent="PanelContainer/VBoxContainer/SettingsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Quad" type="GridContainer" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="CameraAngleLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+layout_mode = 2
+text = "FPV Camera Angle"
+
+[node name="CameraAngleSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = -20.0
+max_value = 80.0
+value = 30.0
+rounded = true
+
+[node name="CameraAngleCurrent" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "30 deg"
+
+[node name="DryWeightLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+layout_mode = 2
+text = "Dry Weight"
+
+[node name="DryWeightSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 100.0
+max_value = 1000.0
+step = 10.0
+value = 550.0
+rounded = true
+
+[node name="DryWeightCurrent" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "550 g"
+
+[node name="BatteryWeightLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+layout_mode = 2
+text = "Battery Weight"
+
+[node name="BatteryWeightSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 50.0
+max_value = 500.0
+step = 10.0
+value = 180.0
+rounded = true
+
+[node name="BatteryWeightCurrent" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/QuadScroll/Quad"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "180 g"
+
+[node name="RatesScroll" type="ScrollContainer" parent="PanelContainer/VBoxContainer/SettingsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Rates" type="VBoxContainer" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="RatesAdjustmentLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/HBoxContainer"]
+layout_mode = 2
+text = "Rates curve:"
+
+[node name="RatesCurveOptionButton" type="OptionButton" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 1
+popup/item_0/text = "Rates"
+popup/item_0/id = 0
+
+[node name="RateAdjust" type="GridContainer" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 20
+columns = 7
+
+[node name="EmptyLabel1" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+layout_mode = 2
+
+[node name="RateLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Rate"
+horizontal_alignment = 1
+
+[node name="EmptyLabel3" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+layout_mode = 2
+
+[node name="RcLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "RC Rate"
+horizontal_alignment = 1
+
+[node name="EmptyLabel5" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+layout_mode = 2
+
+[node name="ExpoLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Expo"
+horizontal_alignment = 1
+
+[node name="EmptyLabel7" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+layout_mode = 2
+
+[node name="PitchLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+layout_mode = 2
+text = "Pitch"
+
+[node name="PitchRateSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 90.0
+max_value = 1800.0
+value = 667.0
+rounded = true
+
+[node name="PitchRate" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0000"
+horizontal_alignment = 2
+
+[node name="PitchRcSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 90.0
+max_value = 1800.0
+value = 667.0
+rounded = true
+
+[node name="PitchRc" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0000"
+horizontal_alignment = 2
+
+[node name="PitchExpoSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="PitchExpo" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0.00"
+
+[node name="RollLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+layout_mode = 2
+text = "Roll"
+
+[node name="RollRateSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 90.0
+max_value = 1800.0
+value = 667.0
+rounded = true
+
+[node name="RollRate" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0000"
+horizontal_alignment = 2
+
+[node name="RollRcSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 90.0
+max_value = 1800.0
+value = 667.0
+rounded = true
+
+[node name="RollRc" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0000"
+horizontal_alignment = 2
+
+[node name="RollExpoSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="RollExpo" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0.00"
+
+[node name="YawLabel" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+layout_mode = 2
+text = "Yaw"
+
+[node name="YawRateSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 90.0
+max_value = 1800.0
+value = 667.0
+rounded = true
+
+[node name="YawRate" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0000"
+horizontal_alignment = 2
+
+[node name="YawRcSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+min_value = 90.0
+max_value = 1800.0
+value = 667.0
+rounded = true
+
+[node name="YawRc" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0000"
+horizontal_alignment = 2
+
+[node name="YawExpoSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 5
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 0.1
+
+[node name="YawExpo" type="Label" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates/RateAdjust"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0.00"
+
+[node name="RateGraph" type="Control" parent="PanelContainer/VBoxContainer/SettingsHBox/RatesScroll/Rates"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_chqgv")
+script = ExtResource("3")
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 2
+
+[node name="ButtonResetQuad" type="Button" parent="PanelContainer/VBoxContainer/ButtonsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset Quad"
+
+[node name="ButtonResetRates" type="Button" parent="PanelContainer/VBoxContainer/ButtonsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset Rates"
+
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/ButtonsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back to Menu"

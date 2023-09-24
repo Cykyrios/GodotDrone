@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://j58ru1bic3dj"]
 
-[ext_resource type="Script" path="res://tracks/Gate.gd" id="1"]
+[ext_resource type="Script" path="res://tracks/gate.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://bpv7ysjoy4hfa" path="res://Assets/Gate/GateMesh.tscn" id="2"]
-[ext_resource type="Script" path="res://tracks/Checkpoint.gd" id="3"]
+[ext_resource type="Script" path="res://tracks/checkpoint.gd" id="3"]
 
 [sub_resource type="CylinderShape3D" id="1"]
 height = 0.1
