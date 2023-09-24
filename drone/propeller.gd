@@ -129,7 +129,7 @@ func update_forces() -> void:
 	var beta := acos(-v.normalized().dot(Vector3.UP))
 	var lambda_c := 0.0
 	var mu := 0.0
-	if w != 0.0:
+	if not is_zero_approx(w):
 		lambda_c = v_len * cos(beta) / (w * radius)
 		mu = v_len * sin(beta) / (w * radius)
 	var sigma := num_blades * c_tip / (PI * radius)
