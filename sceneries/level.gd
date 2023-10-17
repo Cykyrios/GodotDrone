@@ -98,7 +98,7 @@ func _on_resume() -> void:
 
 
 func _on_return_to_menu() -> void:
-	var _discard := get_tree().change_scene_to_file("res://GUI/MainMenu.tscn")
+	var _discard := get_tree().change_scene_to_file("res://gui/main_menu.tscn")
 	queue_free()
 
 
