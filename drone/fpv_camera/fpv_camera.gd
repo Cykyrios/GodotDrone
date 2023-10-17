@@ -58,7 +58,7 @@ func _ready() -> void:
 
 		var camera := Camera3D.new()
 		viewport.add_child(camera)
-		camera.fov = 90
+		camera.fov = 100
 		if fisheye_mode == Graphics.FisheyeMode.FAST and i == 1:
 			camera.fov = 160
 		camera.near = clip_near

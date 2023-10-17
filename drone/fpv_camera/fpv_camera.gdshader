@@ -67,24 +67,25 @@ void fragment() {
 		float az = abs(pos.z);
 
 		if (pos.z <= 0.0) {
+			float fov_fix = tan(radians(90.0 / 2.0)) / tan(radians(100.0 / 2.0));
 			if (az > ax && az > ay) {
-				uv = vec2(0.5 * (vec2(pos.x / az, pos.y / az)) + 0.5);
+				uv = vec2(fov_fix * 0.5 * (vec2(pos.x / az, pos.y / az)) + 0.5);
 				ALBEDO = srgb_to_linear(texture(Texture0, uv).rgb);
 			} else {
 				if (ax > ay) {
 					if (pos.x < 0.0) {
-						uv = vec2(0.5 * (vec2(-pos.z / ax, pos.y / ax)) + 0.5);
+						uv = vec2(fov_fix * 0.5 * (vec2(-pos.z / ax, pos.y / ax)) + 0.5);
 						ALBEDO = srgb_to_linear(texture(Texture1, uv).rgb);
 					} else {
-						uv = vec2(0.5 * (vec2(pos.z / ax, pos.y / ax)) + 0.5);
+						uv = vec2(fov_fix * 0.5 * (vec2(pos.z / ax, pos.y / ax)) + 0.5);
 						ALBEDO = srgb_to_linear(texture(Texture2, uv).rgb);
 					}
 				} else {
 					if (pos.y < 0.0) {
-						uv = vec2(0.5 * (vec2(pos.x / ay, -pos.z / ay)) + 0.5);
+						uv = vec2(fov_fix * 0.5 * (vec2(pos.x / ay, -pos.z / ay)) + 0.5);
 						ALBEDO = srgb_to_linear(texture(Texture3, uv).rgb);
 					} else {
-						uv = vec2(0.5 * (vec2(pos.x / ay, pos.z / ay)) + 0.5);
+						uv = vec2(fov_fix * 0.5 * (vec2(pos.x / ay, pos.z / ay)) + 0.5);
 						ALBEDO = srgb_to_linear(texture(Texture4, uv).rgb);
 					}
 				}
