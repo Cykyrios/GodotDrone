@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b2oyx01l385r7"]
 
-[ext_resource type="Script" path="res://drone/FPVCamera/FPVCamera.gd" id="1"]
-[ext_resource type="Material" uid="uid://yhq1cfgilxhe" path="res://drone/FPVCamera/FPVCamera.tres" id="2"]
+[ext_resource type="Script" path="res://drone/fpv_camera/fpv_camera.gd" id="1"]
+[ext_resource type="Material" uid="uid://yhq1cfgilxhe" path="res://drone/fpv_camera/fpv_camera.tres" id="2"]
 
 [sub_resource type="PlaneMesh" id="1"]
 material = ExtResource("2")

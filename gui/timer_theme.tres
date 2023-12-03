@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://diiixqp26jbhl"]
 
-[ext_resource type="FontFile" uid="uid://q4qsdhpd4hqf" path="res://GUI/RecursiveSansLnrSt-Med.otf" id="1_cn3ma"]
+[ext_resource type="FontFile" uid="uid://q4qsdhpd4hqf" path="res://gui/RecursiveSansLnrSt-Med.otf" id="1_cn3ma"]
 
 [resource]
 default_font = ExtResource("1_cn3ma")
