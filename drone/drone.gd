@@ -83,9 +83,9 @@ func _process(delta: float) -> void:
 					vec_force.length() / 50, Color(5, 1, 0))
 
 		var global_xform := global_transform
-		var global_basis := global_xform.basis
+		var global_bas := global_xform.basis
 		DebugGeometry.draw_debug_grid(0.0, global_xform * Vector3(0, 0, 0), 1.5, 1.5, 1, 1,
-				Vector3.UP, global_basis * Vector3.RIGHT)
+				Vector3.UP, global_bas * Vector3.RIGHT)
 		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3.UP,
 				linear_velocity, linear_velocity.length() / 10)
 		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3.UP,
@@ -96,13 +96,13 @@ func _process(delta: float) -> void:
 				Vector3.BACK, linear_velocity.z / 10, Color(0, 0, 10))
 
 		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3(0.2, 0, 0.5),
-				global_basis * Vector3.RIGHT, (linear_velocity * global_basis).x / 10,
+				global_bas * Vector3.RIGHT, (linear_velocity * global_bas).x / 10,
 				Color(10, 0, 0))
 		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3(-0.2, 0, 0.5),
-				global_basis * Vector3.UP, linear_velocity.y / 10,
+				global_bas * Vector3.UP, linear_velocity.y / 10,
 				Color(0, 10, 0))
 		DebugGeometry.draw_debug_arrow(0.0, global_xform * Vector3(0.2, 0, 0.5),
-				global_basis * Vector3.DOWN, (linear_velocity * global_basis).z / 10,
+				global_bas * Vector3.DOWN, (linear_velocity * global_bas).z / 10,
 				Color(0, 0, 10))
 
 
