@@ -123,7 +123,7 @@ func collision_shape(node: MeshInstance3D, shape: String) -> CollisionShape3D:
 	match shape:
 		"box":
 			var coll_shape := BoxShape3D.new()
-			coll_shape.size = node.scale
+			coll_shape.size = node.scale * 2.0
 			collision.shape = coll_shape
 		"cylinder":
 			var coll_shape := CylinderShape3D.new()
