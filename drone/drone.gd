@@ -189,11 +189,12 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		var ang_a := vec_torque * state.inverse_inertia
 		ang_vel += ang_a * dt
 		var delta_ang_vel := ang_vel * dt
-		if delta_ang_vel != Vector3.ZERO:
+		if not delta_ang_vel.is_zero_approx():
 			bas = bas.rotated(delta_ang_vel.normalized(), delta_ang_vel.length())
 
 		xform = Transform3D(bas, pos)
 
+	xform = xform.orthonormalized()
 	state.linear_velocity = lin_vel
 	state.angular_velocity = ang_vel
 
