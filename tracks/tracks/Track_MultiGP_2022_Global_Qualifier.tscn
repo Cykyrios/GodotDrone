@@ -1,15 +1,15 @@
 [gd_scene load_steps=16 format=3 uid="uid://dphmx20imcptm"]
 
 [ext_resource type="Script" path="res://tracks/track.gd" id="1"]
-[ext_resource type="PackedScene" path="res://tracks/objects/Launchpad.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://tracks/gates/Gate_5x5_Double.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://tracks/gates/Gate_Flag.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://tracks/gates/Gate_5x5_Simple.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://cejslccqkni33" path="res://tracks/objects/Launchpad.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://bmmxvqewne76c" path="res://tracks/gates/Gate_5x5_Double.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://dti83e420tdpb" path="res://tracks/gates/Gate_Flag.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://dysiw8yu823b3" path="res://tracks/gates/Gate_5x5_Simple.tscn" id="5"]
 [ext_resource type="Script" path="res://tracks/pathed_object.gd" id="6"]
 [ext_resource type="PackedScene" uid="uid://crmonycbjc4u4" path="res://tracks/objects/ConePattern_Up2.tscn" id="8"]
 [ext_resource type="ArrayMesh" uid="uid://bxrdbn3jvnd7y" path="res://tracks/objects/RacingCone_1.mesh" id="8_ptcao"]
 [ext_resource type="PackedScene" uid="uid://dbjploq5u1qes" path="res://tracks/objects/ConePattern_Arrow2.tscn" id="9"]
-[ext_resource type="PackedScene" path="res://tracks/gates/Gate_Hurdle_10x5.tscn" id="10"]
+[ext_resource type="PackedScene" uid="uid://cyor372kt054w" path="res://tracks/gates/Gate_Hurdle_10x5.tscn" id="10"]
 
 [sub_resource type="Curve3D" id="1"]
 _data = {

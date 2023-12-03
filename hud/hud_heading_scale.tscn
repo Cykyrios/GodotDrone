@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckklfikxed53j"]
 
-[ext_resource type="PackedScene" uid="uid://cmrbcb2sgf4bh" path="res://HUD/HUDBidirectionalGauge.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://cmrbcb2sgf4bh" path="res://hud/hud_bidirectional_gauge.tscn" id="1"]
 [ext_resource type="Script" path="res://hud/hud_heading_scale.gd" id="2"]
 
 [node name="HUDHeadingScale" type="Control"]

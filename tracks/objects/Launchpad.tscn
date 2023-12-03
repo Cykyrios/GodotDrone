@@ -1,46 +1,46 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://cejslccqkni33"]
 
-[ext_resource path="res://tracks/launch_area.gd" type="Script" id=1]
-[ext_resource path="res://tracks/launchpad.gd" type="Script" id=2]
+[ext_resource type="Script" path="res://tracks/launch_area.gd" id="1"]
+[ext_resource type="Script" path="res://tracks/launchpad.gd" id="2"]
 
-[sub_resource type="PhysicsMaterial" id=1]
+[sub_resource type="PhysicsMaterial" id="1"]
 rough = true
 
-[sub_resource type="BoxMesh" id=2]
-size = Vector3( 2, 0.1, 0.5 )
+[sub_resource type="BoxMesh" id="2"]
+size = Vector3(2, 0.1, 0.5)
 
-[sub_resource type="BoxShape3D" id=3]
-extents = Vector3( 1, 0.05, 0.25 )
+[sub_resource type="BoxShape3D" id="3"]
+size = Vector3(2, 0.1, 0.5)
 
 [node name="Launchpad" type="StaticBody3D"]
-physics_material_override = SubResource( 1 )
-script = ExtResource( 2 )
+physics_material_override = SubResource("1")
+script = ExtResource("2")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.25 )
-mesh = SubResource( 2 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.25)
+mesh = SubResource("2")
 material/0 = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.25 )
-shape = SubResource( 3 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.25)
+shape = SubResource("3")
 
 [node name="LaunchArea1" type="Area3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0.1, 0 )
-script = ExtResource( 1 )
-area_extents = Vector3( 0.12, 0.02, 0.15 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0.1, 0)
+script = ExtResource("1")
+area_extents = Vector3(0.12, 0.02, 0.15)
 
 [node name="LaunchArea2" type="Area3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.1, 0 )
-script = ExtResource( 1 )
-area_extents = Vector3( 0.12, 0.02, 0.15 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.1, 0)
+script = ExtResource("1")
+area_extents = Vector3(0.12, 0.02, 0.15)
 
 [node name="LaunchArea3" type="Area3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.1, 0 )
-script = ExtResource( 1 )
-area_extents = Vector3( 0.12, 0.02, 0.15 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.1, 0)
+script = ExtResource("1")
+area_extents = Vector3(0.12, 0.02, 0.15)
 
 [node name="LaunchArea4" type="Area3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.1, 0 )
-script = ExtResource( 1 )
-area_extents = Vector3( 0.12, 0.02, 0.15 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.1, 0)
+script = ExtResource("1")
+area_extents = Vector3(0.12, 0.02, 0.15)
