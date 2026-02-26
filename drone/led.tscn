@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmh4b4js6orhx"]
+[gd_scene format=3 uid="uid://dmh4b4js6orhx"]
 
-[ext_resource type="Script" path="res://drone/led.gd" id="1"]
+[ext_resource type="Script" uid="uid://cge4pkl6bd1lu" path="res://drone/led.gd" id="1"]
 
 [sub_resource type="StandardMaterial3D" id="3"]
 albedo_color = Color(0.0392157, 0.0392157, 0.0392157, 1)
@@ -17,12 +17,12 @@ height = 0.02
 radial_segments = 16
 rings = 8
 
-[node name="LED" type="Node3D"]
+[node name="LED" type="Node3D" unique_id=1386415785]
 script = ExtResource("1")
 
-[node name="LightFixture" type="MeshInstance3D" parent="."]
+[node name="LightFixture" type="MeshInstance3D" parent="." unique_id=1384365179]
 mesh = SubResource("1")
 
-[node name="LightMesh" type="MeshInstance3D" parent="."]
+[node name="LightMesh" type="MeshInstance3D" parent="." unique_id=212162994]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.005, 0)
 mesh = SubResource("2")

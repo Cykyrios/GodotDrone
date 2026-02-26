@@ -1,9 +1,9 @@
-[gd_scene load_steps=29 format=3 uid="uid://bdyif1vqok2vp"]
+[gd_scene format=3 uid="uid://bdyif1vqok2vp"]
 
 [ext_resource type="PackedScene" uid="uid://bomil4jinmvd7" path="res://tracks/tracks/Track_TorusTunnel.tscn" id="1"]
-[ext_resource type="Script" path="res://sceneries/level.gd" id="3"]
+[ext_resource type="Script" uid="uid://bth7ey1ebf861" path="res://sceneries/level.gd" id="3"]
 [ext_resource type="Shader" uid="uid://b1gnbvtmovyv4" path="res://Assets/grid_shader.tres" id="4"]
-[ext_resource type="Script" path="res://drone/radio_controller.gd" id="5"]
+[ext_resource type="Script" uid="uid://d2mf6xx3fh2sc" path="res://drone/radio_controller.gd" id="5"]
 [ext_resource type="PackedScene" uid="uid://drpyo8j7v14s4" path="res://drone/drones/drone1.tscn" id="6"]
 [ext_resource type="Material" uid="uid://7auec3ko8opy" path="res://Assets/grid_material.tres" id="6_3cqco"]
 [ext_resource type="PackedScene" uid="uid://bcgfl0s4ppsv6" path="res://tracks/tracks/Track_MultiGP_2018_Regional_Qualifier.tscn" id="7"]
@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dmglyxq1ux8sl" path="res://tracks/tracks/Track_FigureEight.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://bpy5wcppe31o0" path="res://tracks/tracks/Track_MultiGP_2020_Global_Qualifier.tscn" id="12"]
 [ext_resource type="PackedScene" uid="uid://c8f7gpaq0tesn" path="res://tracks/tracks/Track_MultiGP_2018_Regional_Final.tscn" id="13"]
-[ext_resource type="Script" path="res://drone/fpv_camera/fpv_camera.gd" id="14"]
+[ext_resource type="Script" uid="uid://cd3simqvqx4ja" path="res://drone/fpv_camera/fpv_camera.gd" id="14"]
 [ext_resource type="PackedScene" uid="uid://ckemy41jveddk" path="res://tracks/tracks/Track_MultiGP_2019_Global_Qualifier.tscn" id="15"]
 [ext_resource type="PackedScene" uid="uid://b2j57x7tra4lm" path="res://tracks/tracks/Track_MultiGP_2021_Global_Qualifier.tscn" id="16"]
 [ext_resource type="PackedScene" uid="uid://dphmx20imcptm" path="res://tracks/tracks/Track_MultiGP_2022_Global_Qualifier.tscn" id="17"]
@@ -63,28 +63,28 @@ height = 1.8
 radius = 0.3
 height = 1.8
 
-[node name="Level" type="Node3D"]
+[node name="Level" type="Node3D" unique_id=1411783041]
 process_mode = 1
 script = ExtResource("3")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1091801724]
 environment = SubResource("Environment_bxx2h")
 camera_attributes = SubResource("CameraAttributesPractical_ybxki")
 
-[node name="Respawn" type="Node3D" parent="."]
+[node name="Respawn" type="Node3D" parent="." unique_id=1864879612]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=200051647]
 transform = Transform3D(0.860577, 0.207325, -0.465214, 0.509321, -0.350308, 0.786051, 0, -0.913401, -0.407062, 0, 20, 0)
 shadow_enabled = true
 shadow_bias = 0.0
 directional_shadow_blend_splits = true
 
-[node name="CameraFixed" type="Camera3D" parent="."]
+[node name="CameraFixed" type="Camera3D" parent="." unique_id=489852568]
 transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 8, 20)
 near = 0.1
 far = 1000.0
 
-[node name="FollowCamera" parent="." instance=ExtResource("9")]
+[node name="FollowCamera" parent="." unique_id=22744208 instance=ExtResource("9")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2)
 near = 0.1
 far = 1000.0
@@ -94,182 +94,182 @@ target_offset = Vector3(0, 0.2, 0)
 camera_offset = Vector3(0, 0.5, 2)
 speed = 10.0
 
-[node name="FlyaroundCamera" parent="." instance=ExtResource("8")]
+[node name="FlyaroundCamera" parent="." unique_id=1681905399 instance=ExtResource("8")]
 process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5)
 
-[node name="Drone" parent="." instance=ExtResource("6")]
+[node name="Drone" parent="." unique_id=1194011848 instance=ExtResource("6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
 
-[node name="FPVCamera" type="Camera3D" parent="Drone"]
+[node name="FPVCamera" type="Camera3D" parent="Drone" unique_id=2115811756]
 transform = Transform3D(1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0.00459784, -0.0626912)
 script = ExtResource("14")
 clip_near = 0.006
 
-[node name="Objects" type="Node3D" parent="."]
+[node name="Objects" type="Node3D" parent="." unique_id=856830944]
 
-[node name="Ground" type="StaticBody3D" parent="Objects"]
+[node name="Ground" type="StaticBody3D" parent="Objects" unique_id=1851914132]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Ground" unique_id=915332996]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("1")
 
-[node name="CollisionShape2" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape2" type="CollisionShape3D" parent="Objects/Ground" unique_id=1343896976]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -0.5, 0)
 shape = SubResource("1")
 
-[node name="CollisionShape3" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape3" type="CollisionShape3D" parent="Objects/Ground" unique_id=1479604033]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, -0.5, 0)
 shape = SubResource("1")
 
-[node name="CollisionShape4" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape4" type="CollisionShape3D" parent="Objects/Ground" unique_id=1245500665]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, -0.5, 0)
 shape = SubResource("1")
 
-[node name="CollisionShape5" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape5" type="CollisionShape3D" parent="Objects/Ground" unique_id=1253108051]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -0.5, 0)
 shape = SubResource("1")
 
-[node name="CollisionShape6" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape6" type="CollisionShape3D" parent="Objects/Ground" unique_id=73151359]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -40)
 shape = SubResource("1")
 
-[node name="CollisionShape7" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape7" type="CollisionShape3D" parent="Objects/Ground" unique_id=1621886878]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -0.5, -40)
 shape = SubResource("1")
 
-[node name="CollisionShape8" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape8" type="CollisionShape3D" parent="Objects/Ground" unique_id=369780854]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, -0.5, -40)
 shape = SubResource("1")
 
-[node name="CollisionShape9" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape9" type="CollisionShape3D" parent="Objects/Ground" unique_id=2019319564]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, -0.5, -40)
 shape = SubResource("1")
 
-[node name="CollisionShape10" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape10" type="CollisionShape3D" parent="Objects/Ground" unique_id=1737876753]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -0.5, -40)
 shape = SubResource("1")
 
-[node name="CollisionShape11" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape11" type="CollisionShape3D" parent="Objects/Ground" unique_id=646865414]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -80)
 shape = SubResource("1")
 
-[node name="CollisionShape12" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape12" type="CollisionShape3D" parent="Objects/Ground" unique_id=1869717874]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -0.5, -80)
 shape = SubResource("1")
 
-[node name="CollisionShape13" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape13" type="CollisionShape3D" parent="Objects/Ground" unique_id=793889178]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, -0.5, -80)
 shape = SubResource("1")
 
-[node name="CollisionShape14" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape14" type="CollisionShape3D" parent="Objects/Ground" unique_id=1741811366]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, -0.5, -80)
 shape = SubResource("1")
 
-[node name="CollisionShape15" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape15" type="CollisionShape3D" parent="Objects/Ground" unique_id=2012793280]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -0.5, -80)
 shape = SubResource("1")
 
-[node name="CollisionShape16" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape16" type="CollisionShape3D" parent="Objects/Ground" unique_id=1538858581]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 40)
 shape = SubResource("1")
 
-[node name="CollisionShape17" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape17" type="CollisionShape3D" parent="Objects/Ground" unique_id=1773759886]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -0.5, 40)
 shape = SubResource("1")
 
-[node name="CollisionShape18" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape18" type="CollisionShape3D" parent="Objects/Ground" unique_id=1292935996]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, -0.5, 40)
 shape = SubResource("1")
 
-[node name="CollisionShape19" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape19" type="CollisionShape3D" parent="Objects/Ground" unique_id=1302637188]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, -0.5, 40)
 shape = SubResource("1")
 
-[node name="CollisionShape20" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape20" type="CollisionShape3D" parent="Objects/Ground" unique_id=480983830]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -0.5, 40)
 shape = SubResource("1")
 
-[node name="CollisionShape21" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape21" type="CollisionShape3D" parent="Objects/Ground" unique_id=1952462260]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 80)
 shape = SubResource("1")
 
-[node name="CollisionShape22" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape22" type="CollisionShape3D" parent="Objects/Ground" unique_id=962094229]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, -0.5, 80)
 shape = SubResource("1")
 
-[node name="CollisionShape23" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape23" type="CollisionShape3D" parent="Objects/Ground" unique_id=1763081803]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, -0.5, 80)
 shape = SubResource("1")
 
-[node name="CollisionShape24" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape24" type="CollisionShape3D" parent="Objects/Ground" unique_id=1776178302]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, -0.5, 80)
 shape = SubResource("1")
 
-[node name="CollisionShape25" type="CollisionShape3D" parent="Objects/Ground"]
+[node name="CollisionShape25" type="CollisionShape3D" parent="Objects/Ground" unique_id=1539781980]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -0.5, 80)
 shape = SubResource("1")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Ground"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Ground" unique_id=227721289]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 instance_shader_parameters/TileX = 50.0
 instance_shader_parameters/TileY = 50.0
 instance_shader_parameters/main_color = Color(0.5, 0.5, 0.5, 1)
 mesh = SubResource("3")
 
-[node name="Pillar3" type="StaticBody3D" parent="Objects"]
+[node name="Pillar3" type="StaticBody3D" parent="Objects" unique_id=1377267741]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Pillar3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Pillar3" unique_id=106104941]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Pillar3"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Pillar3" unique_id=53044952]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 instance_shader_parameters/TileX = 1.0
 instance_shader_parameters/TileY = 1.0
 instance_shader_parameters/main_color = Color(0.5, 0.5, 0.5, 1)
 mesh = SubResource("6")
 
-[node name="MockPilot" type="StaticBody3D" parent="Objects"]
+[node name="MockPilot" type="StaticBody3D" parent="Objects" unique_id=180930487]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/MockPilot"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/MockPilot" unique_id=134064755]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 mesh = SubResource("7")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/MockPilot"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/MockPilot" unique_id=313478883]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("8")
 
-[node name="RadioController" type="Node" parent="."]
+[node name="RadioController" type="Node" parent="." unique_id=244566968]
 script = ExtResource("5")
 target_path = NodePath("../Drone")
 
-[node name="Track_DoubleGateTraining" parent="." instance=ExtResource("10")]
+[node name="Track_DoubleGateTraining" parent="." unique_id=2007290420 instance=ExtResource("10")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 30)
 
-[node name="Track_FigureEight" parent="." instance=ExtResource("11")]
+[node name="Track_FigureEight" parent="." unique_id=1791365695 instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42, 0, 0)
 edit_track = false
 
-[node name="Track_MultiGP_2018_Regional_Qualifier" parent="." instance=ExtResource("7")]
+[node name="Track_MultiGP_2018_Regional_Qualifier" parent="." unique_id=1875933985 instance=ExtResource("7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 80)
 
-[node name="Track_MultiGP_2020_Global_Qualifier" parent="." instance=ExtResource("12")]
+[node name="Track_MultiGP_2020_Global_Qualifier" parent="." unique_id=137823698 instance=ExtResource("12")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 65, 0, 30)
 
-[node name="Track_MultiGP_2018_Regional_Final" parent="." instance=ExtResource("13")]
+[node name="Track_MultiGP_2018_Regional_Final" parent="." unique_id=468140116 instance=ExtResource("13")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70, 0, -50)
 
-[node name="Track_MultiGP_2019_Global_Qualifier" parent="." instance=ExtResource("15")]
+[node name="Track_MultiGP_2019_Global_Qualifier" parent="." unique_id=1855691087 instance=ExtResource("15")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -80)
 
-[node name="TorusTunnel" parent="." instance=ExtResource("1")]
+[node name="TorusTunnel" parent="." unique_id=450692774 instance=ExtResource("1")]
 
-[node name="Track_MultiGP_2021_Global_Qualifier" parent="." instance=ExtResource("16")]
+[node name="Track_MultiGP_2021_Global_Qualifier" parent="." unique_id=98342219 instance=ExtResource("16")]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -65, 0, 20)
 
-[node name="Track_MultiGP_2022_Global_Qualifier" parent="." instance=ExtResource("17")]
+[node name="Track_MultiGP_2022_Global_Qualifier" parent="." unique_id=1040390858 instance=ExtResource("17")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 0, 0)
 edit_track = false

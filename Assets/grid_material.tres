@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://7auec3ko8opy"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://7auec3ko8opy"]
 
 [ext_resource type="Shader" uid="uid://b1gnbvtmovyv4" path="res://Assets/grid_shader.tres" id="1_rlclk"]
 

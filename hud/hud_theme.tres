@@ -1,6 +1,6 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cf465axlen6ii"]
+[gd_resource type="Theme" format=3 uid="uid://cf465axlen6ii"]
 
-[ext_resource type="FontFile" uid="uid://domue31w35df7" path="res://HUD/RecursiveMonoLnrSt-Regular.otf" id="1_x2pkj"]
+[ext_resource type="FontFile" uid="uid://domue31w35df7" path="res://hud/RecursiveMonoLnrSt-Regular.otf" id="1_x2pkj"]
 
 [resource]
 default_font = ExtResource("1_x2pkj")

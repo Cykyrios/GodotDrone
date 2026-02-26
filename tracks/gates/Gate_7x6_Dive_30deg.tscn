@@ -1,20 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://cc1a3ybq53ley"]
+[gd_scene format=3 uid="uid://cc1a3ybq53ley"]
 
-[ext_resource type="Script" path="res://tracks/checkpoint.gd" id="1"]
+[ext_resource type="Script" uid="uid://bw3pn2vd6jd3t" path="res://tracks/checkpoint.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://dwyfppx03dvix" path="res://tracks/objects/Gate_Dive_7x6_30deg.tscn" id="2"]
-[ext_resource type="Script" path="res://tracks/gate.gd" id="3"]
+[ext_resource type="Script" uid="uid://x80c75u7tyj" path="res://tracks/gate.gd" id="3"]
 
 [sub_resource type="BoxShape3D" id="1"]
 size = Vector3(2.1, 1.8, 0.02)
 
-[node name="Gate" type="Node3D"]
+[node name="Gate" type="Node3D" unique_id=1754940444]
 script = ExtResource("3")
 
-[node name="Gate_Dive_7x6_30deg" parent="." instance=ExtResource("2")]
+[node name="Gate_Dive_7x6_30deg" parent="." unique_id=397590628 instance=ExtResource("2")]
 
-[node name="Checkpoint" type="Area3D" parent="."]
+[node name="Checkpoint" type="Area3D" parent="." unique_id=1003360874]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 3.725, 0)
 script = ExtResource("1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint" unique_id=1330070877]
 shape = SubResource("1")

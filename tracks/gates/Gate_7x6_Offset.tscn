@@ -1,31 +1,31 @@
-[gd_scene load_steps=6 format=3 uid="uid://b11fgiwtxypm3"]
+[gd_scene format=3 uid="uid://b11fgiwtxypm3"]
 
-[ext_resource type="Script" path="res://tracks/checkpoint.gd" id="1"]
+[ext_resource type="Script" uid="uid://bw3pn2vd6jd3t" path="res://tracks/checkpoint.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://onf75o840bqs" path="res://tracks/objects/Gate_7x6_Elevated.tscn" id="2"]
-[ext_resource type="Script" path="res://tracks/gate.gd" id="3"]
+[ext_resource type="Script" uid="uid://x80c75u7tyj" path="res://tracks/gate.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://xhfmi6opv0ll" path="res://tracks/objects/Gate_7x6_Simple.tscn" id="4"]
 
 [sub_resource type="BoxShape3D" id="1"]
 size = Vector3(2.1, 1.8, 0.02)
 
-[node name="Gate" type="Node3D"]
+[node name="Gate" type="Node3D" unique_id=65351334]
 script = ExtResource("3")
 
-[node name="Gate_7x6_Elevated" parent="." instance=ExtResource("2")]
+[node name="Gate_7x6_Elevated" parent="." unique_id=115921005 instance=ExtResource("2")]
 
-[node name="Gate_7x6_Simple" parent="." instance=ExtResource("4")]
+[node name="Gate_7x6_Simple" parent="." unique_id=1062451750 instance=ExtResource("4")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.5, 0, -1.5)
 
-[node name="Checkpoint1" type="Area3D" parent="."]
+[node name="Checkpoint1" type="Area3D" parent="." unique_id=275757333]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3, 0)
 script = ExtResource("1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint1"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint1" unique_id=1081914546]
 shape = SubResource("1")
 
-[node name="Checkpoint2" type="Area3D" parent="."]
+[node name="Checkpoint2" type="Area3D" parent="." unique_id=260408594]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.5, 0.9, -1.5)
 script = ExtResource("1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint2" unique_id=676502879]
 shape = SubResource("1")

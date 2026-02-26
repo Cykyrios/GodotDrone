@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://beikfxdbio2ll"]
+[gd_scene format=3 uid="uid://beikfxdbio2ll"]
 
-[ext_resource type="Script" path="res://tracks/checkpoint.gd" id="1"]
+[ext_resource type="Script" uid="uid://bw3pn2vd6jd3t" path="res://tracks/checkpoint.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cio7lc3uxt6ux" path="res://tracks/objects/Gate_5x5_Simple.tscn" id="2"]
-[ext_resource type="Script" path="res://tracks/gate.gd" id="3"]
+[ext_resource type="Script" uid="uid://x80c75u7tyj" path="res://tracks/gate.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://bh6efpyxn1hg0" path="res://tracks/objects/Flag.tscn" id="4"]
 
 [sub_resource type="BoxShape3D" id="1"]
@@ -11,38 +11,38 @@ size = Vector3(1.5, 1.5, 0.02)
 [sub_resource type="BoxShape3D" id="2"]
 size = Vector3(7, 10, 0.02)
 
-[node name="Gate" type="Node3D"]
+[node name="Gate" type="Node3D" unique_id=368239630]
 script = ExtResource("3")
 
-[node name="Gate_5x5_Simple" parent="." instance=ExtResource("2")]
+[node name="Gate_5x5_Simple" parent="." unique_id=1445315739 instance=ExtResource("2")]
 
-[node name="Gate_5x5_Simple2" parent="." instance=ExtResource("2")]
+[node name="Gate_5x5_Simple2" parent="." unique_id=647303754 instance=ExtResource("2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
 
-[node name="Flag1" parent="." instance=ExtResource("4")]
+[node name="Flag1" parent="." unique_id=1052284433 instance=ExtResource("4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.8, 0)
 
-[node name="Flag2" parent="." instance=ExtResource("4")]
+[node name="Flag2" parent="." unique_id=416656683 instance=ExtResource("4")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 1.8, 0)
 
-[node name="Checkpoint" type="Area3D" parent="."]
+[node name="Checkpoint" type="Area3D" parent="." unique_id=1677026851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 script = ExtResource("1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint" unique_id=1169176427]
 shape = SubResource("1")
 
-[node name="Checkpoint2" type="Area3D" parent="."]
+[node name="Checkpoint2" type="Area3D" parent="." unique_id=241212930]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.5, 4, 0)
 script = ExtResource("1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint2" unique_id=980511666]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
 shape = SubResource("2")
 
-[node name="Checkpoint3" type="Area3D" parent="."]
+[node name="Checkpoint3" type="Area3D" parent="." unique_id=681962338]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.75, 0)
 script = ExtResource("1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoint3" unique_id=1476591611]
 shape = SubResource("1")

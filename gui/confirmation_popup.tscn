@@ -1,15 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://hqseyrqeif7i"]
+[gd_scene format=3 uid="uid://hqseyrqeif7i"]
 
-[ext_resource type="Script" path="res://gui/confirmation_popup.gd" id="2"]
+[ext_resource type="Script" uid="uid://dn5gngbidsdks" path="res://gui/confirmation_popup.gd" id="2"]
 
-[node name="ConfirmationPopup" type="Popup"]
+[node name="ConfirmationPopup" type="Popup" unique_id=1468757386]
 process_mode = 3
+oversampling_override = 1.0
 size = Vector2i(235, 105)
 visible = true
 exclusive = true
 script = ExtResource("2")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=955867873]
 unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,34 +21,34 @@ offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=541985211]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 alignment = 1
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1744398932]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Do you want to continue?"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=342100308]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ButtonYes" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ButtonYes" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=868106890]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Yes"
 
-[node name="ButtonNo" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ButtonNo" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=180219855]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "No"
 
-[node name="ButtonAlt" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ButtonAlt" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=351636692]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

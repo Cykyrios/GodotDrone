@@ -1,6 +1,6 @@
-[gd_scene load_steps=31 format=3 uid="uid://c8f7gpaq0tesn"]
+[gd_scene format=3 uid="uid://c8f7gpaq0tesn"]
 
-[ext_resource type="Script" path="res://tracks/track.gd" id="1"]
+[ext_resource type="Script" uid="uid://bc5jvv02bqfle" path="res://tracks/track.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cejslccqkni33" path="res://tracks/objects/Launchpad.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://cksrrjua25x0n" path="res://tracks/gates/Gate_7x6_Elevated.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://dti83e420tdpb" path="res://tracks/gates/Gate_Flag.tscn" id="4"]
@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://ddc12tf3t8ucd" path="res://tracks/gates/Gate_7x6_Simple.tscn" id="11"]
 [ext_resource type="PackedScene" uid="uid://cyor372kt054w" path="res://tracks/gates/Gate_Hurdle_10x5.tscn" id="12"]
 [ext_resource type="PackedScene" uid="uid://wfrqriqgtros" path="res://tracks/gates/Gate_7x6_Double.tscn" id="13"]
-[ext_resource type="Script" path="res://tracks/pathed_object.gd" id="14"]
+[ext_resource type="Script" uid="uid://jmr0rkswyanv" path="res://tracks/pathed_object.gd" id="14"]
 [ext_resource type="ArrayMesh" uid="uid://bxrdbn3jvnd7y" path="res://tracks/objects/RacingCone_1.mesh" id="15_c24gl"]
 [ext_resource type="PackedScene" uid="uid://crmonycbjc4u4" path="res://tracks/objects/ConePattern_Up2.tscn" id="16"]
 [ext_resource type="PackedScene" uid="uid://dbjploq5u1qes" path="res://tracks/objects/ConePattern_Arrow2.tscn" id="17"]
@@ -109,209 +109,209 @@ _data = {
 }
 point_count = 4
 
-[node name="Track" type="Node3D"]
+[node name="Track" type="Node3D" unique_id=1792512652]
 script = ExtResource("1")
 course = "0,lap_start,3,2,1,4b,5,6,8,10,9b,11,12,13b,14,15,16,17b,18,19,20,21,22,23,7b,24,25,26,27,28,29,30,31,32,33,34,0,lap_end"
 
-[node name="Launchpad" parent="." instance=ExtResource("2")]
+[node name="Launchpad" parent="." unique_id=1780050811 instance=ExtResource("2")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 55, 0, 15.5)
 
-[node name="ElevatedGate1" parent="." instance=ExtResource("3")]
+[node name="ElevatedGate1" parent="." unique_id=1420778862 instance=ExtResource("3")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 28, 0, 15.5)
 
-[node name="TripleToplessGate" parent="." instance=ExtResource("5")]
+[node name="TripleToplessGate" parent="." unique_id=463427305 instance=ExtResource("5")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 0, 15.5)
 
-[node name="Flag1" parent="." instance=ExtResource("4")]
+[node name="Flag1" parent="." unique_id=579052264 instance=ExtResource("4")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 17)
 
-[node name="OffsetGate" parent="." instance=ExtResource("6")]
+[node name="OffsetGate" parent="." unique_id=1140028569 instance=ExtResource("6")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11, 0, 15.5)
 
-[node name="DoubleGate1" parent="." instance=ExtResource("13")]
+[node name="DoubleGate1" parent="." unique_id=861921444 instance=ExtResource("13")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 0, -7)
 
-[node name="DoubleGate2" parent="." instance=ExtResource("13")]
+[node name="DoubleGate2" parent="." unique_id=1321095764 instance=ExtResource("13")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, -24)
 
-[node name="Gate1" parent="." instance=ExtResource("11")]
+[node name="Gate1" parent="." unique_id=2058970826 instance=ExtResource("11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 0, -24)
 
-[node name="Flag2" parent="." instance=ExtResource("4")]
+[node name="Flag2" parent="." unique_id=118857769 instance=ExtResource("4")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11, 0, -30)
 
-[node name="Flag3" parent="." instance=ExtResource("4")]
+[node name="Flag3" parent="." unique_id=134301106 instance=ExtResource("4")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -14, 0, -38)
 
-[node name="ElevatedGate2" parent="." instance=ExtResource("3")]
+[node name="ElevatedGate2" parent="." unique_id=1874960314 instance=ExtResource("3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, -38)
 
-[node name="ElevatedGate3" parent="." instance=ExtResource("3")]
+[node name="ElevatedGate3" parent="." unique_id=1729960144 instance=ExtResource("3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5, 0, -38)
 
-[node name="ElevatedGate4" parent="." instance=ExtResource("3")]
+[node name="ElevatedGate4" parent="." unique_id=1614227957 instance=ExtResource("3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.5, 0, -38)
 
-[node name="Flag4" parent="." instance=ExtResource("4")]
+[node name="Flag4" parent="." unique_id=1092445786 instance=ExtResource("4")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 59, 0, -38)
 
-[node name="Gate2" parent="." instance=ExtResource("11")]
+[node name="Gate2" parent="." unique_id=737799843 instance=ExtResource("11")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 63, 0, -22.5)
 
-[node name="Hurdle1" parent="." instance=ExtResource("12")]
+[node name="Hurdle1" parent="." unique_id=439869107 instance=ExtResource("12")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 49, 0, -26.5)
 
-[node name="Gate3" parent="." instance=ExtResource("11")]
+[node name="Gate3" parent="." unique_id=1774589907 instance=ExtResource("11")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 35, 0, -22.5)
 
-[node name="Hurdle2" parent="." instance=ExtResource("12")]
+[node name="Hurdle2" parent="." unique_id=507743443 instance=ExtResource("12")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 21, 0, -26.5)
 
-[node name="Gate4" parent="." instance=ExtResource("11")]
+[node name="Gate4" parent="." unique_id=941217251 instance=ExtResource("11")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7, 0, -22.5)
 
-[node name="Flag5" parent="." instance=ExtResource("4")]
+[node name="Flag5" parent="." unique_id=1195089269 instance=ExtResource("4")]
 transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 0, -14)
 
-[node name="Flag6" parent="." instance=ExtResource("4")]
+[node name="Flag6" parent="." unique_id=401404007 instance=ExtResource("4")]
 transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
 
-[node name="Gate5" parent="." instance=ExtResource("11")]
+[node name="Gate5" parent="." unique_id=317834415 instance=ExtResource("11")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7, 0, 8.5)
 
-[node name="LaunchGate" parent="." instance=ExtResource("9")]
+[node name="LaunchGate" parent="." unique_id=1910749035 instance=ExtResource("9")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 15.5, 0, 8.5)
 
-[node name="DiveGate" parent="." instance=ExtResource("8")]
+[node name="DiveGate" parent="." unique_id=1011023267 instance=ExtResource("8")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 57.5, 0, -1.5)
 
-[node name="GateLowHighLow" parent="." instance=ExtResource("10")]
+[node name="GateLowHighLow" parent="." unique_id=922258119 instance=ExtResource("10")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 35, 0, -1.5)
 
-[node name="Gate6" parent="." instance=ExtResource("11")]
+[node name="Gate6" parent="." unique_id=1212061948 instance=ExtResource("11")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 35, 0, -15.5)
 
-[node name="Gate7" parent="." instance=ExtResource("11")]
+[node name="Gate7" parent="." unique_id=1603704152 instance=ExtResource("11")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 63, 0, -15.5)
 
-[node name="Gate8" parent="." instance=ExtResource("11")]
+[node name="Gate8" parent="." unique_id=1138408453 instance=ExtResource("11")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 71.5, 0, -7)
 
-[node name="SuperHurdle" parent="." instance=ExtResource("7")]
+[node name="SuperHurdle" parent="." unique_id=2051090457 instance=ExtResource("7")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 56, 0, 15.5)
 
-[node name="Path1" type="Path3D" parent="."]
+[node name="Path1" type="Path3D" parent="." unique_id=764591344]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 0, 15.5)
 curve = SubResource("1")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 spacing = 2.0
 
-[node name="Path2" type="Path3D" parent="."]
+[node name="Path2" type="Path3D" parent="." unique_id=454754580]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 15.5)
 curve = SubResource("2")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 spacing = 1.8
 
-[node name="Path3" type="Path3D" parent="."]
+[node name="Path3" type="Path3D" parent="." unique_id=1858823584]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 15.5)
 curve = SubResource("3")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 
-[node name="Path4" type="Path3D" parent="."]
+[node name="Path4" type="Path3D" parent="." unique_id=687690064]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, 17)
 curve = SubResource("6")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 spacing = 1.8
 
-[node name="Path5" type="Path3D" parent="."]
+[node name="Path5" type="Path3D" parent="." unique_id=1380167786]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -12)
 curve = SubResource("4")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 spacing = 1.5
 
-[node name="Path6" type="Path3D" parent="."]
+[node name="Path6" type="Path3D" parent="." unique_id=365820051]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, -24)
 curve = SubResource("5")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 
-[node name="Path7" type="Path3D" parent="."]
+[node name="Path7" type="Path3D" parent="." unique_id=239602557]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 0, -24)
 curve = SubResource("7")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 spacing = 1.5
 
-[node name="Path8" type="Path3D" parent="."]
+[node name="Path8" type="Path3D" parent="." unique_id=1487554968]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -38)
 curve = SubResource("8")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 spacing = 2.0
 
-[node name="Path9" type="Path3D" parent="."]
+[node name="Path9" type="Path3D" parent="." unique_id=1199588455]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, -26.5)
 curve = SubResource("9")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 spacing = 2.0
 
-[node name="Path10" type="Path3D" parent="."]
+[node name="Path10" type="Path3D" parent="." unique_id=51801606]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -26.5)
 curve = SubResource("10")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 spacing = 2.0
 
-[node name="Path11" type="Path3D" parent="."]
+[node name="Path11" type="Path3D" parent="." unique_id=1870077326]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 8.5)
 curve = SubResource("11")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 spacing = 2.0
 
-[node name="Path12" type="Path3D" parent="."]
+[node name="Path12" type="Path3D" parent="." unique_id=2069822280]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, -5)
 curve = SubResource("12")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 spacing = 1.5
 
-[node name="Path13" type="Path3D" parent="."]
+[node name="Path13" type="Path3D" parent="." unique_id=1974648084]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, -15.5)
 curve = SubResource("13")
 script = ExtResource("14")
 mesh = ExtResource("15_c24gl")
 spacing = 2.0
 
-[node name="ConePattern_Up2_5" parent="." instance=ExtResource("16")]
+[node name="ConePattern_Up2_5" parent="." unique_id=1316766040 instance=ExtResource("16")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 18, 0, 15.5)
 
-[node name="ConePattern_Up2_6" parent="." instance=ExtResource("16")]
+[node name="ConePattern_Up2_6" parent="." unique_id=1138767612 instance=ExtResource("16")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17, 0, 15.5)
 
-[node name="ConePattern_Up2_7" parent="." instance=ExtResource("16")]
+[node name="ConePattern_Up2_7" parent="." unique_id=1221544757 instance=ExtResource("16")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -9, 0, 15.5)
 
-[node name="ConePattern_Up2_1" parent="." instance=ExtResource("16")]
+[node name="ConePattern_Up2_1" parent="." unique_id=481428116 instance=ExtResource("16")]
 transform = Transform3D(0.984808, 0, -0.173648, 0, 1, 0, 0.173648, 0, 0.984808, -9.5, 0, -2)
 
-[node name="ConePattern_Arrow2_1" parent="." instance=ExtResource("17")]
+[node name="ConePattern_Arrow2_1" parent="." unique_id=2065431235 instance=ExtResource("17")]
 transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -9.5, 0, -10)
 
-[node name="ConePattern_Up2_2" parent="." instance=ExtResource("16")]
+[node name="ConePattern_Up2_2" parent="." unique_id=41630140 instance=ExtResource("16")]
 transform = Transform3D(0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, 0.984808, -11.8, 0, -20)
 
-[node name="ConePattern_Arrow2_2" parent="." instance=ExtResource("17")]
+[node name="ConePattern_Arrow2_2" parent="." unique_id=412045533 instance=ExtResource("17")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -12.5, 0, -26)
 
-[node name="ConePattern_Up2_3" parent="." instance=ExtResource("16")]
+[node name="ConePattern_Up2_3" parent="." unique_id=1415237026 instance=ExtResource("16")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11, 0, 8.5)
 
-[node name="ConePattern_Up2_4" parent="." instance=ExtResource("16")]
+[node name="ConePattern_Up2_4" parent="." unique_id=706293032 instance=ExtResource("16")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 33, 0, -5)

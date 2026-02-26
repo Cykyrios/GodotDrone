@@ -1,19 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://4ucxhj1m6xil"]
+[gd_scene format=3 uid="uid://4ucxhj1m6xil"]
 
-[ext_resource type="Script" path="res://tracks/track.gd" id="1"]
+[ext_resource type="Script" uid="uid://bc5jvv02bqfle" path="res://tracks/track.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://dwtakig1c6ax" path="res://tracks/gates/Gate_Double_1.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://cejslccqkni33" path="res://tracks/objects/Launchpad.tscn" id="3"]
 
-[node name="Track" type="Node3D"]
+[node name="Track" type="Node3D" unique_id=316645872]
 script = ExtResource("1")
 
-[node name="Launchpad" parent="." instance=ExtResource("3")]
+[node name="Launchpad" parent="." unique_id=601344511 instance=ExtResource("3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 
-[node name="Gate" parent="." instance=ExtResource("2")]
+[node name="Gate" parent="." unique_id=469686910 instance=ExtResource("2")]
 
-[node name="Gate2" parent="." instance=ExtResource("2")]
+[node name="Gate2" parent="." unique_id=828500028 instance=ExtResource("2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
 
-[node name="Gate3" parent="." instance=ExtResource("2")]
+[node name="Gate3" parent="." unique_id=25341414 instance=ExtResource("2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)

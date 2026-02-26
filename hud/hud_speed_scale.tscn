@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnjs7t4n8rx1u"]
+[gd_scene format=3 uid="uid://dnjs7t4n8rx1u"]
 
-[ext_resource type="Script" path="res://hud/hud_speed_scale.gd" id="2"]
+[ext_resource type="Script" uid="uid://cq514yf17fio" path="res://hud/hud_speed_scale.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://cmrbcb2sgf4bh" path="res://hud/hud_bidirectional_gauge.tscn" id="3"]
 
-[node name="HUDSpeedScale" type="Control"]
+[node name="HUDSpeedScale" type="Control" unique_id=451386737]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -14,7 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=836950580]
 layout_mode = 0
 anchor_left = 1.0
 anchor_top = 0.5
@@ -25,12 +25,12 @@ offset_top = -50.0
 offset_bottom = 50.0
 alignment = 2
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=1202289430]
 unique_name_in_owner = true
 layout_mode = 2
 text = "000.0"
 
-[node name="SpeedGauge" parent="HBoxContainer" instance=ExtResource("3")]
+[node name="SpeedGauge" parent="HBoxContainer" unique_id=1773176539 instance=ExtResource("3")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4

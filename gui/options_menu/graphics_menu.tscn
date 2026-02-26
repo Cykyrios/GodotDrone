@@ -1,12 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://eonct0r3co2a"]
+[gd_scene format=3 uid="uid://eonct0r3co2a"]
 
 [ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://gui/menu_theme.tres" id="1_bshb1"]
-[ext_resource type="Script" path="res://gui/options_menu/graphics_menu.gd" id="2"]
+[ext_resource type="Script" uid="uid://d0rgw16o37rrd" path="res://gui/options_menu/graphics_menu.gd" id="2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvkxk"]
 font_size = 48
 
-[node name="GraphicsMenu" type="MarginContainer"]
+[node name="GraphicsMenu" type="MarginContainer" unique_id=1233891430]
 process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,105 +16,105 @@ grow_vertical = 2
 theme = ExtResource("1_bshb1")
 script = ExtResource("2")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1477798836]
 layout_mode = 2
 size_flags_horizontal = 5
 size_flags_vertical = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1493793057]
 layout_mode = 2
 alignment = 1
 
-[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1642734330]
 layout_mode = 2
 text = "Graphics"
 label_settings = SubResource("LabelSettings_nvkxk")
 horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer" unique_id=1718469408]
 layout_mode = 2
 size_flags_horizontal = 5
 size_flags_vertical = 7
 size_flags_stretch_ratio = 100.0
 
-[node name="WindowGrid" type="GridContainer" parent="PanelContainer/VBoxContainer/ScrollContainer"]
+[node name="WindowGrid" type="GridContainer" parent="PanelContainer/VBoxContainer/ScrollContainer" unique_id=369092372]
 layout_mode = 2
 size_flags_horizontal = 7
 size_flags_vertical = 7
 columns = 2
 
-[node name="WindowLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="WindowLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=275958237]
 layout_mode = 2
 text = "Window Mode"
 
-[node name="WindowOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="WindowOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=157221161]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="ResolutionLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="ResolutionLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=1133690051]
 layout_mode = 2
 text = "Resolution"
 
-[node name="ResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="ResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=577248885]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="GameMSAALabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="GameMSAALabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=1048381924]
 layout_mode = 2
 text = "MSAA"
 
-[node name="GameMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="GameMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=676464472]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="GameAFLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="GameAFLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=1696024011]
 layout_mode = 2
 text = "Anisotropic Filter"
 
-[node name="GameAFOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="GameAFOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=647178359]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ShadowsLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="ShadowsLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=122983647]
 layout_mode = 2
 text = "Shadows Quality"
 
-[node name="ShadowsOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="ShadowsOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=1179412124]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="FPVFisheyeLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="FPVFisheyeLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=1897498303]
 layout_mode = 2
 text = "Fisheye Camera"
 
-[node name="FPVFisheyeOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="FPVFisheyeOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=1624868058]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="FisheyeResolutionLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="FisheyeResolutionLabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=247604326]
 layout_mode = 2
 text = "Fisheye Resolution"
 
-[node name="FisheyeResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="FisheyeResolutionOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=1696542188]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="FisheyeMSAALabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="FisheyeMSAALabel" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=423600537]
 layout_mode = 2
 text = "Fisheye MSAA"
 
-[node name="FisheyeMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid"]
+[node name="FisheyeMSAAOptions" type="OptionButton" parent="PanelContainer/VBoxContainer/ScrollContainer/WindowGrid" unique_id=1224874539]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=993734674]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 10
 alignment = 2
 
-[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=352222019]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Back"

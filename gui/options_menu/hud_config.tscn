@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://be6l02nphlj5e"]
+[gd_scene format=3 uid="uid://be6l02nphlj5e"]
 
 [ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://gui/menu_theme.tres" id="1_vw00j"]
 [ext_resource type="PackedScene" uid="uid://cmn8s6qwptgio" path="res://hud/hud.tscn" id="2"]
-[ext_resource type="Script" path="res://gui/options_menu/hud_config.gd" id="3"]
+[ext_resource type="Script" uid="uid://by3bxl5y3a7mw" path="res://gui/options_menu/hud_config.gd" id="3"]
 
-[node name="HUDConfig" type="HBoxContainer"]
+[node name="HUDConfig" type="HBoxContainer" unique_id=35300123]
 process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,28 +17,28 @@ theme = ExtResource("1_vw00j")
 alignment = 1
 script = ExtResource("3")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1409821953]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=543054500]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 3
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer" unique_id=1152553929]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="LabelRefreshRate" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="LabelRefreshRate" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer" unique_id=868517062]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "HUD FPS"
 
-[node name="SpinBoxRefreshRate" type="SpinBox" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="SpinBoxRefreshRate" type="SpinBox" parent="ScrollContainer/VBoxContainer/HBoxContainer" unique_id=332148169]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 9
@@ -48,62 +48,62 @@ step = 5.0
 value = 10.0
 rounded = true
 
-[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer" unique_id=990792335]
 layout_mode = 2
 
-[node name="LabelElements" type="Label" parent="ScrollContainer/VBoxContainer"]
+[node name="LabelElements" type="Label" parent="ScrollContainer/VBoxContainer" unique_id=295309341]
 layout_mode = 2
 text = "HUD Components"
 
-[node name="CheckCrosshair" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+[node name="CheckCrosshair" type="CheckButton" parent="ScrollContainer/VBoxContainer" unique_id=2054584467]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Crosshair"
 
-[node name="CheckHorizon" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+[node name="CheckHorizon" type="CheckButton" parent="ScrollContainer/VBoxContainer" unique_id=2128628907]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Horizon"
 
-[node name="CheckLadder" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+[node name="CheckLadder" type="CheckButton" parent="ScrollContainer/VBoxContainer" unique_id=2003037288]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Pitch Ladder"
 
-[node name="CheckSpeed" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+[node name="CheckSpeed" type="CheckButton" parent="ScrollContainer/VBoxContainer" unique_id=685240042]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Speed"
 
-[node name="CheckAltitude" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+[node name="CheckAltitude" type="CheckButton" parent="ScrollContainer/VBoxContainer" unique_id=2019891825]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Altitude"
 
-[node name="CheckHeading" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+[node name="CheckHeading" type="CheckButton" parent="ScrollContainer/VBoxContainer" unique_id=2129929615]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Heading"
 
-[node name="CheckSticks" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+[node name="CheckSticks" type="CheckButton" parent="ScrollContainer/VBoxContainer" unique_id=1208890430]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Stick Input"
 
-[node name="CheckRPM" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+[node name="CheckRPM" type="CheckButton" parent="ScrollContainer/VBoxContainer" unique_id=495800242]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Motor RPM"
 
-[node name="HUD" parent="." instance=ExtResource("2")]
+[node name="HUD" parent="." unique_id=1054653086 instance=ExtResource("2")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

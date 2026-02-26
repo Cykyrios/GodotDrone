@@ -1,56 +1,55 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgqfmmf7ww2ov"]
+[gd_scene format=4 uid="uid://bgqfmmf7ww2ov"]
 
-[ext_resource type="Texture2D" uid="uid://brxwqxpqjfi3n" path="res://tracks/objects/StandardGates_Hurdle_GodotGP.png" id="1_16mcn"]
+[ext_resource type="Texture2D" uid="uid://brxwqxpqjfi3n" path="res://tracks/objects/StandardGates_Hurdle_GodotGP.png" id="1_cvf8o"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p5fn3"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sq0hh"]
 resource_name = "Hurdle"
 cull_mode = 2
-albedo_texture = ExtResource("1_16mcn")
+albedo_texture = ExtResource("1_cvf8o")
 roughness = 0.4
 emission_enabled = true
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_32roh"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_ulqav"]
 _surfaces = [{
-"aabb": AABB(-3, 0, -0.0250004, 6, 3, 0.05001),
-"format": 34896613377,
+"aabb": AABB(-3, 0, -0.025000393, 6, 3, 0.050000012),
+"format": 34359742465,
 "index_count": 36,
-"index_data": PackedByteArray(0, 0, 2, 0, 1, 0, 0, 0, 3, 0, 2, 0, 4, 0, 6, 0, 5, 0, 4, 0, 7, 0, 6, 0, 7, 0, 3, 0, 0, 0, 7, 0, 4, 0, 3, 0, 6, 0, 0, 0, 1, 0, 6, 0, 7, 0, 0, 0, 5, 0, 1, 0, 2, 0, 5, 0, 6, 0, 1, 0, 4, 0, 2, 0, 3, 0, 4, 0, 5, 0, 2, 0),
+"index_data": PackedByteArray("AAABAAIAAwACAAEAAAAEAAEAAwAFAAIABQAAAAIABgAEAAAABQAGAAAABwABAAQABwADAAEABgAHAAQABwAFAAMABwAGAAUA"),
 "name": "Hurdle",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 8,
-"vertex_data": PackedByteArray(0, 0, 0, 0, 241, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 241, 255, 0, 0, 255, 255, 255, 255, 241, 255, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 241, 255, 0, 0)
+"vertex_data": PackedByteArray("AABAwAAAAAAAzMw8AABAQAAAAACgzcy8AABAwAAAAACgzcy8AABAQAAAQECgzcy8AABAQAAAAAAAzMw8AABAwAAAQECgzcy8AABAwAAAQEAAzMw8AABAQAAAQEAAzMw8")
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_vnc5d"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_4h1xe"]
 resource_name = "StandardGates_Cube_013"
 _surfaces = [{
-"aabb": AABB(-3, 0, -0.0250004, 6, 3, 0.05001),
-"attribute_data": PackedByteArray(101, 18, 204, 182, 101, 18, 204, 182, 153, 237, 204, 182, 153, 237, 204, 182, 153, 237, 50, 73, 153, 237, 50, 73, 101, 18, 50, 73, 101, 18, 50, 73, 101, 18, 50, 73, 101, 18, 204, 182, 153, 237, 204, 182, 153, 237, 50, 73, 101, 18, 50, 73, 101, 18, 204, 182, 101, 18, 204, 182, 101, 18, 50, 73, 101, 18, 50, 73, 101, 18, 204, 182, 153, 237, 204, 182, 153, 237, 50, 73, 153, 237, 50, 73, 153, 237, 204, 182, 153, 237, 204, 182, 153, 237, 50, 73),
-"format": 34896613399,
+"aabb": AABB(-3, 0, -0.025000393, 6, 3, 0.050000012),
+"attribute_data": PackedByteArray("OC6TPR3NNj86mm0/Hc02Pzgukz0dzTY/OpptPx3NNj86mm0/xmWSPjgukz3GZZI+OpptP8Zlkj44LpM9xmWSPjgukz3GZZI+OpptPx3NNj84LpM9Hc02PzqabT/GZZI+OC6TPcZlkj44LpM9Hc02Pzgukz0dzTY/OC6TPcZlkj44LpM9xmWSPjqabT8czTY/OC6TPRzNNj86mm0/xmWSPjqabT/GZZI+OpptPx3NNj86mm0/Hc02PzqabT/GZZI+"),
+"format": 34359742487,
 "index_count": 36,
-"index_data": PackedByteArray(0, 0, 2, 0, 1, 0, 0, 0, 3, 0, 2, 0, 4, 0, 6, 0, 5, 0, 4, 0, 7, 0, 6, 0, 8, 0, 10, 0, 9, 0, 8, 0, 11, 0, 10, 0, 12, 0, 14, 0, 13, 0, 12, 0, 15, 0, 14, 0, 16, 0, 18, 0, 17, 0, 16, 0, 19, 0, 18, 0, 20, 0, 22, 0, 21, 0, 20, 0, 23, 0, 22, 0),
-"material": SubResource("StandardMaterial3D_p5fn3"),
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAANAA4ADAAPAA0AEAARABIAEAATABEAFAAVABYAFAAXABUA"),
+"material": SubResource("StandardMaterial3D_sq0hh"),
 "name": "Hurdle",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 24,
-"vertex_data": PackedByteArray(0, 0, 0, 0, 241, 255, 255, 191, 0, 0, 0, 0, 0, 0, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 0, 0, 241, 255, 255, 191, 255, 255, 255, 255, 241, 255, 255, 191, 255, 255, 255, 255, 0, 0, 255, 191, 0, 0, 255, 255, 0, 0, 255, 191, 0, 0, 255, 255, 241, 255, 255, 191, 0, 0, 255, 255, 241, 255, 255, 127, 0, 0, 0, 0, 241, 255, 255, 127, 255, 255, 0, 0, 241, 255, 255, 127, 255, 255, 255, 255, 241, 255, 255, 127, 0, 0, 255, 255, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 0, 0, 241, 255, 255, 191, 0, 0, 255, 255, 241, 255, 255, 191, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 255, 255, 255, 255, 241, 255, 255, 191, 255, 255, 0, 0, 241, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 255, 0, 0, 255, 191, 0, 0, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 255, 255, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 0, 0, 255, 127, 0, 0)
+"vertex_data": PackedByteArray("AABAwAAAAAAAzMw8AABAQAAAAACgzcy8AABAwAAAAACgzcy8AABAQAAAAAAAzMw8AABAQAAAQEAAzMw8AABAwAAAQECgzcy8AABAQAAAQECgzcy8AABAwAAAQEAAzMw8AABAwAAAQEAAzMw8AABAQAAAAAAAzMw8AABAwAAAAAAAzMw8AABAQAAAQEAAzMw8AABAwAAAQECgzcy8AABAwAAAAAAAzMw8AABAwAAAAACgzcy8AABAwAAAQEAAzMw8AABAQAAAQECgzcy8AABAwAAAAACgzcy8AABAQAAAAACgzcy8AABAwAAAQECgzcy8AABAQAAAQEAAzMw8AABAQAAAAACgzcy8AABAQAAAAAAAzMw8AABAQAAAQECgzcy8/38AAP///7//fwAA////v/9/AAD///+//38AAP///7//f///////v/9///////+//3///////7//f///////v/9//3////+//3//f////7//f/9/////v/9//3////+/AAD/f////78AAP9/////vwAA/3////+/AAD/f////7//////AAD/v/////8AAP+//////wAA/7//////AAD/v////3////+/////f////7////9/////v////3////+/")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_32roh")
+shadow_mesh = SubResource("ArrayMesh_ulqav")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fa6iq"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_frhad"]
 size = Vector3(3, 1.5, 0.025)
 
-[node name="Hurdle_20x10" type="StaticBody3D"]
+[node name="Hurdle_20x10" type="StaticBody3D" unique_id=686696693]
 
-[node name="Hurdle_20x10_Mesh" type="MeshInstance3D" parent="."]
+[node name="Hurdle_20x10_Mesh" type="MeshInstance3D" parent="." unique_id=1921612645]
 gi_mode = 0
-mesh = SubResource("ArrayMesh_vnc5d")
-skeleton = NodePath("")
+mesh = SubResource("ArrayMesh_4h1xe")
 
-[node name="Hurdle_20x10-col" type="CollisionShape3D" parent="."]
+[node name="Hurdle_20x10-col" type="CollisionShape3D" parent="." unique_id=121127384]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-shape = SubResource("BoxShape3D_fa6iq")
+shape = SubResource("BoxShape3D_frhad")

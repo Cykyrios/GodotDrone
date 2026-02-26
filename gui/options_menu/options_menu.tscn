@@ -1,12 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://hwv8he00j43l"]
+[gd_scene format=3 uid="uid://hwv8he00j43l"]
 
 [ext_resource type="Theme" uid="uid://cg8ia5t16ecpj" path="res://gui/menu_theme.tres" id="1_6tmuh"]
-[ext_resource type="Script" path="res://gui/options_menu/options_menu.gd" id="2"]
+[ext_resource type="Script" uid="uid://co1mc7mfx4ba8" path="res://gui/options_menu/options_menu.gd" id="2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_abjtp"]
 font_size = 48
 
-[node name="OptionsMenu" type="MarginContainer"]
+[node name="OptionsMenu" type="MarginContainer" unique_id=507810246]
 process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,41 +16,41 @@ grow_vertical = 2
 theme = ExtResource("1_6tmuh")
 script = ExtResource("2")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1337245216]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1829826965]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="PanelContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1738444873]
 layout_mode = 2
 text = "Options"
 label_settings = SubResource("LabelSettings_abjtp")
 horizontal_alignment = 1
 
-[node name="ButtonGame" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonGame" type="Button" parent="PanelContainer/VBoxContainer" unique_id=458465151]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Game Settings"
 
-[node name="ButtonGraphics" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonGraphics" type="Button" parent="PanelContainer/VBoxContainer" unique_id=2093101819]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Graphics Settings"
 
-[node name="ButtonAudio" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonAudio" type="Button" parent="PanelContainer/VBoxContainer" unique_id=796036502]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Audio Settings"
 
-[node name="ButtonControls" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonControls" type="Button" parent="PanelContainer/VBoxContainer" unique_id=2051558367]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Controls"
 
-[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ButtonBack" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1067956607]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Back to Menu"

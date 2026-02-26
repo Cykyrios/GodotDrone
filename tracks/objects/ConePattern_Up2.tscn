@@ -1,39 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://crmonycbjc4u4"]
+[gd_scene format=3 uid="uid://crmonycbjc4u4"]
 
-[ext_resource type="Script" path="res://tracks/object_pattern.gd" id="2"]
+[ext_resource type="Script" uid="uid://vocrx70h7up8" path="res://tracks/object_pattern.gd" id="2"]
 [ext_resource type="ArrayMesh" uid="uid://bxrdbn3jvnd7y" path="res://tracks/objects/RacingCone_1.mesh" id="2_xwsi1"]
 
 [sub_resource type="MultiMesh" id="1"]
 transform_format = 1
 mesh = ExtResource("2_xwsi1")
 
-[node name="ObjectPattern" type="Node3D"]
+[node name="ObjectPattern" type="Node3D" unique_id=1076995614]
 script = ExtResource("2")
 mesh = ExtResource("2_xwsi1")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=1196315909]
 multimesh = SubResource("1")
 
-[node name="MeshInstance1" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+[node name="MeshInstance1" type="MeshInstance3D" parent="MultiMeshInstance3D" unique_id=1512352760]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0, 0)
 mesh = ExtResource("2_xwsi1")
 
-[node name="MeshInstance2" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+[node name="MeshInstance2" type="MeshInstance3D" parent="MultiMeshInstance3D" unique_id=162352486]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, 0, 0)
 mesh = ExtResource("2_xwsi1")
 
-[node name="MeshInstance3" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+[node name="MeshInstance3" type="MeshInstance3D" parent="MultiMeshInstance3D" unique_id=402723339]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, 0)
 mesh = ExtResource("2_xwsi1")
 
-[node name="MeshInstance4" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+[node name="MeshInstance4" type="MeshInstance3D" parent="MultiMeshInstance3D" unique_id=1144856417]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, 0)
 mesh = ExtResource("2_xwsi1")
 
-[node name="MeshInstance5" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+[node name="MeshInstance5" type="MeshInstance3D" parent="MultiMeshInstance3D" unique_id=1605264677]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0, 0)
 mesh = ExtResource("2_xwsi1")
 
-[node name="MeshInstance6" type="MeshInstance3D" parent="MultiMeshInstance3D"]
+[node name="MeshInstance6" type="MeshInstance3D" parent="MultiMeshInstance3D" unique_id=408646871]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0, 0)
 mesh = ExtResource("2_xwsi1")
