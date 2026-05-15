@@ -222,6 +222,25 @@ func update_forces() -> void:
 	
 	thrust_vec = thrust_vec * get_ground_effect()
 	
+	# Simulate prop wash turbulence
+	# Prop wash occurs when descending into the prop's own thrust path
+	# That means: v (relative velocity opposite to drone movement) has a high upward component
+	if v.y > 0.75 and thrust > 0.0:
+		# Calculate turbulence factor based on descent rate and current thrust
+		var turbulence_factor := clamp(v.y / 10.0, 0.0, 1.0) * clamp(thrust / (0.5 * rho * PI * radius * radius * w * w * radius * radius * cl0), 0.0, 1.0)
+		if turbulence_factor > 0.05:
+			# Apply random variations to thrust, torque and moments to simulate unsteady airflow
+			var rand_thrust := rand_range(-0.3, 0.1) * turbulence_factor * thrust
+			var rand_torque := rand_range(-0.2, 0.2) * turbulence_factor * torque
+			thrust_vec += rand_thrust * Vector3.UP
+			torque_vec += rand_torque * Vector3.UP * direction
+
+			# Add off-axis wobbles
+			var rand_roll := rand_range(-0.75, 0.75) * turbulence_factor * thrust * radius
+			var rand_pitch := rand_range(-0.75, 0.75) * turbulence_factor * thrust * radius
+			roll_moment_vec += rand_roll * Vector3.RIGHT * direction
+			pitch_moment_vec += rand_pitch * Vector3.FORWARD
+
 	forces = [thrust_vec, drag_vec, torque_vec, roll_moment_vec, pitch_moment_vec]
 
 
